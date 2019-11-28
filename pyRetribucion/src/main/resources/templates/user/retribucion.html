@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+
+
+<style>
+.table-responsive {
+	max-height: 300px;
+}
+</style>
+
+
+
+</head>
+
+
+
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<!-- sidebar-wrapper  -->
+		<div class="page-content">
+			<div class="container-fluid">
+				<div class="alert alert-primary" role="alert">
+					<h3>DECLARACIÓN JURADA DE LA DETERMINACIÓN Y PAGO DE LA
+						RETRIBUCIÓN AL ESTADO</h3>
+				</div>
+
+				<!-- /.page-header -->
+
+				<form action="#" id="frmRetribucion" th:action="@{/graboexitoso}"
+					method="post" target="_blank">
+
+					<input type="hidden" name="codaportehdd" id="codaportehdd"
+						th:value="${retribucionForm.codaportehdd}" /> <input type="hidden" name="fdesde"
+						th:value="${retribucionForm.fdesde}" /> <input type="hidden"
+						name="fhasta" th:value="${retribucionForm.fhasta}" /> <input
+						type="hidden" name="tipoPeriodicidad"
+						th:value="${retribucionForm.tipoPeriodicidad}" /> <input
+						type="hidden" name="tipoRetribucion"
+						th:value="${retribucionForm.tipoRetribucion}" /> <input
+						type="hidden" name="mesRetribucion"
+						th:value="${retribucionForm.mesRetribucion}" /> <input
+						type="hidden" name="anioRetribucion"
+						th:value="${retribucionForm.anioRetribucion}" /> <input
+						type="hidden" name="monedaRetribucion" id="idmoneda"
+						th:value="${retribucionForm.monedaRetribucion}" /> <input
+						type="hidden" name="buenContribuyente"
+						th:value="${retribucionForm.buenContribuyente}" /> <input
+						type="hidden" name="baseCalculo"
+						th:value="${retribucionForm.baseCalculo}" /> <input type="hidden"
+						name="porcentaje" th:value="${retribucionForm.porcentaje}" /> <input
+						type="hidden" name="deduccion"
+						th:value="${retribucionForm.deduccion}" /> <input type="hidden"
+						name="pagosprevios" th:value="${retribucionForm.pagosprevios}" />
+					<input type="hidden" name="creditos"
+						th:value="${retribucionForm.creditos}" /> <input type="hidden"
+						name="liberacionpago" th:value="${retribucionForm.liberacionpago}" />
+					<input type="hidden" name="otrosDescuentos"
+						th:value="${retribucionForm.otrosDescuentos}" /> <input
+						id="intereseshdd" type="hidden" name="intereses"
+						th:value="${retribucionForm.intereses}" /> <input type="hidden"
+						name="retribucionpendienteapagar"
+						th:value="${retribucionForm.retribucionpendienteapagar}" /> <input
+						type="hidden" name="retribucionapagar"
+						th:value="${retribucionForm.retribucionapagar}" /> <input
+						id="retribucionresultantehdd" type="hidden"
+						name="retribucionresultante"
+						th:value="${retribucionForm.retribucionresultante}" />
+
+
+
+
+					<div class="row">
+						<div class="col-6">
+							<div class="card bg-default  mb-3">
+								<div class=" card-header">
+									<div class="row">
+										<div class="col ">TIPO DE DECLARACIÓN</div>
+										<div class="col ">
+											<select id="cbocodTipoDeclaracion"
+												name="cbocodTipoDeclaracion"
+												class="sl2 form-control border border-info  "
+												style="float: right;">
+												<option value="1">ORIGINAL</option>
+												<option value="2">SUSTITUTORIA</option>
+												<option value="3">RECTIFICATORIA</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class=" card-body">
+									<br> <br> <br> <br> <br> <br> <br>
+									<br> <br> <br>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="card bg-default  mb-3">
+								<div class=" card-header">
+									<div class="row">
+										<div class="col">DATOS DEL PERIODO</div>
+										<div class="col">
+											<a th:href="@{/mostrarBuscar}" href="/mostrarBuscar"
+												style="float: right;" class="btn btn-outline-info">Cambiar</a>
+										</div>
+									</div>
+								</div>
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+
+
+											<div class="form-group">
+												<label class="col-12 ">TIPO DE PERIODICIDAD </label> <label
+													class="col-12 "
+													th:text="${retribucionForm.tipoPeriodicidadDes}"></label>
+											</div>
+											<div class="form-group">
+												<label class="col-12 ">PERIODO </label> <label
+													class="col-12 " th:text="${retribucionForm.mesRetribucion}"></label>
+											</div>
+											<div class="form-group">
+												<label class="col-12 ">MONEDA</label> <label class="col-12 "
+													th:text="${retribucionForm.monedaRetribucionDes}"></label>
+											</div>
+											<div class="form-group"
+												th:if="${null!=retribucionForm.fdesde && !retribucionForm.fdesde.equals('')}">
+												<label class="col-12 ">DESDE </label> <label class="col-12 "
+													th:text="${retribucionForm.fdesde}"></label>
+											</div>
+
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label class="col-12 ">TIPO DE RETRIBUCIÓN </label> <label
+													class="col-12 "
+													th:text="${retribucionForm.tipoRetribucionDes}"></label>
+											</div>
+											<div class="form-group">
+												<label class="col-12 ">AÑO </label> <label class="col-12 "
+													th:text="${retribucionForm.anioRetribucion}"></label>
+											</div>
+											<div class="form-group">
+												<label class="col-12 ">BUEN CONTRIBUYENTE</label> <label
+													class="col-12 "
+													th:text="${retribucionForm.buenContribuyente}"></label>
+											</div>
+											<div class="form-group"
+												th:if="${null!=retribucionForm.fhasta && !retribucionForm.fhasta.equals('')}">
+												<label class="col-12 ">HASTA</label> <label class="col-12 "
+													th:text="${retribucionForm.fhasta}"></label>
+											</div>
+
+
+
+
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<!-- /.row -->
+
+
+					<hr>
+
+
+
+					<div class="alert alert-info" role="alert">
+						<h5>
+							<b>DETALLE DE LA BASE DE CÁLCULO - CASILLA 1 (*)</b>
+						</h5>
+					</div>
+
+
+					<div class="row">
+						<div class="container">
+							<div class="table-responsive">
+
+								<table id="tblingresos"
+									class="table table-striped  table-bordered">
+									<thead>
+										<tr class="table-info">
+											<th colspan="7" class="col">CONCEPTO</th>
+											<th class="col">TIPO</th>
+
+											<th class="col">[[${#strings.concat(retribucionForm.monedaSimbolo,'IMPORTE')}]]
+											</th>
+											<th class="col">
+												<button class="green" type="button"
+													th:attr="onclick=|abrirNuevoModificarBaseImponible('N', '0','0','0','0')|">
+													<i class="ace-icon fa fa-plus"></i>
+												</button>
+											</th>
+											<th class="col"><button type="button"
+													th:attr="onclick=|abrirNuevoModificarBaseImponible('E', '0','0','0','0')|"
+													title="Eliminar todos los items de este contenedor"
+													class="red">
+													<i class="ace-icon fa fa-trash"></i>
+												</button></th>
+										<tr>
+									</thead>
+									<tbody>
+
+
+										<tr th:each="base : ${basec}">
+											<td colspan="7" scope="row" th:text="${base.sDescripcion}">nombreConcepto</td>
+
+											<td scope="row" th:text="${base.concepto.sDescripcion}">importeBaseImponible</td>
+											<td scope="row"
+												th:text="${base.nimporte=='0'?'0':#numbers.formatDecimal(base.nimporte, 0, 'COMMA', 0, 'POINT')}">importeBaseImponible</td>
+											<td scope="row"><button title="Editar?" class="green"
+													type="button"
+													th:attr="onclick=|abrirNuevoModificarBaseImponible('M', '${base.id}','${base.sDescripcion}','${base.nimporte}','${base.concepto.id}')|">
+													<i class="ace-icon fa fa-edit"></i>
+												</button></td>
+											<td scope="row">
+												<button class="red" value="" title="Eliminar?" type="button"
+													th:attr="onclick=|abrirNuevoModificarBaseImponible('E', '${base.id}','${base.sDescripcion}','${base.nimporte}','${base.concepto.id}')|">
+													<i class="ace-icon fa fa-minus-circle"></i>
+												</button>
+											</td>
+
+										</tr>
+
+
+									</tbody>
+
+								</table>
+
+								<div class="row" th:fragment="pagination">
+									<div class="col-md-2"></div>
+									<div class="col-md-8">
+										<nav aria-label="Pagination">
+											<ul class="pagination justify-content-center">
+												<li class="page-item" th:each="pageNumber : ${pageNumbers}">
+													<a class="page-link"
+													th:href="@{|/retribucion/${pageNumber}|}"
+													th:text=${pageNumber}>1</a>
+
+												</li>
+											</ul>
+										</nav>
+									</div>
+									<div class="col-md-2"></div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+
+					<hr>
+					<hr>
+					<div class="alert alert-primary " role="alert">
+						<h5>DETERMINACIÓN Y LIQUIDACIÓN DE LA RETRIBUCIÓN AL ESTADO</h5>
+					</div>
+
+					<div class="row">
+
+
+
+						<div class="container">
+
+							<div class="table-responsive">
+
+								<table class="table tabletable-striped  table-bordered">
+									<thead>
+										<tr class="table-primary">
+											<th scope="row" colspan="10">CONCEPTOS</th>
+
+
+
+											<th scope="col">CASILLA</th>
+											<th scope="col" style="text-align: right;">[[${#strings.concat(retribucionForm.monedaSimbolo,'
+												IMPORTE')}]]</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td scope="row" colspan="10">BASE DE CÁLCULO</td>
+
+											<td>(1)</td>
+											<td
+												style="text-align: right; font-weight: bolder !important;"
+												id="fbasecalculo">
+												[[${retribucionForm.baseCalculo=='0'?'0':#numbers.formatDecimal(retribucionForm.baseCalculo,0,
+												'COMMA', 0, 'POINT')}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">PORCENTAJE A APLICAR ( %)</td>
+
+											<td>(2)</td>
+											<td align="right" id="fporcentaje"
+												style="font-weight: bold; text-align: right;">[[${retribucionForm.porcentaje}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">DEDUCCIONES</td>
+
+											<td></td>
+											<td
+												style="text-align: right; font-weight: bolder !important;">
+												<button style="float: left;" class="btn btn-info"
+													id="btnDeduccionOpen" type="button">+</button> 
+												<a id="fdeduccion" th:if="${null!=retribucionForm.deduccion}"
+												style="float: right; text-align: right !important; text-decoration: underline;"
+												href="#">[[${#numbers.formatDecimal(retribucionForm.deduccion,0,'COMMA',0,'POINT')}]]</a>
+
+											</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">RETRIBUCIÓN AL ESTADO
+												PENDIENTE A PAGAR(1)*(2)</td>
+
+											<td>(3)</td>
+											<td id="fretribucionpendiente"
+												style="text-align: right; font-weight: bolder !important;">[[${retribucionForm.retribucionpendienteapagar=='0'?'0':#numbers.formatDecimal(retribucionForm.retribucionpendienteapagar,0,
+												'COMMA', 0, 'POINT')}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="12" class="table-secondary">(
+												-) MENOS:</td>
+
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">PAGOS PREVIOS</td>
+
+											<td>(4)</td>
+											<td id="fpagosprevios"
+												style="text-align: right; font-weight: bolder !important;">[[${retribucionForm.pagosprevios=='0'?'0':#numbers.formatDecimal(retribucionForm.pagosprevios,0,
+												'COMMA', 0, 'POINT')}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">CRÉDITOS POR APLICAR</td>
+
+											<td>(5)</td>
+											<td id="fcreditos">[[${retribucionForm.creditos}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">LIBERACIÓN DE PAGO</td>
+
+											<td>(6)</td>
+											<td
+												style="text-align: right; font-weight: bolder !important;">
+												<button style="float: left; font-weight: bolder !important;"
+													class="btn btn-info" id="btnLiberacionOpen" type="button">+</button>
+												<a id="fliberacion"
+												th:if="${null!=retribucionForm.liberacionpago}"
+												style="float: right; text-align: right !important; text-decoration: underline;"
+												href="#">[[${#numbers.formatDecimal(retribucionForm.liberacionpago,0,'COMMA', 0,'POINT')}]]</a>
+											</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">OTROS DESCUENTOS</td>
+
+											<td>(7)</td>
+											<td
+												style="text-align: right; font-weight: bolder !important;">
+												<button style="float: left; font-weight: bolder !important;"
+													class="btn btn-info" id="btnOtrosDescuentosOpen"
+													type="button">+</button> <a id="fotros"
+												th:if="${null!=retribucionForm.otrosDescuentos}"
+												style="float: right; text-align: right; text-decoration: underline;"
+												href="#">[[${#numbers.formatDecimal(retribucionForm.otrosDescuentos,0,'COMMA', 0, 'POINT')}]]</a>
+											</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">RETRIBUCIÓN AL ESTADO A
+												PAGAR (3)-(4)-(5)-(6)-(7)</td>
+
+											<td>(8)</td>
+											<td id="fretribucionaPagar"
+												style="font-weight: bold; text-align: right;">[[${retribucionForm.retribucionapagar}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="12" class="table-secondary">(
+												+) MÁS:</td>
+
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">INTERESES S/.</td>
+
+											<td>(9)</td>
+											<td><input id="fintereses" type="text"
+												class="numero border border-info "
+												style="font-weight: bold; text-align: right; float: right;"
+												size="7" />[[${retribucionForm.intereses}]]</td>
+										</tr>
+										<tr>
+											<td scope="row" colspan="10">RETRIBUCIÓN AL ESTADO
+												RESULTANTE (8)+(9)</td>
+
+											<td>(10)</td>
+											<td id="fretribucionResultante"
+												style="font-weight: bold; text-align: right;">[[${retribucionForm.retribucionresultante}]]</td>
+										</tr>
+
+									</tbody>
+
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-actions">
+						<div class="row">
+
+							<div class="pull-right">
+								<button class="btn btn-info" id="btn-retri-enviar" type="submit">
+									<i class="icon-ok bigger-110"></i> Guardar y Enviar
+								</button>
+								&nbsp; &nbsp; &nbsp;
+								<button class="btn btn-info" type="submit">
+									<i class="icon-ok bigger-110"></i> Vista Previa
+								</button>
+							</div>
+						</div>
+
+					</div>
+
+				</form>
+			</div>
+
+
+			<!-- /.page-content -->
+		</div>
+
+			<div th:replace="user/declaracion/dlgBaseImponible :: dlg-BaseImponible"></div>
+			<div th:replace="user/declaracion/dlgDeduccion :: dlg-Deduccion"></div>
+			<div th:replace="user/declaracion/dlgLiberacion :: dlg-Liberacion"></div>
+			<div th:replace="user/declaracion/dlgOtros :: dlg-Otros"></div>
+			<div th:replace="user/declaracion/dlgEliminarDeduccion :: dlg-EliminarDeduccion"></div>
+			<div th:replace="user/declaracion/dlgEliminarLiberacion :: dlg-EliminarLiberacion"></div>
+			<div th:replace="user/declaracion/dlgEliminarOtro :: dlg-EliminarOtro"></div>
+			
+		</div>
+
+
+
+</body>
+<!-- Footer -->
+
+
+
+<div th:replace="fragments/jsScripts :: scripts"></div>
+<script type="text/javascript">
+	function total() {
+		var fbasecalculo = parseFloatHTMLField("fbasecalculo");
+		var fporcentaje = parseFloatHTMLField("fporcentaje");
+		var fdeduccion = parseFloatHTMLField("fdeduccion");
+		var fretribucionpendiente = (fbasecalculo * fporcentaje) + fdeduccion;
+		$("#fretribucionpendiente").html(evalpositivo(fretribucionpendiente));
+		var fpagosprevios = parseFloatHTMLField("fpagosprevios");
+		var fcreditos = parseFloatHTMLField("fcreditose");
+		var fliberacion = parseFloatHTMLField("fliberacion");
+		var fotros = parseFloatHTMLField("fotros");
+		var fmenos = fpagosprevios + fcreditos + fliberacion + fotros;
+		var fretribucionaPagar = (fretribucionpendiente - fmenos);
+		$("#fretribucionaPagar").html(evalpositivo(fretribucionaPagar));
+		var fintereses = parseFloatHTMLField("fintereses");
+		var fretribucionResultante = fretribucionaPagar + fintereses;
+		$("#fretribucionResultante").html(evalpositivo(fretribucionResultante));
+		$("#retribucionresultantehdd").val(fretribucionResultante);
+		
+		
+		grabarResultante();
+	}
+	function separadorDeMilesporId(id) {
+		var valor = $("#" + id).val();
+		var formateado = smconcomma(valor);
+		$("#" + id).val(formateado);
+	}
+
+	function fnDeduccionOpen() {
+		var token = $("meta[name='_csrf']").attr("content");
+
+		$('#tblDeduccion')
+				.DataTable(
+						{
+							select : {
+								style : 'single'
+							},
+							retrieve : true,
+							paging : false,
+							searching : false,
+							info : false,
+							ajax : {
+								url : context
+										+ "retribucion/openDeduccion?moneda="
+										+ $("#idmoneda").val(),
+								dataSrc : ''
+							},
+							columns : [
+									{
+										data : "dfecRegistro"
+									},
+
+									{
+										data : "sdescripcion"
+									},
+									{
+										data : "moneda"
+									},
+									{
+										data : "nimporte"
+									},
+									{
+										data : "nsaldo"
+									},
+									{
+										data : null,
+										render : function(data, type, row) {
+											return '<button id="actionButton" '
+													+ 'type="button" class="btn btn-secondary" '
+													+ ' onclick="acumularImporte('
+													+ data.id
+													+ ','
+													+ data.nsaldo
+													+ ','
+													+ "'deduccion'"
+													+ ')"><i class="fa fa-check"></i></button>';
+										},
+										targets : -1
+									} ]
+						});
+
+		$("#lblAcumdeduccion").html("");
+		$("#mntdeduccion").val("");
+
+		$("#modalDeduccion").modal("show");
+
+	}
+	function fnLiberacionOpen() {
+		var token = $("meta[name='_csrf']").attr("content");
+
+		$('#tblLiberacion')
+				.DataTable(
+						{
+							select : {
+								style : 'single'
+							},
+							retrieve : true,
+							paging : false,
+							searching : false,
+							info : false,
+							ajax : {
+								url : context
+										+ "retribucion/openLiberacion?moneda="
+										+ $("#idmoneda").val(),
+								dataSrc : ''
+							},
+							columns : [
+									{
+										data : "dfecReconocimiento"
+									},
+									{
+										data : "sdescripcion"
+									},
+									{
+										data : "moneda"
+									},
+									{
+										data : "nimporte"
+									},
+									{
+										data : "nsaldo"
+									},
+									{
+										data : null,
+										render : function(data, type, row) {
+											return '<button id="actionButton" '
+													+ 'type="button" class="btn btn-secondary" '
+													+ ' onclick="acumularImporte('
+													+ data.id
+													+ ','
+													+ data.nsaldo
+													+ ','
+													+ "'liberacion'"
+													+ ')"><i class="fa fa-check"></i></button>';
+										},
+										targets : -1
+									} ]
+						});
+		$("#lblAcumliberacion").html("");
+		$("#mntliberacion").val("");
+		$("#modalLiberacion").modal("show");
+	}
+
+	function fnOtrosDescuentosOpen() {
+		var token = $("meta[name='_csrf']").attr("content");
+
+		$('#tblDescuento')
+				.DataTable(
+						{
+							select : {
+								style : 'single'
+							},
+							retrieve : true,
+							paging : false,
+							searching : false,
+							info : false,
+							ajax : {
+								url : context
+										+ "retribucion/openDescuento?moneda="
+										+ $("#idmoneda").val(),
+								dataSrc : ''
+							},
+							columns : [
+									{
+										data : "dfecRegistro"
+									},
+									{
+										data : "sdescripcion"
+									},
+									{
+										data : "moneda"
+									},
+									{
+										data : "nimporte"
+									},
+									{
+										data : "nsaldo"
+									},
+									{
+										data : null,
+										render : function(data, type, row) {
+											return '<button id="actionButton" '
+													+ 'type="button" class="btn btn-secondary" '
+													+ ' onclick="acumularImporte('
+													+ data.id
+													+ ','
+													+ data.nsaldo
+													+ ','
+													+ "'descuento'"
+													+ ')"><i class="fa fa-check"></i></button>';
+										},
+										targets : -1
+									} ]
+						});
+
+		$("#lblAcumdescuento").html("");
+		$("#mntdescuento").val("");
+		$("#modalOtros").modal("show");
+	}
+
+	function acumularImporte(id, saldo, tipo) {
+		$("#id" + tipo + "hdd").val((id));
+		$("#lblAcum" + tipo).html((saldo));
+	}
+	function getDetalleBaseCalculo(tipo) {
+
+		var token = $("meta[name='_csrf']").attr("content");
+		$.ajax({
+			type : "POST",
+			contenttype : "application/json",
+			url : context + "retribucion/baseCalculo",
+			headers : {
+				"X-CSRF-TOKEN" : token
+			}, //send CSRF token in header
+			data : JSON.stringify($('#frmBiImportes').serialize()),
+			dataType : "json",
+			success : function(data) {
+				$('#cboDetalleBC').html("");
+				var $dropdown = $("#cboDetalleBC");
+				$.each(data, function() {
+					$dropdown.append("<option value="+this.id+" >"+ this.sdescripcion + "</option>");
+				});
+				$("#modalBaseImponible").modal("show");
+				$("#cboDetalleBC option[value='" + tipo + "']").attr("selected", true);
+
+			}
+
+		});
+
+	}
+	function abrirNuevoModificarBaseImponible(m, i, con, imp, tipo) {
+
+		$("#titulobi").html(
+				(m === "N" ? "AGREGAR" : (m === "M" ? "EDITAR" : "ELIMINAR"))
+						+ " BASE DE CÁLCULO");
+
+		$("#biaccion").val(m);
+
+		$("#guardarbi").html(
+				(m === "N" ? "AGREGAR" : (m === "M" ? "EDITAR" : "ELIMINAR")));
+
+		$("#codigobihdd").val(m === "N" ? 0 : i);
+
+		if (m !== "E") {
+			$("#biconcepto").val(m === "M" ? con : "");
+			$("#biimporte").val(m === "M" ? (imp=="0.00"?"0":imp) : "");
+			//separadorDeMilesporId("biimporte");
+			$("#lbldetallebi").html("CONCEPTO DEL IMPORTE");
+		} else {
+			$("#contenidoModalBi").html("");
+			$("#contenidoModalBi")
+					.html(
+							"<input  name=\"cboDetalleBC\" type=\"hidden\" value=\""+tipo+"\" />"
+									+ "<input  name=\"biconcepto\" type=\"hidden\" value=\""+con+"\" />"
+									+ "<input  name=\"biimporte\" type=\"hidden\" value=\""+imp+"\" />"
+									+ "<p>Está seguro de eliminar el registro?<p>");
+		}
+
+		getDetalleBaseCalculo(tipo);
+
+	}
+	function guardarbi() {
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		$.ajax({
+			type : "POST",
+			contenttype : "application/json",
+			url : context + "retribucion/guardarbi",
+			headers : {
+				"X-CSRF-TOKEN" : token
+			}, //send CSRF token in header
+			data : JSON.stringify($('#frmBiImportes').serialize()),
+			dataType : "json",
+			success : function(result) {
+				console.log("xxx");
+			},
+			error : function(result) {
+				console.log("error");
+			}
+
+		});
+
+	}
+	function mostrarEnPDF() {
+
+		var token = $("meta[name='_csrf']").attr("content");
+
+		$.post({
+
+			url : context + "graboexitoso",
+			headers : {
+				"X-CSRF-TOKEN" : token
+			}, //send CSRF token in header
+			data : $("#frmRetribucion").serialize(),
+
+			success : function(result) {
+				console.log("xxx");
+			},
+			error : function(result) {
+				console.log("error");
+			}
+
+		});
+
+	}
+	function grabarIntereses(){
+		var token = $("meta[name='_csrf']").attr("content");
+
+		$.post({
+
+			url : context + "grabarInteres",
+			headers : {
+				"X-CSRF-TOKEN" : token
+			}, //send CSRF token in header
+			data :$("#frmRetribucion").serialize(),
+
+			success : function(result) {
+				console.log("xxx");
+			},
+			error : function(result) {
+				console.log("error");
+			}
+
+		});
+	}
+	function grabarResultante(){
+		var token = $("meta[name='_csrf']").attr("content");
+
+		$.post({
+
+			url : context + "grabarRetResultante",
+			headers : {
+				"X-CSRF-TOKEN" : token
+			}, //send CSRF token in header
+			data :$("#frmRetribucion").serialize(),
+
+			success : function(result) {
+				console.log("xxx");
+			},
+			error : function(result) {
+				console.log("error");
+			}
+
+		});
+	}	
+	$(function() {
+		separadorDeMilesKeyPressPorId("mntliberacion");
+		separadorDeMilesKeyPressPorId("mntdescuento");
+		separadorDeMilesKeyPressPorId("mntdeduccion");
+		$("#abrirNuevobi1").on("click", function() {
+
+			abrirNuevoModificarBaseImponible('N', 0, 0, 0, 0);
+
+		});
+
+		$("#abrirEliminarContenedorbi1").on("click", function() {
+
+			abrirNuevoModificarBaseImponible('E', 0, 0, 0, 0);
+
+		});
+
+		$("#btnLiberacionOpen").on("click", function() {
+
+			fnLiberacionOpen();
+
+		});
+		$("#btnOtrosDescuentosOpen").on("click", function() {
+
+			fnOtrosDescuentosOpen();
+
+		});
+
+		$("#btnDeduccionOpen").on("click", function() {
+
+			fnDeduccionOpen();
+
+		});
+
+		$("#fdeduccion").on(
+				"click",
+				function(e) {
+					e.preventDefault();
+					if (($(this).text() != undefined) && ($(this).text() != "")
+							&& ($(this).text() != "0"))
+						$("#modalEliminarDeduccion").modal("show");
+				});
+		$("#fliberacion").on(
+				"click",
+				function(e) {
+					e.preventDefault();
+					if (($(this).text() != undefined) && ($(this).text() != "")
+							&& ($(this).text() != "0"))
+						$("#modalEliminarLiberacion").modal("show");
+				});
+		$("#fotros").on(
+				"click",
+				function(e) {
+					e.preventDefault();
+					if (($(this).text() != undefined) && ($(this).text() != "")
+							&& ($(this).text() != "0"))
+						$("#modalEliminarOtro").modal("show");
+				});
+		total();
+		$("#fintereses").on(
+				"keyup",
+				function() {
+					var gretapgarsincomas = quitarCommas($(
+							"#fretribucionaPagar").html());
+					var gretapgar = $("#fretribucionaPagar").html()
+							.indexOf("(") != -1 ? parseFloat(gretapgarsincomas
+							.replace("(", "").replace(")", ""))
+							* -1 : parseFloat(gretapgarsincomas);
+					var intereses = $("#fintereses").val();
+					var scintereses = quitarCommas(intereses == undefined
+							|| intereses == "" ? "0" : intereses);
+					$("#intereseshdd").val(scintereses);
+					var fretribucionResultante = parseFloat(gretapgar)
+							+ parseFloat(quitarCommas(intereses == undefined
+									|| intereses == "" ? "0" : intereses));
+					$("#fretribucionResultante").html(
+							evalpositivo(fretribucionResultante));
+					$("#retribucionresultantehdd").val(fretribucionResultante);
+					
+					grabarIntereses();
+
+				});
+		$("#frmDeduccion")
+				.on(
+						"submit",
+						function(e) {
+							var acum = parseFloatHTMLField("lblAcumdeduccion");
+							var adeclarar = $("#mntdeduccion").val();
+							if (acum==undefined||acum=="") {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>No ha seleccionado ningún registro.</span>");
+								e.preventDefault();
+							}else if (acum < adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser mayor al monto disponible.</span>");
+								e.preventDefault();
+							} else if ("0" == adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser cero.</span>");
+								e.preventDefault();
+							} else if ("" == adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser vacío.</span>");
+								e.preventDefault();
+							} else {
+								return;
+							}
+						});
+		$("#frmLiberacion")
+				.on(
+						"submit",
+						function(e) {
+							var acum = parseFloatHTMLField("lblAcumliberacion");
+							var adeclarar = $("#mntliberacion").val();
+							if (acum==undefined||acum=="") {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>No ha seleccionado ningún registro.</span>");
+								e.preventDefault();
+							}else if (acum < adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser mayor al monto disponible.</span>");
+								e.preventDefault();
+							} else if ("0" == adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser cero.</span>");
+								e.preventDefault();
+							} else if ("" == adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser vacío.</span>");
+								e.preventDefault();
+							} else {
+								return;
+							}
+						});
+		$("#frmOtros")
+				.on(
+						"submit",
+						function(e) {
+							var acum = parseFloatHTMLField("lblAcumdescuento");
+							var adeclarar = parseFloatField("mntdescuento");
+							if (acum==undefined||acum=="") {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>No ha seleccionado ningún registro.</span>");
+								e.preventDefault();
+							}else if (acum < adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser mayor al monto disponible.</span>");
+								e.preventDefault();
+							} else if ("0" == adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser cero.</span>");
+								e.preventDefault();
+							} else if ("" == adeclarar) {
+								$(".msgErrorMonto")
+										.html(
+												"<span style='color:red'>EL monto a declarar no puede ser vacío.</span>");
+								e.preventDefault();
+							} else {
+								return;
+							}
+						});
+		$("#mntliberacion,#mntOtros").on("blur,click", function() {
+			$(".msgErrorMonto").html("");
+
+		});		
+		
+		$("#frmBiImportes").on("submit",function(e){
+			
+			if($("#cboDetalleBC").val()==""){
+				e.preventDefault();
+				$(".msgErrorcboDetalleBC").html("<span style='color:red !important;'>Debe seleccionar la base de cálculo</span>");
+			}else if($("#biconcepto").val()==""){
+				e.preventDefault();
+				$(".msgErrorbiconcepto").html("<span style='color:red !important;'>Debe ingresar una Descripción</span>");
+			}else if($("#biimporte").val()==""){
+				e.preventDefault();
+				$(".msgErrorbiimporte").html("<span style='color:red !important;'>Debe ingresar el importe</span>");
+			}
+			
+			
+		});
+		
+		$("#cboDetalleBC").on("click",function(e){			
+			$(".msgErrorcboDetalleBC").html("");			
+		});
+		$("#biconcepto").on("click",function(e){			
+			$(".msgErrorbiconcepto").html("");			
+		});
+		$("#biimporte").on("click",function(e){			
+			$(".msgErrorbiimporte").html("");			
+		});
+	});
+</script>
+
+</body>
+</html>

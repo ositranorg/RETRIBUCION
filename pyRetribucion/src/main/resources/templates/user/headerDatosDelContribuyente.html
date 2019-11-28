@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+</head>
+<script src="https://use.fontawesome.com/c0c323679c.js"></script>
+
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+
+		<div class="page-content">
+			<div class="container-fluid">
+				<div th:fragment="datoscontribuyente">
+					<div class="alert alert-primary" role="alert">DATOS DEL
+						CONTRIBUYENTE</div>
+
+
+
+
+					<div class="form-group">
+						<input type="hidden" value="" id="eddjjruchdd" name="eddjjruchdd" />
+						<input type="hidden" value="" id="eddjjnomhdd" name="eddjjnomhdd" />
+						<div class="row">
+							<label class="col-sm-3 control-label">Nº de Rua: </label> <label
+								class="col-sm-9 control-label">xxxx</label>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">Razon Social:</label> <label
+								class="col-sm-9 control-label">yyyyyy</label>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/jsScripts :: scripts"></div>
+
+</body>
+</html>
