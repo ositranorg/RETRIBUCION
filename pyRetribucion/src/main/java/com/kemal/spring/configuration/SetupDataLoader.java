@@ -3,6 +3,7 @@ package com.kemal.spring.configuration;
 import java.math.BigDecimal;
 import java.net.SocketTimeoutException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -125,8 +126,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
-		/*
 		
+		/*
 		createBanco("BANCO DE COMERCIO");
 		createBanco("BANCO INTERAMERICANO DE FINANZAS (BANBIF)");
 		createBanco("BANCO PICHINCHA");
@@ -206,26 +207,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createContribuyente("TRANSPORTADORA CALLAO S.A.", "20537577232");
 		createContribuyente("SALAVERRY TERMINAL INTERNACIONAL S.A.", "20603487321");
 		
-		createAportePorcentaje(1,1, new BigDecimal("0.46511"));//lap
-		createAportePorcentaje(2,1, new BigDecimal("0.15"));//adp
-		createAportePorcentaje(3,1, new BigDecimal("0.3725"));//ferrocarriles trasandino
-		createAportePorcentaje(4,3, new BigDecimal("0.5"));//ferrocarriles trasandino
-		createAportePorcentaje(5,1, new BigDecimal("0.2475"));//ferrovias central andina
-		createAportePorcentaje(6,3, new BigDecimal("0.5"));//ferrovias central andina
-		createAportePorcentaje(7,1, new BigDecimal("0.1861"));//CONCESIONARIA VIAL DEL PERU S.A.
-		createAportePorcentaje(8,1, new BigDecimal("0.055"));//norvial
-		
-		createAportePorcentaje(9,1,new BigDecimal("0.5"));//tisur-retribucion(canon)
-		createAportePorcentaje(10,3, new BigDecimal("0.985"));//tisur-especial
-		
-		createAportePorcentaje(11,1, new BigDecimal("0.03"));//apm terminals
-		createAportePorcentaje(12,1, new BigDecimal("0.03"));//dpworl
-		createAportePorcentaje(12,1, new BigDecimal("0.02"));//euroandinos
-		createAportePorcentaje(14,1, new BigDecimal("0.03"));//paracas
-		createAportePorcentaje(15,1, new BigDecimal("0.02"));//transportadora
-		
-		createAportePorcentaje(16,1, new BigDecimal("0.03"));//sALAVERRY
-		createAportePorcentaje(17,4, new BigDecimal("0.0006"));//sALAVERRY
+
 		
 		createTipoVencimiento("SEGÚN CONTRATO");
 		createTipoVencimiento("SEGÚN SUNAT");
@@ -263,7 +245,32 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				
 
 		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "tisur", userRoles,7,1);
-	*/
+	
+		*/
+		
+//		
+//		createAportePorcentaje(1,1, new BigDecimal("0.46511"));//lap
+//		createAportePorcentaje(2,1, new BigDecimal("0.15"));//adp
+//		createAportePorcentaje(3,1, new BigDecimal("0.3725"));//ferrocarriles trasandino
+//		createAportePorcentaje(4,3, new BigDecimal("0.5"));//ferrocarriles trasandino
+//		createAportePorcentaje(5,1, new BigDecimal("0.2475"));//ferrovias central andina
+//		createAportePorcentaje(6,3, new BigDecimal("0.5"));//ferrovias central andina
+//		createAportePorcentaje(7,1, new BigDecimal("0.1861"));//CONCESIONARIA VIAL DEL PERU S.A.
+//		createAportePorcentaje(8,1, new BigDecimal("0.055"));//norvial
+//		
+//		createAportePorcentaje(9,1,new BigDecimal("0.5"));//tisur-retribucion(canon)
+//		createAportePorcentaje(10,3, new BigDecimal("0.985"));//tisur-especial
+//		
+//		createAportePorcentaje(11,1, new BigDecimal("0.03"));//apm terminals
+//		createAportePorcentaje(12,1, new BigDecimal("0.03"));//dpworl
+//		createAportePorcentaje(13,1, new BigDecimal("0.02"));//euroandinos
+//		createAportePorcentaje(14,1, new BigDecimal("0.03"));//paracas
+//		createAportePorcentaje(15,1, new BigDecimal("0.02"));//transportadora
+//		
+//		createAportePorcentaje(16,1, new BigDecimal("0.03"));//sALAVERRY
+//		createAportePorcentaje(17,4, new BigDecimal("0.0006"));//sALAVERRY
+		
+		
 			/*
 		
 		createContrato(1,1,"último dia útil del mes inmediato siguiente",1);
