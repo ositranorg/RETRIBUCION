@@ -18,19 +18,19 @@
 					<a href="https://www.ositran.gob.pe/retribucion-al-estado/"
 						target="_blank">RETRIBUCIÓN AL ESTADO</a>
 					<div id="close-sidebar">
-						<i class="fas fa-times"></i>
+						<i class="fa fa-times"></i>
 					</div>
 				</div>
 				<div class="sidebar-header">
 					<div class="user-pic">
-						<img class="img-responsive img-rounded" th:src="@{img/user.jpg}"
-							alt="User picture">
+						<img class="img-responsive img-rounded" src="/img/user.jpg"
+							th:src="@{/img/user.jpg}" alt="User picture">
 					</div>
 					<div class="user-info">
-					<span class="user-role">Bienvenido</span>
+						<span class="user-role">Bienvenido</span>
 						<security:authorize access="isAuthenticated()">
     										Concesionario
-    						<security:authentication property="principal.username" ></security:authentication>
+    						<security:authentication property="principal.username"></security:authentication>
 						</security:authorize>
 						<span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span>
 						</span>
@@ -41,9 +41,9 @@
 				<div class="sidebar-menu">
 					<ul>
 						<li class="header-menu"><span>Menú</span></li>
-						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}" >
-								<i class="fa fa-shopping-cart"></i> <span>CONDICIÓN DEL
-									CONCESIONARIO COMO BUEN CONTRIBUYENTE</span>
+						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}">
+								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
+									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>
 						</a></li>
 						<li class="sidebar-dropdown"><a th:href="@{/pagos}"> <i
 								class="fa fa-shopping-cart"></i> <span> PAGOS</span>
@@ -53,13 +53,11 @@
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/creditos}"
-										>REGISTRAR CRÉDITO <span
-											class="badge badge-pill badge-success">ver</span>
+									<li><a th:href="@{/creditos}">REGISTRAR
+											CRÉDITO <span class="badge badge-pill badge-success">ver</span>
 									</a></li>
-									<li><a th:href="@{/calendario/presentacion/ver/2019}"
-										>LISTAR CRÉDITOS <span
-											class="badge badge-pill badge-success">ver</span>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">LISTAR
+											CRÉDITOS <span class="badge badge-pill badge-success">ver</span>
 									</a></li>
 
 								</ul>
@@ -71,13 +69,11 @@
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/liberacionpago}"
-										>REGISTRO <span
-											class="badge badge-pill badge-warning">Empezar</span>
+									<li><a th:href="@{/liberacionpago}">REGISTRO
+											<span class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
-									<li><a th:href="@{/liberacioncarga/1}"
-										>CARGA MASIVA <span
-											class="badge badge-pill badge-warning">Empezar</span>
+									<li><a th:href="@{/liberacioncarga/1}">CARGA
+											MASIVA <span class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
 
 								</ul>
@@ -87,13 +83,11 @@
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/descuento}"
-										>REGISTRO <span
+									<li><a th:href="@{/descuento}">REGISTRO <span
 											class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
-									<li><a th:href="@{/calendario/presentacion/ver/2019}"
-										>CARGA MASIVA<span
-											class="badge badge-pill badge-warning">Empezar</span>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">CARGA
+											MASIVA<span class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
 
 								</ul>
@@ -103,58 +97,50 @@
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/deduccion}"
-										>REGISTRO <span
+									<li><a th:href="@{/deduccion}">REGISTRO <span
 											class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
-									<li><a th:href="@{/calendario/presentacion/ver/2019}"
-										>CARGA MASIVA<span
-											class="badge badge-pill badge-warning">Empezar</span>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">CARGA
+											MASIVA<span class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
 
 								</ul>
 							</div></li>
-							
-							
-						<li class="sidebar-dropdown">
-						<a href="#"> 
-							<i class="fa fa-shopping-cart"></i> <span> DECLARACION JURADA</span>
+
+
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span> DECLARACION
+									JURADA</span>
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/mostrarBuscar}" >Registrar
+									<li><a th:href="@{/mostrarBuscar}">Registrar
 											Retribución <span class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
-									<li><a href="#">Consultar</a></li>										<li><a th:href="@{/calendario/pago/ver/2019}"
-										>Calendario de Pagos <span
+									<li><a href="#">Consultar</a></li>
+									<li><a th:href="@{/calendario/pago/ver/2019}">Calendario
+											de Pagos <span class="badge badge-pill badge-success">ver</span>
+									</a></li>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">Calendario
+											para la Presentación <span
 											class="badge badge-pill badge-success">ver</span>
 									</a></li>
-									<li><a th:href="@{/calendario/presentacion/ver/2019}"
-										>Calendario para la
-											Presentación <span class="badge badge-pill badge-success">ver</span>
-									</a></li>
 								</ul>
-							</div>
-						</li>
-						<li class="sidebar-dropdown">
-							<a href="#"> 
-								<i class="fa fa-shopping-cart"></i> 
-								<span>LIQUIDACIÓN</span>
-							</a>
+							</div></li>
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span>LIQUIDACIÓN</span>
+						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li>
-										<a th:href="@{/liquidacion/formatoliquidacion}" >
-											Formato de Liquidación Anual y Dictamen
-											 <span class="badge badge-pill badge-warning">Empezar</span>
-										</a>
-									</li>
+									<li><a th:href="@{/liquidacion/formatoliquidacion}">
+											Formato de Liquidación Anual y Dictamen <span
+											class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
 								</ul>
-							</div>
-						</li>
-							
-														
-						
+							</div></li>
+
+
+
 
 
 					</ul>
@@ -182,6 +168,6 @@
 	</div>
 
 
-
+<div th:replace="fragments/jsScripts :: scripts"></div>
 </body>
 </html>

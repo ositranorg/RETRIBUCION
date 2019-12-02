@@ -10,7 +10,17 @@
       "request": "launch",
       "port": 9281,
       "webRoot": "${workspaceFolder}",
-      "url": "http://127.0.0.1:23369/p/spring-thymeleaf-jpa/src/main/resources/templates/user/pago.html?_cmAuth\u003dxywalqldxu"
+      "url": "http://127.0.0.1:23369/p/spring-thymeleaf-jpa/src/main/resources/templates/user/pago.html?_cmAuth=xywalqldxu"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-SpringThymeleafJpaApplication<spring-thymeleaf-jpa>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "com.kemal.spring.SpringThymeleafJpaApplication",
+      "projectName": "spring-thymeleaf-jpa",
+      "args": ""
     }
   ]
 }

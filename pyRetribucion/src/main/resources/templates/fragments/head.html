@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-	>
-	
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head th:fragment="head">
 <!-- Required meta tags -->
 <meta charset="utf-8" />
@@ -15,23 +14,51 @@
 <meta id="_csrf_header" name="_csrf_header"
 	th:content="${_csrf.headerName}" />
 
+<link rel="icon" type="image/png" sizes="72x72" href="/img/android-icon-72x72.png" th:href="@{/img/android-icon-72x72.png}" />
+<!--  
 
-<link th:rel="stylesheet" rel="stylesheet" type="text/css"
-	th:href="@{/css/sb-admin.css}" href="../static/css/sb-admin.css" />
-<!--  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" /> -->	
-<link th:rel="stylesheet" rel="stylesheet" type="text/css"
-	th:href="@{/css/jquery-ui.min.css}" />
-<link th:rel="stylesheet" rel="stylesheet" type="text/css"
-	th:href="@{/webjars/Semantic-UI/semantic.css}" />	
+ -->
+
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 <link th:rel="stylesheet" rel="stylesheet" type="text/css"
+	th:href="@{/css/sb-admin.css}" href="../static/css/sb-admin.css" />
+<link th:rel="stylesheet" rel="stylesheet" type="text/css"
+	th:href="@{/webjars/Semantic-UI/semantic.css}" />
+
+<link th:rel="stylesheet" rel="stylesheet" type="text/css"
+	href="../static/css/jquery-ui.min.css"
+	th:href="@{/css/jquery-ui.min.css}" />
+<link th:rel="stylesheet" rel="stylesheet" type="text/css"
 	th:href="@{/css/mn-lat.css}" href="../static/css/mn-lat.css" />
+<link th:rel="stylesheet" type="text/css" rel="stylesheet"
+	th:href="@{/css/dropzone.css}" href="../static/css/dropzone.css" />
+
+<link th:rel="stylesheet" type="text/css" rel="stylesheet"
+	th:href="@{/css/app.css}" href="../static/css/app.css" />
+<!--  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" /> -->
+<!-- 	
+<link th:rel="stylesheet" rel="stylesheet" type="text/css"
+	href="../static/css/jquery-ui.min.css"
+	th:href="@{/css/jquery-ui.min.css}" />
+	<link th:rel="stylesheet" rel="stylesheet" type="text/css"
+	th:href="@{/webjars/Semantic-UI/semantic.css}" />
+ -->
+<!-- 
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 <link th:rel="stylesheet" type="text/css" rel="stylesheet" th:href="@{/css/dropzone.css}" href="../static/css/dropzone.css"  />
 <link th:rel="stylesheet" type="text/css" rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}"  />
 
+
+	
+<link th:rel="stylesheet" rel="stylesheet" type="text/css"
+	th:href="@{/css/mn-lat.css}" href="../static/css/mn-lat.css" />
+
+ -->
+ <title>OSITRAN</title>
 </head>
 <body>
-	
+
 </body>
 </html>

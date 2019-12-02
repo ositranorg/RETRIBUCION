@@ -98,3 +98,9 @@ div#searchBody { /* (2) */
 div#footer { /* (3) */
     clear: both;
 }
+.bg-primary{
+	background-color: #3661A3!important;
+}
+.btn-primary{
+	background-color: #3661A3!important;
+}
