@@ -23,7 +23,7 @@ public class FormatoLiquidacionController {
 	}
 	@GetMapping(value = "/formatoliquidacion")
 	public String resetDescuento(Model model) {
-		return "/liquidacion/formato-liquidacion";
+		return "/user/liquidacion/formato-liquidacion";
 
 	}
 

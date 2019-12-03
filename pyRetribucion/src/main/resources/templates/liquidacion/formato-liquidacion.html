@@ -408,35 +408,11 @@
 				)
 			})
 			mensajeCorrecto('Se subieron los archivos correctamente');
-			cancelarTodoDictamen();
+			// cancelarTodoDictamen();
+			limpiarControlesDictamen();
 
-		} function subirTodoDictamen() {
-
-
-			closeMensajes();
-			$.each(archivosDictamen, function (index, param) {
-				var formData = new FormData();
-				formData.append("files", param);
-				$.ajax({
-					url: context + 'Upload?subir=fdictamen&tipoDocumento=1',
-					type: "post",
-					headers: {
-						"X-CSRF-TOKEN": token
-					},
-					data: formData,
-					cache: false,
-					contentType: false,
-					processData: false
-				}).done(
-					function (rest) {
-						archivosDictamenResponse.push(rest);
-					}
-				)
-			})
-			mensajeCorrecto('Se subieron los archivos correctamente');
-			cancelarTodoDictamen();
-
-		}
+		} 
+		
 		function subirTodoFormato() {
 
 
@@ -461,7 +437,7 @@
 				)
 			})
 			mensajeCorrecto('Se subieron los archivos correctamente');
-			cancelarTodoFormato();
+			cancelarTodoFormato();			
 
 		}
 		function mensajeCorrecto(mensaje) {
@@ -473,6 +449,12 @@
 			$('#toastMensajeErrorBody').empty();
 			$('#toastMensajeErrorBody').append('<p>' + mensaje + '</p>')
 			$('#toastMensajeError').toast('show');
+		}
+		function limpiarControlesDictamen(){			
+			// $('#fdictamenupload').val('');
+			// archivosDictamen = [];			
+			$('#fdictamenuploadsubirtodo').css("display", "none");
+			$('#fdictamenuploadcancelatodo').css("display", "none");
 		}
 		function cancelarTodoDictamen() {
 			$('#fdictamenupload').val('');
