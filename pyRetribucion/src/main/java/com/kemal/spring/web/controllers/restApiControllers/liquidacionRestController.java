@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kemal.spring.domain.Liquidacion;
+import com.kemal.spring.domain.procedures.PRC_LISTAR_LIQUIDACION;
 import com.kemal.spring.service.LiquidacionService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionDto;
 
@@ -37,11 +38,23 @@ public class liquidacionRestController {
 		liquidacionService.save(liquidaciones);
 		List<Liquidacion> liquidacionesRest = liquidacionService.listarLiquidaciones();
 		List<LiquidacionDto> liquidacionesDtoRest = new ModelMapper().map(liquidacionesRest, listTypeResult);
-		
+		List<PRC_LISTAR_LIQUIDACION> listaLiquidacion = liquidacionService.listarLiquidacion();
 		HashMap<String, Object> resp = new HashMap<>();		
 		resp.put("mensaje", "Se registró satisfactoriamente");
 		resp.put("resultado", 1);
 		resp.put("lista", liquidacionesDtoRest);
+		resp.put("listaLiquidacion", listaLiquidacion);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
+	}
+	@PostMapping(value = "listar-liquidacion", consumes = "application/json",produces =  { "application/json" })
+	@ResponseBody
+	public ResponseEntity<?> listarLiquidacion() {		
+		
+		List<PRC_LISTAR_LIQUIDACION> listaLiquidacion = liquidacionService.listarLiquidacion();
+		HashMap<String, Object> resp = new HashMap<>();		
+		resp.put("mensaje", "Todo correcto.");
+		resp.put("resultado", 1);
+		resp.put("listaLiquidacion", listaLiquidacion);
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 }

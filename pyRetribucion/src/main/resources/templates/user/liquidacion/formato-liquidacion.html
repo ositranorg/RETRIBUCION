@@ -290,6 +290,32 @@
 		// 		//const element = archivos[index];
 
 		// 	}
+		this.listarLiquidacion();
+		function listarLiquidacion(){
+		    var url = context + 'api/liquidacion/listar-liquidacion';
+			$.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+				.done((rest) => {
+					//console.log(rest);
+					if (rest.resultado == 1) {						
+						cargarDatosLiquidaciones(rest.listaLiquidacion);
+						console.log(rest);
+					}
+
+				})
+		}
 		function guardarEnviar(){
 			
 			console.log("archivosFormato ",archivosFormato)
@@ -573,7 +599,7 @@
 			closeMensajes();
 			
 			if(archivosDictamenResponse.length==0){
-				mensajeError('Por favor selección el botón Subir Todo del Dictamen.');
+				mensajeError('Por favor seleccione el botón Subir Todo del Dictamen.');
 				return false;
 			}
 			
@@ -612,10 +638,10 @@
 					//console.log(rest);
 					if (rest.resultado == 1) {
 						mensajeCorrecto(rest.mensaje);
-						cargarDatosLiquidaciones(rest.lista);
+						cargarDatosLiquidaciones(rest.listaLiquidacion);
 					}
 
-				})
+				});
 		}
 		function registrarFormato(estado) {
 			var liquidaciones = [];
@@ -660,7 +686,7 @@
 					//console.log(rest);
 					if (rest.resultado == 1) {
 						mensajeCorrecto(rest.mensaje);
-						cargarDatosLiquidaciones(rest.lista);
+						cargarDatosLiquidaciones(rest.listaLiquidacion);
 					}
 
 				})
@@ -669,13 +695,17 @@
 			$('#tblLiquidaciones').empty();
 			listaLiquidacion.forEach((liquidacion) => {
 				//console.log(liquidacion);
-				var fecha = new Date(liquidacion.fechaRegistro);
-				var fechaModificacion = liquidacion.fechaModificacion == null ? '-' : new Date(liquidacion.fechaModificacion).toString('DD/MM/YYYY hh:mm:ss');
-				var estado = liquidacion.estado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO Y ENVIADO';
-				var row = '<tr><td>' + liquidacion.anio + '</td>';
-				row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'
+				var dateParts = liquidacion.dFechaRegistro.split("/");
+				
+				var fecha = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+				//var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('DD/MM/YYYY hh:mm:ss');
+				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('MM/DD/YYYY');
+				var estado = liquidacion.sEstado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO ' + liquidacion.nOrden + ' Y ENVIADO';
+				var row = '<tr><td>' + liquidacion.nAnio + '</td>';
+				//row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'
+				row += '<td>' + moment(fecha).format('DD/MM/YYYY') + '</td>'
 				row += '<td>' + fechaModificacion + '</td>'
-				row += '<td>' + liquidacion.documento + '</td>'
+				row += '<td>' + liquidacion.sDocumento + '</td>'
 				row += '<td>' + estado + '</td>'
 				// row += '<td>' + liquidacion.fechaRegistro + '</td>'
 				row += '</tr>'

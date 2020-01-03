@@ -14,13 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kemal.spring.domain.Liquidacion;
 import com.kemal.spring.domain.LiquidacionRepository;
+import com.kemal.spring.domain.procedures.PRC_LISTAR_LIQUIDACION;
 
 @Repository
 public class LiquidacionService {
 	@Resource
 	LiquidacionRepository liquidacionRepository;
 	
-
+	@Resource
+	com.kemal.spring.domain.procedures.PRC_LISTAR_LIQUIDACIONRepository PRC_LISTAR_LIQUIDACIONRepository;
 	
 	@Transactional(readOnly = false)
 	public void save(List<Liquidacion> liquidaciones) {
@@ -35,5 +37,8 @@ public class LiquidacionService {
 	}
 	public List<Liquidacion> listarLiquidaciones(){
 		return liquidacionRepository.findAll();
+	}
+	public  List<PRC_LISTAR_LIQUIDACION> listarLiquidacion(){
+		return PRC_LISTAR_LIQUIDACIONRepository.listarLiquidacion();
 	}
 }
