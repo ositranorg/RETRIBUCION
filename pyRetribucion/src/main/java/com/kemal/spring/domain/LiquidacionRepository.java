@@ -1,6 +1,7 @@
 package com.kemal.spring.domain;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,8 @@ public interface LiquidacionRepository extends JpaRepository<Liquidacion, Long> 
 
 	 @Query(value = "SELECT sq_ret_liquidacion.nextval FROM dual", nativeQuery = 
 		        true)
-		 Long getNextSeriesId();
+	 Long getNextSeriesId();
 	
-	
+	 @Query(value="select l from Liquidacion l where l.nAnio=?1 and l.sEstado=?2")
+	 Collection<Liquidacion> findByEstadoAndAnio( int anio,String estado);
 }

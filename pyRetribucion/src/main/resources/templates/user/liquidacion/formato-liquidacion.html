@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/head :: head">
-	<meta charset="utf-8" />
+<meta charset="utf-8" />
 
 </head>
 
@@ -14,40 +14,40 @@
 		<div class="page-content">
 
 			<div class="container-fluid">
-				<div aria-live="polite" aria-atomic="true" style="min-height: 200px;
-					 position: fixed;
-					 z-index: 1000000000;
-					 right: 0px;">
+				<div aria-live="polite" aria-atomic="true"
+					style="min-height: 200px; position: fixed; z-index: 1000000000; right: 0px;">
 					<div style="position: absolute; top: 0; right: 0;">
-					<div id="toastMensajeError" class="toast" role="alert" style="width: 250px;" aria-live="assertive" aria-atomic="true" data-delay="40000">
-						<div class="toast-header bg-danger">
-							<strong class="mr-auto text-white">Error</strong>
-							<!-- <small class="text-white">3 mins ago</small> -->
-							<button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
+						<div id="toastMensajeError" class="toast" role="alert"
+							style="width: 250px;" aria-live="assertive" aria-atomic="true"
+							data-delay="40000">
+							<div class="toast-header bg-danger">
+								<strong class="mr-auto text-white">Error</strong>
+								<!-- <small class="text-white">3 mins ago</small> -->
+								<button type="button" class="ml-2 mb-1 close text-white"
+									data-dismiss="toast" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="toast-body" id="toastMensajeErrorBody">Hey,
+								there! This is a Bootstrap 4 toast.</div>
 						</div>
-						<div class="toast-body" id="toastMensajeErrorBody">
-							Hey, there! This is a Bootstrap 4 toast.
+						<div id="toastMensajeCorrecto" class="toast" role="alert"
+							style="width: 250px;" aria-live="assertive" aria-atomic="true"
+							data-delay="40000">
+							<div class="toast-header bg-success">
+								<strong class="mr-auto text-white">Información</strong>
+								<!-- <small class="text-white">3 mins ago</small> -->
+								<button type="button" class="ml-2 mb-1 close text-white"
+									data-dismiss="toast" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="toast-body" id="toastMensajeCorrectoBody">Hey,
+								there! This is a Bootstrap 4 toast.</div>
 						</div>
-					</div>
-					<div id="toastMensajeCorrecto"  class="toast" role="alert" style="width: 250px;" aria-live="assertive" aria-atomic="true" data-delay="40000">
-						<div class="toast-header bg-success">
-							<strong class="mr-auto text-white">Información</strong>
-							<!-- <small class="text-white">3 mins ago</small> -->
-							<button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="toast-body" id="toastMensajeCorrectoBody">
-							Hey, there! This is a Bootstrap 4 toast.
-						</div>
-					</div>
 					</div>
 				</div>
-			
+
 				<div class="alert alert-primary" role="alert">
 					<h3>Formato de Liquidación Anual y Dictamen</h3>
 				</div>
@@ -70,9 +70,10 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="fdictamenupload"
-													name="files"
-													th:data-url="@{/Upload?subir=fdictamen&tipoDocumento=1}" multiple
+												<input type="file" class="custom-file-input"
+													id="fdictamenupload" name="files"
+													th:data-url="@{/Upload?subir=fdictamen&tipoDocumento=1}"
+													multiple
 													accept="application/pdf,application/vnd.ms-excel,application/vnd.ms-word"
 													onchange="adjuntarArchivosDictamen(event)"> <label
 													class="custom-file-label" for="fdictamenupload"
@@ -115,15 +116,14 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="fFormatoupload"
-													name="files2"
-													th:data-url="@{/Upload?subir=fdictament&tipoDocumento=2}"													
+												<input type="file" class="custom-file-input"
+													id="fFormatoupload" name="files2"
+													th:data-url="@{/Upload?subir=fdictament&tipoDocumento=2}"
 													accept="application/pdf,application/vnd.ms-excel,application/vnd.ms-word"
-													onchange="adjuntarArchivosFormato(event)"multiple
-													> <label
-													class="custom-file-label" for="fFormatoupload"
+													onchange="adjuntarArchivosFormato(event)" multiple>
+												<label class="custom-file-label" for="fFormatoupload"
 													data-browse="Seleccione">Seleccione archivo(s)
-													hasta 30mb</label>													
+													hasta 30mb</label>
 											</div>
 										</div>
 									</div>
@@ -136,14 +136,14 @@
 									<div class="row">
 										<div class="col-sm-12 mt-2" role="toolbar">
 											<div class="btn-group" role="group" aria-label="First group">
-												<button type="button" class="btn btn-primary" id="fFormatouploadsubirtodo"
-													onClick="subirTodoFormato()">
+												<button type="button" class="btn btn-primary"
+													id="fFormatouploadsubirtodo" onClick="subirTodoFormato()">
 													Subir Todo <i class="fa fa-upload"></i>
 												</button>
 											</div>
 											<div class="btn-group" role="group" aria-label="First group">
 												<button type="button" class="btn btn-primary"
-												id="fFormatouploadcancelatodo"
+													id="fFormatouploadcancelatodo"
 													onclick="cancelarTodoFormato()">
 													Cancelar Todo <i class="fa fa-trash"></i>
 												</button>
@@ -157,14 +157,14 @@
 					<div class="row mt-3">
 						<div class="col-sm-12">
 							<div class="btn-group" role="group" aria-label="First group">
-								<button type="button" class="btn btn-primary" onclick="soloGuadar()">Sólo
-									Guardar</button>
+								<button type="button" class="btn btn-primary"
+									onclick="soloGuadar()">Sólo Guardar</button>
 							</div>
-							<div class="btn-group" role="group" aria-label="First group" id="btnGuardarEnviar">
-								<button type="button" class="btn btn-primary" id ="btnEnviarGuardar"
-								onclick="guardarEnviar()"
-								>Guardar y
-									Enviar</button>
+							<div class="btn-group" role="group" aria-label="First group"
+								id="btnGuardarEnviar">
+								<button type="button" class="btn btn-primary"
+									id="btnEnviarGuardar" onclick="guardarEnviar()">Guardar
+									y Enviar</button>
 							</div>
 						</div>
 					</div>
