@@ -19,4 +19,6 @@ public class Config {
 	private String deducciones;
 	@Value("${pago}")
 	private String pago;
+	@Value("${pformatoLiquidacion}")
+	private String pformatoLiquidacion;
 }

@@ -95,7 +95,7 @@ public class OtrosDescuentosController {
 
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		((UserDetailsImpl) us).getUser();
 
 		Optional<Descuento> op = service.findById(Integer.parseInt(idEliminar));
 		Descuento condicion = op.get();

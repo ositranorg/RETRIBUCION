@@ -1,6 +1,5 @@
 package com.kemal.spring.web.controllers.restApiControllers.dto;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

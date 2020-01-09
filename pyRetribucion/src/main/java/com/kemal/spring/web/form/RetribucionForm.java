@@ -9,12 +9,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.kemal.spring.domain.BaseCalculo;
-import com.kemal.spring.domain.Credito;
-import com.kemal.spring.domain.LiberacionPago;
-import com.kemal.spring.domain.Descuento;
-import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.TipoRetribucion;
-
 /**
  *
  * @author consultor_jti07

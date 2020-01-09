@@ -91,9 +91,6 @@ public class LiberacionPagoController {
 			@ModelAttribute("liberacionPagoForm") LiberacionPagoForm liberacionPagoForm) {
 
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
-		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
-
 		Optional<LiberacionPago> op = service.findById(Integer.parseInt(idEliminar));
 		LiberacionPago condicion = op.get();
 		condicion.setSEstado("0");

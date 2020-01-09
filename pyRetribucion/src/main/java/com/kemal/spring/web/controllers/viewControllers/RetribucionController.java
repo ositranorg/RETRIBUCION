@@ -131,7 +131,7 @@ public class RetribucionController {
 	public ModelAndView pago(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		((UserDetailsImpl) us).getUser();
 
 		RetribucionForm form = new RetribucionForm();
 

@@ -91,7 +91,7 @@ public class DeduccionesController {
 
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		((UserDetailsImpl) us).getUser();
 
 		Optional<Deduccion> op = service.findById(Integer.parseInt(idEliminar));
 		Deduccion condicion = op.get();

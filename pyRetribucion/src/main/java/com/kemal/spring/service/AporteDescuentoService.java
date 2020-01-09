@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kemal.spring.domain.Aporte;
 import com.kemal.spring.domain.AporteDescuento;
 import com.kemal.spring.domain.AporteDescuentoRepository;
-import com.kemal.spring.domain.AporteLiberacion;
 import com.kemal.spring.domain.Archivo;
 import com.kemal.spring.domain.ArchivoRepository;
 

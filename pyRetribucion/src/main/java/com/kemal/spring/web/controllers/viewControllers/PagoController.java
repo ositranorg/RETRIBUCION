@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.kemal.spring.domain.Banco;
 import com.kemal.spring.domain.PagoSinAporte;
 import com.kemal.spring.domain.TipoPeriodicidad;
@@ -122,7 +120,7 @@ public class PagoController {
 
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		((UserDetailsImpl) us).getUser();
 		
 		Optional<PagoSinAporte> op =service.findById(Integer.parseInt(idEliminar));
 		PagoSinAporte condicion=op.get();

@@ -1,6 +1,5 @@
 package com.kemal.spring.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,12 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kemal.spring.domain.AporteDeduccion;
 import com.kemal.spring.domain.Archivo;
 import com.kemal.spring.domain.ArchivoRepository;
 import com.kemal.spring.domain.LiberacionPago;
 import com.kemal.spring.domain.LiberacionPagoRepository;
-import com.kemal.spring.domain.Descuento;
 
 @Service
 public class LiberacionPagoService {

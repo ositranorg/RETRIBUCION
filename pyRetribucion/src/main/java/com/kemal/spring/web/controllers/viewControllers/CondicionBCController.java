@@ -1,6 +1,5 @@
 package com.kemal.spring.web.controllers.viewControllers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +23,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kemal.spring.domain.Archivo;
 import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.User;
@@ -118,7 +116,7 @@ public class CondicionBCController {
 
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		((UserDetailsImpl) us).getUser();
 
 
 		CondicionBC condicion =  service.findById(Integer.parseInt(idEliminar));

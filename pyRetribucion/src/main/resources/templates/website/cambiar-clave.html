@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+<title>Insert title here</title>
+</head>
+<script src="https://use.fontawesome.com/c0c323679c.js"></script>
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<!-- sidebar-wrapper  -->
+		<div class="page-content">
+			<div class="container-fluid">
+
+				<div class="alert alert-primary" role="alert">
+					<h3>Cambiar Clave</h3>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<p class="h6">Datos de la nueva clave</p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-4">
+											<div class="form-group">
+												<label>Ingrese clave anterior</label> <input type="password"
+													class="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-4">
+											<div class="form-group">
+												<label>Ingrese nueva clave</label> <input type="password"
+													class="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-4">
+											<div class="form-group">
+												<label>Confirmar clave nueva</label> <input type="password"
+													class="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 mt-2" role="toolbar">
+											<div class="btn-group" role="group" aria-label="First group">
+												<button type="button" class="btn btn-primary"
+													id="fFormatouploadsubirtodo"
+													 onClick="subirTodoFormato()">
+													Guardar <i class="fa fa-save"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer -->
+	<!--<footer th:replace="fragments/footer :: footer"></footer>-->
+
+
+
+
+</body>
+<div th:replace="fragments/jsScripts :: scripts">
+	
+</div>
+<script type="text/javascript">
+var context = [[@{/}]];
+var token = $("meta[name='_csrf']").attr("content");
+this.cambiarClave();
+function cambiarClave(){
+	  var url = context + 'api/usuario/cambiar-clave';
+	  var data = {
+		 claveAnterior:'2',
+		 nuevaClave:'3',
+		 confirmarClave:'3'
+	  }
+	  $.ajax({
+			headers: {
+				"X-CSRF-TOKEN": token
+			},
+			// En data puedes utilizar un objeto JSON, un array o un query string
+			data: JSON.stringify(data),
+			//Cambiar a type: POST si necesario
+			type: "POST",
+			// Formato de datos que se espera en la respuesta
+			dataType: 'JSON',
+			contentType: 'application/json',
+			// URL a la que se enviará la solicitud Ajax
+			url: url,
+		})
+		.done((rest) => {
+			//console.log(rest);
+			if (rest.resultado == 1) {
+				console.log(rest);
+			}
+
+		});
+	
+}
+</script>
+
+</html>

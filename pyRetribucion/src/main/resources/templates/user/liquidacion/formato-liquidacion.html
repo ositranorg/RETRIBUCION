@@ -134,7 +134,7 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-sm-12 mt-2" role="toolbar">
+										<div class="col-sm-12 mt-0" role="toolbar">
 											<div class="btn-group" role="group" aria-label="First group">
 												<button type="button" class="btn btn-primary"
 													id="fFormatouploadsubirtodo" onClick="subirTodoFormato()">
@@ -158,7 +158,8 @@
 						<div class="col-sm-12">
 							<div class="btn-group" role="group" aria-label="First group">
 								<button type="button" class="btn btn-primary"
-									onclick="soloGuadar()">Sólo Guardar</button>
+									id="btnSoloGuardar" onclick="soloGuadar()">Sólo
+									Guardar</button>
 							</div>
 							<div class="btn-group" role="group" aria-label="First group"
 								id="btnGuardarEnviar">
@@ -204,11 +205,11 @@
 											<table class="table">
 												<thead class="thead-dark">
 													<tr>
-														<th scope="col">AÑO</th>
-														<th scope="col">FECHA DE REGISTRO</th>
-														<th scope="col">ULTIMA FECHA MODIFICACIÓN</th>
-														<th scope="col">ARCHIVO</th>
-														<th scope="col">ESTADO</th>
+														<th scope="col" style="text-align: center;">AÑO</th>
+														<th scope="col" style="text-align: center;">FECHA DE REGISTRO</th>
+														<th scope="col" style="text-align: center;">ULTIMA FECHA MODIFICACIÓN</th>
+														<th scope="col" style="text-align: center;">ARCHIVO</th>
+														<th scope="col" style="text-align: center;">ESTADO</th>
 													</tr>
 												</thead>
 												<tbody id="tblLiquidaciones">
@@ -256,6 +257,9 @@
 
 		$('#fFormatouploadsubirtodo').css("display", "none");
 		$('#fFormatouploadcancelatodo').css("display", "none");
+		
+		$('#btnSoloGuardar').css("display", "none");		
+		$('#btnEnviarGuardar').css("display", "none");
 
 		var archivosDictamen = [];
 		var archivosFormato = [];
@@ -318,10 +322,13 @@
 		}
 		function guardarEnviar(){
 			
-			console.log("archivosFormato ",archivosFormato)
-			console.log("archivosDictamen ",archivosDictamen)
+			//console.log("archivosFormato ",archivosFormato)
+			//console.log("archivosDictamen ",archivosDictamen)
 			closeMensajes();
-			if(archivosFormato.length>0 && archivosDictamen.length>0){				
+			
+			
+			//if(archivosFormato.length>0 && archivosDictamen.length>0){				
+			if(archivosFormatoResponse.length>0 && archivosDictamenResponse.length>0){
 				if (!registrarDictamen(2)) return;
 				if(!registrarFormato(2))return;
 				cancelarTodoDictamen();
@@ -338,10 +345,7 @@
 			}
 		}
 		
-		function soloGuadar(){
-			registrarDictamen(1);
-			registrarFormato(1);
-		}
+	
 		function adjuntarArchivosDictamen(event) {
 			//console.log(event);		
 			archivosDictamen = [];
@@ -385,6 +389,10 @@
 
 			$('#fdictamenuploadsubirtodo').css("display", "block");
 			$('#fdictamenuploadcancelatodo').css("display", "block");
+			/*
+			$('#btnSoloGuardar').css("display", "block");
+			$('#btnEnviarGuardar').css("display", "block");
+			*/
 		}
 		function cargarListaArchivoDictamen(){
 			
@@ -407,6 +415,11 @@
 
 				$('#fdictamenuploadsubirtodo').css("display", "none");
 				$('#fdictamenuploadcancelatodo').css("display", "none");
+				if(archivosFormato.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					$('#btnEnviarGuardar').css("display", "none");
+				}
+			
 			}
 			
 		}
@@ -431,6 +444,10 @@
 
 				$('#fFormatouploadsubirtodo').css("display", "none");
 				$('#fFormatouploadcancelatodo').css("display", "none");
+				if(archivosDictamen.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					$('#btnEnviarGuardar').css("display", "none");
+				}
 			}
 			
 		}
@@ -496,6 +513,10 @@
 			*/
 			$('#fFormatouploadsubirtodo').css("display", "block");
 			$('#fFormatouploadcancelatodo').css("display", "block");
+			/*
+			$('#btnSoloGuardar').css("display", "block");		
+			$('#btnEnviarGuardar').css("display", "block");
+			*/
 		}
 		function closeMensajes() {
 			$('#toastMensajeError').toast('hide');
@@ -521,6 +542,8 @@
 				}).done(
 					function (rest) {
 						archivosDictamenResponse.push(rest);
+						$('#btnSoloGuardar').css("display", "block");		
+						$('#btnEnviarGuardar').css("display", "block");
 					}
 				)
 			})
@@ -549,6 +572,8 @@
 				}).done(
 					function (rest) {
 						archivosFormatoResponse.push(rest);
+						$('#btnSoloGuardar').css("display", "block");		
+						$('#btnEnviarGuardar').css("display", "block");
 					}
 				)
 			})
@@ -577,6 +602,27 @@
 			$('#listaArchivosDictamen').empty();
 			$('#fdictamenuploadsubirtodo').css("display", "none");
 			$('#fdictamenuploadcancelatodo').css("display", "none");
+			if(archivosDictamenResponse.length==0){
+				if(archivosFormatoResponse.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					$('#btnEnviarGuardar').css("display", "none");
+				}
+			}
+		}
+		function cancelarTodoFormato() {
+			$('#fFormatoupload').val('');
+			archivosFormato = [];
+			$('#listaArchivosFormato').empty();
+			$('#fFormatouploadsubirtodo').css("display", "none");
+			$('#fFormatouploadcancelatodo').css("display", "none");
+			
+			if(archivosFormato.length==0){
+				if(archivosDictamenResponse.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					$('#btnEnviarGuardar').css("display", "none");
+				}
+			}
+		
 		}
 		function limpiarControles(control) {
 			$('#fFormatoupload').val('');
@@ -586,21 +632,33 @@
 			$('#'+control+ 'uploadsubirtodo').css("display", "none");
 			$('#'+control+'uploadcancelatodo').css("display", "none");
 		}
-		function cancelarTodoFormato() {
-			$('#fFormatoupload').val('');
-			archivosFormato = [];
-			$('#listaArchivosFormato').empty();
-			$('#fFormatouploadsubirtodo').css("display", "none");
-			$('#fFormatouploadcancelatodo').css("display", "none");
+		function soloGuadar(){
+			if(registrarDictamen(1)){
+				registrarFormato(1);
+			}
+			
 		}
 		function registrarDictamen(estado) {
 			var liquidaciones = [];
 			var pAnio = $('#anio').text();
 			closeMensajes();
 			
-			if(archivosDictamenResponse.length==0){
-				mensajeError('Por favor seleccione el botón Subir Todo del Dictamen.');
-				return false;
+			if(estado==1){
+				if(archivosDictamenResponse.length==0){
+					if(archivosFormatoResponse.length==0){
+						mensajeError('Por favor adjunte archivo(s).');
+						return false;
+					}
+				}	
+			}else if(estado==2){
+				if(archivosDictamenResponse.length==0){
+					mensajeError('Por favor adjunte archivo(s) dictamen.');
+					return false;
+				}
+				if(archivosFormatoResponse.length==0){
+					mensajeError('Por favor adjunte archivo(s) formato.');
+					return false;
+				}
 			}
 			
 			$.each(archivosDictamenResponse, function (index, archivoDictamen) {
@@ -617,7 +675,7 @@
 
 			});
 			if (liquidaciones.length == 0) {
-				return;
+				return false;
 			}
 			var url = context + 'api/liquidacion/registrar-liquidacion';
 			$.ajax({
@@ -647,9 +705,36 @@
 			var liquidaciones = [];
 			var pAnio = $('#anio').text();
 			closeMensajes();
+			/*
 			if(archivosDictamenResponse.length==0){
+				//mensajeError('Por favor seleccione el botón Subir Todo del formato de liquidación.');
 				mensajeError('Por favor seleccione el botón Subir Todo del formato de liquidación.');
 				return false;
+			}
+			*/
+			/*
+			if(archivosFormatoResponse.length==0){
+				if(archivosDictamenResponse.length==0){
+					mensajeError('Por favor adjunte archivo(s).');
+					return false;
+				}
+			}*/
+			if(estado==1){
+				if(archivosFormatoResponse.length==0){			
+					if(archivosDictamenResponse.length==0){					
+						mensajeError('Por favor adjunte archivo(s).');
+						return false;
+					}
+				}	
+			}else if(estado==2){
+				if(archivosDictamenResponse.length==0){
+					mensajeError('Por favor adjunte archivo(s) dictamen');
+					return false;
+				}
+				if(archivosFormatoResponse.length==0){
+					mensajeError('Por favor adjunte archivo(s) formato');
+					return false;
+				}
 			}
 			$.each(archivosDictamenResponse, function (index, archivoFormato) {
 				var data = {
@@ -701,12 +786,12 @@
 				//var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('DD/MM/YYYY hh:mm:ss');
 				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('MM/DD/YYYY');
 				var estado = liquidacion.sEstado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO ' + liquidacion.nOrden + ' Y ENVIADO';
-				var row = '<tr><td>' + liquidacion.nAnio + '</td>';
+				var row = '<tr><td style="text-align: center;">' + liquidacion.nAnio + '</td>';
 				//row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'
-				row += '<td>' + moment(fecha).format('DD/MM/YYYY') + '</td>'
-				row += '<td>' + fechaModificacion + '</td>'
-				row += '<td>' + liquidacion.sDocumento + '</td>'
-				row += '<td>' + estado + '</td>'
+				row += '<td style="text-align: center;">' + moment(fecha).format('DD/MM/YYYY') + '</td>'
+				row += '<td style="text-align: center;">' + fechaModificacion + '</td>'
+				row += '<td style="text-align: center;"><a target="_blank" href="' + context +'pformatoLiquidacion/'+ liquidacion.sDocumento + '"><i class="fa fa-file fa-2x" aria-hidden="true"></i></a></td>'
+				row += '<td style="text-align: center;">' + estado + '</td>'
 				// row += '<td>' + liquidacion.fechaRegistro + '</td>'
 				row += '</tr>'
 				$('#tblLiquidaciones').append(row);

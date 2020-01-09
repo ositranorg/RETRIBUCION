@@ -1,7 +1,6 @@
 package com.kemal.spring.domain.procedures;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class PRC_LISTAR_LIQUIDACIONRepository {
 		procedureQuery.registerStoredProcedureParameter("P_CURSOR", void.class, ParameterMode.REF_CURSOR);
 		procedureQuery.execute();
 		List<Object[]> results = procedureQuery.getResultList();
-		PRC_LISTAR_LIQUIDACION data = new PRC_LISTAR_LIQUIDACION();
+		new PRC_LISTAR_LIQUIDACION();
 		//List<PRC_LISTAR_LIQUIDACION> resultList = procedureQuery.getResultList();
 		List<PRC_LISTAR_LIQUIDACION> resultList = new ArrayList<>();
 		/*

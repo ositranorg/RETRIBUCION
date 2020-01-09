@@ -3,9 +3,12 @@ package com.kemal.spring.service;
 import com.kemal.spring.domain.Role;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.UserRepository;
+import com.kemal.spring.domain.nonentity.CambiarClave;
+import com.kemal.spring.domain.nonentity.CambiarClaveRepository;
 import com.kemal.spring.web.dto.UserDto;
 import com.kemal.spring.web.dto.UserUpdateDto;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,16 +29,19 @@ import java.util.*;
 public class UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //@Autowired
     private UserRepository userRepository;
+    
+    private CambiarClaveRepository cambiarClaveRepository;
+    
     private RoleService roleService;
-    private CacheManager cacheManager;
-
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleService
-            roleService, CacheManager cacheManager) {
+            roleService, CacheManager cacheManager,
+            CambiarClaveRepository cambiarClaveRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.roleService = roleService;
-        this.cacheManager = cacheManager;
+        this.cambiarClaveRepository = cambiarClaveRepository;
     }
 
     //region find methods
@@ -168,5 +174,10 @@ public class UserService {
             }
         }
         return userRoles;
+    }
+    public CambiarClave cambiarClave(String claveAnterior, String nuevaClave, String confirmarClave) {
+    	//return userRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
+    	return cambiarClaveRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
+    	//return null;
     }
 }

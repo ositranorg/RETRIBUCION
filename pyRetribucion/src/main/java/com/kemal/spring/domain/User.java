@@ -14,9 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
-
+import javax.persistence.Query;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +31,18 @@ import lombok.ToString;
 /**
  * Created by Keno&Kemo on 30.09.2017..
  */
-
+@NamedStoredProcedureQuery(
+	    name = "cambiarClave", 
+	    procedureName = "PK_USER.PRC_CAMBIARCLAVE", 	
+	    //resultClasses = {User.class},
+	    resultSetMappings = "CambiarClaveResult",
+	    parameters = { 
+	    	@StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "CLAVEANTERIOR"), 
+	        @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "NUEVACLAVE"),
+	        @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "CONFIRMARCLAVE"),	        
+	        @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class, name = "cUsuario")
+	    }
+	)
 @Data
 @ToString
 @AllArgsConstructor

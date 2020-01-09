@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kemal.spring.domain.Credito;
 import com.kemal.spring.domain.CreditoRepository;
-import com.kemal.spring.domain.Deduccion;
 
 @Service
 public class CreditoService {

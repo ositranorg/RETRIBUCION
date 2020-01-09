@@ -3,7 +3,6 @@ package com.kemal.spring.configuration;
 import java.math.BigDecimal;
 import java.net.SocketTimeoutException;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -678,47 +677,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 			}
 
-			Elements table = doc.select("table tr td:has(table)"); // select the first table.
-			/*List<TipoPeriodicidadDetSunat> lst = new ArrayList<TipoPeriodicidadDetSunat>();
-			for (int i = 0; i < table.size(); i++) { // first row is the col names so skip it.
-				if (i == 2) {
-					Elements rows = table.get(i).select("tr");
-					for (int fila = 0; fila < rows.size(); fila++) {
-						if (fila < 12) {
-							Elements cols = rows.get(fila).select("td");
-							for (int columna = 0; columna < cols.size(); columna++) {
-								// periodo
-								String[] per = cols.get(0).text().split("-");
-								if (columna > 0) {
-									String[] diaceromesuno = cols.get(columna).text().split(" ");
-									int digito = columna - 1;
-									TipoPeriodicidadDetSunat calendarioDetSunat = new TipoPeriodicidadDetSunat();
-									calendarioDetSunat.setSDigitoRUC(columna == 11 ? "" : "" + digito);
-									calendarioDetSunat.setSMesPeriodo(getSNumeroMes(per[0]));
-									calendarioDetSunat.setSAnioPeriodo("20" + per[1]);
-									
-									int an = Integer.parseInt("20"+per[1]);
-									int anioperiodo = (fila == 11) ? (an + 1) : an;
-									calendarioDetSunat.setDFechaVenc(
-											getFechaVencimiento(
-													Integer.parseInt(diaceromesuno[0]),
-													getNumeroMes(diaceromesuno[1]), 
-													anioperiodo, concepto.intValue(), 1).getTime()
-											);
-									Concepto c = new Concepto();
-									c.setId(6);//cronograma de pago
-									calendarioDetSunat.setConcepto(c);
-									lst.add(calendarioDetSunat);
-								}
-							}
-						}
-					}
-					break;
-				}
-			}
-			for (TipoPeriodicidadDetSunat d : lst) {
-				calendarioDetSunatService.save(d);
-			}*/
+			doc.select("table tr td:has(table)");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

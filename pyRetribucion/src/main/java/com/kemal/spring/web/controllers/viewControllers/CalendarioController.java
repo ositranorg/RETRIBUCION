@@ -135,11 +135,7 @@ public class CalendarioController {
 		concepto.setId(7);
 		if (calendarioSel.equals("ver")) {// no escoge ningun calendario o es primera vez que pinta la pantalla
 
-			int tipoVencimiento = contratos.get(0).getTipoVencimiento().getId();
-			// segun contrato				
-		/*calendarioDto = tipoVencimiento == 1?
-				calendarioDetService.getCalendariosxContratoAndConceptoOrderById(contratos.get(0),concepto)
-				:calendarioDetSunatService.getCalendarioVencimientoSunatOrderBy(null, anioSel,c.getContribuyente().getRuc().substring(10),concepto);*/
+			contratos.get(0).getTipoVencimiento().getId();
 			
 		} else {// calendario=mensual , trimestral
 			TipoPeriodicidad calend = new TipoPeriodicidad();

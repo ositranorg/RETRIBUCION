@@ -121,7 +121,10 @@ public class Util {
 			ruta = config.getDeducciones();
 		} else if (modulo.equals("fpago")) {
 			ruta = config.getPago();
+		}else if (modulo.equals("fdictamen")) {
+			ruta = config.getPformatoLiquidacion();
 		}
+		
 		return ruta;
 	}
     public String quitarultimacomma(String cadena) {

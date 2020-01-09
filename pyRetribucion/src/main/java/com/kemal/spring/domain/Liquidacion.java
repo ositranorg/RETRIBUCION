@@ -1,6 +1,5 @@
 package com.kemal.spring.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,11 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TemporalType;
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.jpa.repository.Temporal;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

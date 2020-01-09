@@ -27,11 +27,8 @@ import javax.validation.Valid;
 @Scope("session")
 public class RegisterController {
     private UserService userService;
-    private EmailService emailService;
-
     public RegisterController(UserService userService, EmailService emailService) {
         this.userService = userService;
-        this.emailService = emailService;
     }
 
     @PostMapping(value = "/submit-registration")

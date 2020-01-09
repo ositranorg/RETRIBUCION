@@ -2,13 +2,23 @@ package com.kemal.spring.domain;
 
 import java.util.List;
 
+import javax.persistence.NamedStoredProcedureQuery;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+
+import javax.persistence.StoredProcedureParameter;
+import javax.persistence.ParameterMode;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.kemal.spring.domain.nonentity.CambiarClave;
 
 
+@Repository
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -39,5 +49,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //==========================================================================
     //endregion
 
-
+    @Procedure(name = "cambiarClave")
+    CambiarClave cambiarClave(String CLAVEANTERIOR,String NUEVACLAVE,String CONFIRMARCLAVE);
+ 
 }

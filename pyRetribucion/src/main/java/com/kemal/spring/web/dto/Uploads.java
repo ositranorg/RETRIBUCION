@@ -15,6 +15,7 @@ import com.kemal.spring.domain.Archivo;
 import com.kemal.spring.service.ArchivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -34,7 +35,7 @@ public class Uploads {
 	Util util;
 	@Autowired
 	ArchivoService archivoService;
-
+	
 	@PostMapping(value = "/Upload")
 	@ResponseBody
 	public ArchivoDTO upload(@RequestParam(required = false, name = "subir") String subir,
@@ -57,6 +58,7 @@ public class Uploads {
 					+ util.getRandomLetra() + ext;
 
 			archivo.setFileName(renombrar);
+			//archivo.setFileName(ruta + renombrar);
 			archivo.setFileSize(mpf.getSize() / 1024 + " Kb");
 			archivo.setFileType(mpf.getContentType());
 			archivo.setModulo(subir);

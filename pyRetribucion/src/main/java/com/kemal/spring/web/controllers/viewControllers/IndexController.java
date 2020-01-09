@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.UserDto;
 
 /**
@@ -71,5 +69,13 @@ public class IndexController {
 		UserDto userDto = new UserDto();
 		model.addAttribute("userDto", userDto);
 		return "website/register";
+	}
+	@GetMapping(value="/recuperar-clave")
+	public String recuperarClave() {
+		return "website/recuperar-clave";
+	}
+	@GetMapping(value="/cambiar-clave")
+	public String cambiarClave() {
+		return "website/cambiar-clave";
 	}
 }

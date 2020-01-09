@@ -40,7 +40,22 @@
 				<!-- sidebar-search  -->
 				<div class="sidebar-menu">
 					<ul>
-						<li class="header-menu"><span>Menú</span></li>
+					<li class="header-menu"><span>Menú</span></li>
+						<li class="sidebar-dropdown">
+							<a href="#">
+								<i class="fa fa-shopping-cart"></i> 
+								<span>USUARIOS </span>
+							</a>
+							<div class="sidebar-submenu">
+							<ul>
+									<li><a th:href="@{/cambiar-clave}">CAMBIAR CLAVE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
+
+								</ul>
+							</div>
+						</li>
+						
 						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}">
 								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
 									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>
@@ -53,8 +68,8 @@
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/creditos}">REGISTRAR
-											CRÉDITO <span class="badge badge-pill badge-success">ver</span>
+									<li><a th:href="@{/creditos}">REGISTRAR CRÉDITO <span
+											class="badge badge-pill badge-success">ver</span>
 									</a></li>
 									<li><a th:href="@{/calendario/presentacion/ver/2019}">LISTAR
 											CRÉDITOS <span class="badge badge-pill badge-success">ver</span>
@@ -69,11 +84,11 @@
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
-									<li><a th:href="@{/liberacionpago}">REGISTRO
-											<span class="badge badge-pill badge-warning">Empezar</span>
+									<li><a th:href="@{/liberacionpago}">REGISTRO <span
+											class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
-									<li><a th:href="@{/liberacioncarga/1}">CARGA
-											MASIVA <span class="badge badge-pill badge-warning">Empezar</span>
+									<li><a th:href="@{/liberacioncarga/1}">CARGA MASIVA <span
+											class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
 
 								</ul>
@@ -168,6 +183,6 @@
 	</div>
 
 
-<div th:replace="fragments/jsScripts :: scripts"></div>
+	<div th:replace="fragments/jsScripts :: scripts"></div>
 </body>
 </html>
