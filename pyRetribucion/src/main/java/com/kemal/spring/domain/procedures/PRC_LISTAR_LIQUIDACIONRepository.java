@@ -55,7 +55,7 @@ public class PRC_LISTAR_LIQUIDACIONRepository {
 			PRC_LISTAR_LIQUIDACION d =  res;
 			resultList.add(d);
 			*/
-			System.out.println("INGRESE 1");
+			//System.out.println("INGRESE 1");
 			PRC_LISTAR_LIQUIDACION d = new PRC_LISTAR_LIQUIDACION();
 			
 			d.setNOrden(((BigDecimal) res[0]).intValue());

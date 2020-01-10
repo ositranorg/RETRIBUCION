@@ -12,7 +12,7 @@
 		<!-- sidebar-wrapper  -->
 
 		<div class="page-content">
-
+			<p th:text="#{liquidacion.mensaje.adjunteArchivos}">Welcome!</p>
 			<div class="container-fluid">
 				<div aria-live="polite" aria-atomic="true"
 					style="min-height: 200px; position: fixed; z-index: 1000000000; right: 0px;">
@@ -359,12 +359,14 @@
 				cancelarTodoFormato()
 			}else{
 				if(archivosDictamen.length==0){
-				mensajeError('Por favor debe agregar archivo(s) dictamen.')
-				return;					
+				//mensajeError('Por favor debe agregar archivo(s) dictamen.');
+					mensajeError('[[#{liquidacion.mensaje.agregarArchivosDictamen}]]');				
+					return;					
 				}
 				if(archivosFormato.length==0){
-				mensajeError('Por favor debe agregar archivo(s) formato de liquidación.')
-				return;					
+					//mensajeError('Por favor debe agregar archivo(s) formato de liquidación.')
+					mensajeError('[[#{liquidacion.mensaje.agregarArchivosFormato}]]');
+					return;					
 				}
 			}
 		}
@@ -387,12 +389,14 @@
 				archivosDictamen.push(archivos[index]);
 				if (mayusArchivosExtensionesPermitidos.indexOf(ext) == -1) {
 					//uploadErrors.push('Solo se acepta archivos de formato ' + mayuscArracceptFileTypes);
-					mensaje = "Por favor seleccione archivos permitidos.";
+					//mensaje = "Por favor seleccione archivos permitidos.";
+					mensaje = '[[#{liquidacion.mensaje.archivoPermitido}]]';
 					esValidoExtension = false;
 					break;
 				}
 				if (archivos[index].size > ((parseInt(maxtamanio) + 1) * (1024 * 1024))) {
-					mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
+					mensaje = print("[[#{liquidacion.mensaje.limiteArchivo}]]", maxtamanio);
+					//mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
 					esValidoExtension = false;
 					break;
 				}
@@ -506,12 +510,14 @@
 				
 				if (mayusArchivosExtensionesPermitidos.indexOf(ext) == -1) {
 					//uploadErrors.push('Solo se acepta archivos de formato ' + mayuscArracceptFileTypes);
-					mensaje = "Por favor seleccione archivos permitidos.";
+					mensaje = '[[#{liquidacion.mensaje.archivoPermitido}]]';
+					//mensaje = "Por favor seleccione archivos permitidos.";
 					esValidoExtension = false;
 					break;
 				}
 				if (archivos[index].size > ((parseInt(maxtamanio) + 1) * (1024 * 1024))) {
-					mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
+					//mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
+					mensaje = '[[#{liquidacion.mensaje.limiteArchivo}]]';
 					esValidoExtension = false;
 					break;
 				}
@@ -571,7 +577,9 @@
 					}
 				)
 			})
-			mensajeCorrecto('Se subieron los archivos correctamente');			
+			
+			//mensajeCorrecto('Se subieron los archivos correctamente');	
+			mensajeCorrecto('[[#{liquidacion.mensaje.subieronCorrectamente}]]');	
 			//cancelarTodoDictamen();
 			limpiarControles('fdictamen');
 
@@ -602,7 +610,8 @@
 				)
 			})
 			//closeMensajes();
-			mensajeCorrecto('Se subieron los archivos correctamente');
+			//mensajeCorrecto('Se subieron los archivos correctamente');
+			mensajeCorrecto('[[#{liquidacion.mensaje.subieronCorrectamente}]]');	
 			//cancelarTodoFormato();
 			limpiarControles('fFormato');
 
@@ -670,17 +679,20 @@
 			if(estado==1){
 				if(archivosDictamenResponse.length==0){
 					if(archivosFormatoResponse.length==0){
-						mensajeError('Por favor adjunte archivo(s).');
+						//mensajeError('Por favor adjunte archivo(s).');
+						mensajeError('[[#{liquidacion.mensaje.adjunteArchivos}]]');	
 						return false;
 					}
 				}	
 			}else if(estado==2){
 				if(archivosDictamenResponse.length==0){
-					mensajeError('Por favor adjunte archivo(s) dictamen.');
+					//mensajeError('Por favor adjunte archivo(s) dictamen.');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoDictamen}]]');
 					return false;
 				}
 				if(archivosFormatoResponse.length==0){
-					mensajeError('Por favor adjunte archivo(s) formato.');
+					//mensajeError('Por favor adjunte archivo(s) formato.');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoFormato}]]');
 					return false;
 				}
 			}
@@ -746,17 +758,20 @@
 			if(estado==1){
 				if(archivosFormatoResponse.length==0){			
 					if(archivosDictamenResponse.length==0){					
-						mensajeError('Por favor adjunte archivo(s).');
+						//mensajeError('Por favor adjunte archivo(s).');
+						mensajeError('[[#{liquidacion.mensaje.adjunteArchivos}]]');
 						return false;
 					}
 				}	
 			}else if(estado==2){
 				if(archivosDictamenResponse.length==0){
-					mensajeError('Por favor adjunte archivo(s) dictamen');
+					//mensajeError('Por favor adjunte archivo(s) dictamen');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoDictamen}]]');
 					return false;
 				}
 				if(archivosFormatoResponse.length==0){
-					mensajeError('Por favor adjunte archivo(s) formato');
+					//mensajeError('Por favor adjunte archivo(s) formato');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoFormato}]]');
 					return false;
 				}
 			}
@@ -820,10 +835,27 @@
 				// row += '<td>' + liquidacion.fechaRegistro + '</td>'
 				row += '</tr>'
 				$('#tblLiquidaciones').append(row);
-			})
+			});
+		}
+		function format(fmt, ...args) {
+		    if (!fmt.match(/^(?:(?:(?:[^{}]|(?:\{\{)|(?:\}\}))+)|(?:\{[0-9]+\}))+$/)) {
+		        throw new Error('invalid format string.');
+		    }
+		    return fmt.replace(/((?:[^{}]|(?:\{\{)|(?:\}\}))+)|(?:\{([0-9]+)\})/g, (m, str, index) => {
+		        if (str) {
+		            return str.replace(/(?:{{)|(?:}})/g, m => m[0]);
+		        } else {
+		            if (index >= args.length) {
+		                throw new Error('argument index is out of range in format');
+		            }
+		            return args[index];
+		        }
+		    });
+		}
+		function print(fmt, ...args) {
+		    return (format(fmt, ...args));
 		}
 	</script>
-
 
 
 </body>

@@ -43,7 +43,7 @@ public class liquidacionRestController {
 		liquidacionService.save(liquidaciones);
 		List<Liquidacion> liquidacionesRest = liquidacionService.listarLiquidaciones();
 		List<LiquidacionDto> liquidacionesDtoRest = new ModelMapper().map(liquidacionesRest, listTypeResult);
-		System.out.println("TOTALES: " + totalRegistroPorPagina);
+		//System.out.println("TOTALES: " + totalRegistroPorPagina);
 		Map<String,Object> listaLiquidacion= liquidacionService.listarLiquidacion(1,totalRegistroPorPagina);
 		HashMap<String, Object> resp = new HashMap<>();		
 		resp.put("mensaje", "Se registró satisfactoriamente");
