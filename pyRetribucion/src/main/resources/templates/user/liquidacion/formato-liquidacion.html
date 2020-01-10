@@ -216,8 +216,10 @@
 
 												</tbody>
 											</table>
-
-
+												<nav aria-label="Page navigation example">
+												  <ul class="pagination" id="ulPaginacion">												  
+												  </ul>
+												</nav>
 										</div>
 									</div>
 								</div>
@@ -251,6 +253,7 @@
 
 		// 		);
 		var context = [[@{/}]];
+		var totalRegistrosPorPagina = [[${totalRegistroPorPagina}]];
 		var token = $("meta[name='_csrf']").attr("content");
 		$('#fdictamenuploadsubirtodo').css("display", "none");
 		$('#fdictamenuploadcancelatodo').css("display", "none");
@@ -294,15 +297,35 @@
 		// 		//const element = archivos[index];
 
 		// 	}
-		this.listarLiquidacion();
-		function listarLiquidacion(){
+		
+		function cargarPaginador(totalRegistros){
+			var total = totalRegistros;
+			var totalPagina = totalRegistros/totalRegistrosPorPagina;
+			var redondeoPagina = Math.ceil(totalPagina);
+			console.log("total_pagina:",totalPagina);
+			console.log("total_registros:",total);
+			console.log("total_redondeo:",redondeoPagina);
+			$("#ulPaginacion").empty();
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion(1);return false;">Previous</a></li>');
+			var pagina = 0;			
+			for(var i=0;i<redondeoPagina;i++){				
+				pagina = i + 1;
+				$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ pagina +');return false;">' + (i+1) + '</a></li>');	
+			}			
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ redondeoPagina +');return false;">Next</a></li>');
+		}
+		this.listarLiquidacion(1);
+		function listarLiquidacion(pagina){
 		    var url = context + 'api/liquidacion/listar-liquidacion';
+		    var data = {
+		    	pagina:pagina
+		    }
 			$.ajax({
 				headers: {
 					"X-CSRF-TOKEN": token
 				},
 				// En data puedes utilizar un objeto JSON, un array o un query string
-				
+				data: JSON.stringify(data),
 				//Cambiar a type: POST si necesario
 				type: "POST",
 				// Formato de datos que se espera en la respuesta
@@ -314,7 +337,8 @@
 				.done((rest) => {
 					//console.log(rest);
 					if (rest.resultado == 1) {						
-						cargarDatosLiquidaciones(rest.listaLiquidacion);
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
+						cargarPaginador(rest.listaLiquidacion.totalRegistros);
 						console.log(rest);
 					}
 
@@ -780,17 +804,18 @@
 			$('#tblLiquidaciones').empty();
 			listaLiquidacion.forEach((liquidacion) => {
 				//console.log(liquidacion);
-				var dateParts = liquidacion.dFechaRegistro.split("/");
+				var dateParts = liquidacion.dfechaRegistro.split("/");
 				
 				var fecha = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+				//console.log("fecha: ",fecha)
 				//var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('DD/MM/YYYY hh:mm:ss');
-				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('MM/DD/YYYY');
-				var estado = liquidacion.sEstado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO ' + liquidacion.nOrden + ' Y ENVIADO';
-				var row = '<tr><td style="text-align: center;">' + liquidacion.nAnio + '</td>';
+				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('MM/DD/YYYY') + ' ' + liquidacion.dhoraModifica;
+				var estado = liquidacion.sestado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO ' + liquidacion.norden + ' Y ENVIADO';
+				var row = '<tr><td style="text-align: center;">' + liquidacion.nanio + '</td>';
 				//row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'
-				row += '<td style="text-align: center;">' + moment(fecha).format('DD/MM/YYYY') + '</td>'
+				row += '<td style="text-align: center;">' + moment(fecha).format('DD/MM/YYYY') + ' ' + liquidacion.dhoraRegistro + '</td>'
 				row += '<td style="text-align: center;">' + fechaModificacion + '</td>'
-				row += '<td style="text-align: center;"><a target="_blank" href="' + context +'pformatoLiquidacion/'+ liquidacion.sDocumento + '"><i class="fa fa-file fa-2x" aria-hidden="true"></i></a></td>'
+				row += '<td style="text-align: center;"><a target="_blank" href="' + context +'pformatoLiquidacion/'+ liquidacion.sdocumento + '"><i class="fa fa-file fa-2x" aria-hidden="true"></i></a></td>'
 				row += '<td style="text-align: center;">' + estado + '</td>'
 				// row += '<td>' + liquidacion.fechaRegistro + '</td>'
 				row += '</tr>'

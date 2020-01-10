@@ -3,10 +3,12 @@ package com.kemal.spring.web.controllers.restApiControllers;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kemal.spring.domain.Liquidacion;
-import com.kemal.spring.domain.procedures.PRC_LISTAR_LIQUIDACION;
 import com.kemal.spring.service.LiquidacionService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionesDto;
 
 @RestController
 @RequestMapping("api/liquidacion")
@@ -27,6 +29,9 @@ import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionDto;
 public class liquidacionRestController {
 	@Autowired
 	LiquidacionService liquidacionService;
+	
+	@Value("${total-registro-por-pagina}")
+	private int totalRegistroPorPagina;
 	
 	@PostMapping(value = "registrar-liquidacion", consumes = "application/json",produces =  { "application/json" })
 	@ResponseBody
@@ -38,7 +43,8 @@ public class liquidacionRestController {
 		liquidacionService.save(liquidaciones);
 		List<Liquidacion> liquidacionesRest = liquidacionService.listarLiquidaciones();
 		List<LiquidacionDto> liquidacionesDtoRest = new ModelMapper().map(liquidacionesRest, listTypeResult);
-		List<PRC_LISTAR_LIQUIDACION> listaLiquidacion = liquidacionService.listarLiquidacion();
+		System.out.println("TOTALES: " + totalRegistroPorPagina);
+		Map<String,Object> listaLiquidacion= liquidacionService.listarLiquidacion(1,totalRegistroPorPagina);
 		HashMap<String, Object> resp = new HashMap<>();		
 		resp.put("mensaje", "Se registró satisfactoriamente");
 		resp.put("resultado", 1);
@@ -48,9 +54,11 @@ public class liquidacionRestController {
 	}
 	@PostMapping(value = "listar-liquidacion", consumes = "application/json",produces =  { "application/json" })
 	@ResponseBody
-	public ResponseEntity<?> listarLiquidacion() {		
-		
-		List<PRC_LISTAR_LIQUIDACION> listaLiquidacion = liquidacionService.listarLiquidacion();
+	public ResponseEntity<?> listarLiquidacion(@RequestBody LiquidacionesDto liquidacionesDto)throws Exception{		
+		System.out.println("TOTALES: " + totalRegistroPorPagina);
+		System.out.println("PAGINA: " + liquidacionesDto.getPagina());
+		Map<String, Object> listaLiquidacion = liquidacionService.listarLiquidacion(liquidacionesDto.getPagina(),totalRegistroPorPagina);
+		//List<ListarLiquidacion> listaLiquidacion = liquidacionService.listarLiquidacion2();
 		HashMap<String, Object> resp = new HashMap<>();		
 		resp.put("mensaje", "Todo correcto.");
 		resp.put("resultado", 1);

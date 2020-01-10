@@ -3,6 +3,11 @@ package com.kemal.spring.domain.procedures;
 
 
 
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.SqlResultSetMapping;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,63 +17,37 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PRC_LISTAR_LIQUIDACION {
+@MappedSuperclass
+@SqlResultSetMapping(name = "ListarLiquidacionResult", 
+		classes = @ConstructorResult(
+				targetClass = PRC_LISTAR_LIQUIDACION.class, 
+				columns = { 
+						@ColumnResult(name = "nOrden", type = int.class),
+						@ColumnResult(name = "nCodigo", type = int.class), 
+						@ColumnResult(name = "dFechaRegistro", type = String.class),
+						@ColumnResult(name = "dFechaModifica", type = String.class),
+						@ColumnResult(name = "dHoraRegistro", type = String.class),
+						@ColumnResult(name = "dHoraModifica", type = String.class),
+						@ColumnResult(name = "nAnio", type = int.class),
+						@ColumnResult(name = "nIdTipoDocumento", type = int.class),
+						@ColumnResult(name = "nPeriodo", type = int.class),
+						@ColumnResult(name = "nCodigo", type = int.class),
+						@ColumnResult(name = "sDocumento", type = String.class),
+						@ColumnResult(name = "sEstado", type = String.class),
+						
+}))
+public class PRC_LISTAR_LIQUIDACION {	
 	private int nOrden;
 	private int nCodigo;
 	private String dFechaRegistro;
 	private String dFechaModifica;
+	private String dHoraRegistro;
+	private String dHoraModifica;
 	private int nAnio;
 	private int nIdTipoDocumento;
 	private int nPeriodo;
 	private String sDocumento;
 	private String sEstado;
-	public int getnOrden() {
-		return nOrden;
-	}
-	public void setnOrden(int nOrden) {
-		this.nOrden = nOrden;
-	}
-	public int getnCodigo() {
-		return nCodigo;
-	}
-	public void setnCodigo(int nCodigo) {
-		this.nCodigo = nCodigo;
-	}
-	public String getdFechaRegistro() {
-		return dFechaRegistro;
-	}
-	public void setdFechaRegistro(String dFechaRegistro) {
-		this.dFechaRegistro = dFechaRegistro;
-	}
-	public int getnAnio() {
-		return nAnio;
-	}
-	public void setnAnio(int nAnio) {
-		this.nAnio = nAnio;
-	}
-	public int getnIdTipoDocumento() {
-		return nIdTipoDocumento;
-	}
-	public void setnIdTipoDocumento(int nIdTipoDocumento) {
-		this.nIdTipoDocumento = nIdTipoDocumento;
-	}
-	public int getnPeriodo() {
-		return nPeriodo;
-	}
-	public void setnPeriodo(int nPeriodo) {
-		this.nPeriodo = nPeriodo;
-	}
-	public String getsDocumento() {
-		return sDocumento;
-	}
-	public void setsDocumento(String sDocumento) {
-		this.sDocumento = sDocumento;
-	}
-	public String getsEstado() {
-		return sEstado;
-	}
-	public void setsEstado(String sEstado) {
-		this.sEstado = sEstado;
-	}
+
 	
 }
