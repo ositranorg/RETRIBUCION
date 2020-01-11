@@ -339,7 +339,7 @@
 					if (rest.resultado == 1) {						
 						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
 						cargarPaginador(rest.listaLiquidacion.totalRegistros);
-						console.log(rest);
+						//console.log(rest);
 					}
 
 				})
@@ -355,15 +355,22 @@
 			if(archivosFormatoResponse.length>0 && archivosDictamenResponse.length>0){
 				if (!registrarDictamen(2)) return;
 				if(!registrarFormato(2))return;
+				
+				$('#btnSoloGuardar').css("display", "block");		
+				$('#btnEnviarGuardar').css("display", "block");
+				limpiarArchivosDictamen();
+				limpiarArchivosFormato();
+				
 				cancelarTodoDictamen();
-				cancelarTodoFormato()
+				cancelarTodoFormato();
+			
 			}else{
-				if(archivosDictamen.length==0){
+				if(archivosDictamenResponse.length==0){
 				//mensajeError('Por favor debe agregar archivo(s) dictamen.');
 					mensajeError('[[#{liquidacion.mensaje.agregarArchivosDictamen}]]');				
 					return;					
 				}
-				if(archivosFormato.length==0){
+				if(archivosFormatoResponse.length==0){
 					//mensajeError('Por favor debe agregar archivo(s) formato de liquidación.')
 					mensajeError('[[#{liquidacion.mensaje.agregarArchivosFormato}]]');
 					return;					
@@ -436,8 +443,8 @@
 				  }
 				}
 				fileData = JSON.stringify(fileData.file);
-				$('#listaArchivosDictamen').append("<li>" + 
-						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)'><i class='fa fa-trash text-danger'></i></button></li>")
+				 $('#listaArchivosDictamen').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>")
 			});
 			if(archivosDictamen.length==0){
 
@@ -465,8 +472,11 @@
 				  }
 				}
 				fileData = JSON.stringify(fileData.file);
+				/*
 				$('#listaArchivosFormato').append("<li>" + 
-						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")*/
+			    $('#listaArchivosFormato').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
 			});
 			if(archivosFormato.length==0){
 
@@ -553,8 +563,6 @@
 			$('#toastMensajeCorrecto').toast('hide');
 		}
 		function subirTodoDictamen() {
-
-
 			//closeMensajes();
 			$.each(archivosDictamen, function (index, param) {
 				var formData = new FormData();
@@ -574,6 +582,7 @@
 						archivosDictamenResponse.push(rest);
 						$('#btnSoloGuardar').css("display", "block");		
 						$('#btnEnviarGuardar').css("display", "block");
+						//limpiarArchivosDictamen();
 					}
 				)
 			})
@@ -584,10 +593,7 @@
 			limpiarControles('fdictamen');
 
 		} 
-		function subirTodoFormato() {
-			
-			
-			
+		function subirTodoFormato() {					
 			$.each(archivosFormato, function (index, param) {
 				var formData = new FormData();
 				formData.append("files", param);
@@ -606,6 +612,7 @@
 						archivosFormatoResponse.push(rest);
 						$('#btnSoloGuardar').css("display", "block");		
 						$('#btnEnviarGuardar').css("display", "block");
+						//limpiarArchivosFormato();
 					}
 				)
 			})
@@ -630,9 +637,12 @@
 			$('#toastMensajeError').toast('show');
 		}
 		function cancelarTodoDictamen() {
+			/*
 			$('#fdictamenupload').val('');
 			archivosDictamen = [];
 			$('#listaArchivosDictamen').empty();
+			*/
+			limpiarArchivosDictamen();
 			$('#fdictamenuploadsubirtodo').css("display", "none");
 			$('#fdictamenuploadcancelatodo').css("display", "none");
 			if(archivosDictamenResponse.length==0){
@@ -642,10 +652,18 @@
 				}
 			}
 		}
+		function limpiarArchivosDictamen(){
+			$('#fdictamenupload').val('');
+			archivosDictamen = [];
+			$('#listaArchivosDictamen').empty();
+		}
 		function cancelarTodoFormato() {
+			/*		
 			$('#fFormatoupload').val('');
 			archivosFormato = [];
 			$('#listaArchivosFormato').empty();
+			*/
+			limpiarArchivosFormato();
 			$('#fFormatouploadsubirtodo').css("display", "none");
 			$('#fFormatouploadcancelatodo').css("display", "none");
 			
@@ -654,8 +672,12 @@
 					$('#btnSoloGuardar').css("display", "none");
 					$('#btnEnviarGuardar').css("display", "none");
 				}
-			}
-		
+			}		
+		}
+		function limpiarArchivosFormato(){
+			$('#fFormatoupload').val('');
+			archivosFormato = [];
+			$('#listaArchivosFormato').empty();
 		}
 		function limpiarControles(control) {
 			$('#fFormatoupload').val('');
@@ -669,7 +691,16 @@
 			if(registrarDictamen(1)){
 				registrarFormato(1);
 			}
+			limpiarArchivosFormato();
+			limpiarArchivosDictamen();
+			$('#btnSoloGuardar').css("display", "none");
+			$('#btnEnviarGuardar').css("display", "none");
 			
+			$('#fdictamenuploadsubirtodo').css("display", "none");
+			$('#fdictamenuploadcancelatodo').css("display", "none");
+			
+			$('#fFormatouploadsubirtodo').css("display", "none");
+			$('#fFormatouploadcancelatodo').css("display", "none");
 		}
 		function registrarDictamen(estado) {
 			var liquidaciones = [];
@@ -732,7 +763,7 @@
 					//console.log(rest);
 					if (rest.resultado == 1) {
 						mensajeCorrecto(rest.mensaje);
-						cargarDatosLiquidaciones(rest.listaLiquidacion);
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
 					}
 
 				});
