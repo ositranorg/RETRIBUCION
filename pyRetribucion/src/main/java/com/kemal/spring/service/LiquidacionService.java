@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ import com.kemal.spring.domain.procedures.PkgListarLiquidacionMapperFilter;
 
 
 
-@Repository
+@Service
 public class LiquidacionService {
 	@Resource
 	LiquidacionRepository liquidacionRepository;
@@ -60,9 +61,12 @@ public class LiquidacionService {
 		//PRC_LISTAR_LIQUIDACION filtro = new PRC_LISTAR_LIQUIDACION();
 		List<ListarLiquidacion> lista=new ArrayList<ListarLiquidacion>();
 		//HashMap<String , Object> lista=null;
-		pkgListarLiquidacionRepository.listarLiquidacion(lista);
+		PkgListarLiquidacionMapperFilter filtro = new PkgListarLiquidacionMapperFilter();
+		filtro.setPagina(1);
+		filtro.setTotalRegistroPagina(5);
+		pkgListarLiquidacionRepository.listarLiquidacion(filtro);
 		Gson gson = new Gson();
-		System.out.println("DAT:" + gson.toJson(lista));
-		return null;
+		System.out.println("DAT:" + gson.toJson(filtro.getLista()));
+		return filtro.getLista();
 	}
 }

@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 //@EnableTransactionManagement
-@MapperScan(basePackages = {"com.kemal.spring.domain.procedures"})
+@MapperScan(basePackages = {
+		"com.kemal.spring.domain.procedures",
+		"com.kemal.spring.domain.nonentity"})
 public class MybatisConfig {
 	/*
 	@Bean

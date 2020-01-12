@@ -4,7 +4,10 @@ import com.kemal.spring.domain.Role;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.UserRepository;
 import com.kemal.spring.domain.nonentity.CambiarClave;
+import com.kemal.spring.domain.nonentity.CambiarClaveFiltro;
+import com.kemal.spring.domain.nonentity.CambiarClaveMapper;
 import com.kemal.spring.domain.nonentity.CambiarClaveRepository;
+import com.kemal.spring.domain.nonentity.Resultado;
 import com.kemal.spring.web.dto.UserDto;
 import com.kemal.spring.web.dto.UserUpdateDto;
 
@@ -33,7 +36,8 @@ public class UserService {
     private UserRepository userRepository;
     
     private CambiarClaveRepository cambiarClaveRepository;
-    
+    @Autowired
+    private CambiarClaveMapper cambiarClaveMapper;
     private RoleService roleService;
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleService
             roleService, CacheManager cacheManager,
@@ -175,9 +179,16 @@ public class UserService {
         }
         return userRoles;
     }
-    public CambiarClave cambiarClave(String claveAnterior, String nuevaClave, String confirmarClave) {
+    public Resultado cambiarClave(String claveAnterior, String nuevaClave, String confirmarClave) {
     	//return userRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
-    	return cambiarClaveRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
+    	//return cambiarClaveRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
+    	CambiarClaveFiltro cambiarClaveFiltro = new CambiarClaveFiltro();
+    	cambiarClaveFiltro.setClaveAnterior(claveAnterior);
+    	cambiarClaveFiltro.setNuevaClave(nuevaClave);
+    	cambiarClaveFiltro.setConfirmarClave(confirmarClave);
+    	//cambiarClaveFiltro.setRespuesta(new Resultado());
+    	cambiarClaveMapper.cambiarClave(cambiarClaveFiltro);
+    	return cambiarClaveFiltro.getRespuesta().get(0);
     	//return null;
     }
 }

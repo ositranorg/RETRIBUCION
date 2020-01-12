@@ -1,5 +1,6 @@
 package com.kemal.spring.web.controllers.restApiControllers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kemal.spring.domain.nonentity.Resultado;
 import com.kemal.spring.service.UserService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.UsuarioDto;
 
@@ -25,11 +27,13 @@ public class UsuarioRestController {
 	@PostMapping(value = "cambiar-clave", consumes = "application/json",produces =  { "application/json" })
 	@ResponseBody
 	public ResponseEntity<?> cambiarClave(@RequestBody UsuarioDto usuarioDto) {
+		/*
 		System.out.println("clave anterior: " + usuarioDto.getClaveAnterior());
 		System.out.println("clave nueva: " + usuarioDto.getNuevaClave());
 		System.out.println("clave confirmar: " + usuarioDto.getConfirmarClave());
-		
-		userService.cambiarClave(usuarioDto.getClaveAnterior(), usuarioDto.getNuevaClave(), usuarioDto.getConfirmarClave());
-		return new ResponseEntity<>("OK", HttpStatus.OK);
+		*/
+		Resultado res = userService.cambiarClave(usuarioDto.getClaveAnterior(), usuarioDto.getNuevaClave(), usuarioDto.getConfirmarClave());
+
+		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }

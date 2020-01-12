@@ -5,8 +5,14 @@ import java.util.List;
 
 import com.kemal.spring.domain.nonentity.ListarLiquidacion;
 
+import lombok.Data;
+@Data
 public class PkgListarLiquidacionMapperFilter {
+	private int pagina;
+	private int totalRegistroPagina;
+	private int totalRegistros;
 	private List<ListarLiquidacion> lista;
+	
 	
 	public List<ListarLiquidacion> getLista() {
 		return lista;

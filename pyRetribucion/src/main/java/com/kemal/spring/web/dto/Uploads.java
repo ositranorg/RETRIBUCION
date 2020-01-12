@@ -58,6 +58,7 @@ public class Uploads {
 					+ util.getRandomLetra() + ext;
 
 			archivo.setFileName(renombrar);
+			archivo.setFileNameOriginal(mpf.getOriginalFilename());
 			//archivo.setFileName(ruta + renombrar);
 			archivo.setFileSize(mpf.getSize() / 1024 + " Kb");
 			archivo.setFileType(mpf.getContentType());

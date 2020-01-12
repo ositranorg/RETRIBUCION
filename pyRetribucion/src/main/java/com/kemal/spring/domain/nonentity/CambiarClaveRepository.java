@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CambiarClaveRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
-
+	
 	public CambiarClave cambiarClave(String claveAnterior,String nuevaClave,String confirmarClave) {
 		//List<CambiarClave> list = new ArrayList<>();
 		CambiarClave result = null;

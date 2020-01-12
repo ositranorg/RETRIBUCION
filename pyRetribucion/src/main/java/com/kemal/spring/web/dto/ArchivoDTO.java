@@ -17,7 +17,7 @@ public class ArchivoDTO {
     private String fileName;
     private String fileSize;
     private String fileType;
- 
+    private String fileNameOriginal;
     private byte[] bytes;
     private String modulo;
     private Integer codigoPadre;

@@ -302,9 +302,9 @@
 			var total = totalRegistros;
 			var totalPagina = totalRegistros/totalRegistrosPorPagina;
 			var redondeoPagina = Math.ceil(totalPagina);
-			console.log("total_pagina:",totalPagina);
-			console.log("total_registros:",total);
-			console.log("total_redondeo:",redondeoPagina);
+			//console.log("total_pagina:",totalPagina);
+			//console.log("total_registros:",total);
+			//console.log("total_redondeo:",redondeoPagina);
 			$("#ulPaginacion").empty();
 			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion(1);return false;">Previous</a></li>');
 			var pagina = 0;			
@@ -430,7 +430,7 @@
 			*/
 		}
 		function cargarListaArchivoDictamen(){
-			
+			/*
 			$('#listaArchivosDictamen').empty();
 			archivosDictamen.forEach((archivo) => {
 				var fileData = {
@@ -443,9 +443,16 @@
 				  }
 				}
 				fileData = JSON.stringify(fileData.file);
-				 $('#listaArchivosDictamen').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
-						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>")
+				$('#listaArchivosDictamen').append("<li>" + 
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+			
 			});
+			*/
+			/*
+			 $('#listaArchivosDictamen').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+					archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+			*/
+			cargarListaArchivos(archivosDictamen,'listaArchivosDictamen');
 			if(archivosDictamen.length==0){
 
 				$('#fdictamenuploadsubirtodo').css("display", "none");
@@ -454,12 +461,38 @@
 					$('#btnSoloGuardar').css("display", "none");
 					$('#btnEnviarGuardar').css("display", "none");
 				}
-			
 			}
-			
 		}
+		function cargarListaArchivos(archivos,nombreListaFormato,mostrarIcono=false){
+			$('#'+nombreListaFormato).empty();
+		
+			archivos.forEach((archivo) => {
+				//console.log(archivo)
+			
+				var fileData = {
+				  file: {
+					  lastModified : archivo.lastModified,
+					  lastModifiedDate: archivo.lastModifiedDate,
+			          name:archivo.name,
+			          size:archivo.size,
+			          type:archivo.type
+				  }
+				}
+				fileData = JSON.stringify(fileData.file);
+				if(!mostrarIcono){
+					$('#'+nombreListaFormato).append("<li>" + 
+							archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+				}else{
+				    $('#'+nombreListaFormato).append("<li><a href='" + archivo.fileNameOriginal + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+							archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+				}	
+			});		
+		}
+	
 		function cargarListaArchivoFormato(){
 			
+			
+			/*
 			$('#listaArchivosFormato').empty();
 			archivosFormato.forEach((archivo) => {
 				var fileData = {
@@ -472,14 +505,18 @@
 				  }
 				}
 				fileData = JSON.stringify(fileData.file);
-				/*
+				
 				$('#listaArchivosFormato').append("<li>" + 
-						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")*/
-			    $('#listaArchivosFormato').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
-						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+				
 			});
+			*/
+			/*			
+		    $('#listaArchivosFormato').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+					archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+			*/	
+			cargarListaArchivos(archivosFormato,'listaArchivosFormato');
 			if(archivosFormato.length==0){
-
 				$('#fFormatouploadsubirtodo').css("display", "none");
 				$('#fFormatouploadcancelatodo').css("display", "none");
 				if(archivosDictamen.length==0){
@@ -564,6 +601,10 @@
 		}
 		function subirTodoDictamen() {
 			//closeMensajes();
+			archivosDictamenResponse=[];
+		
+			
+			var itemsProcessed = 0;
 			$.each(archivosDictamen, function (index, param) {
 				var formData = new FormData();
 				formData.append("files", param);
@@ -579,21 +620,40 @@
 					processData: false
 				}).done(
 					function (rest) {
+						itemsProcessed++;
 						archivosDictamenResponse.push(rest);
-						$('#btnSoloGuardar').css("display", "block");		
-						$('#btnEnviarGuardar').css("display", "block");
+						if(itemsProcessed === archivosDictamen.length) {
+							cargarListaArchivoSubirTodo(archivosDictamenResponse,'listaArchivosDictamen');							
+							$('#btnSoloGuardar').css("display", "block");		
+							$('#btnEnviarGuardar').css("display", "block");
+							$('#fdictamenuploadsubirtodo').css("display", "none");		
+							$('#fdictamenuploadcancelatodo').css("display", "none");	
+					    }
 						//limpiarArchivosDictamen();
 					}
 				)
-			})
+			});
 			
 			//mensajeCorrecto('Se subieron los archivos correctamente');	
-			mensajeCorrecto('[[#{liquidacion.mensaje.subieronCorrectamente}]]');	
-			//cancelarTodoDictamen();
-			limpiarControles('fdictamen');
-
 		} 
-		function subirTodoFormato() {					
+		
+		function cargarListaArchivoSubirTodo(lista,nombreListaFormato){
+			/*	
+			console.log("data: ",lista);
+			console.log("total: ",lista.length);
+			*/
+			$('#'+nombreListaFormato).empty();
+			for (var i = 0; i < lista.length; i++) {
+			  var data = lista[i];
+			  console.log("resultado: ",data);
+			  console.log("resultado: ",data.fileNameOriginal);
+			  $('#'+nombreListaFormato)
+			  .append("<li><a href='" + data.fileName + "' target='_blank'><i class='fa fa-file'></i></a> " 
+					  + data.fileNameOriginal + "</li>");
+			}	
+		}
+		function subirTodoFormato() {		
+			var itemsProcessed = 0;
 			$.each(archivosFormato, function (index, param) {
 				var formData = new FormData();
 				formData.append("files", param);
@@ -609,13 +669,24 @@
 					processData: false
 				}).done(
 					function (rest) {
+						
+						//$('#btnSoloGuardar').css("display", "block");		
+						//$('#btnEnviarGuardar').css("display", "block");
+						itemsProcessed++;
 						archivosFormatoResponse.push(rest);
-						$('#btnSoloGuardar').css("display", "block");		
-						$('#btnEnviarGuardar').css("display", "block");
+						//archivosDictamenResponse.push(rest);
+						if(itemsProcessed === archivosFormato.length) {
+							cargarListaArchivoSubirTodo(archivosFormatoResponse,'listaArchivosFormato');	
+							$('#fFormatouploadsubirtodo').css("display", "none");		
+							$('#fFormatouploadcancelatodo').css("display", "none");	
+							$('#btnSoloGuardar').css("display", "block");		
+							$('#btnEnviarGuardar').css("display", "block");
+					    }
 						//limpiarArchivosFormato();
 					}
 				)
-			})
+			});
+			cargarListaArchivos(archivosFormato,'listaArchivosFormato',true);
 			//closeMensajes();
 			//mensajeCorrecto('Se subieron los archivos correctamente');
 			mensajeCorrecto('[[#{liquidacion.mensaje.subieronCorrectamente}]]');	

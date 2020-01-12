@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kemal.spring.domain.Liquidacion;
+import com.kemal.spring.domain.nonentity.ListarLiquidacion;
 import com.kemal.spring.service.LiquidacionService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionesDto;
@@ -58,11 +59,12 @@ public class liquidacionRestController {
 		System.out.println("TOTALES: " + totalRegistroPorPagina);
 		System.out.println("PAGINA: " + liquidacionesDto.getPagina());
 		Map<String, Object> listaLiquidacion = liquidacionService.listarLiquidacion(liquidacionesDto.getPagina(),totalRegistroPorPagina);
-		//List<ListarLiquidacion> listaLiquidacion = liquidacionService.listarLiquidacion2();
+		List<ListarLiquidacion> listaLiquidacion2 = liquidacionService.listarLiquidacion2();
 		HashMap<String, Object> resp = new HashMap<>();		
 		resp.put("mensaje", "Todo correcto.");
 		resp.put("resultado", 1);
 		resp.put("listaLiquidacion", listaLiquidacion);
+		resp.put("listaLiquidacion2", listaLiquidacion2);
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 }
