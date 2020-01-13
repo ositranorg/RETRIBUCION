@@ -7,4 +7,5 @@ public class UsuarioDto {
 	private String claveAnterior;
 	private String nuevaClave;
 	private String confirmarClave;
+	private int idUsuario;
 }

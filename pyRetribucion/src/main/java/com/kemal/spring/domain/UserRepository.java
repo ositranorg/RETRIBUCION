@@ -19,7 +19,6 @@ import com.kemal.spring.domain.nonentity.CambiarClave;
 
 
 @Repository
-
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);

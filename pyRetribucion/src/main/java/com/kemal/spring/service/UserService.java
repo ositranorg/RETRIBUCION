@@ -15,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,12 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     //@Autowired
     private UserRepository userRepository;
+    @Autowired
+    MessageByLocaleService messageByLocaleService;
     
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
     private CambiarClaveRepository cambiarClaveRepository;
     @Autowired
     private CambiarClaveMapper cambiarClaveMapper;
@@ -179,16 +186,50 @@ public class UserService {
         }
         return userRoles;
     }
-    public Resultado cambiarClave(String claveAnterior, String nuevaClave, String confirmarClave) {
+    public Resultado cambiarClave(int idUsuario, String claveAnterior, String nuevaClave, String confirmarClave) {
     	//return userRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
     	//return cambiarClaveRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
     	CambiarClaveFiltro cambiarClaveFiltro = new CambiarClaveFiltro();
+    	Optional<User> user = userRepository.findById((long) idUsuario);
+    	Resultado resultado = new Resultado();
+    	System.out.println("nuevaClave: "+nuevaClave);
+    	System.out.println("confirmarClave: "+confirmarClave);
+    	System.out.println("idUsuario: "+idUsuario);
+    	if(!nuevaClave.equals(confirmarClave)) {
+    		resultado.setResultado(0);
+    		resultado.setMensaje(messageByLocaleService.getMessage("usuario.mensaje.campararNuevaClave"));
+    		return resultado;
+    	}
+    	//System.out.println("getPassword: "+user.get().getPassword());
+    	//PasswordEncoder encoder = new BCryptPasswordEncoder();
+    	String password = passwordEncoder.encode(confirmarClave); 
+    	//System.out.println("password: "+password);
+    	claveAnterior = claveAnterior.toLowerCase();
+    	//System.out.println("claveAnterior: "+claveAnterior);
+    	if(!passwordEncoder.matches(claveAnterior,user.get().getPassword())) {
+    		resultado.setResultado(0);
+    		resultado.setMensaje(messageByLocaleService.getMessage("usuario.mensaje.campararClave"));
+    		return resultado;
+    	}
+    	
+    	user.get().setPassword(password);
+    	userRepository.save(user.get());
+    	
+    	resultado.setResultado(1);
+		resultado.setMensaje(messageByLocaleService.getMessage("usuario.mensaje.actualizarCorrectoClave"));
+		return resultado;
+		
+		/*
     	cambiarClaveFiltro.setClaveAnterior(claveAnterior);
     	cambiarClaveFiltro.setNuevaClave(nuevaClave);
     	cambiarClaveFiltro.setConfirmarClave(confirmarClave);
+    	cambiarClaveFiltro.setIdUsuario(idUsuario);
     	//cambiarClaveFiltro.setRespuesta(new Resultado());
     	cambiarClaveMapper.cambiarClave(cambiarClaveFiltro);
     	return cambiarClaveFiltro.getRespuesta().get(0);
     	//return null;
+    	
+    	 * */
+    	 
     }
 }

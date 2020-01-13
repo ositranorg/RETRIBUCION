@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface CambiarClaveMapper {
 	@Select(value = "{ CALL PK_USER.PRC_CAMBIARCLAVE"
 			+ "("
+			+ "#{filtro.idUsuario,mode=IN,jdbcType=NUMERIC,javaType=int},"
 			+ "#{filtro.claveAnterior,mode=IN,jdbcType=VARCHAR,javaType=String},"
 			+ "#{filtro.nuevaClave,mode=IN,jdbcType=VARCHAR,javaType=String},"
 			+ "#{filtro.confirmarClave,mode=IN,jdbcType=VARCHAR,javaType=String},"
