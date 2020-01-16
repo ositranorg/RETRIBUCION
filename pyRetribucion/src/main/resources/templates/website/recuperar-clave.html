@@ -12,28 +12,171 @@
 				style="width: 20rem; margin-top: 120px;">
 				<div class="card-body">
 					<h4 class="card-title"></h4>
-					<form>
+					<form class="needs-validation" novalidate id="basic-form" >
 						<div class="form-group">
-							<label th:for="username">ENTIDAD PRESTADORA</label>
-							  <select class="form-control" id="exampleFormControlSelect1">
-						      <option>1</option>
-						      <option>2</option>
-						      <option>3</option>
-						      <option>4</option>
-						      <option>5</option>
-						    </select>
+							<label th:for="cboContribuyente">ENTIDAD PRESTADORA</label> 
+							<select
+								class="form-control" id="cboContribuyente" required>
+								<option selected value="">[SELECCIONE ENTIDAD PRESTADORA]</option>
+							</select>
+							<div class="invalid-feedback">Por favor seleccion Entidad
+								Prestadora.</div>
 						</div>
 						<div class="form-group">
-							<label th:for="username">CORREO ELECTRÓNICO</label>
-								<input type="text"
-								class="form-control" th:id="username" name="username"
-								th:name="username" placeholder="Ingrese correo electrónico">
+							<label th:for="username">CORREO ELECTRÓNICO</label> <input
+								id="txtCorreo" type="email" class="form-control" th:id="txtCorreo"
+								name="txtCorreo" th:name="txtCorreo"								
+								placeholder="Ingrese correo electrónico" required>
+							<div class="invalid-feedback">Por favor ingrese correo
+								electrónico.</div>
 						</div>
-						<button type="submit" class="btn btn-primary">Recuperar</button>
+						<button type="submit" class="btn btn-primary" onclick="recuperarClave()">Recuperar</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div th:replace="fragments/jsScripts :: scripts"></div>
 </body>
+<script type="text/javascript">
+	
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.getElementsByClassName('needs-validation');
+	// Loop over them and prevent submission
+	var validation = Array.prototype.filter.call(forms, function(form) {
+	form.addEventListener('submit', function(event) {
+		
+		//if (form.checkValidity() === false) {
+		//	event.preventDefault();
+//			event.stopPropagation();
+		//}
+		
+		event.preventDefault();
+		event.stopPropagation();
+	
+		form.classList.add('was-validated');		
+	}, false);
+	});
+	}, false);
+	})();
+	/*
+	$("#basic-form").validate({
+	    rules: {
+	      cboContribuyente: {
+	        required: true
+	      },
+	      txtCorreo: {
+	        required: true,
+	        email: true
+	      }
+	    },
+	    messages : {
+	      cboContribuyente: {
+	        required: "Por favor seleccione "
+	      },
+	      txtCorreo: {
+	        email: "The email should be in the format: abc@domain.tld"
+	      }
+	    }
+	  });
+	*/
+	var token = $("meta[name='_csrf']").attr("content");
+	var context = [[@{/}]];
+		listarContribuyente();
+		function listarContribuyente(){
+			var url = context + 'api/contribuyente/listar-contribuyente';
+			
+			$.ajax({
+				//headers: {
+				//	"X-CSRF-TOKEN": token
+				//},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				//data: JSON.stringify(data),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+			.done((rest) => {			
+				//console.log(rest);
+				if (rest.resultado == 1) {
+					//console.log(rest);
+					//alert('Se registró correctamente.')
+				
+		            rest.lista.forEach(agregarElemento);
+		         
+				}else{
+					$.alert({
+					    title: 'Alerta',
+					    content: rest.mensaje,
+					    type: 'red',
+					});
+				}
+
+			});
+		}
+		function agregarElemento(item, index) {			
+			/*optionText = 'Ultimate'; 
+            optionValue = 'ultimate'; 
+            console.log(item)*/
+		   	$('#cboContribuyente').append(new Option(item.nombre, item.id));
+		}
+		function recuperarClave(){
+			var url = context + 'api/usuario/enviar-clave';
+			var correo = $('#txtCorreo').val();
+			var idEntidadPrestadora = $('#cboContribuyente').val();
+		
+			var data = {
+					idEntidadPrestadora:idEntidadPrestadora,
+					correo:correo
+			}
+			
+			console.log(JSON.stringify(data));
+			
+		
+			$.ajax({
+				//headers: {
+				//	"X-CSRF-TOKEN": token
+				//},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				data: JSON.stringify(data),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+			.done((rest) => {			
+				//console.log(rest);
+				if (rest.resultado == 1) {				
+					$.alert({
+					    title: 'Información',
+					    content: rest.mensaje,
+					    type: 'green',
+					});
+					setTimeout(function(){
+						window.location.href = context + 'login';
+					}, 2000)
+					
+				}else{
+					$.alert({
+					    title: 'Alerta',
+					    content: rest.mensaje,
+					    type: 'red',
+					});
+				}
+
+			});
+			
+		}
+	</script>
 </html>
+

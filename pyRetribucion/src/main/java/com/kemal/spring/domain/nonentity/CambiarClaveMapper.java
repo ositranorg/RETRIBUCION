@@ -9,8 +9,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.StatementType;
 import org.apache.ibatis.type.JdbcType;
-import org.hibernate.annotations.Parameter;
-import org.springframework.stereotype.Repository;
 
 //@Repository
 @Mapper

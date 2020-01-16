@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +24,7 @@ import com.kemal.spring.service.userDetails.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)  
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -57,11 +61,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Override methods
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers("/css/**", "/js/**", "/images/**", "/resources/static/**", "/webjars/**").permitAll()
+		/*
+		 	http
+			.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/recuperar-clave","api/contribuyente/listar-contribuyente").permitAll()
+			.anyRequest().authenticated()
+			.and()
+		      .httpBasic().and()
+		      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		*/
+		   http
+		   //.csrf()
+		   //.ignoringAntMatchers("api/contribuyente/listar-contribuyente") 
+		     //.and() 
+		.authorizeRequests()		
+		.antMatchers("/css/**", "/js/**", "/images/**", "/resources/static/**", "/webjars/**").permitAll()	
 		.antMatchers("/recuperar-clave").permitAll()
-		.antMatchers("/user/**").hasRole("USER").antMatchers("/login*").permitAll().anyRequest().authenticated().and().formLogin()
-
+		.antMatchers("/user/**").hasRole("USER")
+		.antMatchers("/login*").permitAll()		
+		.anyRequest().authenticated()
+		.and()
+		.formLogin()		
 		.loginPage("/login").permitAll()
 		.loginProcessingUrl("/login_in")
 		.defaultSuccessUrl("/index", true)
@@ -78,7 +99,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return sessionRegistry;
 	}
 	
+	@Override
+    public void configure(WebSecurity web) throws Exception {
 
+        web.ignoring().antMatchers(HttpMethod.POST,"/api/contribuyente/**");
+        web.ignoring().antMatchers(HttpMethod.POST,"/api/usuario/enviar-clave");
+    }
 	// Register HttpSessionEventPublisher
 	@Bean
 	public static ServletListenerRegistrationBean<EventListener> httpSessionEventPublisher() {

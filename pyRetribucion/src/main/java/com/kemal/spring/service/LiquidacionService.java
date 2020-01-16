@@ -1,14 +1,12 @@
 package com.kemal.spring.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +14,6 @@ import com.google.gson.Gson;
 import com.kemal.spring.domain.Liquidacion;
 import com.kemal.spring.domain.LiquidacionRepository;
 import com.kemal.spring.domain.nonentity.ListarLiquidacion;
-import com.kemal.spring.domain.procedures.PRC_LISTAR_LIQUIDACION;
-import com.kemal.spring.domain.procedures.PRC_LISTAR_LIQUIDACIONFilter;
 import com.kemal.spring.domain.procedures.PkgListarLiquidacionMapper;
 import com.kemal.spring.domain.procedures.PkgListarLiquidacionMapperFilter;
 

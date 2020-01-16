@@ -19,7 +19,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
-import javax.persistence.Query;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -84,7 +84,8 @@ public class User {
     private String sTipoUsuario="E";
         
    
-
+    @Column(length = 1)
+    private Integer estadoCorreo;
     
     
     

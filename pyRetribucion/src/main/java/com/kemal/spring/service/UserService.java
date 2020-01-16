@@ -1,21 +1,16 @@
 package com.kemal.spring.service;
 
-import com.kemal.spring.domain.Role;
-import com.kemal.spring.domain.User;
-import com.kemal.spring.domain.UserRepository;
-import com.kemal.spring.domain.nonentity.CambiarClave;
-import com.kemal.spring.domain.nonentity.CambiarClaveFiltro;
-import com.kemal.spring.domain.nonentity.CambiarClaveMapper;
-import com.kemal.spring.domain.nonentity.CambiarClaveRepository;
-import com.kemal.spring.domain.nonentity.Resultado;
-import com.kemal.spring.web.dto.UserDto;
-import com.kemal.spring.web.dto.UserUpdateDto;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +19,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import com.kemal.spring.domain.Role;
+import com.kemal.spring.domain.User;
+import com.kemal.spring.domain.UserRepository;
+import com.kemal.spring.domain.nonentity.CambiarClaveRepository;
+import com.kemal.spring.domain.nonentity.Resultado;
+import com.kemal.spring.domain.procedures.PkUserMapper;
+import com.kemal.spring.domain.procedures.PkUserMapperFilter;
+import com.kemal.spring.domain.procedures.PkUserMapperResultado;
+import com.kemal.spring.web.dto.UserDto;
+import com.kemal.spring.web.dto.UserUpdateDto;
 
 /**
  * Created by Keno&Kemo on 18.10.2017..
@@ -42,9 +46,12 @@ public class UserService {
 	@Autowired
     private PasswordEncoder passwordEncoder;
 	
-    private CambiarClaveRepository cambiarClaveRepository;
-    @Autowired
-    private CambiarClaveMapper cambiarClaveMapper;
+	@Autowired
+	private PkUserMapper pkUserMapper;
+	
+    //private CambiarClaveRepository cambiarClaveRepository;
+    //@Autowired
+    //private CambiarClaveMapper cambiarClaveMapper;
     private RoleService roleService;
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleService
             roleService, CacheManager cacheManager,
@@ -52,7 +59,7 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.roleService = roleService;
-        this.cambiarClaveRepository = cambiarClaveRepository;
+        //this.cambiarClaveRepository = cambiarClaveRepository;
     }
 
     //region find methods
@@ -189,12 +196,12 @@ public class UserService {
     public Resultado cambiarClave(int idUsuario, String claveAnterior, String nuevaClave, String confirmarClave) {
     	//return userRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
     	//return cambiarClaveRepository.cambiarClave(claveAnterior, nuevaClave, confirmarClave);
-    	CambiarClaveFiltro cambiarClaveFiltro = new CambiarClaveFiltro();
+    	//CambiarClaveFiltro cambiarClaveFiltro = new CambiarClaveFiltro();
     	Optional<User> user = userRepository.findById((long) idUsuario);
     	Resultado resultado = new Resultado();
-    	System.out.println("nuevaClave: "+nuevaClave);
-    	System.out.println("confirmarClave: "+confirmarClave);
-    	System.out.println("idUsuario: "+idUsuario);
+    	//System.out.println("nuevaClave: "+nuevaClave);
+    	//System.out.println("confirmarClave: "+confirmarClave);
+    	//System.out.println("idUsuario: "+idUsuario);
     	if(!nuevaClave.equals(confirmarClave)) {
     		resultado.setResultado(0);
     		resultado.setMensaje(messageByLocaleService.getMessage("usuario.mensaje.campararNuevaClave"));
@@ -218,18 +225,21 @@ public class UserService {
     	resultado.setResultado(1);
 		resultado.setMensaje(messageByLocaleService.getMessage("usuario.mensaje.actualizarCorrectoClave"));
 		return resultado;
-		
-		/*
-    	cambiarClaveFiltro.setClaveAnterior(claveAnterior);
-    	cambiarClaveFiltro.setNuevaClave(nuevaClave);
-    	cambiarClaveFiltro.setConfirmarClave(confirmarClave);
-    	cambiarClaveFiltro.setIdUsuario(idUsuario);
-    	//cambiarClaveFiltro.setRespuesta(new Resultado());
-    	cambiarClaveMapper.cambiarClave(cambiarClaveFiltro);
-    	return cambiarClaveFiltro.getRespuesta().get(0);
-    	//return null;
-    	
-    	 * */
-    	 
+	}
+    public PkUserMapperResultado recuperarClave(int idEntidadPrestadora, String correo) throws Exception {
+    	PkUserMapperFilter filtro = new PkUserMapperFilter();
+    	filtro.setIdentidadPrestadora(idEntidadPrestadora);
+    	filtro.setCorreo(correo);
+    	String codigoDecode = genererNombre().toString();
+    	System.out.println("clave 1 es: " + codigoDecode);
+    	String codigoEncode = passwordEncoder.encode(codigoDecode);
+    	System.out.println("clave 2 es: " + codigoEncode);
+    	filtro.setClaveDecode(codigoDecode);
+    	filtro.setClaveEncode(codigoEncode);
+    	pkUserMapper.recuperarClave(filtro);
+    	return filtro.getRespuesta().get(0);
+    }
+    public static Integer genererNombre(){
+    	  return (int)(1000000 * Math.random());
     }
 }

@@ -8,4 +8,6 @@ public class UsuarioDto {
 	private String nuevaClave;
 	private String confirmarClave;
 	private int idUsuario;
+	private int idEntidadPrestadora;
+	private String correo;
 }
