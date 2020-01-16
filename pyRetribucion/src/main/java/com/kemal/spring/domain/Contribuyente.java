@@ -26,10 +26,10 @@ public class Contribuyente {
 	@SequenceGenerator(name = "id_SequenceCONTRIBUYENTE", sequenceName = "SQ_RET_CONTRIBUYENTE", allocationSize= 1)
 	private Integer id;
 	@Column(length = 11)
-	private String ruc;
-	private String nombre;
+	private String sruc;
+	private String snombre;
 
-	private String estado = "1";
+	private String sestado = "1";
 
 	
 

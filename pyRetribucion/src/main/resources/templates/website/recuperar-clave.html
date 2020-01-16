@@ -125,7 +125,7 @@
 			/*optionText = 'Ultimate'; 
             optionValue = 'ultimate'; 
             console.log(item)*/
-		   	$('#cboContribuyente').append(new Option(item.nombre, item.id));
+		   	$('#cboContribuyente').append(new Option(item.snombre, item.id));
 		}
 		function recuperarClave(){
 			var url = context + 'api/usuario/enviar-clave';

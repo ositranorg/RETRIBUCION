@@ -618,8 +618,8 @@ public class RetribucionController {
 			buf.append("         <th width=\"70%\"> Razón Social </th> \n");
 			buf.append("    </tr>\n");
 			buf.append("    <tr> \n");
-			buf.append("        <td> " + c.getContribuyente().getRuc() + " </td> \n");
-			buf.append("       <td>" + c.getContribuyente().getNombre() + "</td> \n");
+			buf.append("        <td> " + c.getContribuyente().getSruc() + " </td> \n");
+			buf.append("       <td>" + c.getContribuyente().getSnombre() + "</td> \n");
 			buf.append("    </tr>\n");
 			buf.append("</table>");
 			// Resumen

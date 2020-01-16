@@ -526,8 +526,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	@Transactional
 	void createContribuyente(final String name, final String ruc) {
 		Contribuyente contribuyente = new Contribuyente();
-		contribuyente.setNombre(name);
-		contribuyente.setRuc(ruc);
+		contribuyente.setSnombre(name);
+		contribuyente.setSruc(ruc);
 		// contribuyente.
 		contribuyenteService.save(contribuyente);
 

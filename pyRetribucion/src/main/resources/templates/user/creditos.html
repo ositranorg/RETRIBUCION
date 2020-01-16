@@ -33,7 +33,7 @@
 
 						<!-- /.row -->
 
-						<div class="row border border-info"  >
+						<div class="row border border-info">
 							<div class="col-12 ">
 
 								<div class="row alert alert-info">
@@ -45,11 +45,12 @@
 
 
 
-								<ul class="nav nav-pills nav-fill border border-info bg-info white ">
-									<li class="nav-item active"><a class="nav-link active"
-										data-toggle="tab" href="#pordefecto"
+								<ul
+									class="nav nav-pills nav-fill border border-info bg-dark white ">
+									<li class="nav-item active  bg-dark"><a
+										class="nav-link active" data-toggle="tab" href="#pordefecto"
 										onclick="obtenerValorTab('0')">POR DEFECTO</a></li>
-									<li class="nav-item"><a class="nav-link "
+									<li class="nav-item  bg-dark"><a class="nav-link "
 										data-toggle="tab" href="#modomanual"
 										onclick="obtenerValorTab('1')">MODO MANUAL</a></li>
 								</ul>
@@ -74,17 +75,12 @@
 
 													<tr th:each="base : ${lstCreditos}">
 
-														<td scope="row"
-															th:text="${null==base.aporte?'':base.aporte.sTipoPeriodicidad}">status</td>
-														<td scope="row"
-															th:text="${null==base.aporte?'':base.aporte.sTipoRetribucion}">status</td>
-														<td scope="row"
-															th:text="${null==base.aporte?'':base.aporte.sMesPeriodo}">status</td>
-														<td scope="row"
-															th:text="${null==base.aporte?'':base.aporte.sAnioPeriodo}">status</td>
+														<td scope="row" th:text="${base.periodo}">status</td>
+														<td scope="row" th:text="${base.tiporetribucion}">status</td>
+														<td scope="row" th:text="${base.mes}">status</td>
+														<td scope="row" th:text="${base.anio}">status</td>
 
-														<td scope="row"
-															th:text="${base.importe}">status</td>
+														<td scope="row" th:text="${base.nmonto}">status</td>
 
 														<td class="center">
 															<button type="button" title="Seleccionar?"
@@ -98,7 +94,26 @@
 
 												</tbody>
 											</table>
+											<div class="row" th:fragment="pagination">
+												<div class="col-md-2"></div>
+												<div class="col-md-8">
+													<nav aria-label="Pagination">
+														<ul class="pagination justify-content-center">
+															<li class="page-item"
+																th:each="pageNumber : ${pageNumbers}">
+																<button class="page-link"
+																	th:attr="onclick=|paginacion('creditos','credito-form','${pageNumber}')|"
+																	th:text=${pageNumber}>1</button>
+															</li>
+														</ul>
+													</nav>
+												</div>
+												<div class="col-md-2"></div>
 
+											</div>
+
+											<input type="hidden" id="paginacionhdd" name="page"
+												th:value="${pageNumber}" />
 											<div id="saldos">
 												<input type="hidden" id="contsaldos" name="contsaldos"
 													value="0" />
@@ -122,7 +137,8 @@
 
 												<div class="col-6">
 													<label> TIPO DE PERIODICIDAD </label> <select
-														th:field="${creditosForm.ftipoPeriodicidad}" id="ftipoPeriodicidad"
+														th:field="${creditosForm.ftipoPeriodicidad}"
+														id="ftipoPeriodicidad"
 														class="form-control border border-info">
 														<option value="">--SELECCIONE--</option>
 														<option th:each="cal : ${lsttipoPeriodicidad}"
@@ -135,7 +151,8 @@
 												<div class="col-6">
 													<label style="text-align: left;"> TIPO DE
 														RETRIBUCIÓN</label> <select
-														th:field="${creditosForm.ftipoRetribucion}" id="ftipoRetribucion"
+														th:field="${creditosForm.ftipoRetribucion}"
+														id="ftipoRetribucion"
 														class="form-control border border-info">
 														<option value="">--SELECCIONE--</option>
 														<option th:each="tp : ${lsttipoRetribucion}"
@@ -152,7 +169,8 @@
 												<div class="col-6">
 
 													<label style="text-align: left;"> AÑO</label> <select
-														th:field="${creditosForm.fanioRetribucion}" id="fanioRetribucion"
+														th:field="${creditosForm.fanioRetribucion}"
+														id="fanioRetribucion"
 														class="form-control form-control border border-info">
 														<option value="">--SELECCIONE--</option>
 														<option th:each="anioi : ${anios}" th:value="${anioi}"
@@ -177,7 +195,7 @@
 													</div>
 												</div>
 											</div>
-											<br/>
+											<br />
 										</fieldset>
 
 									</div>
@@ -190,7 +208,7 @@
 
 
 
-						<div class="row border border-info" >
+						<div class="row border border-info">
 							<div class="col-12">
 
 
@@ -205,7 +223,8 @@
 									<div class="col-6">
 										<label> TIPO DE PERIODICIDAD </label> <select
 											th:field="${creditosForm.ftipoPeriodicidadDestino}"
-											id="ftipoPeriodicidadDestino" class="form-control border border-info">
+											id="ftipoPeriodicidadDestino"
+											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
 											<option th:each="cal : ${lsttipoPeriodicidad}"
 												th:value="${cal.id}" th:text="${cal.sDescripcion}"></option>
@@ -216,7 +235,8 @@
 
 									<div class="col-6">
 										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label>
-										<select id="ftipoRetribucionDestino" th:field="${creditosForm.ftipoRetribucionDestino}"
+										<select id="ftipoRetribucionDestino"
+											th:field="${creditosForm.ftipoRetribucionDestino}"
 											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
 											<option th:each="tp : ${lsttipoRetribucion}"
@@ -233,7 +253,8 @@
 									<div class="col-6">
 
 										<label style="text-align: left;"> AÑO</label> <select
-											th:field="${creditosForm.fanioRetribucionDestino}" id="fanioRetribucionDestino"
+											th:field="${creditosForm.fanioRetribucionDestino}"
+											id="fanioRetribucionDestino"
 											class="form-control form-control border border-info">
 											<option value="">--SELECCIONE--</option>
 											<option th:each="anioi : ${anios}" th:value="${anioi}"
@@ -258,10 +279,10 @@
 
 						</div>
 					</div>
-						<input type="hidden" id="tipoPeriodicidadhdd"
-								th:value="${creditosForm.ftipoPeriodicidad}" />
-						<input type="hidden" id="tipoPeriodicidadDestinohdd"
-								th:value="${creditosForm.ftipoPeriodicidadDestino}" />								
+					<input type="hidden" id="tipoPeriodicidadhdd"
+						th:value="${creditosForm.ftipoPeriodicidad}" /> <input
+						type="hidden" id="tipoPeriodicidadDestinohdd"
+						th:value="${creditosForm.ftipoPeriodicidadDestino}" />
 				</form>
 
 
@@ -273,216 +294,209 @@
 
 <div th:replace="fragments/jsScripts :: scripts"></div>
 <script type="text/javascript">
-		function validarNegativo(e) {
-			var a = e.value;
-			if (e.value !== '0' && a.indexOf("-") == -1)
-				e.value = "-" + e.value;
+	function validarNegativo(e) {
+		var a = e.value;
+		if (e.value !== '0' && a.indexOf("-") == -1)
+			e.value = "-" + e.value;
 
+	}
+	function obtenerValorTab(modo) {
+		$("#modo").val(modo);
+		if (modo == 0) {
+			$("#sMescm").val("-1");
+			$("#sAniocm").val("-1");
+
+		} else {
+			$("#sMesMa").val("-1");
+			$("#sAnioMa").val("-1");
+			$("#sMescm").val("-1");
+			$("#sAniocm").val("-1");
+			$("#hddconsumoManual").val("");
 		}
-		function obtenerValorTab(modo) {
-			$("#modo").val(modo);
-			if (modo == 0) {
-				$("#sMescm").val("-1");
-				$("#sAniocm").val("-1");
+		$('#btn-cred-guardar').prop("disabled", false);
+		$("#hddconsumoManual").prop('readonly', false);
+	}
+	function seleccionarSaldo(codigo, saldo, mes, anio) {
+		// Moves up from <button> to <td>
+		if ($('#sMescm').val() == "-1" || $('#sAniocm').val() == "-1") {
+			mensajeError('Seleccione el Per&iacute;odo Destino');
+		} else {
+			var creditoposineg = parseFloat(quitarCommas(saldo));
 
-			} else {
-				$("#sMesMa").val("-1");
-				$("#sAnioMa").val("-1");
-				$("#sMescm").val("-1");
-				$("#sAniocm").val("-1");
-				$("#hddconsumoManual").val("");
-			}
-			$('#btn-cred-guardar').prop("disabled", false);
-			$("#hddconsumoManual").prop('readonly', false);
-		}
-		function seleccionarSaldo(codigo, saldo, mes, anio) {
-			// Moves up from <button> to <td>
-			if ($('#sMescm').val() == "-1" || $('#sAniocm').val() == "-1") {
-				mensajeError('Seleccione el Per&iacute;odo Destino');
-			} else {
-				var creditoposineg = parseFloat(quitarCommas(saldo));
+			var item = parseInt($('#contsaldos').val()) + 1;
+			var div = '<div class="form-group" id="item-' + codigo + '" data-id="' + codigo + '"> '
+					+ '<div class="col-xs-12  center"> '
+					+ '<label>'
+					+ number_format(creditoposineg, 0)
+					+ '</label>'
+					+ '<input type="hidden" id="item-' + codigo + '" name="codSaldo[' + item + ']" value="' + codigo + '" />'
+					+ '    <label >'
+					+ '        <a class="blue" style="text-decoration: underline" onclick="delDivConsumo('
+					+ codigo
+					+ ','
+					+ creditoposineg
+					+ ','
+					+ mes
+					+ ','
+					+ anio
+					+ ')">Deshacer</a>' + '    </label>' + '</div>'
 
-				var item = parseInt($('#contsaldos').val()) + 1;
-				var div = '<div class="form-group" id="item-' + codigo + '" data-id="' + codigo + '"> '
-						+ '<div class="col-xs-12  center"> '
-						+ '<label>'
-						+ number_format(creditoposineg, 0)
-						+ '</label>'
-						+ '<input type="hidden" id="item-' + codigo + '" name="codSaldo[' + item + ']" value="' + codigo + '" />'
-						+ '    <label >'
-						+ '        <a class="blue" style="text-decoration: underline" onclick="delDivConsumo('
-						+ codigo
-						+ ','
-						+ creditoposineg
-						+ ','
-						+ mes
-						+ ','
-						+ anio + ')">Deshacer</a>' + '    </label>' + '</div>'
+					+ '</div>';
+			$("#saldos").append(div);
+			$('#contsaldos').val(item);
+			//$('#btn-'+codigo).css('display','none');
+			$(".btnseleccionarcred").css('display', 'none');
 
-						+ '</div>';
-				$("#saldos").append(div);
-				$('#contsaldos').val(item);
-				//$('#btn-'+codigo).css('display','none');
-				$(".btnseleccionarcred").css('display', 'none');
-
-				var total = parseFloat(quitarCommas($('#hddconsumo').val()))
-						+ parseFloat(quitarCommas(creditoposineg));
-				$('#hddconsumo').val(total);
-				total = number_format($('#hddconsumo').val(), 0);
-				$('#lblconsumo').text(total);
-				$("#sAnioPD").val(anio);
-				$("#sMesPD").val(mes);
-			}
-
-		}
-		function delDivConsumo(id, saldo, mes, anio) {
-			var total = parseFloat($('#hddconsumo').val()) - parseFloat(saldo);
+			var total = parseFloat(quitarCommas($('#hddconsumo').val()))
+					+ parseFloat(quitarCommas(creditoposineg));
 			$('#hddconsumo').val(total);
-			total = number_format(total);
+			total = number_format($('#hddconsumo').val(), 0);
 			$('#lblconsumo').text(total);
-			$('.btnseleccionarcred').css('display', 'block');
-			$('#item-' + id).remove();
-			$("#sAnioPD").val(0);
-			$("#sMesPD").val(0);
-			$('.btnseleccionarcred').closest('tr').css("background", "none");
+			$("#sAnioPD").val(anio);
+			$("#sMesPD").val(mes);
 		}
-		function obtenerMonto(pmes, panio) {
-			$
-					.ajax({
-						type : 'POST',
-						url : 'obtenerMonto',
-						data : {							
-							"mes" : pmes,
-							"anio" : panio
-						},
-						dataType : 'json',
-						success : function(json) {
 
-							if (json[0].montoaconsumir !== "0") {
-								$("#hddconsumoManual").prop('readonly', true);
-								$("#hddconsumoManual").val(
-										json[0].montoaconsumir);
-								$("#btn-cred-guardar").prop("disabled", true);
-								mensajeError("Los Cr&eacute;ditos que existen en el sistema, no pueden ser asignados en esta pesta&ntilde;a.");
-							} else {
-								$("#hddconsumoManual").prop('readonly', false);
-								$("#hddconsumoManual").val('');
-								$('#btn-cred-guardar').prop("disabled", false);
-							}
+	}
+	function delDivConsumo(id, saldo, mes, anio) {
+		var total = parseFloat($('#hddconsumo').val()) - parseFloat(saldo);
+		$('#hddconsumo').val(total);
+		total = number_format(total);
+		$('#lblconsumo').text(total);
+		$('.btnseleccionarcred').css('display', 'block');
+		$('#item-' + id).remove();
+		$("#sAnioPD").val(0);
+		$("#sMesPD").val(0);
+		$('.btnseleccionarcred').closest('tr').css("background", "none");
+	}
+	function obtenerMonto(pmes, panio) {
+		$
+				.ajax({
+					type : 'POST',
+					url : 'obtenerMonto',
+					data : {
+						"mes" : pmes,
+						"anio" : panio
+					},
+					dataType : 'json',
+					success : function(json) {
 
+						if (json[0].montoaconsumir !== "0") {
+							$("#hddconsumoManual").prop('readonly', true);
+							$("#hddconsumoManual").val(json[0].montoaconsumir);
+							$("#btn-cred-guardar").prop("disabled", true);
+							mensajeError("Los Cr&eacute;ditos que existen en el sistema, no pueden ser asignados en esta pesta&ntilde;a.");
+						} else {
+							$("#hddconsumoManual").prop('readonly', false);
+							$("#hddconsumoManual").val('');
+							$('#btn-cred-guardar').prop("disabled", false);
 						}
-					});
-		}
 
-		jQuery(document)
-				.ready(
-						function() {
-							buscarPeriodo("fmesRetribucion", "periodostributrios","ftipoPeriodicidad",$("#tipoPeriodicidadhdd").val());
-							buscarPeriodo("fmesRetribucionDestino", "periodostributriosDestino","ftipoPeriodicidadDestino",$("#tipoPeriodicidadDestinohdd").val());
-							
+					}
+				});
+	}
 
-							$('.btnseleccionarcred')
-									.on(
-											'click',
-											function() {
-												if ($('#sMescm').val() != "-1"
-														|| $('#sAniocm').val() != "-1") {
-													$(this).closest('tr').css(
-															"background",
-															"cyan");
-												}
-											});
+	jQuery(document)
+			.ready(
+					function() {
+						buscarPeriodo("fmesRetribucion", "periodostributrios",
+								"ftipoPeriodicidad", $("#tipoPeriodicidadhdd")
+										.val());
+						buscarPeriodo("fmesRetribucionDestino",
+								"periodostributriosDestino",
+								"ftipoPeriodicidadDestino", $(
+										"#tipoPeriodicidadDestinohdd").val());
 
-							
-							$("#sMesMa").change(function() {
-								var pmes = $("#sMesMa").val();
-								var panio = $("#sAnioMa").val();
-								obtenerMonto(pmes, panio);
-							});
-							$("#sAnioMa").change(function() {
-								var pmes = $("#sMesMa").val();
-								var panio = $("#sAnioMa").val();
-								obtenerMonto(pmes, panio);
-							});
-							numeroDecimales('consumo');
-							numeroDecimales('saldomanual');
+						$('.btnseleccionarcred').on(
+								'click',
+								function() {
+									if ($('#sMescm').val() != "-1"
+											|| $('#sAniocm').val() != "-1") {
+										$(this).closest('tr').css("background",
+												"cyan");
+									}
+								});
 
-							$('#btn-cred-guardar')
-									.click(
-											function() {
-
-												var modo = $("#modo").val();
-												var mes = $("#sMescm").val();
-												var anio = $("#sAniocm").val();
-												var mesant = "";
-												var anioant = "";
-												if (modo === "1") {
-													mesant = $("#sMesMa").val();
-													anioant = $("#sAnioMa")
-															.val();
-												} else {
-													mesant = $("#sMesPD").val();
-													anioant = $("#sAnioPD")
-															.val();
-												}
-												if ($("#hddconsumo").val() == "0"
-														&& $("#modo").val() == "0") {
-													mensajeError('El Cr&eacute;dito no puede ser cero');
-												} else if ($(
-														"#hddconsumoManual")
-														.val() == "0"
-														&& $("#modo").val() == "1") {
-													mensajeError('El Cr&eacute;dito no puede ser cero');
-												} else if (($(
-														"#hddconsumoManual")
-														.val() == "-")
-														&& $("#modo").val() == "1") {
-													mensajeError('El Cr&eacute;dito debe ser un valor num&eacute;rico');
-												} else if (($(
-														"#hddconsumoManual")
-														.val() == "")
-														&& $("#modo").val() == "1") {
-													mensajeError('El Cr&eacute;dito no puede ser vac&iacute;o');
-												} else if (anio == "-1"
-														|| mes == "-1") {
-													mensajeError('Debe seleccionar el Periodo Tributario de Destino');
-												} else if (mesant == "-1"
-														|| anioant == "-1") {
-													mensajeError('Debe seleccionar el Periodo Tributario de Origen');
-												} else if (anio == anioant
-														&& mes == mesant) {
-													mensajeError('El Periodo Destino no puede ser igual al Periodo Origen');
-												} else {
-													$
-															.ajax({
-																type : 'POST',
-																url : 'Credito',
-																data : $(
-																		'#credito-form')
-																		.serialize(),
-																dataType : 'json',
-																success : function(
-																		json) {
-																	if (json[0].success) {
-																		mensajeServidor(json);
-																		$(
-																				"#sMescm")
-																				.val(
-																						"-1");
-																		$(
-																				"#sAniocm")
-																				.val(
-																						"-1");
-																	} else {
-																		mensajeError(json[0].msg);
-																	}
-
-																}
-															});
-												}
-
-											});
+						$("#sMesMa").change(function() {
+							var pmes = $("#sMesMa").val();
+							var panio = $("#sAnioMa").val();
+							obtenerMonto(pmes, panio);
 						});
-	</script>
+						$("#sAnioMa").change(function() {
+							var pmes = $("#sMesMa").val();
+							var panio = $("#sAnioMa").val();
+							obtenerMonto(pmes, panio);
+						});
+						numeroDecimales('consumo');
+						numeroDecimales('saldomanual');
 
+						$('#btn-cred-guardar')
+								.click(
+										function() {
 
+											var modo = $("#modo").val();
+											var mes = $("#sMescm").val();
+											var anio = $("#sAniocm").val();
+											var mesant = "";
+											var anioant = "";
+											if (modo === "1") {
+												mesant = $("#sMesMa").val();
+												anioant = $("#sAnioMa").val();
+											} else {
+												mesant = $("#sMesPD").val();
+												anioant = $("#sAnioPD").val();
+											}
+											if ($("#hddconsumo").val() == "0"
+													&& $("#modo").val() == "0") {
+												mensajeError('El Cr&eacute;dito no puede ser cero');
+											} else if ($("#hddconsumoManual")
+													.val() == "0"
+													&& $("#modo").val() == "1") {
+												mensajeError('El Cr&eacute;dito no puede ser cero');
+											} else if (($("#hddconsumoManual")
+													.val() == "-")
+													&& $("#modo").val() == "1") {
+												mensajeError('El Cr&eacute;dito debe ser un valor num&eacute;rico');
+											} else if (($("#hddconsumoManual")
+													.val() == "")
+													&& $("#modo").val() == "1") {
+												mensajeError('El Cr&eacute;dito no puede ser vac&iacute;o');
+											} else if (anio == "-1"
+													|| mes == "-1") {
+												mensajeError('Debe seleccionar el Periodo Tributario de Destino');
+											} else if (mesant == "-1"
+													|| anioant == "-1") {
+												mensajeError('Debe seleccionar el Periodo Tributario de Origen');
+											} else if (anio == anioant
+													&& mes == mesant) {
+												mensajeError('El Periodo Destino no puede ser igual al Periodo Origen');
+											} else {
+												$
+														.ajax({
+															type : 'POST',
+															url : 'Credito',
+															data : $(
+																	'#credito-form')
+																	.serialize(),
+															dataType : 'json',
+															success : function(
+																	json) {
+																if (json[0].success) {
+																	mensajeServidor(json);
+																	$("#sMescm")
+																			.val(
+																					"-1");
+																	$(
+																			"#sAniocm")
+																			.val(
+																					"-1");
+																} else {
+																	mensajeError(json[0].msg);
+																}
+
+															}
+														});
+											}
+
+										});
+					});
+</script>
