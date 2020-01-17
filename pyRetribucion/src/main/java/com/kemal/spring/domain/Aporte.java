@@ -56,6 +56,7 @@ public class Aporte {
 	private Date fechaVenPres;
 	
 	@ManyToOne
+	@JoinColumn(name="ncodigoCN")
 	private Contribuyente contribuyente;
 	
 	@ManyToOne

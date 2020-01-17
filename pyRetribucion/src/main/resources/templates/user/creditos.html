@@ -75,12 +75,12 @@
 
 													<tr th:each="base : ${lstCreditos}">
 
-														<td scope="row" th:text="${base.periodo}">status</td>
-														<td scope="row" th:text="${base.tiporetribucion}">status</td>
-														<td scope="row" th:text="${base.mes}">status</td>
-														<td scope="row" th:text="${base.anio}">status</td>
+														<td scope="row" th:text="${base.sTipoPeriodicidad}">status</td>
+														<td scope="row" th:text="${base.sTipoRetribucion}">status</td>
+														<td scope="row" th:text="${base.sMes}">status</td>
+														<td scope="row" th:text="${base.sAnio}">status</td>
 
-														<td scope="row" th:text="${base.nmonto}">status</td>
+														<td scope="row" th:text="${base.nretResultante}">status</td>
 
 														<td class="center">
 															<button type="button" title="Seleccionar?"

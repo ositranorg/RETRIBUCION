@@ -1,8 +1,6 @@
 package com.kemal.spring.domain.dto;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +16,13 @@ public class CreditoDeLaDJSP implements CreditoDeLaDJRepository{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCallRefCursor;
-	@SuppressWarnings({ "rawtypes", "unlikely-arg-type", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public List<CreditoDeLaDJ> listar(int concesionario,int ini,int max) {
+	public List<CreditoDeLaDJ> listar(int concesionario,int page) {
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
 		SqlParameterSource parameters=new MapSqlParameterSource()
 				.addValue("PCONCESIONARIO", concesionario)
-				.addValue("IDXINI", ini)
-				.addValue("IDXFIN", max);
+				.addValue("PPAGE", page);
 		simpleJdbcCallRefCursor=new SimpleJdbcCall(jdbcTemplate).withCatalogName("PK_RET_SALDOS").withProcedureName("PRC_DETSALDOACT")
 				.returningResultSet("CPAGOS",BeanPropertyRowMapper.newInstance(CreditoDeLaDJ.class));
 		Map<String, Object> map=simpleJdbcCallRefCursor.execute(parameters);
@@ -35,28 +32,10 @@ public class CreditoDeLaDJSP implements CreditoDeLaDJRepository{
 		for (Object object : d) {
 			CreditoDeLaDJ credito=(CreditoDeLaDJ)object;
 			x.add(credito);
-			
-			
 		}
-		
-		
-		
 		return x;
 	}		
-	public long countListar(int concesionario) {
-		jdbcTemplate.setResultsMapCaseInsensitive(true);
-		SqlParameterSource parameters=new MapSqlParameterSource()
-				.addValue("PCONCESIONARIO", concesionario);
-				
-		simpleJdbcCallRefCursor=new SimpleJdbcCall(jdbcTemplate).withCatalogName("PK_RET_SALDOS").withProcedureName("PRC_DETSALDOACTCOUNT");
-		Map<String, Object> map=simpleJdbcCallRefCursor.execute(parameters);
-		
-		long total=((BigDecimal)map.get("TOTAL")).longValue();
 	
-		
-		
-		return total;
-	}
 	
 	
 }
