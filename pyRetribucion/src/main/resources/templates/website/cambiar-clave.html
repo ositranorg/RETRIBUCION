@@ -202,6 +202,10 @@ function cambiarClave(){
 			if (rest.resultado == 1) {
 				console.log(rest);
 				//alert('Se registró correctamente.')
+				$('#txtClaveAnterior').val('');
+				$('#txtNuevaClave').val('');
+				$('#txtConfirmarClave').val('');
+				
 				$.alert({
 				    title: 'Información',
 				    content: rest.mensaje,
@@ -210,7 +214,7 @@ function cambiarClave(){
 			}else{
 				$.alert({
 				    title: 'Alerta',
-				    content: rest.mensaje,
+				    content: 'Ocurrió un error.',
 				    type: 'red',
 				});
 			}

@@ -61,20 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Override methods
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/*
-		 	http
-			.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/recuperar-clave","api/contribuyente/listar-contribuyente").permitAll()
-			.anyRequest().authenticated()
-			.and()
-		      .httpBasic().and()
-		      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		*/
-		   http
-		   //.csrf()
-		   //.ignoringAntMatchers("api/contribuyente/listar-contribuyente") 
-		     //.and() 
+		http
 		.authorizeRequests()		
 		.antMatchers("/css/**", "/js/**", "/images/**", "/resources/static/**", "/webjars/**").permitAll()	
 		.antMatchers("/recuperar-clave").permitAll()

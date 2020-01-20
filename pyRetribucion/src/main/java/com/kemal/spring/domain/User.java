@@ -87,7 +87,7 @@ public class User {
     @Column(length = 1)
     private Integer estadoCorreo;
     
-    
+    private String sTelefono;
     
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)

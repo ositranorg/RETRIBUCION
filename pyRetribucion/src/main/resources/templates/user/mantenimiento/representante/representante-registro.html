@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<div class="page-content">
+			<div class="container-fluid">
+				<div class="alert alert-primary" role="alert">
+					<h3>Registro de Representantes de la Empresa</h3>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-header bg-primary text-white">
+								<p class="h6">Datos de la Empresa a Representar</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-2 form-group">
+										<label for="txtRucEmpresa">NÚMERO DE RUC</label> <input
+											id="txtRucEmpresa" type="text" class="form-control" disabled>
+										</input>
+									</div>
+									<div class="col-sm-8 form-group">
+										<label for="txtRazonSocial">RAZÓN SOCIAL</label> <input
+											id="txtRazonSocial" type="text" class="form-control" disabled>
+										</input>
+									</div>
+									<div class="col-sm-2 form-group">
+										<label for="txtTelefono">TELÉFONO<span
+											class="text-danger">(*)</span></label> <input id="txtTelefono"
+											type="text" class="form-control"> </input>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row pt-3">
+					<div class="col-sm-12 ">
+						<div class="card">
+							<div class="card-header bg-primary text-white">
+								<div
+									class="d-flex flex-row align-items-center justify-content-center">
+									<div class="mr-auto">
+										<p class="h6">
+											Datos del Representante(s) Legal(es)<span class="text-danger">(*)</span>
+										</p>
+									</div>
+									<div>
+										<button class="btn btn-light" data-toggle="modal"
+											data-target="#registrarModal">
+											<i class="fa fa-plus pr-1"></i>REPRESENTANTE
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<table class="table">
+											<thead class="thead-dark">
+												<tr>
+													<th scope="col" style="text-align: center;">Nro</th>
+													<th scope="col" style="text-align: center;">Tipo
+														Documento</th>
+													<th scope="col" style="text-align: center;">Número</th>
+													<th scope="col" style="text-align: center;">Nombres</th>
+													<th scope="col" style="text-align: center;">Ape.
+														Paterno</th>
+													<th scope="col" style="text-align: center;">Ape.
+														Materno</th>
+													<th scope="col" style="text-align: center;">Cargo</th>
+													<th scope="col" style="text-align: center;">Fec.
+														Inicio</th>
+												</tr>
+											</thead>
+											<tbody id="tblRepresentantes">
+
+											</tbody>
+										</table>
+										<nav aria-label="Page navigation example">
+											<ul class="pagination" id="ulPaginacion">
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="row pt-3">
+					<div class="col-sm-12 ">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-4 form-group">
+										<label for="txtCorreo">Correo<span class="text-danger">(*)</span></label>
+										<input type="email" class="form-control" id="txtCorreo" />
+									</div>
+								</div>
+								<div
+									class="d-flex flex-row align-items-center justify-content-center">
+									<div class="ml-auto">
+										<button class="btn btn-primary">Guardar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" data-backdrop="static" data-keyboard="false"
+		id="registrarModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form class="needs-validation" novalidate id="frmRepresentante">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Datos del
+							Representante Legal</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="cboTipoDocumento">Tipo de Documento<span
+									class="text-danger">(*)</span></label> <select class="form-control"
+									id="cboTipoDocumento" required>
+								</select>
+								<div class="invalid-feedback">Por favor seleccione tipo de
+									documento.</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="txtNroDocumento">Número de Documento<span
+									class="text-danger">(*)</span></label> <input type="text"
+									id="txtNroDocumento" class="form-control" required />
+								<div class="invalid-feedback">Ingrese número de documento.</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="txtNombres">Nombres<span class="text-danger">(*)</span></label>
+								<input type="text" id="txtNombres" class="form-control" required />
+								<div class="invalid-feedback">Ingrese nombre.</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="txtApellidoPaterno">Apellido Paterno<span
+									class="text-danger">(*)</span></label> <input type="text"
+									id="txtApellidoPaterno" class="form-control" required />
+								<div class="invalid-feedback">Ingrese apellido paterno.</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="txtApellidoMaterno">Apellido Materno<span
+									class="text-danger">(*)</span></label> <input type="text"
+									id="txtApellidoMaterno" class="form-control" required />
+								<div class="invalid-feedback">Ingrese apellido materno.</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="txtCargo">Cargo<span class="text-danger">(*)</span></label>
+								<input type="text" id="txtCargo" class="form-control" required />
+								<div class="invalid-feedback">Ingrese cargo.</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="txtFechaPoder">Fecha de Inicio del Poder<span
+									class="text-danger">(*)</span></label> <input id="txtFechaPoder"
+									input="text" readonly class="form-control datepicker" required />
+								<div class="invalid-feedback">Ingrese fecha.</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							onclick="limparDatosPopup()" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn btn-primary"
+							onclick="guardarRepresentante()">Guardar Representante</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+<script type="text/javascript">
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.getElementsByClassName('needs-validation');
+	// Loop over them and prevent submission
+	var validation = Array.prototype.filter.call(forms, function(form) {
+	form.addEventListener('submit', function(event) {
+		/*
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		*/
+		event.preventDefault();
+		event.stopPropagation();
+	
+		form.classList.add('was-validated');		
+	}, false);
+	});
+	}, false);
+	}
+)();
+	$('.datepicker').datepicker({
+	  uiLibrary: 'bootstrap4',
+	  locale: 'es-es',
+	  endDate: new Date(new Date().setDate(new Date().getDate() + 42)),
+	  maxDate: new Date(new Date().setDate(new Date().getDate() + 42)),
+	  maxDateNow: true, format:'DD/MM/YYYY HH:mm'
+	});
+	var context = [[@{/}]];	
+	var token = $("meta[name='_csrf']").attr("content");
+	var idEmpresa = [[${idEmpresa}]];
+	var rucEmpresa = "[[${rucEmpresa}]]";
+	var totalRegistrosPorPagina = [[${totalRegistroPorPagina}]];
+	
+	var nombreEmpresa = "[[${nombreEmpresa}]]";
+	var telefonoEmpresa = "[[${telefonoEmpresa}]]";
+	var idUser = [[${idUser}]];
+	$('#txtRucEmpresa').val(rucEmpresa);
+	$('#txtRazonSocial').val(nombreEmpresa);
+	$('#txtTelefono').val(telefonoEmpresa);
+	
+	listarTipoDocumento();
+	listarRepresentantes(1);
+	
+	function cargarPaginador(totalRegistros){
+		var total = totalRegistros;
+		var totalPagina = totalRegistros/totalRegistrosPorPagina;
+		var redondeoPagina = Math.ceil(totalPagina);
+		//console.log("total_pagina:",totalPagina);
+		//console.log("total_registros:",total);
+		//console.log("total_redondeo:",redondeoPagina);
+		$("#ulPaginacion").empty();
+		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes(1);return false;">Previous</a></li>');
+		var pagina = 0;			
+		for(var i=0;i<redondeoPagina;i++){				
+			pagina = i + 1;
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes('+ pagina +');return false;">' + (i+1) + '</a></li>');	
+		}			
+		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes('+ redondeoPagina +');return false;">Next</a></li>');
+	}
+	
+	function listarTipoDocumento(){
+		 var url = context + 'api/tipo-documento/listar-tipo-documento';
+	   /* var data = {
+	    	pagina:pagina
+	    }*/
+		$.ajax({
+			headers: {
+				"X-CSRF-TOKEN": token
+			},
+			// En data puedes utilizar un objeto JSON, un array o un query string
+			//data: JSON.stringify(data),
+			//Cambiar a type: POST si necesario
+			type: "POST",
+			// Formato de datos que se espera en la respuesta
+			dataType: 'JSON',
+			contentType: 'application/json',
+			// URL a la que se enviará la solicitud Ajax
+			url: url,
+		})
+		.done((rest) => {
+			//console.log(rest);
+			if (rest.resultado == 1) {						
+				//cargarDatos(rest.lista.contribuyentes);
+				//cargarPaginador(rest.lista.totalRegistros);
+				console.log(rest);
+				cargarOptionTipoDocumento(rest.lista);			
+			}
+
+		});
+	}
+	function listarRepresentantes(pagina){
+		var url = context + 'api/representante/listar-representante';
+		var ruc = $('#txtRucEmpresa').val();
+	    var data = {
+	    		sruc:ruc,
+	    		pagina:pagina
+	    }
+		$.ajax({
+			headers: {
+				"X-CSRF-TOKEN": token
+			},
+			// En data puedes utilizar un objeto JSON, un array o un query string
+			data: JSON.stringify(data),
+			//Cambiar a type: POST si necesario
+			type: "POST",
+			// Formato de datos que se espera en la respuesta
+			dataType: 'JSON',
+			contentType: 'application/json',
+			// URL a la que se enviará la solicitud Ajax
+			url: url,
+		})
+		.done((rest) => {
+			//console.log(rest);
+			if (rest.resultado == 1) {		
+				pintarTablaRepresentantes(rest.lista.contribuyentes);
+				cargarPaginador(rest.lista.totalRegistros);
+			}
+
+		});
+	}
+	function cargarOptionTipoDocumento(lista){
+		$('#cboTipoDocumento').append(new Option("[SELECCIONE]", "", false, true));
+		lista.forEach((data)=>{
+			$('#cboTipoDocumento').append(new Option(data.snombre, data.id));
+		});
+	}
+	function limparDatosPopup(){
+		$("#frmRepresentante")[0].reset();
+		$('#frmRepresentante').removeClass( "was-validated");
+		
+		/*
+		$('#cboTipoDocumento').val('');
+		$('#txtNroDocumento').val('');
+		$('#txtNombres').val('');
+		$('#txtApellidoPaterno').val('');
+		$('#txtApellidoMaterno').val('');
+		$('#txtCargo').val('');
+		$('#txtFechaPoder').val('');
+		*/
+	}
+	function guardarRepresentante(){
+	
+		var url = context + 'api/representante/registrar-representante';
+		
+		var ruc = $('#txtRucEmpresa').val();
+		var correo = $('#txtCorreo').val();
+		var idTipoDocumento = $('#cboTipoDocumento').val();
+		var numeroDocumento = $('#txtNroDocumento').val();
+		var nombres = $('#txtNombres').val();
+		var apellidoPaterno = $('#txtApellidoPaterno').val();
+		var apellidoMaterno = $('#txtApellidoMaterno').val();
+		var cargo = $('#txtCargo').val();
+		var fechaInicio = $('#txtFechaPoder').val();
+		
+		if((ruc=='') || (idTipoDocumento=='') || (numeroDocumento=='') ||
+			(nombres='') || (apellidoPaterno=='') || (apellidoMaterno=='') || (cargo=='')
+		){
+			return;
+		}
+	    var data = {
+	    	pagina:1,
+    		sNumero:numeroDocumento,
+    		sNombres:nombres,
+    		sApePaterno:apellidoPaterno,
+    		sApeMaterno:apellidoMaterno,
+    		dFechaInicio:formatDate(fechaInicio),
+    		sCargo:cargo,
+    		tipoDocumento:{
+    			id:idTipoDocumento
+    		},
+    		contribuyente:{
+    			sruc:ruc,
+    			sCorreo:correo,
+    		}
+	    }
+		$.ajax({
+			headers: {
+				"X-CSRF-TOKEN": token
+			},
+			// En data puedes utilizar un objeto JSON, un array o un query string
+			data: JSON.stringify(data),
+			//Cambiar a type: POST si necesario
+			type: "POST",
+			// Formato de datos que se espera en la respuesta
+			dataType: 'JSON',
+			contentType: 'application/json',
+			// URL a la que se enviará la solicitud Ajax
+			url: url,
+		})
+		.done((rest) => {
+			//console.log(rest);
+			if (rest.resultado == 1) {						
+				//cargarDatos(rest.lista.contribuyentes);
+				//cargarPaginador(rest.lista.totalRegistros);
+				//console.log(rest);
+				limparDatosPopup();
+				$("#registrarModal").modal('hide');
+				pintarTablaRepresentantes(rest.lista.contribuyentes);
+				cargarPaginador(rest.lista.totalRegistros);
+				$.alert({
+				    title: 'Información',
+				    content: rest.mensaje,
+				    type: 'green',
+				});
+				
+			}else{
+				$.alert({
+				    title: 'Información',
+				    content: rest.mensaje,
+				    type: 'green',
+				});
+			}
+
+		});
+	}
+	function pintarTablaRepresentantes(lista){
+		$('#tblRepresentantes').empty();
+		lista.forEach((data)=>{
+			var nombre = data.tipoDocumento.snombre==='null'?'-':data.tipoDocumento.snombre;
+			var numero = data.snumero==null?'-':data.snumero;
+			var nombres = data.snombres==null?'-':data.snombres;
+			var apePaterno = data.sapePaterno==null?'-':data.sapePaterno;
+			var apeMaterno = data.sapeMaterno==null?'-':data.sapeMaterno;
+			var cargo = data.scargo==null?'-':data.scargo;
+			var fechaInicio = data.dFechaInicio==null?'-':data.dFechaInicio;
+			var row = '<tr>';
+			row += '<td>1</td>'
+			row += '<td>'+ nombre +'</td>'
+			row += '<td>'+numero+'</td>'
+			row += '<td>'+nombres+'</td>'
+			row += '<td>'+apePaterno+'</td>'
+			row += '<td>'+apeMaterno+'</td>'
+			row += '<td>'+cargo+'</td>'
+			row += '<td>'+fechaInicio+'</td>'
+			'</tr>';
+			$('#tblRepresentantes').append(row);
+		});
+	}
+	function formatDate(date) {
+		var date_components = date.split("/");
+		var current_year = date_components[2];
+		var current_month= date_components[1];
+		var current_day = date_components[0];
+		current = current_year+"-"+current_month+"-"+current_day+'T00:00:00';
+		var date11=new Date(current);
+		
+		/*
+	    var d = new Date(date11),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+		*/
+	    //return [year, month, day].join('-');
+	    return date11;
+	}
+</script>
+</html>
