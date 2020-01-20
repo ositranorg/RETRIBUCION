@@ -1,6 +1,7 @@
 package com.kemal.spring.web.controllers.viewControllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -55,7 +56,8 @@ public class CreditosController {
 	}
 	@GetMapping(value = "/creditos")
 	public String buscar(Model model,
-			@RequestParam(required = false, name = "page") Integer page) {
+			@RequestParam(required = false, name = "page") Integer page,
+			@RequestParam(required = false,value="ids[]") String ids[]) {
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
 		User c = ((UserDetailsImpl) us).getUser();
@@ -68,6 +70,14 @@ public class CreditosController {
 		f.setFtipoRetribucionDestino("");
 		f.setFtipoPeriodicidad("");
 		f.setFtipoPeriodicidadDestino("");
+		String idsval="";
+		if(null!=ids) {
+			for (int i = 0; i < ids.length; i++) {
+				idsval+=ids[i].toString()+",";
+			}
+			f.setIds(idsval);
+		}
+		
 		model.addAttribute("creditosForm", f);
 		model.addAttribute("creditosForm.fmesRetribucion","");
 		model.addAttribute("creditosForm.fmesRetribucionDestino","");
@@ -77,7 +87,7 @@ public class CreditosController {
 		model.addAttribute("creditosForm.ftipoRetribucionDestino","");
 		model.addAttribute("creditosForm.ftipoPeriodicidad","");
 		model.addAttribute("creditosForm.ftipoPeriodicidadDestino","");
-		
+	
 		List<TipoPeriodicidad> lstCal = calendarioService.findAll();
 		
 		

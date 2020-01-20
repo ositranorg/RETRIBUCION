@@ -549,7 +549,7 @@ public class RetribucionController {
 		OutputStream out = null;
 		try {
 			
-			//aporteService.save(aporte);
+			aporteService.presentar(retribucion.getCodaportehdd(), c.getUsername());
 			
 			
 			

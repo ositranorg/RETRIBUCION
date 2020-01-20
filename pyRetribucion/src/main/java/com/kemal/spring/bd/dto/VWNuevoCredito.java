@@ -21,6 +21,10 @@ import lombok.ToString;
 @Table(name = "VW_NUEVOCREDITO")
 public class VWNuevoCredito {
 	@Id
+	@Column(name="CODIGO")
+	private Long codigo;
+	
+	
 	@Column(name="NCODIGO")
 	private Long nCodigo;
 	
