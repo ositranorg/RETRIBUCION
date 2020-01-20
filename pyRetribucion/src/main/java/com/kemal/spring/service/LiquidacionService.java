@@ -55,6 +55,7 @@ public class LiquidacionService {
 		//return PRC_LISTAR_LIQUIDACIONRepository.listarLiquidacion();
 		//PRC_LISTAR_LIQUIDACIONFilter filtro = new PRC_LISTAR_LIQUIDACIONFilter();
 		//PRC_LISTAR_LIQUIDACION filtro = new PRC_LISTAR_LIQUIDACION();
+		@SuppressWarnings("unused")
 		List<ListarLiquidacion> lista=new ArrayList<ListarLiquidacion>();
 		//HashMap<String , Object> lista=null;
 		PkgListarLiquidacionMapperFilter filtro = new PkgListarLiquidacionMapperFilter();

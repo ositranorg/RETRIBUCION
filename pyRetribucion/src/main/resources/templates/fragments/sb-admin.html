@@ -3,6 +3,12 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="fragments/head :: head">
 <meta charset="utf-8" />
+<style>
+label {
+	display: inline-block;
+	width: 5em;
+}
+</style>
 </head>
 <body>
 
@@ -40,7 +46,7 @@
 				<!-- sidebar-search  -->
 				<div class="sidebar-menu">
 					<ul>
-					<li class="header-menu"><span>Menú</span></li>
+						<li class="header-menu"><span>Menú</span></li>
 						<!-- 
 						<li class="sidebar-dropdown">
 							<a href="#">
@@ -57,20 +63,19 @@
 							</div>
 						</li>
 						 -->
-						<li class="sidebar-dropdown">
-							<a href="#">
-								<i class="fa fa-shopping-cart"></i> 
-								<span>MANTENIMIENTO </span>
-							</a>
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span>MANTENIMIENTO </span>
+						</a>
 							<div class="sidebar-submenu">
-							<ul>
+								<ul>
 									<li><a th:href="@{/mantenimiento/contribuyente}">CONTRIBUYENTE<span
 											class="badge badge-pill badge-success">ver</span>
 									</a></li>
-
+									<li><a th:href="@{/mantenimiento/representante}">REPRESENTANTE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
 								</ul>
-							</div>
-						</li>
+							</div></li>
 						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}">
 								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
 									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>
@@ -185,13 +190,12 @@
 					class="badge badge-pill badge-success notification">7</span>
 				</a> <a href="#"> <i class="fa fa-cog"></i> <span
 					class="badge-sonar"></span>
-				</a> 
-				<a href="#" th:href="@{/cambiar-clave}" data-placement="bottom"
-				 data-toggle="tooltip" title="Cambiar clave">
-					<i class="fa fa-key"></i></a>
-				<a href="javascript: document.logoutForm.submit()"><i
+				</a> <a href="#" th:href="@{/cambiar-clave}" data-placement="bottom"
+					data-toggle="tooltip" title="Cambiar clave"> <i
+					class="fa fa-key"></i></a> <a
+					href="javascript: document.logoutForm.submit()"><i
 					class="fa fa-power-off"></i></a>
-				
+
 				<form name="logoutForm" th:action="@{/logout}" method="post"
 					th:hidden="true">
 					<input hidden type="submit" value="Sign Out" />
@@ -201,15 +205,19 @@
 
 
 	</div>
-
-
-	<div th:replace="fragments/jsScripts :: scripts"></div>
-	<script type="text/javascript">
-		
-		$(document).ready(function(){
-		    $('[data-toggle="tooltip"]').tooltip();   
-		});
-		
-	</script>
 </body>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+<script type="text/javascript">
+	/*
+	$(document).ready(function() {
+		//$('[data-toggle="tooltip"]').tooltip();   
+		$("body").tooltip({
+			selector : '[data-toggle=tooltip]'
+		});
+	});
+	 */
+	$(function() {
+		$(document).tooltip();
+	});
+</script>
 </html>

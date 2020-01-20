@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContribuyenteRepository   extends PagingAndSortingRepository<Contribuyente, Long> {
-	Page<Contribuyente> findAll(Pageable pageable);	
+	Page<Contribuyente> findAll(Pageable pageable);
+	Contribuyente findBySruc(String sruc);
 }

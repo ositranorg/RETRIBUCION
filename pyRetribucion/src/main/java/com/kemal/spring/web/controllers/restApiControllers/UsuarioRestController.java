@@ -51,8 +51,8 @@ public class UsuarioRestController {
 	@ResponseBody
 	@PostMapping(value = "enviar-clave", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> enviarClave(@RequestBody UsuarioDto usuarioDto) throws Exception {
-		System.out.println("idEntidad: " + usuarioDto.getIdEntidadPrestadora());
-		System.out.println("correo: " + usuarioDto.getCorreo());
+		//System.out.println("idEntidad: " + usuarioDto.getIdEntidadPrestadora());
+		//System.out.println("correo: " + usuarioDto.getCorreo());
 		PkUserMapperResultado res = userService.recuperarClave(usuarioDto.getIdEntidadPrestadora(), usuarioDto.getCorreo());
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
