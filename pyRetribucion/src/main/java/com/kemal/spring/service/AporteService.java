@@ -220,8 +220,10 @@ public class AporteService {
 		
 		Aporte aporte = dao
 				.findById(codigoAporte).get();
-		
-		aporte.setSEstado("P");
+		AporteTipo apTipo=new AporteTipo();
+		apTipo.setId("P");
+		aporte.setAporteTipo(apTipo);
+		aporte.setSEstado("1");
 		
 		aporte.setSUsuModifica(usuario);
 		aporte.setDfecModifica(x);

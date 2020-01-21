@@ -260,7 +260,8 @@
 				var token = $("meta[name='_csrf']").attr(
 				"content");
 				$("#paginacionhdd").val(paginacion);
-				$.post({
+				$.ajax({
+					type: 'GET',
 					url : context+action,
 					data : $("#"+frmid)
 							.serialize(),
@@ -340,7 +341,7 @@
 			jQuery(document)
 					.ready(
 							function($) {
-							  
+								
 								 //$('input,textarea').keyup(function() {
 								   //     this.value = this.value.toLocaleUpperCase();
 								    //});

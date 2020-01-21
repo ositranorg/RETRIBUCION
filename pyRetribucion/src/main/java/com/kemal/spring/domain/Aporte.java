@@ -48,7 +48,7 @@ public class Aporte {
 	private String sAnioPeriodo;
 	
 
-	private String sEstadoPres="I";
+
 	private String sEstado="1";
 	@Temporal(TemporalType.DATE)
 	private Date fechaVenPago;
@@ -56,6 +56,7 @@ public class Aporte {
 	private Date fechaVenPres;
 	
 	@ManyToOne
+	@JoinColumn(name="ncodigoCN")
 	private Contribuyente contribuyente;
 	
 	@ManyToOne

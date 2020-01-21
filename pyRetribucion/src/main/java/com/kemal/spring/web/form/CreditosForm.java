@@ -24,5 +24,5 @@ public class CreditosForm {
 	
 	private String id;
 	private String accion;	
-	
+	private String ids;
 }

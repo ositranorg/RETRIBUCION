@@ -651,6 +651,11 @@ function imprimirControlPrevio(cod, periodo, ruc, razon, mes, anio, codcalificac
     };
 
 }
+
+
+
+
+
 $(document).ajaxStart(function () {
     $('#wait').show();
 });
@@ -673,4 +678,9 @@ jQuery(document).ready(function ($) {
     }).on('input', function () {
         h(this);
     });
+    
+    
+    
+   
+    
 });
