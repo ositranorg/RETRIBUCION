@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,6 +44,7 @@ public class Contribuyente {
 	@OneToMany(mappedBy = "contribuyente",
 			fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)
+	@JsonBackReference
 	private Set<Representante> representante;
 	
 

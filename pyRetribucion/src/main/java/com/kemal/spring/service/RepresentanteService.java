@@ -2,6 +2,7 @@ package com.kemal.spring.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -27,6 +28,8 @@ public class RepresentanteService {
 	@Transactional
 	public HashMap<String,Object> registrarRepresentante(Representante representante,int pagina,int totalRegistrosPorPagina) {
 		Contribuyente contribuyente = contribuyenteRepository.findBySruc(representante.getContribuyente().getSruc());
+
+		System.out.println("ID REPRESNTANTE: " + representante.getId());
 		representante.setId(representanteRepository.getNextSeriesId());
 		representante.getContribuyente().setId(contribuyente.getId());
 		System.out.println("ID CONTRIBUYENTE: " + contribuyente.getId());
@@ -53,12 +56,24 @@ public class RepresentanteService {
 		HashMap<String, Object> rest = new HashMap<>();
 		if (pagedResult.hasContent()) {
 			rest.put("totalRegistros", pagedResult.getTotalElements());
-			rest.put("contribuyentes", pagedResult.getContent());
+			rest.put("representantes", pagedResult.getContent());
 			return rest;
 		} else {
 			rest.put("totalRegistros", 0);
-			rest.put("contribuyentes", null);
+			rest.put("representantes", null);
 			return rest;
 		}
+	}
+	public HashMap<String, Object> eliminarRepresentantesByRucPaginado(String ruc,int pagina,int totalRegistrosPorPagina,int idRepresentante){
+		
+		Optional<Representante> representante = representanteRepository.findById(idRepresentante);
+		representante.get().setNEstado(0);
+		representanteRepository.save(representante.get());
+		
+		HashMap<String, Object> rest = new HashMap<>();
+		rest.put("lista", listarRepresentantesByRucPaginado(representante.get().getContribuyente().getSruc(),pagina,totalRegistrosPorPagina));
+		rest.put("resultado", 1);
+		rest.put("mensaje", "Se eliminó correctamente");
+		return rest;
 	}
 }

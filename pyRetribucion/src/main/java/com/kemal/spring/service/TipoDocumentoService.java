@@ -2,6 +2,7 @@ package com.kemal.spring.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kemal.spring.domain.TipoDocumento;
@@ -14,6 +15,6 @@ public class TipoDocumentoService {
 		this.tipoDocumentoRepository = tipoDocumentoRepository;
 	}
 	public List<TipoDocumento> findAll(){
-		return tipoDocumentoRepository.findAllTipoDocumento();
+		return tipoDocumentoRepository.findAllTipoDocumento(Sort.by(Sort.Direction.ASC, "id"));
 	}
 }

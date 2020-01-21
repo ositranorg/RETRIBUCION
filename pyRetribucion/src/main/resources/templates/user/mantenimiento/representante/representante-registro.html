@@ -33,7 +33,8 @@
 									<div class="col-sm-2 form-group">
 										<label for="txtTelefono">TELÉFONO<span
 											class="text-danger">(*)</span></label> <input id="txtTelefono"
-											type="text" class="form-control"> </input>
+											type="text" class="form-control"
+											onKeyPress="return soloNumeros(event)" > </input>
 									</div>
 								</div>
 							</div>
@@ -77,6 +78,8 @@
 													<th scope="col" style="text-align: center;">Cargo</th>
 													<th scope="col" style="text-align: center;">Fec.
 														Inicio</th>
+													<th scope="col" style="text-align: center;">
+														Acciones</th>
 												</tr>
 											</thead>
 											<tbody id="tblRepresentantes">
@@ -107,7 +110,7 @@
 								<div
 									class="d-flex flex-row align-items-center justify-content-center">
 									<div class="ml-auto">
-										<button class="btn btn-primary">Guardar</button>
+										<button class="btn btn-primary" onclick="actualizarEmpresa()">Guardar</button>
 									</div>
 								</div>
 							</div>
@@ -124,7 +127,7 @@
 		<div class="modal-dialog" role="document">
 			<form class="needs-validation" novalidate id="frmRepresentante">
 				<div class="modal-content">
-
+					<input type="hidden" id="txtIdRepresentante"> </input>
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Datos del
 							Representante Legal</h5>
@@ -138,6 +141,7 @@
 							<div class="col-sm-12 form-group">
 								<label for="cboTipoDocumento">Tipo de Documento<span
 									class="text-danger">(*)</span></label> <select class="form-control"
+									onchange="variaValorNroDocumento()"
 									id="cboTipoDocumento" required>
 								</select>
 								<div class="invalid-feedback">Por favor seleccione tipo de
@@ -148,8 +152,10 @@
 							<div class="col-sm-12 form-group">
 								<label for="txtNroDocumento">Número de Documento<span
 									class="text-danger">(*)</span></label> <input type="text"
-									id="txtNroDocumento" class="form-control" required />
-								<div class="invalid-feedback">Ingrese número de documento.</div>
+									id="txtNroDocumento" class="form-control" required onKeyPress="return soloNumeros(event)" 
+									maxlength="8"
+									/>
+								<div class="invalid-feedback" >Ingrese número de documento.</div>
 							</div>
 						</div>
 						<div class="row">
@@ -190,6 +196,7 @@
 								<div class="invalid-feedback">Ingrese fecha.</div>
 							</div>
 						</div>
+						
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
@@ -243,22 +250,38 @@
 	
 	var nombreEmpresa = "[[${nombreEmpresa}]]";
 	var telefonoEmpresa = "[[${telefonoEmpresa}]]";
+	var correoEmpresa = "[[${correoEmpresa}]]";
 	var idUser = [[${idUser}]];
 	$('#txtRucEmpresa').val(rucEmpresa);
 	$('#txtRazonSocial').val(nombreEmpresa);
 	$('#txtTelefono').val(telefonoEmpresa);
-	
+	$('#txtCorreo').val(correoEmpresa);
 	listarTipoDocumento();
 	listarRepresentantes(1);
 	
+	function variaValorNroDocumento(){
+		var idTipoDocumento = $('#cboTipoDocumento').val();
+		$('#txtNroDocumento').val('');
+		if(idTipoDocumento==7){
+			$('#txtNroDocumento').attr('maxLength',8);
+		}else if(idTipoDocumento==8){
+			$('#txtNroDocumento').attr('maxLength',11);
+		}else{
+			$('#txtNroDocumento').attr('maxLength',15);
+		}
+	}
 	function cargarPaginador(totalRegistros){
+
+		$("#ulPaginacion").empty();
+		if(totalRegistros==0){
+			return falses;
+		}
 		var total = totalRegistros;
 		var totalPagina = totalRegistros/totalRegistrosPorPagina;
 		var redondeoPagina = Math.ceil(totalPagina);
 		//console.log("total_pagina:",totalPagina);
 		//console.log("total_registros:",total);
 		//console.log("total_redondeo:",redondeoPagina);
-		$("#ulPaginacion").empty();
 		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes(1);return false;">Previous</a></li>');
 		var pagina = 0;			
 		for(var i=0;i<redondeoPagina;i++){				
@@ -322,7 +345,7 @@
 		.done((rest) => {
 			//console.log(rest);
 			if (rest.resultado == 1) {		
-				pintarTablaRepresentantes(rest.lista.contribuyentes);
+				pintarTablaRepresentantes(rest.lista.representantes);
 				cargarPaginador(rest.lista.totalRegistros);
 			}
 
@@ -349,9 +372,9 @@
 		*/
 	}
 	function guardarRepresentante(){
-	
+		$('#txtIdRepresentante').val(null);
 		var url = context + 'api/representante/registrar-representante';
-		
+		var idRepresentante = $('#txtIdRepresentante').val();
 		var ruc = $('#txtRucEmpresa').val();
 		var correo = $('#txtCorreo').val();
 		var idTipoDocumento = $('#cboTipoDocumento').val();
@@ -368,6 +391,7 @@
 			return;
 		}
 	    var data = {
+	    		id:idRepresentante,
 	    	pagina:1,
     		sNumero:numeroDocumento,
     		sNombres:nombres,
@@ -405,7 +429,7 @@
 				//console.log(rest);
 				limparDatosPopup();
 				$("#registrarModal").modal('hide');
-				pintarTablaRepresentantes(rest.lista.contribuyentes);
+				pintarTablaRepresentantes(rest.lista.representantes);
 				cargarPaginador(rest.lista.totalRegistros);
 				$.alert({
 				    title: 'Información',
@@ -425,6 +449,9 @@
 	}
 	function pintarTablaRepresentantes(lista){
 		$('#tblRepresentantes').empty();
+		if(lista==null){
+			return;
+		}
 		lista.forEach((data)=>{
 			var nombre = data.tipoDocumento.snombre==='null'?'-':data.tipoDocumento.snombre;
 			var numero = data.snumero==null?'-':data.snumero;
@@ -434,7 +461,7 @@
 			var cargo = data.scargo==null?'-':data.scargo;
 			var fechaInicio = data.dFechaInicio==null?'-':data.dFechaInicio;
 			var row = '<tr>';
-			row += '<td>1</td>'
+			row += '<td>'+ data.id +'</td>'
 			row += '<td>'+ nombre +'</td>'
 			row += '<td>'+numero+'</td>'
 			row += '<td>'+nombres+'</td>'
@@ -442,8 +469,111 @@
 			row += '<td>'+apeMaterno+'</td>'
 			row += '<td>'+cargo+'</td>'
 			row += '<td>'+fechaInicio+'</td>'
+			row += "<td style='text-align: center;'>"+
+					"<button type='button' class='btn' onclick='editarRepresentante("+ JSON.stringify(data) +")'><i class='fa fa-edit text-primary' aria-hidden='true'></i></button>" +
+					"<button type='button' class='btn' onclick='eliminarRepresentante(" + data.id + ");'><i class='fa fa-trash text-danger' aria-hidden='true'></i></button>" +
+					"</td>";
 			'</tr>';
 			$('#tblRepresentantes').append(row);
+		});
+	}
+	function editarRepresentante(representante){
+		var ruc = $('#txtRucEmpresa').val();
+		var data = {
+		    	pagina:1,
+		    	id:representante.id,
+	    		sNumero:representante.snumero,
+	    		sNombres:representante.snombres,
+	    		sApePaterno:representante.sapePaterno,
+	    		sApeMaterno:representante.sapeMaterno,
+	    		dFechaInicio:representante.dFechaInicio,
+	    		sCargo:representante.scargo,
+	    		tipoDocumento:{
+	    			id:representante.tipoDocumento.id
+	    		},
+	    		contribuyente:{
+	    			sruc:ruc,
+	    		//	sCorreo:correo,
+	    		}
+		    }
+		//$('#txtRucEmpresa').val();
+		//$('#txtCorreo').val();
+		$('#txtIdRepresentante').val(representante.id);
+		$('#cboTipoDocumento').val(representante.tipoDocumento.id);
+		$('#txtNroDocumento').val(representante.snumero);
+		$('#txtNombres').val(representante.snombres);
+		$('#txtApellidoPaterno').val(representante.sapePaterno);
+		$('#txtApellidoMaterno').val(representante.sapeMaterno);
+		$('#txtCargo').val(representante.scargo);
+		$('#txtFechaPoder').val(representante.dFechaInicio);
+		
+		$("#registrarModal").modal('show');
+		console.log("representante: ",representante);
+	}
+	function actualizarRepresentante(){
+		
+	}
+	function eliminarRepresentante(idRepresentante){
+		var url = context + 'api/representante/eliminar-representante';		
+		
+		var ruc = $('#txtRucEmpresa').val();
+		var data = {
+					pagina:1,
+					id:idRepresentante,
+					contribuyente:{
+						sruc:ruc
+					}
+				 }
+		$.confirm({
+		    title: 'Confirmación',
+		    content: '¿Desea eliminar al representante?',
+		    buttons: {
+		        si: {
+		        	text:'Sí',
+		        	btnClass:'btn-primary',
+		        	action:function () {
+		        		$.ajax({
+		    				headers: {
+		    					"X-CSRF-TOKEN": token
+		    				},
+		    				// En data puedes utilizar un objeto JSON, un array o un query string
+		    				data: JSON.stringify(data),
+		    				//Cambiar a type: POST si necesario
+		    				type: "POST",
+		    				// Formato de datos que se espera en la respuesta
+		    				dataType: 'JSON',
+		    				contentType: 'application/json',
+		    				// URL a la que se enviará la solicitud Ajax
+		    				url: url,
+		    			})
+		    			.done((rest) => {
+		    				//console.log(rest);
+		    				if (rest.resultado == 1) {						
+		    					pintarTablaRepresentantes(rest.lista.representantes);
+		    					cargarPaginador(rest.lista.totalRegistros);
+		    					//console.log(rest);	
+		    					$.alert({
+		    					    title: 'Información',
+		    					    content: rest.mensaje,
+		    					    type: 'green',
+		    					});
+		    					
+		    				}else{
+		    					$.alert({
+		    					    title: 'Información',
+		    					    content: rest.mensaje,
+		    					    type: 'green',
+		    					});
+		    				}
+
+		    			});
+			            //$.alert('Confirmed!');
+			        }
+		        },
+		        no: function () {
+		            $.alert('Canceled!');
+		        }
+		    }
 		});
 	}
 	function formatDate(date) {
@@ -465,6 +595,57 @@
 		*/
 	    //return [year, month, day].join('-');
 	    return date11;
+	}
+	function actualizarEmpresa(){
+		var url = context + 'api/contribuyente/actualizar-contribuyente';		
+		var ruc = $('#txtRucEmpresa').val();
+		
+		var telefono = $('#txtTelefono').val();
+		var correo = $('#txtCorreo').val();
+		 var data = {
+			sruc:ruc,
+			sTelefono:telefono,
+			sCorreo:correo
+		 }
+		 $.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				data: JSON.stringify(data),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+			.done((rest) => {
+				//console.log(rest);
+				if (rest.resultado == 1) {						
+					//cargarDatos(rest.lista.contribuyentes);
+					//cargarPaginador(rest.lista.totalRegistros);
+					//console.log(rest);	
+					$.alert({
+					    title: 'Información',
+					    content: rest.mensaje,
+					    type: 'green',
+					});
+					
+				}else{
+					$.alert({
+					    title: 'Información',
+					    content: rest.mensaje,
+					    type: 'green',
+					});
+				}
+
+			});
+	}
+	function soloNumeros(e){
+		var key = window.Event ? e.which : e.keyCode
+		return (key >= 48 && key <= 57)
 	}
 </script>
 </html>

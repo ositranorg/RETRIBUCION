@@ -37,7 +37,7 @@ public class RepresentanteRestController {
 	@ResponseBody
 	@PostMapping(value = "registrar-representante", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> registrarRepresentante(@RequestBody RepresentanteDto representanteDto) {
-		System.out.println("nombreDto: " + representanteDto.getSNombres());
+		System.out.println("idDto: " + representanteDto.getId());
 		
 		Representante representante = modelMapper.map(representanteDto, Representante.class);
 		System.out.println("nombre: " + representante.getSNombres());
@@ -56,6 +56,21 @@ public class RepresentanteRestController {
 		HashMap<String, Object>res = new HashMap<String, Object>();
 		res.put("resultado", 1);
 		res.put("lista", representanteService.listarRepresentantesByRucPaginado(contribuyenteDto.getSruc(), contribuyenteDto.getPagina(), totalRegistroPorPagina));
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	@ResponseBody
+	@PostMapping(value = "eliminar-representante", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> eliminarRepresentante(@RequestBody RepresentanteDto representanteDto) {
+	
+		//List<Representante> lista = representanteService.listarRepresentantesByRuc(contribuyenteDto.getSruc());
+		
+		HashMap<String, Object>res = 
+				representanteService.eliminarRepresentantesByRucPaginado(
+						representanteDto.getContribuyente().getSruc(),
+						representanteDto.getPagina(),
+				totalRegistroPorPagina, representanteDto.getId());
+		//res.put("resultado", 1);
+		//res.put("lista", representanteService.listarRepresentantesByRucPaginado(contribuyenteDto.getSruc(), contribuyenteDto.getPagina(), totalRegistroPorPagina));
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }

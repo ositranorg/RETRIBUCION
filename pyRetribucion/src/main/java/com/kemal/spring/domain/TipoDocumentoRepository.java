@@ -3,6 +3,7 @@ package com.kemal.spring.domain;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,5 +13,5 @@ public interface TipoDocumentoRepository extends JpaRepository<TipoDocumento, In
 	 Long getNextSeriesId();
 	 @Query(value = "SELECT t FROM TipoDocumento t",
 	            nativeQuery = false)
-	 List<TipoDocumento> findAllTipoDocumento();
+	 List<TipoDocumento> findAllTipoDocumento(Sort sort);
 }

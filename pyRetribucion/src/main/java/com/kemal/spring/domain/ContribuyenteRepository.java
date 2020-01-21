@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ContribuyenteRepository   extends PagingAndSortingRepository<Contribuyente, Long> {
+public interface ContribuyenteRepository   extends PagingAndSortingRepository<Contribuyente, Integer> {
 	Page<Contribuyente> findAll(Pageable pageable);
 	Contribuyente findBySruc(String sruc);
 }

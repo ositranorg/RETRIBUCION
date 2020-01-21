@@ -42,6 +42,8 @@ public class Representante {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date dFechaInicio;
 	private String sCargo;
+	@Column(nullable = true)
+	private int nEstado=1;
 	/*
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)	
 	@JoinColumn(unique = true,name = "tipodocumento_id", insertable=false, updatable=false)

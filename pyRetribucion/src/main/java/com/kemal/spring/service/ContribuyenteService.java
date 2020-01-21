@@ -25,6 +25,9 @@ public class ContribuyenteService {
 		return (List<Contribuyente>) dao.findAll();
 	}
 
+	public Contribuyente obtenerContribuyente(Integer id) {
+		return dao.findById(id).get();
+	}
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Object> listaContribuyentePaginacion(int pagina, int totalRegistrosPorPagina) {
 		Pageable pageable = PageRequest.of(pagina-1, totalRegistrosPorPagina);
@@ -40,6 +43,16 @@ public class ContribuyenteService {
 			rest.put("contribuyentes", null);
 			return rest;
 		}
+	}
+	public HashMap<String,Object> actualizarContribuyenteByRuc(Contribuyente contribuyente){
+		Contribuyente cont = dao.findBySruc(contribuyente.getSruc());
+		cont.setSCorreo(contribuyente.getSCorreo());
+		cont.setSTelefono(contribuyente.getSTelefono());
+		dao.save(cont);
+		HashMap<String, Object> rest = new HashMap<>();
+		rest.put("resultado", 1);
+		rest.put("mensaje", "Se actualizó correctamente");
+		return rest;
 	}
 
 }

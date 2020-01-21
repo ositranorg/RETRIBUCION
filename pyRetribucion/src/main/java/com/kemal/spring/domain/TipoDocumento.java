@@ -55,7 +55,8 @@ public class TipoDocumento {
     //@MapsId
     
 	@OneToMany(mappedBy = "tipoDocumento", 
-    	cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    	cascade = CascadeType.ALL,
+    	fetch = FetchType.LAZY)
 	@Column(nullable = true)
 	@JsonBackReference
     private Set<Representante> representantes = new HashSet<>();
