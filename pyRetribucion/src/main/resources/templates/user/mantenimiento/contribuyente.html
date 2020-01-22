@@ -63,13 +63,13 @@ function cargarPaginador(totalRegistros){
 	//console.log("total_registros:",total);
 	//console.log("total_redondeo:",redondeoPagina);
 	$("#ulPaginacion").empty();
-	$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente(1);return false;">Previous</a></li>');
+	$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente(1);return false;">Inicio</a></li>');
 	var pagina = 0;			
 	for(var i=0;i<redondeoPagina;i++){				
 		pagina = i + 1;
 		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente('+ pagina +');return false;">' + (i+1) + '</a></li>');	
 	}			
-	$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente('+ redondeoPagina +');return false;">Next</a></li>');
+	$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente('+ redondeoPagina +');return false;">Final</a></li>');
 }
 function listarContribuyente(pagina){
     var url = context + 'api/contribuyente/listar-contribuyente-paginacion';

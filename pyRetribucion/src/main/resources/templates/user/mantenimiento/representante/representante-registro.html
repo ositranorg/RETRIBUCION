@@ -8,116 +8,120 @@
 	<div class="page-wrapper chiller-theme toggled">
 		<div th:replace="fragments/sb-admin :: mn-lat"></div>
 		<div class="page-content">
-			<div class="container-fluid">
-				<div class="alert alert-primary" role="alert">
-					<h3>Registro de Representantes de la Empresa</h3>
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="card">
-							<div class="card-header bg-primary text-white">
-								<p class="h6">Datos de la Empresa a Representar</p>
+			<form class="needs-validation" novalidate id="frmEmpresa">
+				<div class="container-fluid">
+					<div class="alert alert-primary" role="alert">
+						<h3>Registro de Representantes de la Empresa</h3>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<p class="h6">Datos de la Empresa a Representar</p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-2 form-group">
+											<label for="txtRucEmpresa">NÚMERO DE RUC</label> <input
+												id="txtRucEmpresa" type="text" class="form-control" disabled>
+											</input>
+										</div>
+										<div class="col-sm-8 form-group">
+											<label for="txtRazonSocial">RAZÓN SOCIAL</label> <input
+												id="txtRazonSocial" type="text" class="form-control" disabled>
+											</input>
+										</div>
+										<div class="col-sm-2 form-group">
+											<label for="txtTelefono">TELÉFONO<span
+												class="text-danger">(*)</span></label> <input id="txtTelefono"
+												type="text" class="form-control"
+												onKeyPress="return soloNumeros(event)" required> </input>
+											<div class="invalid-feedback">Por favor ingrese nro. de teléfono.</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-2 form-group">
-										<label for="txtRucEmpresa">NÚMERO DE RUC</label> <input
-											id="txtRucEmpresa" type="text" class="form-control" disabled>
-										</input>
+						</div>
+					</div>
+					<div class="row pt-3">
+						<div class="col-sm-12 ">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<div
+										class="d-flex flex-row align-items-center justify-content-center">
+										<div class="mr-auto">
+											<p class="h6">
+												Datos del Representante(s) Legal(es)<span class="text-danger">(*)</span>
+											</p>
+										</div>
+										<div>
+											<button class="btn btn-light" data-toggle="modal"
+												data-target="#registrarModal">
+												<i class="fa fa-plus pr-1"></i>REPRESENTANTE
+											</button>
+										</div>
 									</div>
-									<div class="col-sm-8 form-group">
-										<label for="txtRazonSocial">RAZÓN SOCIAL</label> <input
-											id="txtRazonSocial" type="text" class="form-control" disabled>
-										</input>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<table class="table">
+												<thead class="thead-dark">
+													<tr>
+														<th scope="col" style="text-align: center;">Nro</th>
+														<th scope="col" style="text-align: center;">Tipo
+															Documento</th>
+														<th scope="col" style="text-align: center;">Número</th>
+														<th scope="col" style="text-align: center;">Nombres</th>
+														<th scope="col" style="text-align: center;">Ape.
+															Paterno</th>
+														<th scope="col" style="text-align: center;">Ape.
+															Materno</th>
+														<th scope="col" style="text-align: center;">Cargo</th>
+														<th scope="col" style="text-align: center;">Fec.
+															Inicio</th>
+														<th scope="col" style="text-align: center;">
+															Acciones</th>
+													</tr>
+												</thead>
+												<tbody id="tblRepresentantes">
+	
+												</tbody>
+											</table>
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPaginacion">
+												</ul>
+											</nav>
+										</div>
 									</div>
-									<div class="col-sm-2 form-group">
-										<label for="txtTelefono">TELÉFONO<span
-											class="text-danger">(*)</span></label> <input id="txtTelefono"
-											type="text" class="form-control"
-											onKeyPress="return soloNumeros(event)" > </input>
+								</div>
+							</div>
+	
+						</div>
+					</div>
+					<div class="row pt-3">
+						<div class="col-sm-12 ">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-4 form-group">
+											<label for="txtCorreo">Correo<span class="text-danger">(*)</span></label>
+											<input type="email" class="form-control" id="txtCorreo" required/>
+											<div class="invalid-feedback">Por favor ingrese correo ó ingrese correo con el formato correcto.</div>
+										</div>
+									</div>
+									<div
+										class="d-flex flex-row align-items-center justify-content-center">
+										<div class="ml-auto">
+											<button class="btn btn-primary" onclick="actualizarEmpresa()">Guardar</button>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row pt-3">
-					<div class="col-sm-12 ">
-						<div class="card">
-							<div class="card-header bg-primary text-white">
-								<div
-									class="d-flex flex-row align-items-center justify-content-center">
-									<div class="mr-auto">
-										<p class="h6">
-											Datos del Representante(s) Legal(es)<span class="text-danger">(*)</span>
-										</p>
-									</div>
-									<div>
-										<button class="btn btn-light" data-toggle="modal"
-											data-target="#registrarModal">
-											<i class="fa fa-plus pr-1"></i>REPRESENTANTE
-										</button>
-									</div>
-								</div>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-12">
-										<table class="table">
-											<thead class="thead-dark">
-												<tr>
-													<th scope="col" style="text-align: center;">Nro</th>
-													<th scope="col" style="text-align: center;">Tipo
-														Documento</th>
-													<th scope="col" style="text-align: center;">Número</th>
-													<th scope="col" style="text-align: center;">Nombres</th>
-													<th scope="col" style="text-align: center;">Ape.
-														Paterno</th>
-													<th scope="col" style="text-align: center;">Ape.
-														Materno</th>
-													<th scope="col" style="text-align: center;">Cargo</th>
-													<th scope="col" style="text-align: center;">Fec.
-														Inicio</th>
-													<th scope="col" style="text-align: center;">
-														Acciones</th>
-												</tr>
-											</thead>
-											<tbody id="tblRepresentantes">
-
-											</tbody>
-										</table>
-										<nav aria-label="Page navigation example">
-											<ul class="pagination" id="ulPaginacion">
-											</ul>
-										</nav>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				<div class="row pt-3">
-					<div class="col-sm-12 ">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-4 form-group">
-										<label for="txtCorreo">Correo<span class="text-danger">(*)</span></label>
-										<input type="email" class="form-control" id="txtCorreo" />
-									</div>
-								</div>
-								<div
-									class="d-flex flex-row align-items-center justify-content-center">
-									<div class="ml-auto">
-										<button class="btn btn-primary" onclick="actualizarEmpresa()">Guardar</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal -->
@@ -282,13 +286,13 @@
 		//console.log("total_pagina:",totalPagina);
 		//console.log("total_registros:",total);
 		//console.log("total_redondeo:",redondeoPagina);
-		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes(1);return false;">Previous</a></li>');
+		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes(1);return false;">Inicio</a></li>');
 		var pagina = 0;			
 		for(var i=0;i<redondeoPagina;i++){				
 			pagina = i + 1;
 			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes('+ pagina +');return false;">' + (i+1) + '</a></li>');	
 		}			
-		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes('+ redondeoPagina +');return false;">Next</a></li>');
+		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarRepresentantes('+ redondeoPagina +');return false;">Final</a></li>');
 	}
 	
 	function listarTipoDocumento(){
@@ -386,7 +390,7 @@
 		var fechaInicio = $('#txtFechaPoder').val();
 		
 		if((ruc=='') || (idTipoDocumento=='') || (numeroDocumento=='') ||
-			(nombres='') || (apellidoPaterno=='') || (apellidoMaterno=='') || (cargo=='')
+			(nombres=='') || (apellidoPaterno=='') || (apellidoMaterno=='') || (cargo=='')
 		){
 			return;
 		}
@@ -452,6 +456,7 @@
 		if(lista==null){
 			return;
 		}
+		var conta = 0;
 		lista.forEach((data)=>{
 			var nombre = data.tipoDocumento.snombre==='null'?'-':data.tipoDocumento.snombre;
 			var numero = data.snumero==null?'-':data.snumero;
@@ -460,8 +465,9 @@
 			var apeMaterno = data.sapeMaterno==null?'-':data.sapeMaterno;
 			var cargo = data.scargo==null?'-':data.scargo;
 			var fechaInicio = data.dFechaInicio==null?'-':data.dFechaInicio;
+			conta+=1;
 			var row = '<tr>';
-			row += '<td>'+ data.id +'</td>'
+			row += '<td style="text-align: center;">'+ conta +'</td>'
 			row += '<td>'+ nombre +'</td>'
 			row += '<td>'+numero+'</td>'
 			row += '<td>'+nombres+'</td>'
@@ -602,6 +608,9 @@
 		
 		var telefono = $('#txtTelefono').val();
 		var correo = $('#txtCorreo').val();
+		if(telefono=='' || correo==''){
+			return false;
+		}
 		 var data = {
 			sruc:ruc,
 			sTelefono:telefono,
