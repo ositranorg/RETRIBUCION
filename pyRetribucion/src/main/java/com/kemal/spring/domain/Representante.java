@@ -55,8 +55,7 @@ public class Representante {
 	//@JsonBackReference
 	private TipoDocumento tipoDocumento;
 	
-	@ManyToOne(fetch = FetchType.LAZY,
-			optional = false)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "contribuyente_id", nullable = false)
 	@JsonIgnore
 	private Contribuyente contribuyente;

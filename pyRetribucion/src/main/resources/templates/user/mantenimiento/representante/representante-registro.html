@@ -106,7 +106,9 @@
 									<div class="row">
 										<div class="col-sm-4 form-group">
 											<label for="txtCorreo">Correo<span class="text-danger">(*)</span></label>
-											<input type="email" class="form-control" id="txtCorreo" required/>
+											<input type="email" class="form-control" id="txtCorreo" required
+											pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+											/>
 											<div class="invalid-feedback">Por favor ingrese correo ó ingrese correo con el formato correcto.</div>
 										</div>
 									</div>
@@ -131,7 +133,7 @@
 		<div class="modal-dialog" role="document">
 			<form class="needs-validation" novalidate id="frmRepresentante">
 				<div class="modal-content">
-					<input type="hidden" id="txtIdRepresentante"> </input>
+					<input type="hidden" id="txtIdRepresentante"/>
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Datos del
 							Representante Legal</h5>
@@ -278,7 +280,7 @@
 
 		$("#ulPaginacion").empty();
 		if(totalRegistros==0){
-			return falses;
+			return false;
 		}
 		var total = totalRegistros;
 		var totalPagina = totalRegistros/totalRegistrosPorPagina;
@@ -376,9 +378,10 @@
 		*/
 	}
 	function guardarRepresentante(){
-		$('#txtIdRepresentante').val(null);
+		//$('#txtIdRepresentante').val(null);
 		var url = context + 'api/representante/registrar-representante';
 		var idRepresentante = $('#txtIdRepresentante').val();
+		console.log("ID TEST:", idRepresentante)
 		var ruc = $('#txtRucEmpresa').val();
 		var correo = $('#txtCorreo').val();
 		var idTipoDocumento = $('#cboTipoDocumento').val();
@@ -393,6 +396,14 @@
 			(nombres=='') || (apellidoPaterno=='') || (apellidoMaterno=='') || (cargo=='')
 		){
 			return;
+		}
+		if(fechaInicio==''){
+			$.alert({
+			    title: 'Error',
+			    content: 'Por favor ingrese fecha de inicio',
+			    type: 'red',
+			});
+			return false;
 		}
 	    var data = {
 	    		id:idRepresentante,
@@ -433,6 +444,7 @@
 				//console.log(rest);
 				limparDatosPopup();
 				$("#registrarModal").modal('hide');
+				$('#txtIdRepresentante').val(null);
 				pintarTablaRepresentantes(rest.lista.representantes);
 				cargarPaginador(rest.lista.totalRegistros);
 				$.alert({
@@ -443,9 +455,9 @@
 				
 			}else{
 				$.alert({
-				    title: 'Información',
+				    title: 'Error',
 				    content: rest.mensaje,
-				    type: 'green',
+				    type: 'red',
 				});
 			}
 
@@ -504,7 +516,13 @@
 		    }
 		//$('#txtRucEmpresa').val();
 		//$('#txtCorreo').val();
+		
+		
+		
+		//console.log("ID: ",representante.id);
+		$('#txtIdRepresentante').val(null);
 		$('#txtIdRepresentante').val(representante.id);
+		//console.log("ID FINAL: ",$('#txtIdRepresentante').val());
 		$('#cboTipoDocumento').val(representante.tipoDocumento.id);
 		$('#txtNroDocumento').val(representante.snumero);
 		$('#txtNombres').val(representante.snombres);
@@ -514,7 +532,7 @@
 		$('#txtFechaPoder').val(representante.dFechaInicio);
 		
 		$("#registrarModal").modal('show');
-		console.log("representante: ",representante);
+		//console.log("representante: ",representante);
 	}
 	function actualizarRepresentante(){
 		
@@ -589,6 +607,7 @@
 		var current_day = date_components[0];
 		current = current_year+"-"+current_month+"-"+current_day+'T00:00:00';
 		var date11=new Date(current);
+		console.log("FECHA: ",date11);
 		
 		/*
 	    var d = new Date(date11),
@@ -608,6 +627,11 @@
 		
 		var telefono = $('#txtTelefono').val();
 		var correo = $('#txtCorreo').val();
+		var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+		   if(!email_regex.test(correo))
+		   { 
+				return false;   
+		   }
 		if(telefono=='' || correo==''){
 			return false;
 		}
@@ -644,9 +668,9 @@
 					
 				}else{
 					$.alert({
-					    title: 'Información',
+					    title: 'Error',
 					    content: rest.mensaje,
-					    type: 'green',
+					    type: 'red',
 					});
 				}
 

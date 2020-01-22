@@ -16,6 +16,8 @@ import com.kemal.spring.domain.Contribuyente;
 import com.kemal.spring.domain.ContribuyenteRepository;
 import com.kemal.spring.domain.Representante;
 import com.kemal.spring.domain.RepresentanteRepository;
+import com.kemal.spring.domain.TipoDocumento;
+import com.kemal.spring.domain.TipoDocumentoRepository;
 
 @Service
 public class RepresentanteService {
@@ -25,17 +27,43 @@ public class RepresentanteService {
 	@Autowired
 	ContribuyenteRepository contribuyenteRepository;
 	
+	@Autowired
+	TipoDocumentoRepository tipoDocumentoRepository;
+	
 	@Transactional
 	public HashMap<String,Object> registrarRepresentante(Representante representante,int pagina,int totalRegistrosPorPagina) {
 		Contribuyente contribuyente = contribuyenteRepository.findBySruc(representante.getContribuyente().getSruc());
 
 		System.out.println("ID REPRESNTANTE: " + representante.getId());
-		representante.setId(representanteRepository.getNextSeriesId());
-		representante.getContribuyente().setId(contribuyente.getId());
+		if(representante.getId()==null) {
+			System.out.println("INGRESE INSERTAR");			
+			TipoDocumento tipoDocumentoModel = tipoDocumentoRepository.findById(representante.getTipoDocumento().getId()).get();
+			representante.setContribuyente(contribuyente);
+			representante.setTipoDocumento(tipoDocumentoModel);			
+			representante.setId(representanteRepository.getNextSeriesId());	
+			representanteRepository.save(representante);
+		}else {
+			System.out.println("INGRESE ACTUALIZAR");
+			
+			Representante representanteModel = representanteRepository.findById(representante.getId()).get();
+			TipoDocumento tipoDocumentoModel = tipoDocumentoRepository.findById(representante.getTipoDocumento().getId()).get();
+			
+			representanteModel.setContribuyente(contribuyente);
+			representanteModel.setTipoDocumento(tipoDocumentoModel);
+			representanteModel.setDFechaInicio(representante.getDFechaInicio());
+			representanteModel.setSNombres(representante.getSNombres());
+			representanteModel.setSApePaterno(representante.getSApePaterno());
+			representanteModel.setSApeMaterno(representante.getSApeMaterno());
+			representanteModel.setSCargo(representante.getSCargo());
+			representanteModel.setSNumero(representante.getSNumero());
+			representanteRepository.save(representanteModel);
+		}
+		
 		System.out.println("ID CONTRIBUYENTE: " + contribuyente.getId());
 		//System.out.println("ID TIPO DOCUMENTO: " + representante.getTipoDocumento().getId());
-		representanteRepository.save(representante);
+		
 		HashMap<String, Object> rest = new HashMap<String, Object>();
+		System.out.println("INGRESE ACA");
 		//rest.put("lista", listarRepresentantes(contribuyente.getId()));
 		rest.put("lista", listarRepresentantesByRucPaginado(representante.getContribuyente().getSruc(),pagina,totalRegistrosPorPagina));
 		rest.put("resultado", 1);
@@ -50,8 +78,10 @@ public class RepresentanteService {
 		return representanteRepository.findAllByIdContribuyente(contribuyente.getId());
 	}
 	public HashMap<String, Object> listarRepresentantesByRucPaginado(String ruc,int pagina,int totalRegistrosPorPagina){
+		System.out.println("EL RUC ES: " + ruc);
 		Contribuyente contribuyente = contribuyenteRepository.findBySruc(ruc);
 		Pageable pageable = PageRequest.of(pagina-1, totalRegistrosPorPagina);
+		System.out.println("INGRESE A LA LISTA");
 		Page<Representante> pagedResult = representanteRepository.findAllByIdContribuyentePaginacion(contribuyente.getId(),pageable);
 		HashMap<String, Object> rest = new HashMap<>();
 		if (pagedResult.hasContent()) {

@@ -1,5 +1,6 @@
 package com.kemal.spring.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -42,10 +44,11 @@ public class Contribuyente {
 	private String sestado = "1";
 
 	@OneToMany(mappedBy = "contribuyente",
-			fetch = FetchType.LAZY,
-			cascade = CascadeType.ALL)
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY)	
+	@Column(nullable = true)
 	@JsonBackReference
-	private Set<Representante> representante;
+	private Set<Representante> representante = new HashSet<>();
 	
 
 }

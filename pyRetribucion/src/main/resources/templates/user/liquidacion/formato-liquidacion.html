@@ -164,7 +164,7 @@
 							<div class="btn-group" role="group" aria-label="First group"
 								id="btnGuardarEnviar">
 								<button type="button" class="btn btn-primary"
-									id="btnEnviarGuardar" onclick="guardarEnviar()">Guardar
+									id="btnEnviarGuardar" onclick="guardarEnviarFinal()">Guardar
 									y Enviar</button>
 							</div>
 						</div>
@@ -206,8 +206,10 @@
 												<thead class="thead-dark">
 													<tr>
 														<th scope="col" style="text-align: center;">AÑO</th>
-														<th scope="col" style="text-align: center;">FECHA DE REGISTRO</th>
-														<th scope="col" style="text-align: center;">ULTIMA FECHA MODIFICACIÓN</th>
+														<th scope="col" style="text-align: center;">FECHA DE
+															REGISTRO</th>
+														<th scope="col" style="text-align: center;">ULTIMA
+															FECHA MODIFICACIÓN</th>
 														<th scope="col" style="text-align: center;">ARCHIVO</th>
 														<th scope="col" style="text-align: center;">ESTADO</th>
 													</tr>
@@ -216,10 +218,10 @@
 
 												</tbody>
 											</table>
-												<nav aria-label="Page navigation example">
-												  <ul class="pagination" id="ulPaginacion">												  
-												  </ul>
-												</nav>
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPaginacion">
+												</ul>
+											</nav>
 										</div>
 									</div>
 								</div>
@@ -306,13 +308,13 @@
 			//console.log("total_registros:",total);
 			//console.log("total_redondeo:",redondeoPagina);
 			$("#ulPaginacion").empty();
-			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion(1);return false;">Previous</a></li>');
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion(1);return false;">Inicio</a></li>');
 			var pagina = 0;			
 			for(var i=0;i<redondeoPagina;i++){				
 				pagina = i + 1;
 				$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ pagina +');return false;">' + (i+1) + '</a></li>');	
 			}			
-			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ redondeoPagina +');return false;">Next</a></li>');
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ redondeoPagina +');return false;">Final</a></li>');
 		}
 		this.listarLiquidacion(1);
 		function listarLiquidacion(pagina){
@@ -344,6 +346,7 @@
 
 				})
 		}
+		
 		function guardarEnviar(){
 			
 			//console.log("archivosFormato ",archivosFormato)
@@ -356,8 +359,10 @@
 				if (!registrarDictamen(2)) return;
 				if(!registrarFormato(2))return;
 				
-				$('#btnSoloGuardar').css("display", "block");		
-				$('#btnEnviarGuardar').css("display", "block");
+				console.log("TODO CORRECTO")
+				
+				$('#btnSoloGuardar').css("display", "none");		
+				$('#btnEnviarGuardar').css("display", "none");
 				limpiarArchivosDictamen();
 				limpiarArchivosFormato();
 				
@@ -488,9 +493,94 @@
 				}	
 			});		
 		}
-	
-		function cargarListaArchivoFormato(){
+		function guardarEnviarFinal(){
+			if(archivosDictamenResponse.length==0){							
+				mensajeError("Por favor adjunte archivos Dictamen.")
+				return;
+			}
+			if(archivosFormatoResponse.length==0){						
+				mensajeError("Por favor adjunte archivos Formato de Liquidación Anual.")
+					return;
+			}
 			
+			registrarSubirTodo(2,archivosFormatoResponse,archivosDictamenResponse);
+			
+			
+			//console.log(archivosDictamenResponse);
+			//console.log(archivosFormatoResponse);
+		}
+		function registrarSubirTodo(estado,listaFormato,listaDictamen) {
+			var liquidaciones = [];
+			var pAnio = $('#anio').text();
+			closeMensajes();
+						
+			$.each(listaFormato, function (index, archivoDictamen) {
+				var data = {
+					idPeriodo: 1,
+					idTipoDocumento: 1,
+					anio: pAnio,
+					documento: archivoDictamen.fileName,
+					estado: estado
+				};
+				liquidaciones.push(data);
+				//console.log(archivoDictamen);
+			
+
+			});
+			$.each(listaDictamen, function (index, archivoDictamen) {
+				var data = {
+					idPeriodo: 1,
+					idTipoDocumento: 1,
+					anio: pAnio,
+					documento: archivoDictamen.fileName,
+					estado: estado
+				};
+				liquidaciones.push(data);
+				//console.log(archivoDictamen);
+			
+
+			});
+			if (listaDictamen.length == 0) {
+				return false;
+			}
+			if (listaFormato.length == 0) {
+				return false;
+			}
+			var url = context + 'api/liquidacion/registrar-liquidacion';
+			$.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				data: JSON.stringify(liquidaciones),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+				.done((rest) => {
+					//console.log(rest);
+					if (rest.resultado == 1) {
+						//mensajeCorrecto(rest.mensaje);
+						mensajeCorrecto('[[#{general.mensaje.registroCorrectamente}]]');
+						$('#btnSoloGuardar').css("display", "none");
+						$('#btnEnviarGuardar').css("display", "none");
+						$('#fFormatouploadsubirtodo').css("display", "none");
+						$('#fFormatouploadcancelatodo').css("display", "none");
+						$('#listaArchivosDictamen').empty();
+						$('#listaArchivosFormato').empty();
+						
+						archivosDictamenResponse = [];
+						archivosFormatoResponse = [];
+					}
+
+				});
+		
+		}
+		function cargarListaArchivoFormato(){
 			
 			/*
 			$('#listaArchivosFormato').empty();
@@ -645,8 +735,8 @@
 			$('#'+nombreListaFormato).empty();
 			for (var i = 0; i < lista.length; i++) {
 			  var data = lista[i];
-			  console.log("resultado: ",data);
-			  console.log("resultado: ",data.fileNameOriginal);
+			  //console.log("resultado: ",data);
+			  //console.log("resultado: ",data.fileNameOriginal);
 			  $('#'+nombreListaFormato)
 			  .append("<li><a href='" + data.fileName + "' target='_blank'><i class='fa fa-file'></i></a> " 
 					  + data.fileNameOriginal + "</li>");
@@ -718,8 +808,8 @@
 			$('#fdictamenuploadcancelatodo').css("display", "none");
 			if(archivosDictamenResponse.length==0){
 				if(archivosFormatoResponse.length==0){
-					$('#btnSoloGuardar').css("display", "none");
-					$('#btnEnviarGuardar').css("display", "none");
+					//$('#btnSoloGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
 				}
 			}
 		}
@@ -762,10 +852,10 @@
 			if(registrarDictamen(1)){
 				registrarFormato(1);
 			}
-			limpiarArchivosFormato();
-			limpiarArchivosDictamen();
-			$('#btnSoloGuardar').css("display", "none");
-			$('#btnEnviarGuardar').css("display", "none");
+			//limpiarArchivosFormato();
+			//limpiarArchivosDictamen();
+			//$('#btnSoloGuardar').css("display", "none");
+			//$('#btnEnviarGuardar').css("display", "none");
 			
 			$('#fdictamenuploadsubirtodo').css("display", "none");
 			$('#fdictamenuploadcancelatodo').css("display", "none");
