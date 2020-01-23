@@ -16,7 +16,7 @@
 					<h3>Cambiar Clave</h3>
 				</div>
 				<div class="container-fluid">
-					<form class="needs-validation" novalidate>
+					<form class="needs-validation" novalidate id="frmCambiarClave">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="card">
@@ -177,7 +177,7 @@ function cambiarClave(){
 	  var claveAnterior = $('#txtClaveAnterior').val();
 	  var nuevaClave = $('#txtNuevaClave').val();
 	  var confirmarClave = $('#txtConfirmarClave').val();
-	  if(claveAnterior==''|| nuevaClave==''||confirmarClave){
+	  if(claveAnterior==''|| nuevaClave==''||confirmarClave==''){
 		  return false;
 	  }
 	  var data = {
@@ -214,6 +214,8 @@ function cambiarClave(){
 				    content: rest.mensaje,
 				    type: 'green',
 				});
+				$("#frmCambiarClave")[0].reset();
+				$('#frmCambiarClave').removeClass( "was-validated");
 			}else{
 				$.alert({
 				    title: 'Alerta',
