@@ -9,18 +9,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kemal.spring.bd.view.VWNuevoCredito;
 import com.kemal.spring.bd.view.VWNuevoCreditoRepository;
+import com.kemal.spring.domain.Credito;
+import com.kemal.spring.domain.CreditoRepository;
 
 @Service
 public class CreditoService {
 
 	@Autowired
 	VWNuevoCreditoRepository vwNuevoCreditoRepository;
-
-	@Transactional
-	public HashMap<String,Object> registrarRepresentante(int idcn,int pagina,int totalRegistrosPorPagina) {
-
+	@Autowired
+	CreditoRepository creditoRepository;
+	@Transactional(readOnly = false)
+	public HashMap<String,Object> registrarCredito(List<Credito> lstCredito,Integer idcn) {
+		
+		
+		lstCredito.stream().forEach((a) -> {
+			creditoRepository.save(a);
+		});
+		
+	
 		HashMap<String, Object> rest=new HashMap<String, Object>();
-		//rest.put("lista", listarNuevosCreditos(idcn,pagina,totalRegistrosPorPagina));
+		rest.put("lista", listarNuevosCreditos(idcn));
 		rest.put("resultado", 1);
 		rest.put("mensaje", "Se registró correctamente");
 		return rest;
@@ -28,21 +37,8 @@ public class CreditoService {
 	
 	public List<VWNuevoCredito> listarNuevosCreditos(Integer idcn){
 		List<VWNuevoCredito> pagedResult = vwNuevoCreditoRepository.findByNCodigocn(idcn);
-//		pagedResult.addAll(vwNuevoCreditoRepository.findByNCodigocn(idcn));
-//		pagedResult.addAll(vwNuevoCreditoRepository.findByNCodigocn(idcn));
 		return pagedResult;
+	}
 	
-	}
-	public HashMap<String, Object> eliminarRepresentantesByRucPaginado(String ruc,int pagina,int totalRegistrosPorPagina,int idRepresentante){
-		
-		//Optional<Representante> representante = vwNuevoCreditoRepository.findById(idRepresentante);
-		//representante.get().setNEstado(0);
-		//representanteRepository.save(representante.get());
-		
-		HashMap<String, Object> rest = new HashMap<>();
-		//rest.put("lista", listarRepresentantesByRucPaginado(representante.get().getContribuyente().getSruc(),pagina,totalRegistrosPorPagina));
-		rest.put("resultado", 1);
-		rest.put("mensaje", "Se eliminó correctamente");
-		return rest;
-	}
+	
 }

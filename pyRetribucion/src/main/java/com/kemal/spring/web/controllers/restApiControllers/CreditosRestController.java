@@ -1,10 +1,13 @@
 package com.kemal.spring.web.controllers.restApiControllers;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -22,7 +25,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kemal.spring.bd.view.NuevoCreditoDTO;
+import com.kemal.spring.domain.Credito;
+import com.kemal.spring.domain.Liquidacion;
 import com.kemal.spring.domain.User;
+import com.kemal.spring.domain.dto.CreditoDTO;
 import com.kemal.spring.service.CreditoService;
 import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.controllers.restApiControllers.dto.RepresentanteDto;
@@ -44,12 +50,16 @@ public class CreditosRestController {
 		return attr.getRequest().getSession(); // true == allow create
 	}
 	@ResponseBody
-	@PostMapping(value = "registrar-representante", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> registrarRepresentante(@RequestBody  NuevoCreditoDTO nuevoCreditoDTO) {
-		System.out.println("idDto: " + nuevoCreditoDTO.getCodigo());
+	@PostMapping(value = "registrarConsumo", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> registrarRepresentante(@RequestBody  List<CreditoDTO> creditosDTO) {
+		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		Object us = (Object) sci.getAuthentication().getPrincipal();
+		User c = ((UserDetailsImpl) us).getUser();
 		
-		NuevoCreditoDTO snuevoCreditoDTO = modelMapper.map(nuevoCreditoDTO, NuevoCreditoDTO.class);
-		
+		Type listType = new TypeToken<List<Credito>>() {}.getType();
+		Type listTypeResult = new TypeToken<List<CreditoDTO>>() {}.getType();
+		List<Credito> creditos = new ModelMapper().map(creditosDTO, listType);
+		creditoService.registrarCredito(creditos, c.getContribuyente().getId());
 
 		//HashMap<String, Object>res = creditoService.registrarRepresentante(representante,representanteDto.getPagina(),totalRegistroPorPagina);
 		HashMap<String, Object>res =null;

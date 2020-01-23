@@ -230,20 +230,11 @@ function validanumerosRP(noperacion) {
 }
 
 function mensajeError(msg) {
-    bootbox.dialog({
-        message: "" + msg,
-        closeButton: false,
-        buttons: {
-            success: {
-                label: "OK",
-                className: "btn-sm btn-danger",
-                callback: function () {
-
-                }
-            }
-
-        }
-    });
+	$.alert({
+	    title: 'Información',
+	    content: msg,
+	    type: 'green',
+	});
 }
 function mensajeError2(stitle, msg) {
     bootbox.dialog({

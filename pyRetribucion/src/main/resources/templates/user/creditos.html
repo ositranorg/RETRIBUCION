@@ -91,9 +91,9 @@
 											</div>
 											<div class="form-group">
 												<div class="center">
-													<label class="orange ">Crédito </label>
+													<h3 class="orange ">Crédito <span id="lblconsumo"></span></h3>
 													<div class="clearfix ">
-														<label id="lblconsumo">0</label> <input type="hidden"
+														 <input type="hidden"
 															id="hddconsumo" name="hddconsumo" value="0" />
 													</div>
 												</div>
@@ -420,9 +420,10 @@
 						
 						
 						var DT1=$('#tableConsumoDisponible').DataTable( {
-							
+							  "pageLength": 5,
 							  'bProcessing': false,
 						        'bServerSide': false,
+						        
 						        "ajax": {
 						            "url": url,
 						            "type": "GET"
@@ -489,25 +490,40 @@
 						
 						 $('#tableConsumoDisponible thead').on('change', 'input[type="checkbox"]', function(){
 							  if(this.checked ){
-								  var r =  $('#tableConsumoDisponible tbody tr');
-								  rows_selected = [];
-								  r.each(function(k,v){
+								 
+								  var arr= [];
+								  var checkedvalues = DT1.$('input:checked').each(function () {
+								 			
 									  
-									  var data = DT1.row($(this)).data();
-									  // Determine whether row ID is in the list of selected row IDs 
-								      var index = $.inArray(data, rows_selected);
+									  
+									  var $row =DT1.row( $(this).parents('tr') );
 
-								      // If checkbox is checked and row ID is not in list of selected row IDs
+								      // Get row data
+								      var data = DT1.row($row).data();
+
+								      // Get row ID
+								      var saldo = data.nCodigo;
 								     
-								         rows_selected.push(data);
-
-								      	
+								      // Determine whether row ID is in the list of selected row IDs 
+								      var index = $.inArray(data, rows_selected);
+									  rows_selected.push(data);
+									  var saldoTotalSeleccionado=0;
+									  
+										for (var i = 0; i < rows_selected.length; i++) {									  
+											saldoTotalSeleccionado=saldoTotalSeleccionado+(parseFloat(rows_selected[i].nretResultante)*-1);
+										}
+									  $("#lblconsumo").html(saldoTotalSeleccionado==undefined||saldoTotalSeleccionado==""?"":saldoTotalSeleccionado*-1);
+										
+										
+										
 								  });
-								 console.log(rows_selected);
+								 
+								
 							  }else{
 								  rows_selected=[];
+								  $("#lblconsumo").html("");
 							  }
-								
+							 
 						 });
 						
 						
@@ -541,22 +557,13 @@
 									saldoTotalSeleccionado=saldoTotalSeleccionado+(parseFloat(rows_selected[i].nretResultante)*-1);
 										
 								}
-								$("#lblconsumo").html(saldoTotalSeleccionado);
+								$("#lblconsumo").html(saldoTotalSeleccionado==undefined||saldoTotalSeleccionado==""?"":saldoTotalSeleccionado*-1);
 						});
 						
 						$('#btn-cred-guardar')
 								.click(
 										function() {
-											 var message = "";
-											$("#tableConsumoDisponible input[type=checkbox]:checked").each(function () {
-								                var row = $(this).closest("tr")[0];
-								                message += row.cells[1].innerHTML;
-								                message += "   " + row.cells[2].innerHTML;
-								                message += "   " + row.cells[3].innerHTML;
-								                message += "   " + row.cells[4].innerHTML;
-								                message += "\n";
-								            });
-										alert(message);
+										console.log(rows_selected);
 											var modo = $("#modo").val();
 											var mes = $("#sMescm").val();
 											var anio = $("#sAniocm").val();
@@ -569,7 +576,7 @@
 												mesant = $("#sMesPD").val();
 												anioant = $("#sAnioPD").val();
 											}
-											if ($("#hddconsumo").val() == "0"
+											if ($("#lblconsumo").html() == "0"
 													&& $("#modo").val() == "0") {
 												mensajeError('El Cr&eacute;dito no puede ser cero');
 											} else if ($("#hddconsumoManual")
@@ -594,13 +601,30 @@
 													&& mes == mesant) {
 												mensajeError('El Periodo Destino no puede ser igual al Periodo Origen');
 											} else {
-												$
-														.ajax({
+												
+												var url = 'api/creditos/listar-creditos';
+												var token = $("meta[name='_csrf']").attr("content");
+												var creditos=[];
+												$.each(rows_selected, function (index,regcredito) {
+													var data={
+															nCodigo:regcredito.nCodigo,
+															nCodigocn: regcredito.nCodigocn,
+															sTipoPeriodicidad: regcredito.sTipoPeriodicidad,
+															sTipoRetribucion: regcredito.sTipoRetribucion,
+															sAnio: regcredito.sAnio,
+															sMes: regcredito.sMes,
+															nretResultante: regcredito.nretResultante
+															
+													}
+													creditos.push(data);
+												});
+												$.ajax({
 															type : 'POST',
-															url : 'Credito',
-															data : $(
-																	'#credito-form')
-																	.serialize(),
+															url : 'api/creditos/registrarConsumo',
+															data : JSON.stringify(creditos),															
+													        headers: {
+																'X-CSRF-TOKEN': token
+															},
 															dataType : 'json',
 															success : function(
 																	json) {
