@@ -16,7 +16,7 @@
 					<h3>Cambiar Clave</h3>
 				</div>
 				<div class="container-fluid">
-					<form class="needs-validation" novalidate>
+					<form class="needs-validation" novalidate id="frmCambiarClave">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="card">
@@ -214,6 +214,8 @@ function cambiarClave(){
 				    content: rest.mensaje,
 				    type: 'green',
 				});
+				$("#frmCambiarClave")[0].reset();
+				$('#frmCambiarClave').removeClass( "was-validated");
 			}else{
 				$.alert({
 				    title: 'Alerta',

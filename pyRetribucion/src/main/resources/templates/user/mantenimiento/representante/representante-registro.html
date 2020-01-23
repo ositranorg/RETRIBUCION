@@ -321,7 +321,7 @@
 			if (rest.resultado == 1) {						
 				//cargarDatos(rest.lista.contribuyentes);
 				//cargarPaginador(rest.lista.totalRegistros);
-				console.log(rest);
+				//console.log(rest);
 				cargarOptionTipoDocumento(rest.lista);			
 			}
 
@@ -381,7 +381,7 @@
 		//$('#txtIdRepresentante').val(null);
 		var url = context + 'api/representante/registrar-representante';
 		var idRepresentante = $('#txtIdRepresentante').val();
-		console.log("ID TEST:", idRepresentante)
+		//console.log("ID TEST:", idRepresentante)
 		var ruc = $('#txtRucEmpresa').val();
 		var correo = $('#txtCorreo').val();
 		var idTipoDocumento = $('#cboTipoDocumento').val();
@@ -481,14 +481,14 @@
 			var fechaTmp = fechaInicio=='-'?'-':moment(fechaInicio).format('DD/MM/YYYY hh:mm:ss')
 			
 			var row = '<tr>';
-			row += '<td style="text-align: center;">'+ conta +'</td>'
-			row += '<td>'+ nombre +'</td>'
-			row += '<td>'+numero+'</td>'
-			row += '<td>'+nombres+'</td>'
-			row += '<td>'+apePaterno+'</td>'
-			row += '<td>'+apeMaterno+'</td>'
-			row += '<td>'+cargo+'</td>'
-			row += '<td style="text-align: center;">'+ fechaTmp +'</td>'
+			row += '<td style="text-align: center;vertical-align: middle;">'+ conta +'</td>'
+			row += '<td style="vertical-align: middle;">'+ nombre +'</td>'
+			row += '<td style="vertical-align: middle;">'+numero+'</td>'
+			row += '<td style="vertical-align: middle;">'+nombres+'</td>'
+			row += '<td style="vertical-align: middle;">'+apePaterno+'</td>'
+			row += '<td style="vertical-align: middle;">'+apeMaterno+'</td>'
+			row += '<td style="vertical-align: middle;">'+cargo+'</td>'
+			row += '<td style="text-align: center;vertical-align: middle;">'+ fechaTmp +'</td>'
 			row += "<td style='text-align: center;'>"+
 					"<button type='button' class='btn' onclick='editarRepresentante("+ JSON.stringify(data) +")'><i class='fa fa-edit text-primary' aria-hidden='true'></i></button>" +
 					"<button type='button' class='btn' onclick='eliminarRepresentante(" + data.id + ");'><i class='fa fa-trash text-danger' aria-hidden='true'></i></button>" +
@@ -531,7 +531,14 @@
 		$('#txtApellidoPaterno').val(representante.sapePaterno);
 		$('#txtApellidoMaterno').val(representante.sapeMaterno);
 		$('#txtCargo').val(representante.scargo);
-		$('#txtFechaPoder').val(representante.dFechaInicio);
+		
+		var dateParts = representante.dFechaInicio==null?'':representante.dFechaInicio.split("/");
+		if(dateParts!=''){
+			var fecha =  moment(representante.dFechaInicio).format('DD/MM/YYYY hh:mm:ss');
+			$('#txtFechaPoder').val(fecha);
+		}else{
+			$('#txtFechaPoder').val('');
+		}
 		
 		$("#registrarModal").modal('show');
 		//console.log("representante: ",representante);
@@ -609,7 +616,7 @@
 		var current_day = date_components[0];
 		current = current_year+"-"+current_month+"-"+current_day+'T00:00:00';
 		var date11=new Date(current);
-		console.log("FECHA: ",date11);
+		//console.log("FECHA: ",date11);
 		
 		/*
 	    var d = new Date(date11),
