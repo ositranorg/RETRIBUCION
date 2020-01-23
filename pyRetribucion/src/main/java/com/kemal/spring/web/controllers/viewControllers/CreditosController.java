@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.kemal.spring.bd.dto.VWNuevoCredito;
-import com.kemal.spring.bd.dto.VWNuevoCreditoService;
+import com.kemal.spring.bd.view.VWNuevoCredito;
+import com.kemal.spring.bd.view.VWNuevoCreditoService;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.dto.CreditoDeLaDJService;

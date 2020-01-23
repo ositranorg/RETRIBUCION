@@ -123,8 +123,9 @@ public class Util {
 			ruta = config.getPago();
 		}else if (modulo.equals("fdictamen")) {
 			ruta = config.getPformatoLiquidacion();
+		}else if (modulo.equals("fFormato")) {
+			ruta = config.getPformatoLiquidacion();
 		}
-		
 		return ruta;
 	}
     public String quitarultimacomma(String cadena) {
@@ -149,4 +150,5 @@ public class Util {
 		
 		return lst;
 	}
+
 }

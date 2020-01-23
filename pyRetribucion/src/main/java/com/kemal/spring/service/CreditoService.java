@@ -1,43 +1,48 @@
 package com.kemal.spring.service;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kemal.spring.domain.Credito;
-import com.kemal.spring.domain.CreditoRepository;
+import com.kemal.spring.bd.view.VWNuevoCredito;
+import com.kemal.spring.bd.view.VWNuevoCreditoRepository;
 
 @Service
 public class CreditoService {
 
 	@Autowired
-	CreditoRepository dao;
+	VWNuevoCreditoRepository vwNuevoCreditoRepository;
 
-	public Page<Credito> findAllBySEstado(String estado,Pageable pageable) {
+	@Transactional
+	public HashMap<String,Object> registrarRepresentante(int idcn,int pagina,int totalRegistrosPorPagina) {
 
-		try {
-			return dao.findAllBySEstado(estado, pageable);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		HashMap<String, Object> rest=new HashMap<String, Object>();
+		//rest.put("lista", listarNuevosCreditos(idcn,pagina,totalRegistrosPorPagina));
+		rest.put("resultado", 1);
+		rest.put("mensaje", "Se registró correctamente");
+		return rest;
 	}
-
-	@Transactional(readOnly = false)
-	public void save(Credito deducciones) {
-		dao.save(deducciones);
-
+	
+	public List<VWNuevoCredito> listarNuevosCreditos(Integer idcn){
+		List<VWNuevoCredito> pagedResult = vwNuevoCreditoRepository.findByNCodigocn(idcn);
+//		pagedResult.addAll(vwNuevoCreditoRepository.findByNCodigocn(idcn));
+//		pagedResult.addAll(vwNuevoCreditoRepository.findByNCodigocn(idcn));
+		return pagedResult;
+	
 	}
-
-	@Transactional(readOnly = true)
-	public Optional<Credito> findById(Integer id) {
-		return dao.findById(id);
-
+	public HashMap<String, Object> eliminarRepresentantesByRucPaginado(String ruc,int pagina,int totalRegistrosPorPagina,int idRepresentante){
+		
+		//Optional<Representante> representante = vwNuevoCreditoRepository.findById(idRepresentante);
+		//representante.get().setNEstado(0);
+		//representanteRepository.save(representante.get());
+		
+		HashMap<String, Object> rest = new HashMap<>();
+		//rest.put("lista", listarRepresentantesByRucPaginado(representante.get().getContribuyente().getSruc(),pagina,totalRegistrosPorPagina));
+		rest.put("resultado", 1);
+		rest.put("mensaje", "Se eliminó correctamente");
+		return rest;
 	}
 }

@@ -46,69 +46,45 @@
 
 
 								<ul
-									class="nav nav-pills nav-fill border border-info bg-dark white ">
-									<li class="nav-item active  bg-dark"><a
+									class="nav nav-pills nav-fill border border-info  white ">
+									<li class="nav-item  "><a
 										class="nav-link active" data-toggle="tab" href="#pordefecto"
 										onclick="obtenerValorTab('0')">POR DEFECTO</a></li>
-									<li class="nav-item  bg-dark"><a class="nav-link "
+									<li class="nav-item  "><a class="nav-link "
 										data-toggle="tab" href="#modomanual"
 										onclick="obtenerValorTab('1')">MODO MANUAL</a></li>
 								</ul>
 								<div class="tab-content ">
 									<div id="pordefecto" class="tab-pane active">
+									<br/>
 										<fieldset class="scheduler-border">
-											<legend class="scheduler-border">Seleccionar Crédito</legend>
+											<legend class="scheduler-border">SELECCIONAR CREDITO</legend>
 											<table id="tableConsumoDisponible"
 												class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
+													
 														<th class="col" style="width: 5% !important;"></th>
+														<th class="col" style="width: 15% !important;">nCodigocn</th>
+														<th class="col" style="width: 15% !important;">sTipoPeriodicidad</th>
+														<th class="col" style="width: 15% !important;">sTipoRetribucion</th>
 														<th class="col" style="width: 15% !important;">TIPO DE PERIODICIDAD</th>
-														<th class="col" style="width: 15% !important;">TIPO DE RETRIBUCIÓN</th>
+														<th class="col" style="width: 15% !important;">TIPO	DE RETRIBUCIÓN</th>
 														<th class="col" style="width: 15% !important;">PERIODO</th>
 														<th class="col" style="width: 15% !important;">AÑO</th>
-														<th class="col center"  style="width: 35% !important;">CRÉDITO</th>
-														
+														<th class="col center" style="width: 35% !important;">CRÉDITO</th>
+
 													</tr>
 												</thead>
-												<tbody>
-
-													<tr th:each="base : ${lstCreditos}">
-															<td scope="row" >
-																<input type="checkbox" th:value="${base.nCodigo}"  name="ids[]" th:class="checkBoxClass"/>
-															</td>
-														<td scope="row" th:text="${base.sTipoPeriodicidad}">status</td>
-														<td scope="row" th:text="${base.sTipoRetribucion}">status</td>
-														<td scope="row" th:text="${base.sMes}">status</td>
-														<td scope="row" th:text="${base.sAnio}">status</td>
-
-														<td scope="row" th:text="${base.nretResultante}">status</td>
-														
-													</tr>
-
-												</tbody>
+											
 											</table>
-											<div class="row" th:fragment="pagination">
-												<div class="col-md-2"></div>
-												<div class="col-md-8">
-													<nav aria-label="Pagination">
-														<ul class="pagination justify-content-center">
-															<li class="page-item"
-																th:each="pageNumber : ${pageNumbers}">
-																<button class="page-link" 
-																	th:attr="onclick=|paginacion('creditos','credito-form','${pageNumber}')|"
-																	th:text=${pageNumber}>1</button>
-															</li>
-														</ul>
-													</nav>
-												</div>
-												<div class="col-md-2"></div>
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPaginacion">
+												</ul>
+											</nav>
 
-											</div>
-
-											<input type="hidden" id="paginacionhdd" name="page"
-												th:value="${pageNumber}" />
-											<input type="hidden" id="selids" th:value="${creditosForm.ids}" />
+											<input type="hidden" id="selids"
+												th:value="${creditosForm.ids}" />
 											<div id="saldos">
 												<input type="hidden" id="contsaldos" name="contsaldos"
 													value="0" />
@@ -123,7 +99,7 @@
 												</div>
 											</div>
 										</fieldset>
-
+	
 									</div>
 									<div id="modomanual" class="tab-pane">
 										<fieldset class="scheduler-border">
@@ -262,6 +238,9 @@
 
 								</div>
 							</div>
+							
+							
+						
 							<!-- /.col -->
 						</div>
 						<!-- /.row -->
@@ -289,6 +268,16 @@
 
 <div th:replace="fragments/jsScripts :: scripts"></div>
 <script type="text/javascript">
+
+
+
+
+
+
+
+
+
+
 	function validarNegativo(e) {
 		var a = e.value;
 		if (e.value !== '0' && a.indexOf("-") == -1)
@@ -393,26 +382,10 @@
 	jQuery(document)
 			.ready(
 					function() {
-						$('.checkBoxClass').each(function () {
-							var selArr=$("#selids").val().substring("",$("#selids").val().length-1);
-							 var d=$(this).val();
-							 if($("#selids").val().length>0 ){
-								 
-									var s=selArr.split(",");
-									for (var i = 0; i < s.length; i++) {
-										if(d==s[i]){
-											$(this).prop('checked',"true");	
-										}
-									}
-									
-							 }
-							
-							
-							
-					    	
-						});
 						
-						
+						var url = 'api/creditos/listar-creditos';
+						var token = $("meta[name='_csrf']").attr("content");
+					
 						
 						buscarPeriodo("fmesRetribucion", "periodostributrios",
 								"ftipoPeriodicidad", $("#tipoPeriodicidadhdd")
@@ -444,11 +417,146 @@
 						});
 						numeroDecimales('consumo');
 						numeroDecimales('saldomanual');
+						
+						
+						var DT1=$('#tableConsumoDisponible').DataTable( {
+							
+							  'bProcessing': false,
+						        'bServerSide': false,
+						        "ajax": {
+						            "url": url,
+						            "type": "GET"
+						        },
+						        'headers': {
+									'X-CSRF-TOKEN': token
+								},
+								
+								 'columnDefs': [
+								      {
+								         'targets': 0,
+								         'checkboxes': {
+								            'selectRow': true
+								         }
+								      }
+								   ],
+								   'select': {
+								      'style': 'multi'
+								   },
+						     
+						        "aoColumns": [ 
+						        	
+						        	
+							            { 'mData': 'nCodigo' },
+							          
+							            
+							            { 'mData': 'nCodigocn' ,"visible":false},
+							            { 'mData': 'sTipoPeriodicidad',"visible":false },
+							            { 'mData': 'sTipoRetribucion' ,"visible":false},
+							            
+							            { 'mData': 'sTipoPeriodicidadNombre' },
+							            { 'mData': 'sTipoRetribucionNombre' },
+							            { 'mData': 'sAnio' },
+							            { 'mData': 'sMes' },
+							            { 'mData': 'nretResultante' }
+						              
+						            ],
+						            "language": {
+						                "decimal": "",
+						                "emptyTable": "No hay información",
+						                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+						                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+						                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+						                "infoPostFix": "",
+						                "thousands": ",",
+						                "lengthMenu": "Mostrar _MENU_ Entradas",
+						                "loadingRecords": "Cargando...",
+						                "processing": "Procesando...",
+						                "search": "Buscar:",
+						                "zeroRecords": "Sin resultados encontrados",
+						                "paginate": {
+						                    "first": "Primero",
+						                    "last": "Ultimo",
+						                    "next": "Siguiente",
+						                    "previous": "Anterior"
+						                }
+						            }
+							    
+						} );
+					
+						
+						
+						 var rows_selected = [];
+						
+						 $('#tableConsumoDisponible thead').on('change', 'input[type="checkbox"]', function(){
+							  if(this.checked ){
+								  var r =  $('#tableConsumoDisponible tbody tr');
+								  rows_selected = [];
+								  r.each(function(k,v){
+									  
+									  var data = DT1.row($(this)).data();
+									  // Determine whether row ID is in the list of selected row IDs 
+								      var index = $.inArray(data, rows_selected);
 
+								      // If checkbox is checked and row ID is not in list of selected row IDs
+								     
+								         rows_selected.push(data);
+
+								      	
+								  });
+								 console.log(rows_selected);
+							  }else{
+								  rows_selected=[];
+							  }
+								
+						 });
+						
+						
+						 $('#tableConsumoDisponible tbody').on('change', 'input[type="checkbox"]', function(){
+							/* var data1 = DT1.row( $(this).parents('tr') ).data();
+								console.log(data1);
+							*/			
+								
+							 var $row =DT1.row( $(this).parents('tr') );
+
+						      // Get row data
+						      var data = DT1.row($row).data();
+
+						      // Get row ID
+						      var saldo = data.nCodigo;
+
+						      // Determine whether row ID is in the list of selected row IDs 
+						      var index = $.inArray(data, rows_selected);
+
+						      // If checkbox is checked and row ID is not in list of selected row IDs
+						      if(this.checked && index === -1){
+						         rows_selected.push(data);
+
+						      // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+						      } else if (!this.checked && index !== -1){
+						         rows_selected.splice(index, 1);
+						      }		
+								//console.log(rows_selected);
+								var saldoTotalSeleccionado=0;
+								for (var i = 0; i < rows_selected.length; i++) {
+									saldoTotalSeleccionado=saldoTotalSeleccionado+(parseFloat(rows_selected[i].nretResultante)*-1);
+										
+								}
+								$("#lblconsumo").html(saldoTotalSeleccionado);
+						});
+						
 						$('#btn-cred-guardar')
 								.click(
 										function() {
-
+											 var message = "";
+											$("#tableConsumoDisponible input[type=checkbox]:checked").each(function () {
+								                var row = $(this).closest("tr")[0];
+								                message += row.cells[1].innerHTML;
+								                message += "   " + row.cells[2].innerHTML;
+								                message += "   " + row.cells[3].innerHTML;
+								                message += "   " + row.cells[4].innerHTML;
+								                message += "\n";
+								            });
+										alert(message);
 											var modo = $("#modo").val();
 											var mes = $("#sMescm").val();
 											var anio = $("#sAniocm").val();
@@ -497,7 +605,7 @@
 															success : function(
 																	json) {
 																if (json[0].success) {
-																	mensajeServidor(json);
+																	//mensajeServidor(json);
 																	$("#sMescm")
 																			.val(
 																					"-1");
@@ -506,7 +614,7 @@
 																			.val(
 																					"-1");
 																} else {
-																	mensajeError(json[0].msg);
+																	//mensajeError(json[0].msg);
 																}
 
 															}
