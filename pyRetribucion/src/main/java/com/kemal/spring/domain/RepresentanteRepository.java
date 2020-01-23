@@ -20,7 +20,7 @@ public interface RepresentanteRepository extends JpaRepository<Representante, In
 	 /*@Query(value = "SELECT r FROM Representante r join r.contribuyente c join r.tipoDocumento t where c.id = :idContribuyente and r.nEstado=1",
 		    countQuery = "SELECT count(r) FROM Representante r join r.contribuyente c join r.tipoDocumento t where c.id = :idContribuyente and r.nEstado=1", nativeQuery = 
 	        false)*/
-	 @Query(value = "SELECT r FROM Representante r join r.contribuyente c join r.tipoDocumento t where c.id = :idContribuyente and r.nEstado=1",
+	 @Query(value = "SELECT r FROM Representante r join r.contribuyente c join r.tipoDocumento t where c.id = :idContribuyente and r.nEstado=1 order by r.id desc",
 			    nativeQuery = false)
 	 Page<Representante> findAllByIdContribuyentePaginacion(@Param("idContribuyente") Integer idContribuyente,Pageable pageable);
 	 

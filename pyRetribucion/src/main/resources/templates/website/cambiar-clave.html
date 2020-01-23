@@ -177,6 +177,9 @@ function cambiarClave(){
 	  var claveAnterior = $('#txtClaveAnterior').val();
 	  var nuevaClave = $('#txtNuevaClave').val();
 	  var confirmarClave = $('#txtConfirmarClave').val();
+	  if(claveAnterior==''|| nuevaClave==''||confirmarClave){
+		  return false;
+	  }
 	  var data = {
 		 claveAnterior:claveAnterior,
 		 nuevaClave:nuevaClave,

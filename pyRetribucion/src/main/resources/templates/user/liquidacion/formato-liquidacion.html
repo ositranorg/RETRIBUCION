@@ -849,9 +849,9 @@
 			$('#'+control+'uploadcancelatodo').css("display", "none");
 		}
 		function soloGuadar(){
-			if(registrarDictamen(1)){
-				registrarFormato(1);
-			}
+			
+			registrarDictamen(1);
+			registrarFormato(1);
 			//limpiarArchivosFormato();
 			//limpiarArchivosDictamen();
 			//$('#btnSoloGuardar').css("display", "none");
@@ -967,7 +967,7 @@
 					return false;
 				}
 			}
-			$.each(archivosDictamenResponse, function (index, archivoFormato) {
+			$.each(archivosFormatoResponse, function (index, archivoFormato) {
 				var data = {
 					idPeriodo: 1,
 					idTipoDocumento: 2,
@@ -1002,7 +1002,7 @@
 					//console.log(rest);
 					if (rest.resultado == 1) {
 						mensajeCorrecto(rest.mensaje);
-						cargarDatosLiquidaciones(rest.listaLiquidacion);
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
 					}
 
 				})

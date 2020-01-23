@@ -478,6 +478,8 @@
 			var cargo = data.scargo==null?'-':data.scargo;
 			var fechaInicio = data.dFechaInicio==null?'-':data.dFechaInicio;
 			conta+=1;
+			var fechaTmp = fechaInicio=='-'?'-':moment(fechaInicio).format('DD/MM/YYYY hh:mm:ss')
+			
 			var row = '<tr>';
 			row += '<td style="text-align: center;">'+ conta +'</td>'
 			row += '<td>'+ nombre +'</td>'
@@ -486,7 +488,7 @@
 			row += '<td>'+apePaterno+'</td>'
 			row += '<td>'+apeMaterno+'</td>'
 			row += '<td>'+cargo+'</td>'
-			row += '<td>'+fechaInicio+'</td>'
+			row += '<td style="text-align: center;">'+ fechaTmp +'</td>'
 			row += "<td style='text-align: center;'>"+
 					"<button type='button' class='btn' onclick='editarRepresentante("+ JSON.stringify(data) +")'><i class='fa fa-edit text-primary' aria-hidden='true'></i></button>" +
 					"<button type='button' class='btn' onclick='eliminarRepresentante(" + data.id + ");'><i class='fa fa-trash text-danger' aria-hidden='true'></i></button>" +
