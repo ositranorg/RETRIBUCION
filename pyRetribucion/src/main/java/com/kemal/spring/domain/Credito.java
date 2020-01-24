@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,15 +31,12 @@ public class Credito {
 	    @SequenceGenerator(name = "id_SequenceCREDITO", sequenceName = "SQ_RET_CREDITO", allocationSize= 1)
 	    private Integer id;	 
 	    
-	    @Column(name = "SDOCUMENTO")
-	    private String sDocumento;	   
+   
 
 	    
 	    @Column(name = "ncodigoAporte")
 		private Integer ncodigoAporte;
 	    
-	    @Column(name = "DFECHAREGISTRO")
-	    private Date dfecRegistro;
 	    
 	    
 	    @Column(name = "DFECHAAPLICADO")
@@ -72,5 +71,19 @@ public class Credito {
 		private String mesRetribucionDestino;
 	    @Column(name = "SANIOPERIODO_DESTINO")
 		private String anioRetribucionDestino;		
+		
+	    
+		
+		@Temporal(TemporalType.DATE)
+		@Column(name = "DFECHAREGISTRO")
+	    private Date dfecRegistro;
+		@Column(name = "SUSUREGISTRA")
+	    private String sUsuRegistra;
+		
+		@Temporal(TemporalType.DATE)
+		@Column(name = "DFECHAMODIFICA")
+	    private Date dfecModifica;
+		@Column(name = "SUSUMODIFICA")
+	    private String sUsuModifica;
 		
 }

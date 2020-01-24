@@ -34,10 +34,9 @@ label {
 					</div>
 					<div class="user-info">
 						<span class="user-role">Bienvenido</span>
-						<security:authorize access="isAuthenticated()">
-    										Concesionario
-    						<security:authentication property="principal.username"></security:authentication>
-						</security:authorize>
+    					<div sec:authorize="isAuthenticated()">
+     						  <span sec:authentication="principal.user.contribuyente.snombre"></span>
+     					</div>
 						<span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span>
 						</span>
 					</div>

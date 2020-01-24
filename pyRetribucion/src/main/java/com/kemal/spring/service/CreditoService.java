@@ -1,5 +1,6 @@
 package com.kemal.spring.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,16 +21,19 @@ public class CreditoService {
 	@Autowired
 	CreditoRepository creditoRepository;
 	@Transactional(readOnly = false)
-	public HashMap<String,Object> registrarCredito(List<Credito> lstCredito,Integer idcn) {
+	public HashMap<String,Object> save(List<Credito> lstCredito,String usuario) {
 		
 		
 		lstCredito.stream().forEach((a) -> {
+			
+			
+			a.setSUsuRegistra(usuario);
+			a.setDfecRegistro(new Date());
 			creditoRepository.save(a);
 		});
 		
 	
 		HashMap<String, Object> rest=new HashMap<String, Object>();
-		rest.put("lista", listarNuevosCreditos(idcn));
 		rest.put("resultado", 1);
 		rest.put("mensaje", "Se registró correctamente");
 		return rest;

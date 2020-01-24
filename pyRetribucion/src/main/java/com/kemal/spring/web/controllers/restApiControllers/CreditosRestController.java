@@ -28,9 +28,10 @@ import com.kemal.spring.bd.view.NuevoCreditoDTO;
 import com.kemal.spring.domain.Credito;
 import com.kemal.spring.domain.Liquidacion;
 import com.kemal.spring.domain.User;
-import com.kemal.spring.domain.dto.CreditoDTO;
 import com.kemal.spring.service.CreditoService;
 import com.kemal.spring.service.userDetails.UserDetailsImpl;
+import com.kemal.spring.web.controllers.restApiControllers.dto.CreditoDTO;
+import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.RepresentanteDto;
 import com.kemal.spring.web.dto.DataTableObject;
 
@@ -51,18 +52,14 @@ public class CreditosRestController {
 	}
 	@ResponseBody
 	@PostMapping(value = "registrarConsumo", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> registrarRepresentante(@RequestBody  List<CreditoDTO> creditosDTO) {
+	public ResponseEntity<?> registrarRepresentante(@RequestBody  List<CreditoDTO> creditoDTO) {
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
 		User c = ((UserDetailsImpl) us).getUser();
 		
 		Type listType = new TypeToken<List<Credito>>() {}.getType();
-		Type listTypeResult = new TypeToken<List<CreditoDTO>>() {}.getType();
-		List<Credito> creditos = new ModelMapper().map(creditosDTO, listType);
-		creditoService.registrarCredito(creditos, c.getContribuyente().getId());
-
-		//HashMap<String, Object>res = creditoService.registrarRepresentante(representante,representanteDto.getPagina(),totalRegistroPorPagina);
-		HashMap<String, Object>res =null;
+		List<Credito> creditos = new ModelMapper().map(creditoDTO, listType);
+		HashMap<String, Object>res =creditoService.save(creditos,c.getUsername());
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	@ResponseBody

@@ -231,9 +231,9 @@ function validanumerosRP(noperacion) {
 
 function mensajeError(msg) {
 	$.alert({
-	    title: 'Información',
+	    title: 'Aviso',
 	    content: msg,
-	    type: 'green',
+	    type: 'red'
 	});
 }
 function mensajeError2(stitle, msg) {
@@ -257,58 +257,22 @@ function mensajeError2(stitle, msg) {
     });
 }
 function mensaje(msg) {
-    bootbox.dialog({
-
-        message: "" + msg,
-        buttons: {
-            success: {
-                label: "OK",
-                className: "btn-sm btn-info",
-                callback: function () {
-
-                }
-            }
-
-        },
-        callback: function (result) {
-            console.log('This was logged in the callback: ' + result);
-        }
-    });
+	$.alert({
+	    title: 'Información',
+	    content: msg,
+	    type: 'green',
+	    
+	});
 }
-function mensajeServidor(json) {
-    var html_out = json[0].msg;
-    if (json[0].error) {
-        bootbox.dialog({
-            message: html_out,
-            closeButton: false,
-            buttons: {
-                success: {
-                    label: "OK",
-                    className: "btn-sm btn-danger",
-                    callback: function () {
-                        location.reload(true);
-
-                    }
-                }
-
-            }
-        });
-    } else {
-        bootbox.dialog({
-            message: html_out,
-            closeButton: false,
-            buttons: {
-                success: {
-                    label: "OK",
-                    className: "btn-sm btn-primary",
-                    callback: function () {
-                        location.reload(true);
-                    }
-                }
-
-            }
-        });
-    }
+function mensajeServidor(msg) {
+    	$.confirm({
+    	    title: 'Aviso',
+    	    content: msg,
+    	    type: 'green',
+    	    onClose: function(){
+    	        window.location.reload();
+    	    }
+    	});
 }
 function confirmarDesactivar(modulo, codigo) {
     confirmar(modulo, codigo, '0')
