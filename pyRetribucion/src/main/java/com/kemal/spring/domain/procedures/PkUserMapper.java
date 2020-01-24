@@ -32,3 +32,6 @@ public interface PkUserMapper {
 	public void recuperarClave(@Param("filtro") PkUserMapperFilter filtro) throws Exception;
 	
 }
+
+
+

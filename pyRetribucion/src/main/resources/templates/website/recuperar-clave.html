@@ -62,27 +62,7 @@
 	});
 	}, false);
 	})();
-	/*
-	$("#basic-form").validate({
-	    rules: {
-	      cboContribuyente: {
-	        required: true
-	      },
-	      txtCorreo: {
-	        required: true,
-	        email: true
-	      }
-	    },
-	    messages : {
-	      cboContribuyente: {
-	        required: "Por favor seleccione "
-	      },
-	      txtCorreo: {
-	        email: "The email should be in the format: abc@domain.tld"
-	      }
-	    }
-	  });
-	*/
+
 	var token = $("meta[name='_csrf']").attr("content");
 	var context = [[@{/}]];
 		listarContribuyente();

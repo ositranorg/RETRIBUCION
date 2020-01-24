@@ -10,3 +10,5 @@ public interface ContribuyenteRepository   extends PagingAndSortingRepository<Co
 	Page<Contribuyente> findAll(Pageable pageable);
 	Contribuyente findBySruc(String sruc);
 }
+
+

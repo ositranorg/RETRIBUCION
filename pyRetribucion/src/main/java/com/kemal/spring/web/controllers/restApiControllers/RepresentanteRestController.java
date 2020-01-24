@@ -38,7 +38,7 @@ public class RepresentanteRestController {
 	@PostMapping(value = "registrar-representante", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> registrarRepresentante(@RequestBody RepresentanteDto representanteDto) {
 		System.out.println("idDto: " + representanteDto.getId());
-		
+		System.out.println("fecha inicio " + representanteDto.getDFechaInicio());
 		Representante representante = modelMapper.map(representanteDto, Representante.class);
 		System.out.println("nombre: " + representante.getSNombres());
 		

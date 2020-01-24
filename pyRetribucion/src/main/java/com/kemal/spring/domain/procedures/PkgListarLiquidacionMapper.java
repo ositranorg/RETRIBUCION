@@ -41,3 +41,5 @@ public interface PkgListarLiquidacionMapper {
 	public void listarLiquidacion(PkgListarLiquidacionMapperFilter lista) throws Exception;
 	//public void listarLiquidacion(@Param("lista") HashMap<String, Object> lista) throws Exception;
 }
+
+
