@@ -1,4 +1,4 @@
-package com.kemal.spring.bd.dto;
+package com.kemal.spring.bd.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

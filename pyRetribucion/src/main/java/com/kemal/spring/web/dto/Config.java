@@ -21,4 +21,9 @@ public class Config {
 	private String pago;
 	@Value("${pformatoLiquidacion}")
 	private String pformatoLiquidacion;
+	
+	@Value("${total.registro.por.pagina}")
+	private int totalRegistroPorPagina;
+	
+	
 }

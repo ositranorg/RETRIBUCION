@@ -44,7 +44,7 @@ public class Uploads {
 		String ruta = "";
 		System.out.println("subir::" + subir);
 		ruta = util.getRuta(subir);
-		System.out.println("ruta::" + ruta);
+		System.out.println("rutaaaaaa::" + ruta);
 
 		ArchivoDTO archivo = new ArchivoDTO();
 		Iterator<String> itr = request.getFileNames();

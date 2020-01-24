@@ -10,6 +10,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class CreditosForm {
+
+	
+	
 	private String ftipoPeriodicidad;
 	private String ftipoRetribucion;
 	private String fmesRetribucion;
