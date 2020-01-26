@@ -13,7 +13,7 @@ import com.kemal.spring.domain.nonentity.ListarLiquidacion;
 //@Repository
 @Mapper
 public interface PkgListarLiquidacionMapper {
-	@Select(value = "{ CALL PK_RET_LIQUIDACION.PRC_LISTAR_LIQUIDACION"
+	@Select(value = "{ CALL PK_RET_LIQUIDACION.PRC_LISTAR_LIQUIDACION_FINAL"
 			+ "("
 			+ "#{pagina,mode=IN,jdbcType=INTEGER,javaType=Integer},"
 			+ "#{totalRegistroPagina,mode=IN,jdbcType=INTEGER,javaType=Integer},"

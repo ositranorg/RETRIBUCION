@@ -264,7 +264,7 @@
 		$('#fFormatouploadcancelatodo').css("display", "none");
 		
 		$('#btnSoloGuardar').css("display", "none");		
-		$('#btnEnviarGuardar').css("display", "none");
+		//$('#btnEnviarGuardar').css("display", "none");
 
 		var archivosDictamen = [];
 		var archivosFormato = [];
@@ -308,6 +308,9 @@
 			//console.log("total_registros:",total);
 			//console.log("total_redondeo:",redondeoPagina);
 			$("#ulPaginacion").empty();
+			if(totalRegistros==0){
+				return;
+			}
 			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion(1);return false;">Inicio</a></li>');
 			var pagina = 0;			
 			for(var i=0;i<redondeoPagina;i++){				
@@ -362,7 +365,7 @@
 				console.log("TODO CORRECTO")
 				
 				$('#btnSoloGuardar').css("display", "none");		
-				$('#btnEnviarGuardar').css("display", "none");
+				//$('#btnEnviarGuardar').css("display", "none");
 				limpiarArchivosDictamen();
 				limpiarArchivosFormato();
 				
@@ -464,7 +467,7 @@
 				$('#fdictamenuploadcancelatodo').css("display", "none");
 				if(archivosFormato.length==0){
 					$('#btnSoloGuardar').css("display", "none");
-					$('#btnEnviarGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
 				}
 			}
 		}
@@ -495,12 +498,12 @@
 		}
 		function guardarEnviarFinal(){
 			if(archivosDictamenResponse.length==0){							
-				mensajeError("Por favor adjunte archivos Dictamen.")
-				return;
+				//mensajeError("Por favor adjunte archivos Dictamen.")
+				//return;
 			}
 			if(archivosFormatoResponse.length==0){						
-				mensajeError("Por favor adjunte archivos Formato de Liquidación Anual.")
-					return;
+				//mensajeError("Por favor adjunte archivos Formato de Liquidación Anual.")
+				//	return;
 			}
 			
 			registrarSubirTodo(2,archivosFormatoResponse,archivosDictamenResponse);
@@ -540,11 +543,16 @@
 			
 
 			});
+			/*
 			if (listaDictamen.length == 0) {
 				return false;
 			}
 			if (listaFormato.length == 0) {
 				return false;
+			}*/
+			var dataFinal = {
+					estado: estado,
+					liquidaciones: liquidaciones
 			}
 			var url = context + 'api/liquidacion/registrar-liquidacion';
 			$.ajax({
@@ -552,7 +560,8 @@
 					"X-CSRF-TOKEN": token
 				},
 				// En data puedes utilizar un objeto JSON, un array o un query string
-				data: JSON.stringify(liquidaciones),
+				//data: JSON.stringify(liquidaciones),
+				data: JSON.stringify(dataFinal),
 				//Cambiar a type: POST si necesario
 				type: "POST",
 				// Formato de datos que se espera en la respuesta
@@ -567,7 +576,7 @@
 						//mensajeCorrecto(rest.mensaje);
 						mensajeCorrecto('[[#{general.mensaje.registroCorrectamente}]]');
 						$('#btnSoloGuardar').css("display", "none");
-						$('#btnEnviarGuardar').css("display", "none");
+						//$('#btnEnviarGuardar').css("display", "none");
 						$('#fFormatouploadsubirtodo').css("display", "none");
 						$('#fFormatouploadcancelatodo').css("display", "none");
 						$('#listaArchivosDictamen').empty();
@@ -613,7 +622,7 @@
 				$('#fFormatouploadcancelatodo').css("display", "none");
 				if(archivosDictamen.length==0){
 					$('#btnSoloGuardar').css("display", "none");
-					$('#btnEnviarGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
 				}
 			}
 			
@@ -717,7 +726,7 @@
 						if(itemsProcessed === archivosDictamen.length) {
 							cargarListaArchivoSubirTodo(archivosDictamenResponse,'listaArchivosDictamen');							
 							$('#btnSoloGuardar').css("display", "block");		
-							$('#btnEnviarGuardar').css("display", "block");
+							//$('#btnEnviarGuardar').css("display", "block");
 							$('#fdictamenuploadsubirtodo').css("display", "none");		
 							$('#fdictamenuploadcancelatodo').css("display", "none");	
 					    }
@@ -772,7 +781,7 @@
 							$('#fFormatouploadsubirtodo').css("display", "none");		
 							$('#fFormatouploadcancelatodo').css("display", "none");	
 							$('#btnSoloGuardar').css("display", "block");		
-							$('#btnEnviarGuardar').css("display", "block");
+							//$('#btnEnviarGuardar').css("display", "block");
 					    }
 						//limpiarArchivosFormato();
 					}
@@ -833,7 +842,7 @@
 			if(archivosFormato.length==0){
 				if(archivosDictamenResponse.length==0){
 					$('#btnSoloGuardar').css("display", "none");
-					$('#btnEnviarGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
 				}
 			}		
 		}
@@ -856,7 +865,7 @@
 			registrarFormato(1);
 			//limpiarArchivosFormato();
 			//limpiarArchivosDictamen();
-			//$('#btnSoloGuardar').css("display", "none");
+			$('#btnSoloGuardar').css("display", "none");
 			//$('#btnEnviarGuardar').css("display", "none");
 			
 			$('#fdictamenuploadsubirtodo').css("display", "none");
@@ -864,6 +873,8 @@
 			
 			$('#fFormatouploadsubirtodo').css("display", "none");
 			$('#fFormatouploadcancelatodo').css("display", "none");
+			archivosDictamenResponse = [];
+			archivosFormatoResponse = [];
 		}
 		function registrarDictamen(estado) {
 			var liquidaciones = [];
@@ -906,14 +917,19 @@
 			});
 			if (liquidaciones.length == 0) {
 				return false;
-			}
+			};
+			var dataFinal = {
+					estado:estado,
+					liquidaciones:liquidaciones
+				}
 			var url = context + 'api/liquidacion/registrar-liquidacion';
 			$.ajax({
 				headers: {
 					"X-CSRF-TOKEN": token
 				},
 				// En data puedes utilizar un objeto JSON, un array o un query string
-				data: JSON.stringify(liquidaciones),
+				//data: JSON.stringify(liquidaciones),
+				data: JSON.stringify(dataFinal),
 				//Cambiar a type: POST si necesario
 				type: "POST",
 				// Formato de datos que se espera en la respuesta
@@ -985,13 +1001,18 @@
 			if (liquidaciones.length == 0) {
 				return;
 			}
+			var dataFinal = {
+					estado:estado,
+					liquidaciones:liquidaciones
+				}
 			var url = context + 'api/liquidacion/registrar-liquidacion';
 			$.ajax({
 				headers: {
 					"X-CSRF-TOKEN": token
 				},
 				// En data puedes utilizar un objeto JSON, un array o un query string
-				data: JSON.stringify(liquidaciones),
+				//data: JSON.stringify(liquidaciones),
+				data: JSON.stringify(dataFinal),				
 				//Cambiar a type: POST si necesario
 				type: "POST",
 				// Formato de datos que se espera en la respuesta
@@ -1014,11 +1035,13 @@
 			listaLiquidacion.forEach((liquidacion) => {
 				//console.log(liquidacion);
 				var dateParts = liquidacion.dfechaRegistro.split("/");
+				var dateModificarParts = liquidacion.dfechaRegistro.split("/");
 				
 				var fecha = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+				var fechaModificar = new Date(+dateModificarParts[2], dateModificarParts[1] - 1, +dateModificarParts[0]);
 				//console.log("fecha: ",fecha)
 				//var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('DD/MM/YYYY hh:mm:ss');
-				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('MM/DD/YYYY') + ' ' + liquidacion.dhoraModifica;
+				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : moment(fechaModificar).format('DD/MM/YYYY') + ' ' + liquidacion.dhoraModifica;
 				var estado = liquidacion.sestado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO ' + liquidacion.norden + ' Y ENVIADO';
 				var row = '<tr><td style="text-align: center;">' + liquidacion.nanio + '</td>';
 				//row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'

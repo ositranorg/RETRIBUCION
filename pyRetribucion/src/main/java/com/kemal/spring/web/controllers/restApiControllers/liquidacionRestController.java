@@ -23,6 +23,7 @@ import com.kemal.spring.domain.nonentity.ListarLiquidacion;
 import com.kemal.spring.service.LiquidacionService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.LiquidacionesDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.RegistrarLiquidacionDto;
 
 @RestController
 @RequestMapping("api/liquidacion")
@@ -36,12 +37,12 @@ public class liquidacionRestController {
 	
 	@PostMapping(value = "registrar-liquidacion", consumes = "application/json",produces =  { "application/json" })
 	@ResponseBody
-	public ResponseEntity<?> registrarLiquidacion(@RequestBody List<LiquidacionDto> liquidacionesDto) {
+	public ResponseEntity<?> registrarLiquidacion(@RequestBody RegistrarLiquidacionDto registroDto) {
 		
 		Type listType = new TypeToken<List<Liquidacion>>() {}.getType();
 		Type listTypeResult = new TypeToken<List<LiquidacionDto>>() {}.getType();
-		List<Liquidacion> liquidaciones = new ModelMapper().map(liquidacionesDto, listType);
-		liquidacionService.save(liquidaciones);
+		List<Liquidacion> liquidaciones = new ModelMapper().map(registroDto.getLiquidaciones(), listType);
+		liquidacionService.save(registroDto.getEstado(),liquidaciones);
 		List<Liquidacion> liquidacionesRest = liquidacionService.listarLiquidaciones();
 		List<LiquidacionDto> liquidacionesDtoRest = new ModelMapper().map(liquidacionesRest, listTypeResult);
 		//System.out.println("TOTALES: " + totalRegistroPorPagina);

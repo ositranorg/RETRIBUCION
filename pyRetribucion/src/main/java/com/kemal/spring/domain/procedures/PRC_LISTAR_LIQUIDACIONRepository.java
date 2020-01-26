@@ -23,7 +23,7 @@ public class PRC_LISTAR_LIQUIDACIONRepository {
 	@SuppressWarnings("unchecked")
 	public Map<String,Object> listarLiquidacion1(int pagina,int totalRegistroPagina) {
 		StoredProcedureQuery procedureQuery = entityManager
-				.createStoredProcedureQuery("PK_RET_LIQUIDACION.PRC_LISTAR_LIQUIDACION");
+				.createStoredProcedureQuery("PK_RET_LIQUIDACION.PRC_LISTAR_LIQUIDACION_FINAL");
 
 		procedureQuery.registerStoredProcedureParameter("P_PAGINA", int.class, ParameterMode.IN);
 		procedureQuery.registerStoredProcedureParameter("P_TOTAL_REGISTROS_POR_PAGINA", int.class, ParameterMode.IN);
