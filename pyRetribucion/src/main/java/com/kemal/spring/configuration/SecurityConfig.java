@@ -15,11 +15,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
 import com.kemal.spring.service.userDetails.UserDetailsServiceImpl;
 
 @Configuration
@@ -61,10 +62,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Override methods
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		 String[] staticResources  =  {
+			        "/css/**",
+			        "/images/**",
+			        "/fonts/**",
+			        "/scripts/**",
+			    };
+		 
+		 
 		http
 		.authorizeRequests()		
-		.antMatchers("/css/**", "/js/**", "/images/**", "/resources/static/**", "/webjars/**").permitAll()	
+		 .antMatchers(staticResources).permitAll()
+		.antMatchers("/css/**", "/js/**",  "/resources/static/**", "/webjars/**").permitAll()	
 		.antMatchers("/recuperar-clave").permitAll()
+		
 		.antMatchers("/user/**").hasRole("USER")
 		.antMatchers("/login*").permitAll()		
 		.anyRequest().authenticated()
@@ -75,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.defaultSuccessUrl("/index", true)
 		.failureUrl("/login?error=true")
 		.permitAll()
-		.and().logout()
+		.and().logout().permitAll()
 		.logoutSuccessUrl("/login?logout=true").deleteCookies("JSESSIONID").permitAll()
 		.and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true).sessionRegistry(sessionRegistry());
 	}
@@ -88,7 +100,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
-
         web.ignoring().antMatchers(HttpMethod.POST,"/api/contribuyente/**");
         web.ignoring().antMatchers(HttpMethod.POST,"/api/usuario/enviar-clave");
     }
@@ -102,5 +113,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) {
 		auth.authenticationProvider(authProvider());
 	}
-	
+	 
 }
