@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,8 @@ public class Liquidacion {
 	@Column(name = "SDOCUMENTO", length = 4000)
 	private String sDocumento;
 	
+	@Column(name = "NORDEN")
+	private Integer nOrden = 0;
 	
 	@Column(name = "DFECHAREGISTRO")
 	@CreationTimestamp	 
@@ -49,8 +53,10 @@ public class Liquidacion {
 	@Column(name = "SUSUREGISTRA")
 	private String sUsuRegistra;
 
+	@UpdateTimestamp
 	@Column(name = "DFECHAMODIFICA")
 	private Date dfecModifica;
+	
 	@Column(name = "SUSUMODIFICA")
 	private String sUsuModifica;
 	
