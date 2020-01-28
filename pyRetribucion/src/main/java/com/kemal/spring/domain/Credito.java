@@ -37,7 +37,7 @@ public class Credito {
 	    @Column(name = "DFECHAAPLICADO")
 	    private Date dfecAplicado;
 	    @Column(name = "NIMPORTE")
-	    private BigDecimal importe;
+	    private BigDecimal nimporte;
 	    @Column(name = "SESTADO",length = 1)
 	    private String sEstado="1";
 	    @Column(name = "NCODIGOCN")

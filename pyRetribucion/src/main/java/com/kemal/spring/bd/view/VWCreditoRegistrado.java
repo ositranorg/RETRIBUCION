@@ -26,41 +26,31 @@ public class VWCreditoRegistrado {
 	@Id
 	@Column(name = "NCODIGO")
 	private Integer ncodigo;
-	@Column(name = "PERIODICIDADORIGEN")
-	private Integer periodicidadOrigen;
-	@Column(name = "RETRIBUCIONORIGEN")
-	private Integer retribucionOrigen;
+	@Column(name = "SPERIODICIDAD_ORIGEN")
+	private String periodicidadOrigen;
+	@Column(name = "SRETRIBUCION_ORIGEN")
+	private String retribucionOrigen;
 	@Column(name = "SANIOPERIODO_ORIGEN")
-	private Integer sAnioPeriodoiOrigen;
+	private String sAnioPeriodoiOrigen;
 	@Column(name = "SMESPERIODO_ORIGEN")
-	private Integer sMesPeriodoOrigen;
-	@Column(name = "PERIODICIDADDESTINO")
-	private Integer periodicidadDestino;
-	@Column(name = "RETRIBUCIONDESTINO")
-	private Integer retribucionDestino;
+	private String sMesPeriodoOrigen;
+	@Column(name = "SPERIODICIDAD_DESTINO")
+	private String periodicidadDestino;
+	@Column(name = "SRETRIBUCION_DESTINO")
+	private String retribucionDestino;
 	@Column(name = "SANIOPERIODO_DESTINO")
 	private String sAnioPeriodoDestino;
 	@Column(name = "SMESPERIODO_DESTINO")
 	private String sMesPeriodoDestino;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DFECHAAPLICADO")
-	private Date dFechaAplicado;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DFECHAMODIFICA")
-	private Date dFechaModifica;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DFECHAREGISTRO")
-	private Date dFechaRegistro;
 	@Column(name = "NIMPORTE")
-	private BigDecimal nImporte;
+	private BigDecimal nimporte;
 	@Column(name = "NCODIGOCN")
 	private Integer nCodigocn;
 	@Column(name = "NCODIGO_APORTE")
 	private Integer nCodigoAporte;
-	@Column(name = "SESTADO")
-	private String sEstado;
-	@Column(name = "SUSUMODIFICA")
-	private String sUsuModifica;
-	@Column(name = "SUSUREGISTRA")
-	private String sUsuRegistra;
+	
+	
+	@Column(name = "ESTADO")
+	private String estado;
+	
 }

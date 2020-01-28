@@ -73,8 +73,6 @@ public class CreditoService {
 	public Page<VWCreditoRegistrado> findCreditosRegistrados(Integer nCodigoCn, Pageable pageable) {
 
 		try {
-			Estado estado= new Estado();
-			estado.setId(0);
 			return creditoRegistradoRepository.findByNCodigocn(nCodigoCn, pageable);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

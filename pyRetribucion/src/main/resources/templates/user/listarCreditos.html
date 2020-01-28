@@ -145,19 +145,19 @@
 								<td scope="row" th:text="${base.sAnioPeriodoiOrigen}">status</td>
 								<td scope="row" th:text="${base.sMesPeriodoOrigen}">status</td>
 
-								<td scope="row" th:text="${base.importe}">status</td>
+								<td scope="row" th:text="${base.nimporte}">status</td>
 								
 								<td scope="row" th:text="${base.periodicidadDestino}">status</td>
 								<td scope="row" th:text="${base.retribucionDestino}">status</td>
-								<td scope="row" th:text="${base.sanioRetribucionDestino}">status</td>
-								<td scope="row" th:text="${base.smesRetribucionDestino}">status</td>
+								<td scope="row" th:text="${base.sAnioPeriodoDestino}">status</td>
+								<td scope="row" th:text="${base.sMesPeriodoDestino}">status</td>
 								
-								<td scope="row" th:text="${base.sestado}">status</td>
+								<td scope="row" th:text="${base.estado}">status</td>
 								
 								
 								<td class="center">
-									<button title="Desactivar?" id="activarcred"
-										class="btn btn-xs btn-danger"></button>
+									<button title="Desactivar?"  type="button"
+										class="activarcred btn btn-xs btn-danger"></button>
 								</td>
 
 							</tr>
@@ -174,12 +174,31 @@
 	</div>
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 	<script type="text/javascript">
-		jQuery(document).ready(
-				function($) {
-					buscarPeriodo("fmesRetribucion", "periodostributrios",
-							"ftipoPeriodicidad");
-
-				});
+	jQuery(document).ready(function($) {
+		
+		buscarPeriodo("fmesRetribucion", "periodostributrios","ftipoPeriodicidad");
+		$(".activarcred").on("click",function(){
+			
+			$.confirm({
+			    title: 'Esta seguro(a) de eliminar el registro?',
+			    content: 'Esta ventana se cerrará automaticamente en unos segundos si ud. no responde.',
+			    autoClose: 'Cancelar|10000',
+			    buttons: {
+			        deleteUser: {
+			            text: 'Eliminar',
+			            action: function () {
+			                $.alert('Se eliminó el credito!');
+			            }
+			        },
+			        Cancelar: function () {
+			        	text: 'Cancelar',
+			            $.alert('No se realizó ninguna acción.');
+			        }
+			    }
+			});
+		});
+	});
+		
 	</script>
 </body>
 </html>

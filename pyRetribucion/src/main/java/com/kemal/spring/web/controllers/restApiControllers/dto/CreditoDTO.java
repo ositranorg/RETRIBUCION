@@ -19,8 +19,8 @@ public class CreditoDTO {
 	@JsonProperty("ncodigoAporte")
 	private Integer ncodigoAporte;
 	
-	@JsonProperty("nCodigoCns")
-	private Integer nCodigoCns;
+	@JsonProperty("nCodigoCn")
+	private Integer nCodigoCn;
 	
 	
 	@JsonProperty("tipoPeriodicidadOrigen")
@@ -50,8 +50,8 @@ public class CreditoDTO {
 	@JsonProperty("tipoRegistroCredito")
 	private Integer tipoRegistroCredito;
 	
-	@JsonProperty("importe")
-	private BigDecimal importe;
+	@JsonProperty("nimporte")
+	private BigDecimal nimporte;
 	
 	
 	

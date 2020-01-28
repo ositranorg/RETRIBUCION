@@ -166,7 +166,7 @@
 												<div class="col-xs-6  no-padding-right">
 													<div class="clearfix">
 														<input type="text" id="hddconsumoManual"
-															name="hddconsumoManual"
+															
 															class="saldomanual inicial form-control border border-info input-mini"
 															value="0" onblur="return validarNegativo(this);">
 													</div>
@@ -630,12 +630,12 @@
 												$.each(rows_selected, function (index,regcredito) {
 													var data={
 															ncodigoAporte:(regcredito.nCodigo),
-															nCodigoCns: regcredito.nCodigocn,
+															nCodigoCn: regcredito.nCodigocn,
 															tipoPeriodicidadOrigen: regcredito.sTipoPeriodicidad,
 															tipoRetribucionOrigen: regcredito.sTipoRetribucion,
 															anioRetribucionOrigen: regcredito.sAnio,
 															mesRetribucionOrigen: regcredito.sMes,
-															importe: regcredito.nretResultante,
+															nimporte: regcredito.nretResultante,
 															
 																									
 															
@@ -655,8 +655,8 @@
 													
 													var data={
 															ncodigoAporte:-1,
-															nCodigoCns:$("#csn").html(),
-															importe: $("#hddconsumoManual").val(),
+															nCodigoCn:$("#csn").html(),
+															nimporte: $("#hddconsumoManual").val().replace(/,/g, ""),
 															
 															tipoPeriodicidadOrigen:(tipoPeriodicidadOrigen),
 															tipoRetribucionOrigen:(tipoRetribucionOrigen),
@@ -672,7 +672,7 @@
 															modo:modo
 															
 													}
-													
+													console.log(data);
 													creditos.push(data);
 												}
 												

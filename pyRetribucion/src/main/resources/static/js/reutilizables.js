@@ -269,8 +269,11 @@ function mensajeServidor(msg) {
     	    title: 'Aviso',
     	    content: msg,
     	    type: 'green',
-    	    onClose: function(){
-    	        window.location.reload();
+    	    buttons: {
+    	    	text: 'OK',
+	    	    OK: function(){
+	    	        window.location.reload();
+	    	    }
     	    }
     	});
 }
