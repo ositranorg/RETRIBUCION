@@ -1,12 +1,16 @@
 package com.kemal.spring.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,12 +25,19 @@ import lombok.ToString;
 @Table(name = "SRET_TIPORETRIBUCION")
 public class TipoRetribucion {
 	@Id
-	@Column(name = "NCODIGO", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_SequenceRetribucion")
-	@SequenceGenerator(name = "id_SequenceRetribucion", sequenceName = "SQ_RET_TIPORETRIBUCION", allocationSize= 1)
+	 @JsonProperty("NCODIGO")
 	private Integer id;
 	@Column(name = "SDESCRIPCION")
 	private String sDescripcion;
 	@Column(name = "SESTADO")
 	private String sEstado="1";
+	
+	 @OneToMany(mappedBy="tipoRetribucionOrigen", fetch = FetchType.EAGER)
+	    private Set<Credito> origen=new HashSet<>();;
+
+	    @OneToMany(mappedBy="tipoRetribucionDestino", fetch = FetchType.EAGER)
+	    private Set<Credito> destino=new HashSet<>();;
+	    
+
+	
 }

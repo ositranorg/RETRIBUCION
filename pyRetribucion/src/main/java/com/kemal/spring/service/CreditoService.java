@@ -5,13 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kemal.spring.bd.view.VWCreditoRegistrado;
+import com.kemal.spring.bd.view.VWCreditoRegistradoRepository;
 import com.kemal.spring.bd.view.VWNuevoCredito;
 import com.kemal.spring.bd.view.VWNuevoCreditoRepository;
 import com.kemal.spring.domain.Credito;
 import com.kemal.spring.domain.CreditoRepository;
+import com.kemal.spring.domain.Estado;
 
 @Service
 public class CreditoService {
@@ -20,6 +25,11 @@ public class CreditoService {
 	VWNuevoCreditoRepository vwNuevoCreditoRepository;
 	@Autowired
 	CreditoRepository creditoRepository;
+	
+	@Autowired
+	VWCreditoRegistradoRepository creditoRegistradoRepository;
+	
+	
 	@Transactional(readOnly = false)
 	public HashMap<String,Object> save(List<Credito> lstCredito,String usuario) {
 		
@@ -29,6 +39,9 @@ public class CreditoService {
 			
 			a.setSUsuRegistra(usuario);
 			a.setDfecRegistro(new Date());
+			Estado estado=new Estado();
+			estado.setId(1);
+			a.setEstado(estado);
 			creditoRepository.save(a);
 		});
 		
@@ -43,6 +56,34 @@ public class CreditoService {
 		List<VWNuevoCredito> pagedResult = vwNuevoCreditoRepository.findByNCodigocn(idcn);
 		return pagedResult;
 	}
+	public Page<Credito> findByNCodigocn(Integer nCodigoCns, Pageable pageable) {
+
+		try {
+			Estado estado= new Estado();
+			estado.setId(0);
+			return creditoRepository.findByNCodigoCnAndEstadoNotIn( nCodigoCns,estado,pageable);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	public Page<VWCreditoRegistrado> findCreditosRegistrados(Integer nCodigoCn, Pageable pageable) {
+
+		try {
+			Estado estado= new Estado();
+			estado.setId(0);
+			return creditoRegistradoRepository.findByNCodigocn(nCodigoCn, pageable);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	
 	
 }

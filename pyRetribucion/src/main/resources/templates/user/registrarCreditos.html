@@ -33,7 +33,7 @@
 						<div sec:authorize="isAuthenticated() ">
 
 							
-								<span id="csn" sec:authentication="principal.user.contribuyente.id"></span>
+								<span id="csn" sec:authentication="principal.user.contribuyente.id" style="color: white;"></span>
 							
 						</div>
 						<!-- /.row -->
@@ -72,10 +72,8 @@
 														<th class="col" style="width: 15% !important;">nCodigocn</th>
 														<th class="col" style="width: 15% !important;">sTipoPeriodicidad</th>
 														<th class="col" style="width: 15% !important;">sTipoRetribucion</th>
-														<th class="col" style="width: 15% !important;">TIPO
-															DE PERIODICIDAD</th>
-														<th class="col" style="width: 15% !important;">TIPO
-															DE RETRIBUCIÓN</th>
+														<th class="col" style="width: 15% !important;">TIPO	DE PERIODICIDAD</th>
+														<th class="col" style="width: 15% !important;">TIPO	DE RETRIBUCIÓN</th>
 														<th class="col" style="width: 15% !important;">PERIODO</th>
 														<th class="col" style="width: 15% !important;">AÑO</th>
 														<th class="col center" style="width: 35% !important;">CRÉDITO</th>
@@ -633,8 +631,8 @@
 													var data={
 															ncodigoAporte:(regcredito.nCodigo),
 															nCodigoCns: regcredito.nCodigocn,
-															sTipoPeriodicidad: regcredito.sTipoPeriodicidad,
-															sTipoRetribucion: regcredito.sTipoRetribucion,
+															tipoPeriodicidadOrigen: regcredito.sTipoPeriodicidad,
+															tipoRetribucionOrigen: regcredito.sTipoRetribucion,
 															anioRetribucionOrigen: regcredito.sAnio,
 															mesRetribucionOrigen: regcredito.sMes,
 															importe: regcredito.nretResultante,

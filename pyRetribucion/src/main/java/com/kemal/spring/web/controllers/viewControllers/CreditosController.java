@@ -1,7 +1,6 @@
 package com.kemal.spring.web.controllers.viewControllers;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.kemal.spring.bd.view.VWNuevoCredito;
-import com.kemal.spring.bd.view.VWNuevoCreditoService;
+import com.kemal.spring.bd.view.VWCreditoRegistrado;
+import com.kemal.spring.domain.Credito;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.dto.CreditoDeLaDJService;
@@ -41,21 +40,17 @@ public class CreditosController {
 	@Autowired
 	TipoRetribucionService tipoRetribucionService;
 	
-	@Autowired
-	CreditoService service;
-	@Autowired
-	CreditoDeLaDJService creditoDeLaDJService;
 	
 	@Autowired
-	VWNuevoCreditoService creditoService;
+	CreditoService creditoService;
 	
 	
 	public static HttpSession session() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
 	}
-	@GetMapping(value = "/creditos")
-	public String buscar(Model model,
+	@GetMapping(value = "/abrirRegistrarCreditos")
+	public String abrirRegistrarCreditos(Model model,
 			@RequestParam(required = false, name = "page") Integer page,
 			@RequestParam(required = false,value="ids[]") String ids[]) {
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
@@ -92,7 +87,7 @@ public class CreditosController {
 		
 		
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
-		Page<VWNuevoCredito> articlePage = creditoService.findByNCodigocn(c.getContribuyente().getId(), pageable);				
+		Page<Credito> articlePage = creditoService.findByNCodigocn(c.getContribuyente().getId(), pageable);				
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -107,7 +102,48 @@ public class CreditosController {
 		model.addAttribute("lsttipoRetribucion", tipoRetribucionService.findAll());
 		
 	
-		return "/user/creditos";
+		return "/user/registrarCreditos";
+	}
+	
+	
+	@GetMapping(value = "/listarcreditosregistrados")
+	public String buscar(Model model,
+			@RequestParam(required = false, name = "page") Integer page) {
+		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		Object us = (Object) sci.getAuthentication().getPrincipal();
+		User c = ((UserDetailsImpl) us).getUser();
+		CreditosForm f=new CreditosForm();
+		f.setFmesRetribucion("");
+		f.setFanioRetribucion("");
+		f.setFtipoRetribucion("");
+		f.setFtipoPeriodicidad("");
+		
+		model.addAttribute("creditosForm", f);
+		model.addAttribute("creditosForm.fmesRetribucion","");
+		model.addAttribute("creditosForm.fanioRetribucion","");
+		model.addAttribute("creditosForm.ftipoRetribucion","");
+		model.addAttribute("creditosForm.ftipoPeriodicidad","");
+	
+		List<TipoPeriodicidad> lstCal = calendarioService.findAll();
+		
+		
+		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
+		Page<VWCreditoRegistrado> articlePage = creditoService.findCreditosRegistrados(c.getContribuyente().getId(), pageable);				
+		int totalPages = articlePage.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+		
+	
+		model.addAttribute("lstCreditos",articlePage.getContent());
+		
+		model.addAttribute("lsttipoPeriodicidad", lstCal);
+		model.addAttribute("anios", util.getAnios());
+		model.addAttribute("lsttipoRetribucion", tipoRetribucionService.findAll());
+		
+	
+		return "/user/listarCreditos";
 	}
 	
 }

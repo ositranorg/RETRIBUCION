@@ -38,9 +38,9 @@ public class CreditoDTO {
 	
 	
 	@JsonProperty("tipoPeriodicidadDestino")
-	private String tipoPeriodicidadDestino;
+	private Integer tipoPeriodicidadDestino;
 	@JsonProperty("tipoRetribucionDestino")
-	private String tipoRetribucionDestino;
+	private Integer tipoRetribucionDestino;
 	@JsonProperty("mesRetribucionDestino")
 	private String mesRetribucionDestino;
 	@JsonProperty("anioRetribucionDestino")

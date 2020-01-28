@@ -3,13 +3,13 @@ package com.kemal.spring.configuration;
 import java.math.BigDecimal;
 import java.net.SocketTimeoutException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +22,7 @@ import com.kemal.spring.domain.Banco;
 import com.kemal.spring.domain.Concepto;
 import com.kemal.spring.domain.Contrato;
 import com.kemal.spring.domain.Contribuyente;
+import com.kemal.spring.domain.Estado;
 import com.kemal.spring.domain.Feriado;
 import com.kemal.spring.domain.Modulo;
 import com.kemal.spring.domain.Moneda;
@@ -39,6 +40,7 @@ import com.kemal.spring.service.CalendarioDetService;
 import com.kemal.spring.service.ConceptoService;
 import com.kemal.spring.service.ContratoService;
 import com.kemal.spring.service.ContribuyenteService;
+import com.kemal.spring.service.EstadoService;
 import com.kemal.spring.service.FeriadoService;
 import com.kemal.spring.service.ModuloService;
 import com.kemal.spring.service.MonedaService;
@@ -82,6 +84,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	private AportePorcentajeService aportePorcentajeService;
 	private BancoService bancoService;
 	private PerfilService perfilService;
+	private EstadoService estadoService;
 	public SetupDataLoader(UserService userService, RoleService roleService,
 			BCryptPasswordEncoder bCryptPasswordEncoder, ConceptoService conceptoService, ModuloService moduloService,
 			TipoPeriodicidadService calendarioService, CalendarioDetService calendarioDetService,
@@ -94,7 +97,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			MonedaService monedaService,
 			AportePorcentajeService aportePorcentajeService,
 			BancoService bancoService,
-			PerfilService perfilService) {
+			PerfilService perfilService,
+			EstadoService estadoService) {
 		this.userService = userService;
 		this.roleService = roleService;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -115,6 +119,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		this.aportePorcentajeService=aportePorcentajeService;
 		this.bancoService=bancoService;
 		this.perfilService=perfilService;
+		this.estadoService=estadoService;
 	}
 
 	// API
@@ -125,8 +130,19 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
-		
 		/*
+		createEstado(0,"ELIMINADO");
+		createEstado(1,"REGISTRADO");
+		createEstado(2,"APLICADO");
+		createEstado(3,"ANULADO");
+		
+		 
+		createEstado(0,"ELIMINADO");
+		createEstado(1,"REGISTRADO");
+		createEstado(2,"APLICADO");
+		createEstado(3,"ANULADO");
+		
+		
 		createBanco("BANCO DE COMERCIO");
 		createBanco("BANCO INTERAMERICANO DE FINANZAS (BANBIF)");
 		createBanco("BANCO PICHINCHA");
@@ -182,15 +198,15 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createAporteTipo("E","ELIMINADO");
 		
 			
-		createCalendario("MENSUAL", 1);		
-		createCalendario("TRIMESTRAL", 2);
-		createCalendario("SEMESTRAL", 3);
-		createCalendario("ANUAL", 4);
+		createCalendario(1,"MENSUAL", 1);		
+		createCalendario(2,"TRIMESTRAL", 2);
+		createCalendario(3,"SEMESTRAL", 3);
+		createCalendario(4,"ANUAL", 4);
 		
-		createTiporRetribucion("RETRIBUCION");		
-		createTiporRetribucion("PRINCIPAL");	
-		createTiporRetribucion("ESPECIAL");	
-		createTiporRetribucion("FONCEPRI");	
+		createTiporRetribucion(1,"RETRIBUCION");		
+		createTiporRetribucion(2,"PRINCIPAL");	
+		createTiporRetribucion(3,"ESPECIAL");	
+		createTiporRetribucion(4,"FONCEPRI");	
 		
 		createContribuyente("LIMA AIRPORT PARTNERS S.R.L.", "20501577252");
 		createContribuyente("AEROPUERTOS DEL PERÚ S.A.", "20514513172");
@@ -494,6 +510,16 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		});*/
 		alreadySetup = true;
 	}
+	
+	@Transactional
+	void createEstado(Integer id, String sestado) {
+		Estado estado = new Estado();
+		estado.setId(id);
+		estado.setSDescripcion(sestado);
+		estadoService.save(estado);
+	}
+	
+	
 	@Transactional
 	void createBanco(final String name) {
 		Banco banco = new Banco();
@@ -699,16 +725,18 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 	}
 	@Transactional
-	void createTiporRetribucion(final String name) {
+	void createTiporRetribucion(Integer id,final String name) {
 		TipoRetribucion n = new TipoRetribucion();
+		n.setId(id);
 		n.setSDescripcion(name);
 	
 		tipoRetribucionService.save(n);
 
 	}
 	@Transactional
-	void createCalendario(final String name, final int orden) {
+	void createCalendario(Integer id,final String name, final int orden) {
 		TipoPeriodicidad n = new TipoPeriodicidad();
+		n.setId(id);
 		n.setSDescripcion(name);
 		n.setOrden(orden);
 		calendarioService.save(n);

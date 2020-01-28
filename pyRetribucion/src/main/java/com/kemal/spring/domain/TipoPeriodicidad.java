@@ -6,13 +6,17 @@
 package com.kemal.spring.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,13 +42,11 @@ public class TipoPeriodicidad implements Serializable {
 
 
 	@Id
-    @Column(name = "NTIPO_PERIODICIDAD", unique = true, nullable = false)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_SequenceTIPOPERIODICIDAD")
-    @SequenceGenerator(name = "id_SequenceTIPOPERIODICIDAD", sequenceName = "SQ_RET_TIPOPERIODICIDAD", allocationSize= 1)
+	 @JsonProperty("NCODIGO")
     private Integer id;
 
 
-    @Column(name = "SDESCRIPCION", nullable = false)
+    @Column(name = "SDESCRIPCION")
     private String sDescripcion;
 
     @Column(name = "SESTADO")
@@ -55,7 +57,11 @@ public class TipoPeriodicidad implements Serializable {
     private Integer orden; 
     
     
-    
+    @OneToMany(mappedBy="tipoPeriodicidadOrigen", fetch = FetchType.EAGER)
+    private Set<Credito> origen=new HashSet<>();;
+
+    @OneToMany(mappedBy="tipoPeriodicidadDestino", fetch = FetchType.EAGER)
+    private Set<Credito> destino=new HashSet<>();;
     
     
     

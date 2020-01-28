@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface VWNuevoCreditoRepository extends CrudRepository< VWNuevoCredito, Long> {
 	public Page<VWNuevoCredito> findByNCodigocn(Integer nCodigoCns, Pageable pageable);
 	
-	public List<VWNuevoCredito> findByNCodigocn(Integer nCodigoCns);;
+	public List<VWNuevoCredito> findByNCodigocn(Integer nCodigoCns);
 	
 }

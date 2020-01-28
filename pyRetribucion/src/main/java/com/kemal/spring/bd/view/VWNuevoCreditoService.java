@@ -13,12 +13,6 @@ public class VWNuevoCreditoService {
 
 	public Page<VWNuevoCredito> findByNCodigocn(Integer nCodigoCns, Pageable pageable) {
 
-		try {
-			return creditoRepository.findByNCodigocn( nCodigoCns,pageable);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return null;
 	}
 }
