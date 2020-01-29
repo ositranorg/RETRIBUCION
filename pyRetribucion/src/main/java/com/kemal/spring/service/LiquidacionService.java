@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +38,31 @@ public class LiquidacionService {
 	volatile Integer ordenFinal;
 	
 	@Transactional(readOnly = false)
-	public void save(Integer estado, List<Liquidacion> liquidaciones) {
+	public HashMap<String,Object> save(Integer estado, List<Liquidacion> liquidaciones) {
+		HashMap<String,Object> rest = new HashMap<>();
 		BigDecimal nOrden = liquidacionRepository.maxOrdenByEstadoDos();
 		//System.out.println("ORDEN: " + nOrden);
 		ordenFinal = nOrden == null ? 1 :nOrden.intValue() + 1;
 		//long esAccionEnviado = liquidaciones.stream().filter(x->x.getSEstado().equals("2")).count();
 		if(estado==2) {
+			liquidaciones.forEach(System.out::println);
+			liquidaciones.stream().filter(x->x.getNIdTipoDocumento()==2).forEach(System.out::println);
+			long totalDictamen = liquidaciones.stream().filter(x->x.getNIdTipoDocumento()==1).count();
+			long totalFormato = liquidaciones.stream().filter(x->x.getNIdTipoDocumento()==2).count();
+			System.out.println("FORMATO 1: " + totalFormato);
+			totalFormato = totalFormato > 0 ? totalFormato : liquidacionRepository.obtenerCantidadFormato();
+			totalDictamen = totalDictamen > 0 ? totalDictamen : liquidacionRepository.obtenerCantidadDictamen();
+			System.out.println("FORMATO 2: " + totalFormato);
+			if( totalFormato == 0) {
+				rest.put("resultado", 0);
+				rest.put("mensaje", "Debe adjuntar archivos de formato.");
+				return rest;
+			}
+			if( totalDictamen == 0) {
+				rest.put("resultado", 0);
+				rest.put("mensaje", "Debe adjuntar archivos de dictamen.");
+				return rest;
+			}
 			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 			Date currentDate = new Date(System.currentTimeMillis());
 			liquidacionRepository.actualizarOrden(ordenFinal,currentDate);
@@ -56,7 +76,9 @@ public class LiquidacionService {
 			liquidacion.setNOrden(ordenFinal);
 			liquidacionRepository.save(liquidacion);	
 		});
-				
+		rest.put("resultado", 1);
+		rest.put("mensaje", "Se ha registrado correctamente.");
+		return rest;
 	}
 	public List<Liquidacion> listarLiquidaciones(){
 		return liquidacionRepository.findAll();

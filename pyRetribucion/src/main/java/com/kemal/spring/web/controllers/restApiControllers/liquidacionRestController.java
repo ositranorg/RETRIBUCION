@@ -42,14 +42,14 @@ public class liquidacionRestController {
 		Type listType = new TypeToken<List<Liquidacion>>() {}.getType();
 		Type listTypeResult = new TypeToken<List<LiquidacionDto>>() {}.getType();
 		List<Liquidacion> liquidaciones = new ModelMapper().map(registroDto.getLiquidaciones(), listType);
-		liquidacionService.save(registroDto.getEstado(),liquidaciones);
+		Map<String,Object> restSave = liquidacionService.save(registroDto.getEstado(),liquidaciones);
 		List<Liquidacion> liquidacionesRest = liquidacionService.listarLiquidaciones();
 		List<LiquidacionDto> liquidacionesDtoRest = new ModelMapper().map(liquidacionesRest, listTypeResult);
 		//System.out.println("TOTALES: " + totalRegistroPorPagina);
 		Map<String,Object> listaLiquidacion= liquidacionService.listarLiquidacion(1,totalRegistroPorPagina);
 		HashMap<String, Object> resp = new HashMap<>();		
-		resp.put("mensaje", "Se registró satisfactoriamente");
-		resp.put("resultado", 1);
+		resp.put("mensaje", restSave.get("mensaje"));
+		resp.put("resultado", restSave.get("resultado"));
 		resp.put("lista", liquidacionesDtoRest);
 		resp.put("listaLiquidacion", listaLiquidacion);
 		return new ResponseEntity<>(resp, HttpStatus.OK);

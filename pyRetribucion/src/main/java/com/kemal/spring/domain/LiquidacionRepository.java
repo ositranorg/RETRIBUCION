@@ -23,6 +23,12 @@ public interface LiquidacionRepository extends JpaRepository<Liquidacion, Long> 
 	 @Query(value="select max(l.nOrden) from Liquidacion l where l.sEstado='2'")
 	 BigDecimal maxOrdenByEstadoDos();
 	 
+	 @Query(value="select count(l) from Liquidacion l where l.sEstado='1' and l.nIdTipoDocumento=2")
+	 int obtenerCantidadFormato();
+	 
+	 @Query(value="select count(l) from Liquidacion l where l.sEstado='1' and l.nIdTipoDocumento=1")
+	 int obtenerCantidadDictamen();
+	 
 	 @Modifying(flushAutomatically = true)
 	 @Query("update Liquidacion l set l.nOrden = :orden, l.sEstado='2', l.dfecModifica=:currentDate where l.sEstado='1'")
 	 int actualizarOrden(@Param("orden")int orden, @Param("currentDate")Date currentDate);

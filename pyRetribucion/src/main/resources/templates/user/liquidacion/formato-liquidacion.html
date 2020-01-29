@@ -520,7 +520,7 @@
 			$.each(listaFormato, function (index, archivoDictamen) {
 				var data = {
 					idPeriodo: 1,
-					idTipoDocumento: 1,
+					idTipoDocumento: 2,
 					anio: pAnio,
 					documento: archivoDictamen.fileName,
 					estado: estado
@@ -586,6 +586,8 @@
 						archivosFormatoResponse = [];
 						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
 						cargarPaginador(rest.listaLiquidacion.totalRegistros);
+					}else{
+						mensajeError(rest.mensaje);
 					}
 
 				});
