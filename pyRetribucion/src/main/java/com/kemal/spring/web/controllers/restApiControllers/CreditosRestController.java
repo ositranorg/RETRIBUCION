@@ -99,25 +99,26 @@ public class CreditosRestController {
 		 return gson.toJson(dataTableObject);
 	}
 	
-	@ResponseBody
-	@PostMapping(value = "eliminar-representante", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> eliminarRepresentante(@RequestBody RepresentanteDto representanteDto) {
-	
-		HashMap<String, Object>res =null;
-		/*HashMap<String, Object>res = 
-				creditoService.eliminarRepresentantesByRucPaginado(
-						representanteDto.getContribuyente().getSruc(),
-						representanteDto.getPagina(),
-				totalRegistroPorPagina, representanteDto.getId());*/
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
 	@GetMapping(value = "/abrirRegistrarCreditos")
 	public String buscar() {
 		
 		return "/user/creditos";
 	}
-	
-	
+	@ResponseBody
+	@PostMapping(value = "eliminarCredito", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> eliminarRepresentante(@RequestBody  CreditoDTO credito) {
+		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		Object us = (Object) sci.getAuthentication().getPrincipal();
+		User c = ((UserDetailsImpl) us).getUser();
+		Integer a=0;
+		try {
+			a=creditoService.delete(credito.getIdCredito(), c.getUsername());
+		} catch (Exception e) {
+			a=0;
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(a, HttpStatus.OK);
+	}
 	
 	
 	

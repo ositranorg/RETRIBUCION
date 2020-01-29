@@ -254,12 +254,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createPerfil("TESORERIA");
 		createPerfil("INVITADO");
 		
-		createUserIfNotFound("admin@gmail.com", "Admin", "Admin", "limaai", "admin", adminRoles, 1,1);
+		createUserIfNotFound("admin@gmail.com", "Admin", "Admin", "limaai", "admin", adminRoles, 1,2);
 
-		createUserIfNotFound("adp"  + "@gmail.com", "User" , "User", "adp" , "ayp", userRoles,2,1);
+		createUserIfNotFound("adp"  + "@gmail.com", "User" , "User", "adp" , "ayp", userRoles,2,2);
 				
 
-		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "tisur", userRoles,7,1);
+		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "tisur", userRoles,7,2);
 	
 		*/
 		

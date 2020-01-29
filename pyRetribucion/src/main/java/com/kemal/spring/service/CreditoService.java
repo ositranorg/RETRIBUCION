@@ -81,7 +81,16 @@ public class CreditoService {
 		return null;
 	}
 	
+	@Transactional(readOnly = false)
+	public Integer delete(Integer idCredito,String usuario)throws Exception {
+		Credito d=creditoRepository.findById(idCredito).get();
+		Estado e=new Estado();
+		e.setId(0);
+		d.setEstado(e);
+		creditoRepository.save(d);
 	
+		return 1;
+	}
 	
 	
 }

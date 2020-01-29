@@ -108,6 +108,7 @@ public class CreditosController {
 	
 	@GetMapping(value = "/listarcreditosregistrados")
 	public String buscar(Model model,
+			@RequestParam(required = false, name = "codigoCN") Integer codigoCN,
 			@RequestParam(required = false, name = "page") Integer page) {
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
@@ -128,7 +129,18 @@ public class CreditosController {
 		
 		
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
-		Page<VWCreditoRegistrado> articlePage = creditoService.findCreditosRegistrados(c.getContribuyente().getId(), pageable);				
+		Page<VWCreditoRegistrado> articlePage =null;
+		
+		if(c.getPerfil().getId()==1) {
+			articlePage = creditoService.findCreditosRegistrados(codigoCN, pageable);		
+		}else {
+			//articlePage = creditoService.findCreditosRegistrados(c.getContribuyente().getId(), pageable);
+			articlePage = creditoService.findCreditosRegistrados(codigoCN, pageable);	
+		}
+			
+		
+		
+		
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());

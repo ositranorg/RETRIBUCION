@@ -15,7 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreditoDTO {
-
+	@JsonProperty("idCredito")
+	private Integer idCredito;
 	@JsonProperty("ncodigoAporte")
 	private Integer ncodigoAporte;
 	
