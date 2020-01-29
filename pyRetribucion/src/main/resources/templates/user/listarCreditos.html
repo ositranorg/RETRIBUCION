@@ -34,7 +34,7 @@
 							<label class="control-label ">CONCESIONARIOS: </label>
 
 
-									  <input id="cns" type="text" class="typeahead" autocomplete="off"/>
+									  <input id="cns" type="text" class="form-control" autocomplete="off"/>
 									
 									
 
@@ -189,7 +189,7 @@
 	</div>
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 
-	<script type="text/javascript" th:src="@{/js/bootstrap3-typeahead.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.auto-complete.js}"></script>
 	
 	<script type="text/javascript">
 	
@@ -246,37 +246,42 @@
 		    }
 		});
 	}
+	function afterSelect(item, element) {
+	    //element.parent().find('.quantity').val(item.quantity);
+		console.log(item);
+	}
+	function split(val) {
+	    return val.split(/,\s*/);
+	}
+	function extractLast(term) {
+	    return split(term).pop();
+	}
 	jQuery(document).ready(function($) {
 		
 		buscarPeriodo("fmesRetribucion", "periodostributrios","ftipoPeriodicidad");
 		var token = $("meta[name='_csrf']").attr("content");
-		//$.get([{url:context+"api/contribuyente/listar-contribuyente",headers:{ 'X-CSRF-TOKEN': token  }}]);
-		
-		
-		 $('#cns').typeahead({
-	            source: function (query, process) {
-	                $.ajax({
-	                	headers: {
-							'X-CSRF-TOKEN': token
-						},
-						 minLength: 3,
-	                    url: context+"api/contribuyente/listar-contribuyente",
-						data: 'query=' + query,            
-	                    dataType: "JSON",
-	                    type: "POST",
-	                    contentType: 'application/json',
-	                    success: function (data) {
-	                    	 var newData = [];
-	                         $.each(data.lista, function(){
-	                             newData.push(this.snombre);
-	                             });
-	                         return process(newData);
-	                         }
-	                    
-	                });
-	            }, autoSelect: true, afterSelect: afterSelect
-	        });  
-		 
+		$('#cns').autocomplete({
+			serviceUrl: context+'api/contribuyente/getContribuyente',
+			paramName: "tagName",
+			delimiter: ",",
+		   transformResult: function(response) {
+			    	
+			return {      	
+			  //must convert json to javascript object before process
+			  suggestions: $.map($.parseJSON(response), function(item) {
+			            	
+			      return { value: item.snombre, data: item.id };
+			   })
+			            
+			 };
+			        
+	            },
+	            onSelect: function (suggestion) {
+	                var thehtml = '<strong>Currency Name:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
+	                $('#outputcontent').html(thehtml);
+	              }
+			    
+		 });
 		 
 	});
 		
