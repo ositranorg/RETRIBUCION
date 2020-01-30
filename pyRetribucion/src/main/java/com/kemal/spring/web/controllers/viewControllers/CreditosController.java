@@ -138,9 +138,6 @@ public class CreditosController {
 			articlePage = creditoService.findCreditosRegistrados(codigoCN, pageable);	
 		}
 			
-		
-		
-		
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -149,7 +146,7 @@ public class CreditosController {
 		
 	
 		model.addAttribute("lstCreditos",articlePage.getContent());
-		
+		model.addAttribute("activeArticleList", true);
 		model.addAttribute("lsttipoPeriodicidad", lstCal);
 		model.addAttribute("anios", util.getAnios());
 		model.addAttribute("lsttipoRetribucion", tipoRetribucionService.findAll());

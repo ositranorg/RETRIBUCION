@@ -80,7 +80,16 @@ public class CreditoService {
 		}
 		return null;
 	}
-	
+	public List<VWCreditoRegistrado> findCreditosRegistrados(Integer nCodigoCn) {
+
+		try {
+			return creditoRegistradoRepository.findByNCodigocn(nCodigoCn);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	@Transactional(readOnly = false)
 	public Integer delete(Integer idCredito,String usuario)throws Exception {
 		Credito d=creditoRepository.findById(idCredito).get();
