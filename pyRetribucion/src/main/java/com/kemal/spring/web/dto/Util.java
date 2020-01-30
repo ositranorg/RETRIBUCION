@@ -125,6 +125,8 @@ public class Util {
 			ruta = config.getPformatoLiquidacion();
 		}else if (modulo.equals("fFormato")) {
 			ruta = config.getPformatoLiquidacion();
+		}else if (modulo.equals("pformatoLiquidacion")) {
+			ruta = config.getPformatoLiquidacion();
 		}
 		return ruta;
 	}

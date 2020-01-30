@@ -97,7 +97,7 @@ public class Uploads {
 			String ruta = "";
 			System.out.println("modulo::" + modulo);
 			ruta = util.getRuta(modulo);
-			ruta = (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0 ? "c:" : "") + ruta;
+			ruta = (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0 ? "c:/" : "") + ruta;
 
 			File reportFile = new File(ruta + value);
 			InputStream in = new FileInputStream(reportFile);
