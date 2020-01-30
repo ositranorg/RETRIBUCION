@@ -1049,9 +1049,9 @@
 				//row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'
 				row += '<td style="text-align: center;">' + moment(fecha).format('DD/MM/YYYY') + ' ' + liquidacion.dhoraRegistro + '</td>'
 				row += '<td style="text-align: center;">' + fechaModificacion + '</td>'
-				row += '<td style="text-align: center;"><a target="_blank" href="' + context +'pformatoLiquidacion/'+ liquidacion.sdocumento + '"><i class="fa fa-file fa-2x" aria-hidden="true"></i></a></td>'
+				row += '<td style="text-align: center;"><a target="_blank" href="' + context +'get/pformatoLiquidacion/'+ liquidacion.sdocumento + '"><i class="fa fa-file fa-2x" aria-hidden="true"></i></a></td>'
 				row += '<td style="text-align: center;">' + estado + '</td>'
-				// row += '<td>' + liquidacion.fechaRegistro + '</td>'
+				// row += '<td>' + liqu1idacion.fechaRegistro + '</td>'
 				row += '</tr>'
 				$('#tblLiquidaciones').append(row);
 			});
