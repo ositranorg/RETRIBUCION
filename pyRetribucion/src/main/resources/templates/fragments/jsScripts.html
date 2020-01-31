@@ -43,19 +43,7 @@
     /*<![CDATA[*/
         var context = [[@{/}]];
     /*]]>*/
-    function doPostController(alink,page){
-    	var token = $("meta[name='_csrf']")
-		.attr("content");
-    	 $.post({
-				url : context+alink,
-				headers : {
-					"X-CSRF-TOKEN" : token
-				}, //send CSRF token in header
-				success : function(res) {
-					window.location.href=context+alink;
-				}
-			});
-    }
+   
     function parseFloatHTMLField(f) {
 		return parseFloat(undefined != $("#" + f).html()
 				&& $("#" + f).html() != "" ? quitarCommas($("#" + f).html())

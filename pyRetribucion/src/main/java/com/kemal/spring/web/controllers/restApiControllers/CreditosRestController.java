@@ -116,15 +116,16 @@ public class CreditosRestController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "listar-creditosregistrados")
+	@GetMapping(value = "listar-creditosregistrados")
 	public String listarCreditosRegistrados(@RequestParam(required = false, name = "codigoCN") Integer codigoCN) {	
 		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
 		User c = ((UserDetailsImpl) us).getUser();
-		
+		if(c.getPerfil().getId()==2)
+			codigoCN=c.getContribuyente().getId();
 		dataTableVWCreditoRegistrado.setData(creditoService.findCreditosRegistrados(codigoCN));
 		 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		 return gson.toJson(dataTableVWNuevoCredito);
+		 return gson.toJson(dataTableVWCreditoRegistrado);
 	}
 	
 }
