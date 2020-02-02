@@ -130,7 +130,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
-		/*
+	/*
 		createEstado(0,"ELIMINADO");
 		createEstado(1,"REGISTRADO");
 		createEstado(2,"APLICADO");

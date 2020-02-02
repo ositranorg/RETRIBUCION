@@ -48,7 +48,8 @@ public class VWCreditoRegistrado {
 	private Integer nCodigocn;
 	@Column(name = "NCODIGO_APORTE")
 	private Integer nCodigoAporte;
-	
+	@Column(name = "NCODIGO_ESTADO")
+	private Integer ncodigoEstado;
 	
 	@Column(name = "ESTADO")
 	private String estado;
