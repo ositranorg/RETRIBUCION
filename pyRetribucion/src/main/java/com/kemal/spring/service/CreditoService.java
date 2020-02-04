@@ -83,7 +83,7 @@ public class CreditoService {
 	public List<VWCreditoRegistrado> findCreditosRegistrados(Integer nCodigoCn) {
 
 		try {
-			return creditoRegistradoRepository.findByNCodigocn(nCodigoCn);
+			return creditoRegistradoRepository.findByNCodigocnAndNcodigoEstadoNotIn(nCodigoCn,0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,16 +3,13 @@ package com.kemal.spring.configuration;
 import java.math.BigDecimal;
 import java.net.SocketTimeoutException;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +24,10 @@ import com.kemal.spring.domain.Feriado;
 import com.kemal.spring.domain.Modulo;
 import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.Perfil;
-import com.kemal.spring.domain.Role;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.TipoPeriodicidadDet;
 import com.kemal.spring.domain.TipoRetribucion;
 import com.kemal.spring.domain.TipoVencimiento;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.AportePorcentajeService;
 import com.kemal.spring.service.AporteTipoService;
 import com.kemal.spring.service.BancoService;
@@ -45,11 +40,9 @@ import com.kemal.spring.service.FeriadoService;
 import com.kemal.spring.service.ModuloService;
 import com.kemal.spring.service.MonedaService;
 import com.kemal.spring.service.PerfilService;
-import com.kemal.spring.service.RoleService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
 import com.kemal.spring.service.TipoVencimientoService;
-import com.kemal.spring.service.UserService;
 
 
 @Component
@@ -57,11 +50,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 	private boolean alreadySetup = false;
 
-	private UserService userService;
+	/*private _UserService userService;
 
-	private RoleService roleService;
+	private _RoleService roleService;
 
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
 	private ConceptoService conceptoService;
 
@@ -85,8 +78,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	private BancoService bancoService;
 	private PerfilService perfilService;
 	private EstadoService estadoService;
-	public SetupDataLoader(UserService userService, RoleService roleService,
-			BCryptPasswordEncoder bCryptPasswordEncoder, ConceptoService conceptoService, ModuloService moduloService,
+	public SetupDataLoader(/*_UserService userService, _RoleService roleService,
+			BCryptPasswordEncoder bCryptPasswordEncoder,*/ ConceptoService conceptoService, ModuloService moduloService,
 			TipoPeriodicidadService calendarioService, CalendarioDetService calendarioDetService,
 			FeriadoService feriadoService, ContribuyenteService contribuyenteService, ContratoService contratoService,
 			
@@ -99,9 +92,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			BancoService bancoService,
 			PerfilService perfilService,
 			EstadoService estadoService) {
-		this.userService = userService;
+		/*this.userService = userService;
 		this.roleService = roleService;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;*/
 		this.conceptoService = conceptoService;
 		this.moduloService = moduloService;
 		this.calendarioDetService = calendarioDetService;
@@ -647,7 +640,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		
 	}
 
-	@Transactional
+	/*@Transactional
 	Role createRoleIfNotFound(final String name) {
 		Role role = roleService.findByName(name);
 		if (role == null) {
@@ -655,14 +648,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			roleService.save(role);
 		}
 		return role;
-	}
+	}*/
 	@Transactional
 	void createPerfil(final String name) {
 		Perfil perfil = new Perfil();
 		perfil.setSDescripcion(name);
 		perfilService.save(perfil);
 	}
-	@Transactional
+	/*@Transactional
 	void createUserIfNotFound(final String email, String name, String surname, String username, String password,
 			List<Role> userRoles, Integer idContribuyente,int idPerfil) {
 		User user  = new User();
@@ -680,7 +673,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			perfil.setId(idPerfil);
 			user.setPerfil(perfil);
 			userService.save(user);
-	}
+	}*/
 
 	final static String URL_CRON = "http://www.sunat.gob.pe/cl-ti-itcronobligme/fvS01Alias?accion=rptGral&periodo=";
 

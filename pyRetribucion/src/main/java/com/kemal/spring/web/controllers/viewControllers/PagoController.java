@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import com.kemal.spring.domain.Banco;
 import com.kemal.spring.domain.PagoSinAporte;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.TipoRetribucion;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.BancoService;
 import com.kemal.spring.service.PagoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.PagoForm;
 
@@ -65,9 +63,9 @@ public class PagoController {
 			@RequestParam(required = false, name = "fbdfecpagovouHasta") String fdfecpagovouHasta,
 			@RequestParam(required = false, name = "page") Integer page,Model model) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
 		Page<PagoSinAporte> articlePage = 
@@ -78,8 +76,8 @@ public class PagoController {
 				fbanioRetribucion, 
 				null==fdfecpagovouDesde?null:util.strtoDate(fdfecpagovouDesde),
 				null==fdfecpagovouHasta?null:util.strtoDate(fdfecpagovouHasta),
-				c.getContribuyente().getId(), 
-				c.getPerfil().getId().intValue()==1?"0":"-1", 
+				1/*c.getContribuyente().getId()*/, 
+				1/*c.getPerfil().getId().intValue()*/==1?"0":"-1", 
 				pageable);
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
@@ -118,9 +116,9 @@ public class PagoController {
 	public String eliminarCondicion(
 			@PathVariable String idEliminar,@ModelAttribute("pagoForm") PagoForm PagoForm) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+	/*	SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		((UserDetailsImpl) us).getUser();
+		((_UserDetailsImpl) us).getUser();*/
 		
 		Optional<PagoSinAporte> op =service.findById(Integer.parseInt(idEliminar));
 		PagoSinAporte condicion=op.get();
@@ -153,9 +151,9 @@ public class PagoController {
 	public String  guardarPago(
 			@ModelAttribute("pagoForm") PagoForm pagoForm,Model model) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		
 		PagoSinAporte pagox = new PagoSinAporte();
 		TipoPeriodicidad p=new TipoPeriodicidad();
@@ -178,7 +176,7 @@ public class PagoController {
 		pagox.setNroOperacion(pagoForm.getFnroOperacion());
 		pagox.setNImporte(util.strToBigDecimal(pagoForm.getFnImporte()));
 		pagox.setDfecPagoVoucher(util.strtoDate(pagoForm.getFdfecpagovou().substring(0, 10)));
-		pagox.setNCodigoCns(c.getContribuyente().getId());
+		pagox.setNCodigoCns(1/*c.getContribuyente().getId()*/);
 		pagox.setObservacion(pagoForm.getFobservacion());
 		service.save(pagox);
 		

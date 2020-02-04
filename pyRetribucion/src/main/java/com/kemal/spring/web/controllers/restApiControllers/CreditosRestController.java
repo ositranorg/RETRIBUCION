@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,12 +25,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kemal.spring.domain.Credito;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.dto.CreditoDeLaDJService;
 import com.kemal.spring.service.CreditoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.controllers.restApiControllers.dto.CreditoDTO;
 import com.kemal.spring.web.dto.DataTableVWCreditoRegistrado;
 import com.kemal.spring.web.dto.DataTableVWNuevoCredito;
@@ -72,23 +69,23 @@ public class CreditosRestController {
 	@ResponseBody
 	@PostMapping(value = "registrarConsumo", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> registrarRepresentante(@RequestBody  List<CreditoDTO> creditoDTO) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		
 		Type listType = new TypeToken<List<Credito>>() {}.getType();
 		List<Credito> creditos = new ModelMapper().map(creditoDTO, listType);
-		HashMap<String, Object>res =creditoService.save(creditos,c.getUsername());
+		HashMap<String, Object>res =creditoService.save(creditos,null/*c.getUsername()*/);
 		return new ResponseEntity<>(res, HttpStatus.OK); 
 	}
 	@ResponseBody
 	@GetMapping(value = "listar-creditos")
 	public String listarCreditos() {	
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		
-		dataTableVWNuevoCredito.setData(creditoService.listarNuevosCreditos(c.getContribuyente().getId() ));
+		dataTableVWNuevoCredito.setData(creditoService.listarNuevosCreditos(null/*c.getContribuyente().getId()*/ ));
 		 Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		 return gson.toJson(dataTableVWNuevoCredito);
 	}
@@ -102,12 +99,12 @@ public class CreditosRestController {
 	@ResponseBody
 	@PostMapping(value = "eliminarCredito", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> eliminarRepresentante(@RequestBody  CreditoDTO credito) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		Integer a=0;
 		try {
-			a=creditoService.delete(credito.getIdCredito(), c.getUsername());
+			a=creditoService.delete(credito.getIdCredito(), null/*c.getUsername()*/);
 		} catch (Exception e) {
 			a=0;
 			e.printStackTrace();
@@ -118,11 +115,11 @@ public class CreditosRestController {
 	@ResponseBody
 	@GetMapping(value = "listar-creditosregistrados")
 	public String listarCreditosRegistrados(@RequestParam(required = false, name = "codigoCN") Integer codigoCN) {	
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
-		if(c.getPerfil().getId()==2)
-			codigoCN=c.getContribuyente().getId();
+		User c = ((_UserDetailsImpl) us).getUser();*/
+		/*if(c.getPerfil().getId()==2)
+			codigoCN=c.getContribuyente().getId();*/
 		dataTableVWCreditoRegistrado.setData(creditoService.findCreditosRegistrados(codigoCN));
 		 Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		 return gson.toJson(dataTableVWCreditoRegistrado);

@@ -13,10 +13,10 @@ import java.util.Optional;
  * Created by Keno&Kemo on 04.11.2017..
  */
 @Service
-public class RoleService {
-    private RoleRepository roleRepository;
+public class _RoleService {
+   /* private RoleRepository roleRepository;
 
-    public RoleService(RoleRepository roleRepository) {
+    public _RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
@@ -54,7 +54,7 @@ public class RoleService {
             }
         }
         return roleNameAlreadyExists;
-    }
+    }*/
 
 
 }

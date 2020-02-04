@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,6 @@ import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.PagoSinAporte;
 import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.AporteDeduccionService;
 import com.kemal.spring.service.AporteDescuentoService;
 import com.kemal.spring.service.AporteLiberacionService;
@@ -44,7 +42,6 @@ import com.kemal.spring.service.OtroDescuentoService;
 import com.kemal.spring.service.PagoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.BuscarRetribucionForm;
 import com.kemal.spring.web.form.RetribucionForm;
@@ -100,10 +97,10 @@ public class MostrarRetribucionController {
 			@RequestParam(required = false, name = "fhasta") String dfecReconocimientoHasta,
 			@RequestParam(required = false, name = "errorMessage") Integer errorMessage, Model model) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User u = ((UserDetailsImpl) us).getUser();
-		List<AportePorcentaje> lstAportePorcentaje = aportePorcentajeService.findAll(u.getContribuyente().getId());
+		User u = ((_UserDetailsImpl) us).getUser();*/
+		List<AportePorcentaje> lstAportePorcentaje = aportePorcentajeService.findAll(1/*u.getContribuyente().getId()*/);
 		List<TipoPeriodicidad> lstCal = calendarioService.findAll();
 		model.addAttribute("lsttipoPeriodicidad", lstCal);
 		model.addAttribute("anios", util.getAnios());
@@ -111,7 +108,7 @@ public class MostrarRetribucionController {
 		model.addAttribute("lstMonedaRetribucion", monedaService.findAll());
 		model.addAttribute("lstAportePorcentaje", lstAportePorcentaje);
 		BuscarRetribucionForm x = new BuscarRetribucionForm();
-		CondicionBC condicionBC = condicionBCservice.findByNCodigoCnsAndSEstado(u.getContribuyente().getId());
+		CondicionBC condicionBC = condicionBCservice.findByNCodigoCnsAndSEstado(1/*u.getContribuyente().getId()*/);
 		x.setBuenContribuyente(condicionBC == null ? "" : condicionBC.getSBuenContribuyente());
 
 		x.setMes(null == periodicidad || "".equals(periodicidad) ? "" : periodicidad);
@@ -135,7 +132,7 @@ public class MostrarRetribucionController {
 		model.addAttribute("buscarRetribucionForm.buenContribuyente", x.getBuenContribuyente());
 		model.addAttribute("buscarRetribucionForm.dfecReconocimientoDesde", dfecReconocimientoDesde);
 		model.addAttribute("buscarRetribucionForm.dfecReconocimientoHasta", dfecReconocimientoHasta);
-		model.addAttribute("csn", u.getContribuyente().getId());
+		model.addAttribute("csn",1/* u.getContribuyente().getId()*/);
 		model.addAttribute("buscarRetribucionForm.errorMessage", errorMessage);
 		model.addAttribute("lstAportePorcentajesize", lstAportePorcentaje.size());
 		String msg = "";
@@ -191,9 +188,9 @@ public class MostrarRetribucionController {
 			@RequestParam(required = false, name = "fhasta") String dfecReconocimientoHasta,
 			@RequestParam(required = false, name = "porcentajehdd") String porcentajehdd,
 			@RequestParam(required = false, name = "page") Integer page, Model model) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User u = ((UserDetailsImpl) us).getUser();
+		User u = ((_UserDetailsImpl) us).getUser();*/
 		String errorMessage = "";
 		BigDecimal porcentaje = new BigDecimal(
 				"".equals(porcentajehdd) || "null".equals(porcentajehdd) ? "0" : porcentajehdd);
@@ -235,7 +232,7 @@ public class MostrarRetribucionController {
 		} else {
 
 			Aporte aporte = aporteService.getAporte(tipoPeriodicidad, tipoRetribucion, periodicidad, anioRetribucion,
-					u.getContribuyente().getId());
+					1/*u.getContribuyente().getId()*/);
 
 			RetribucionForm r = new RetribucionForm();
 			r.setCodaportehdd(aporte.getId());
@@ -282,7 +279,7 @@ public class MostrarRetribucionController {
 							Integer.parseInt(tipoPeriodicidad), 
 							Integer.parseInt(tipoRetribucion),
 							periodicidad, anioRetribucion,
-							u.getContribuyente().getId(),
+							1/*u.getContribuyente().getId()*/,
 							"0")
 					.stream().map(PagoSinAporte::getNImporte).reduce(BigDecimal.ZERO, (a, t) -> {
 						a = a.add(t);

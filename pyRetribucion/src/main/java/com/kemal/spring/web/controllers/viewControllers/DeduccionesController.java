@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +26,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kemal.spring.domain.Deduccion;
 import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.User;
-import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.DeduccionService;
 import com.kemal.spring.service.MonedaService;
+import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.DeduccionForm;
 
@@ -60,13 +57,13 @@ public class DeduccionesController {
 
 			@RequestParam(required = false, name = "page") Integer page) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
 		Page<Deduccion> articlePage = service.findByNCodigoCnsAndSEstado(
-				c.getContribuyente().getId(), c.getPerfil().getId().intValue()==1? "0":"-1", pageable);
+				1/*c.getContribuyente().getId()*/,1 /*c.getPerfil().getId().intValue()*/==1? "0":"-1", pageable);
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -89,9 +86,9 @@ public class DeduccionesController {
 	public String eliminarCondicion(@PathVariable String idEliminar,
 			@ModelAttribute("deduccionForm") DeduccionForm deduccionForm) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		((UserDetailsImpl) us).getUser();
+		((_UserDetailsImpl) us).getUser();*/
 
 		Optional<Deduccion> op = service.findById(Integer.parseInt(idEliminar));
 		Deduccion condicion = op.get();
@@ -114,9 +111,9 @@ public class DeduccionesController {
 
 	@PostMapping(value = "/guardardeduccion")
 	public ModelAndView guardardeduccion(@ModelAttribute("deduccionForm") DeduccionForm deduccionForm) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		ModelAndView model = new ModelAndView();
 
 		Deduccion deduccionx = new Deduccion();
@@ -130,7 +127,7 @@ public class DeduccionesController {
 		moneda.setId(deduccionForm.getMonedaRetribucion());
 		
 		deduccionx.setMoneda(moneda);
-		deduccionx.setNCodigoCns(c.getContribuyente().getId());
+		deduccionx.setNCodigoCns(1/*c.getContribuyente().getId()*/);
 		service.save(deduccionx, util.lstArchivos("FDEDUCCION", deduccionForm.getFsDocumento()));
 		model.addObject("deduccionForm", new DeduccionForm());
 		model.setViewName("redirect:/deduccion");

@@ -1,7 +1,7 @@
 package com.kemal.spring.web.controllers.restApiControllers;
 
 import com.kemal.spring.domain.User;
-import com.kemal.spring.service.UserService;
+import com.kemal.spring.service._UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,9 +18,9 @@ import java.util.Optional;
 
 @RestController
 public class restController {
-    private UserService userService;
+    /*private _UserService userService;
 
-    public restController(UserService userService) {
+    public restController(_UserService userService) {
         this.userService = userService;
     }
 
@@ -44,5 +44,5 @@ public class restController {
 
         userService.deleteById(id);
         return new ResponseEntity<>(userToDelete.get(), HttpStatus.NO_CONTENT);
-    }
+    }*/
 }

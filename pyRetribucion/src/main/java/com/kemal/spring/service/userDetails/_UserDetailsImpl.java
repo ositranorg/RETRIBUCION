@@ -1,27 +1,17 @@
 package com.kemal.spring.service.userDetails;
 
-import com.kemal.spring.domain.Role;
-import com.kemal.spring.domain.User;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
 /**
  * Created by Keno&Kemo on 04.11.2017..
  */
 
 
-public class UserDetailsImpl implements UserDetails {
+public class _UserDetailsImpl /*implements UserDetails*/ {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	/*private static final long serialVersionUID = 1L;
 	private User user;
-    public UserDetailsImpl(User user) {
+    public _UserDetailsImpl(User user) {
         this.user = user;
     }
 
@@ -67,5 +57,5 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.isEnabled();
-    }
+    }*/
 }

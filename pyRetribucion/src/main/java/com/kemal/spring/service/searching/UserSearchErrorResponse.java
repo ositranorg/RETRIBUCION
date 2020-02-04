@@ -1,6 +1,6 @@
 package com.kemal.spring.service.searching;
 
-import com.kemal.spring.service.UserDtoService;
+import com.kemal.spring.service._UserDtoService;
 import com.kemal.spring.web.paging.InitialPagingSizes;
 import com.kemal.spring.web.paging.Pager;
 import org.springframework.data.domain.PageRequest;
@@ -10,9 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Service
 public class UserSearchErrorResponse {
 
-    private UserDtoService userDtoService;
+   /* private _UserDtoService userDtoService;
 
-    public UserSearchErrorResponse(UserDtoService userDtoService) {
+    public UserSearchErrorResponse(_UserDtoService userDtoService) {
         this.userDtoService = userDtoService;
     }
 
@@ -31,5 +31,5 @@ public class UserSearchErrorResponse {
         modelAndView.addObject("noMatches", true);
         modelAndView.addObject("users", userDtoService.findAllPageable(pageRequest));
         return modelAndView;
-    }
+    }*/
 }

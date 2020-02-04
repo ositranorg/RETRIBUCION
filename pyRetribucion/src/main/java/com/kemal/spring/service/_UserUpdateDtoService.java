@@ -13,12 +13,12 @@ import java.util.List;
  */
 
 @Service
-public class UserUpdateDtoService {
+public class _UserUpdateDtoService {
 
-    private UserService userService;
+   /* private _UserService userService;
     private ModelMapper modelMapper;
 
-    public UserUpdateDtoService(UserService userService, ModelMapper modelMapper) {
+    public _UserUpdateDtoService(_UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
@@ -35,7 +35,7 @@ public class UserUpdateDtoService {
 
     public UserUpdateDto findById(Long id){
         return modelMapper.map(userService.findByIdEagerly(id), UserUpdateDto.class);
-    }
+    }*/
 
 
 }

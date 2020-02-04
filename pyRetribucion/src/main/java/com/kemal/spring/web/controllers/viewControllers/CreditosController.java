@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +20,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.kemal.spring.bd.view.VWCreditoRegistrado;
 import com.kemal.spring.domain.Credito;
 import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.User;
-import com.kemal.spring.domain.dto.CreditoDeLaDJService;
 import com.kemal.spring.service.CreditoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.CreditosForm;
 
@@ -53,9 +49,9 @@ public class CreditosController {
 	public String abrirRegistrarCreditos(Model model,
 			@RequestParam(required = false, name = "page") Integer page,
 			@RequestParam(required = false,value="ids[]") String ids[]) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		CreditosForm f=new CreditosForm();
 		f.setFmesRetribucion("");
 		f.setFmesRetribucionDestino("");
@@ -87,7 +83,7 @@ public class CreditosController {
 		
 		
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
-		Page<Credito> articlePage = creditoService.findByNCodigocn(c.getContribuyente().getId(), pageable);				
+		Page<Credito> articlePage = creditoService.findByNCodigocn(1/*c.getContribuyente().getId()*/, pageable);				
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -110,9 +106,9 @@ public class CreditosController {
 	public String buscar(Model model,
 			@RequestParam(required = false, name = "codigoCN") Integer codigoCN,
 			@RequestParam(required = false, name = "page") Integer page) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+	/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		CreditosForm f=new CreditosForm();
 		f.setFmesRetribucion("");
 		f.setFanioRetribucion("");
@@ -131,7 +127,7 @@ public class CreditosController {
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
 		Page<VWCreditoRegistrado> articlePage =null;
 		
-		if(c.getPerfil().getId()==1) {
+		if(2==1/*c.getPerfil().getId()==1*/) {
 			articlePage = creditoService.findCreditosRegistrados(codigoCN, pageable);		
 		}else {
 			//articlePage = creditoService.findCreditosRegistrados(c.getContribuyente().getId(), pageable);

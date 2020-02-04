@@ -21,7 +21,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +62,7 @@ import com.kemal.spring.service.OtroDescuentoService;
 import com.kemal.spring.service.PagoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
+import com.kemal.spring.service.userDetails._UserDetailsImpl;
 import com.kemal.spring.web.dto.AporteDeduccionModalDTO;
 import com.kemal.spring.web.dto.AporteDescuentoModalDTO;
 import com.kemal.spring.web.dto.AporteLiberacionModalDTO;
@@ -129,9 +128,9 @@ public class RetribucionController {
 
 	@RequestMapping(value = { "/retribucion/registrar" }, method = RequestMethod.GET)
 	public ModelAndView pago(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+	/*	SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		((UserDetailsImpl) us).getUser();
+		((_UserDetailsImpl) us).getUser();*/
 
 		RetribucionForm form = new RetribucionForm();
 
@@ -144,10 +143,10 @@ public class RetribucionController {
 	@ResponseBody
 	public List<AporteDeduccionModalDTO> deduccion(@RequestParam(required = false, name = "moneda") Integer moneda) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User u = ((UserDetailsImpl) us).getUser();
-			List<Deduccion> lfindByNCodigoCnsAndSEstado = deduccionService.getListaSaldo(u.getContribuyente().getId(),
+			User u = ((_UserDetailsImpl) us).getUser();*/
+			List<Deduccion> lfindByNCodigoCnsAndSEstado = deduccionService.getListaSaldo(1/*u.getContribuyente().getId()*/,
 					moneda, "1");
 			List<AporteDeduccionModalDTO> lst = new ArrayList<AporteDeduccionModalDTO>();
 			lfindByNCodigoCnsAndSEstado.stream().forEach((a) -> {
@@ -175,11 +174,11 @@ public class RetribucionController {
 	@ResponseBody
 	public List<AporteLiberacionModalDTO> liberacion(@RequestParam(required = false, name = "moneda") Integer moneda) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User u = ((UserDetailsImpl) us).getUser();
+			User u = ((_UserDetailsImpl) us).getUser();*/
 			List<LiberacionPago> lfindByNCodigoCnsAndSEstado = liberacionPagoService
-					.getListaSaldo(u.getContribuyente().getId(), moneda, "1");
+					.getListaSaldo(1/*u.getContribuyente().getId()*/, moneda, "1");
 			List<AporteLiberacionModalDTO> lst = new ArrayList<AporteLiberacionModalDTO>();
 			lfindByNCodigoCnsAndSEstado.stream().forEach((a) -> {
 				Calendar cal = Calendar.getInstance();
@@ -207,10 +206,10 @@ public class RetribucionController {
 	public List<AporteDescuentoModalDTO> otrosDescuentos(
 			@RequestParam(required = false, name = "moneda") Integer moneda) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User u = ((UserDetailsImpl) us).getUser();
-			List<Descuento> lotrosDescuentos = otrosDescuentosService.getListaSaldo(u.getContribuyente().getId(),
+			User u = ((_UserDetailsImpl) us).getUser();*/
+			List<Descuento> lotrosDescuentos = otrosDescuentosService.getListaSaldo(1/*u.getContribuyente().getId()*/,
 					moneda, "1");
 			List<AporteDescuentoModalDTO> lst = new ArrayList<AporteDescuentoModalDTO>();
 			lotrosDescuentos.stream().forEach((a) -> {
@@ -239,11 +238,11 @@ public class RetribucionController {
 	public String getPorcentaje(@RequestParam(required = false, name = "tipoRetribucion") int tipoRetribucion) {
 		AportePorcentaje c = null;
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User u = ((UserDetailsImpl) us).getUser();
+			User u = ((_UserDetailsImpl) us).getUser();*/
 
-			c = aportePorcentajeService.findByContribuyenteAndTipoRetribucionAndSEstado(u.getContribuyente().getId(),
+			c = aportePorcentajeService.findByContribuyenteAndTipoRetribucionAndSEstado(1/*u.getContribuyente().getId()*/,
 					tipoRetribucion);
 			if (null != c)
 				return c.getPorcentaje().toString();
@@ -259,10 +258,10 @@ public class RetribucionController {
 	@ResponseBody
 	public List<BaseCalculoConceptodto> action() {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User u = ((UserDetailsImpl) us).getUser();
-			final int codigo = u.getContribuyente().getId().intValue();
+			User u = ((_UserDetailsImpl) us).getUser();*/
+			final int codigo =1/* u.getContribuyente().getId().intValue()*/;
 
 			List<BaseCalculoConceptodto> s = new ArrayList<BaseCalculoConceptodto>();
 			List<Concepto> ls = conceptoService.findConceptosBaseImponible();
@@ -274,7 +273,7 @@ public class RetribucionController {
 				System.out.println(f.getSDescripcion());
 				if (codigo == 2) {
 					s.add(a);
-				} else if (u.getContribuyente().getId().intValue() != 2 && (f.getId() < 7)) {
+				} else if (1/*u.getContribuyente().getId().intValue() */!= 2 && (f.getId() < 7)) {
 					s.add(a);
 				}
 
@@ -328,11 +327,11 @@ public class RetribucionController {
 	public String guardarDeduccion(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 			aporteService.updateDeduccion(retribucion.getIddeduccionhdd(), retribucion.getDeduccion(),
-					retribucion.getCodaportehdd(), c.getUsername());
+					retribucion.getCodaportehdd(), ""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -351,11 +350,11 @@ public class RetribucionController {
 	public String guardarliberacion(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*	SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 			aporteService.updateLiberacion(retribucion.getIdliberacionhdd(), retribucion.getLiberacionpago(),
-					retribucion.getCodaportehdd(), c.getUsername());
+					retribucion.getCodaportehdd(), ""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -376,12 +375,12 @@ public class RetribucionController {
 	public String guardarOtroDescuento(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 
 			aporteService.updateDescuento(retribucion.getIddescuentohdd(), retribucion.getOtrosDescuentos(),
-					retribucion.getCodaportehdd(), c.getUsername());
+					retribucion.getCodaportehdd(), ""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -403,11 +402,11 @@ public class RetribucionController {
 	public String eliminarLiberacion(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 
-			aporteService.eliminarLiberacion(retribucion.getCodaportehdd(), c.getUsername());
+			aporteService.eliminarLiberacion(retribucion.getCodaportehdd(),""/* c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -428,11 +427,11 @@ public class RetribucionController {
 	public String eliminarOtro(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 
-			aporteService.eliminarDescuento(retribucion.getCodaportehdd(), c.getUsername());
+			aporteService.eliminarDescuento(retribucion.getCodaportehdd(),""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -453,11 +452,11 @@ public class RetribucionController {
 	public String eliminarDeduccion(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 
-			aporteService.eliminarDeduccion(retribucion.getCodaportehdd(), c.getUsername());
+			aporteService.eliminarDeduccion(retribucion.getCodaportehdd(), ""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -480,15 +479,15 @@ public class RetribucionController {
 	public String grabarInteres(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 
 			aporteService.grabarInteresResultante(
 					retribucion.getCodaportehdd(),
 					retribucion.getIntereses(), 
 					retribucion.getRetribucionresultante(),
-					c.getUsername());
+					""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -509,15 +508,15 @@ public class RetribucionController {
 	public String grabarRetResultante(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion,
 			ModelMap model) {
 		try {
-			SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+			/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 			Object us = (Object) sci.getAuthentication().getPrincipal();
-			User c = ((UserDetailsImpl) us).getUser();
+			User c = ((_UserDetailsImpl) us).getUser();*/
 
 			aporteService.grabarInteresResultante(
 					retribucion.getCodaportehdd(),
 					null, 
 					retribucion.getRetribucionresultante(),
-					c.getUsername());
+					""/*c.getUsername()*/);
 
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -540,16 +539,16 @@ public class RetribucionController {
 	public void xx(RedirectAttributes a, @ModelAttribute("command") RetribucionForm retribucion, ModelMap model,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 
 		response.setContentType("text/html;charset=UTF-8");
 		response.setContentType("application/pdf");
 		OutputStream out = null;
 		try {
 			
-			aporteService.presentar(retribucion.getCodaportehdd(), c.getUsername());
+			aporteService.presentar(retribucion.getCodaportehdd(),""/* c.getUsername()*/);
 			
 			
 			
@@ -618,8 +617,8 @@ public class RetribucionController {
 			buf.append("         <th width=\"70%\"> Razón Social </th> \n");
 			buf.append("    </tr>\n");
 			buf.append("    <tr> \n");
-			buf.append("        <td> " + c.getContribuyente().getSruc() + " </td> \n");
-			buf.append("       <td>" + c.getContribuyente().getSnombre() + "</td> \n");
+			buf.append("        <td> " + ""/*c.getContribuyente().getSruc()*/ + " </td> \n");
+			buf.append("       <td>" + ""/*c.getContribuyente().getSnombre()*/ + "</td> \n");
 			buf.append("    </tr>\n");
 			buf.append("</table>");
 			// Resumen
@@ -734,7 +733,7 @@ public class RetribucionController {
 							Integer.parseInt(retribucion.getTipoRetribucion()), 
 							retribucion.getMesRetribucion(),
 							retribucion.getAnioRetribucion(), 
-							c.getContribuyente().getId(), 
+							1/*c.getContribuyente().getId()*/, 
 							"0")
 					.stream().forEach((f) -> {			
 						buf.append("    <tr> \n");

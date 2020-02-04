@@ -5,17 +5,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.kemal.spring.domain.Contribuyente;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.ContribuyenteService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 
 @Controller
 @Scope("session")
@@ -32,27 +28,21 @@ public class RepresentanteController {
 	}
 	@GetMapping(value = "/mantenimiento/representante")
 	public String registrar(Model model) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();	
+		User c = ((_UserDetailsImpl) us).getUser();	
 	
-		//System.out.println("id empresa: " + id);
 		Contribuyente contribuyente = contribuyenteService.obtenerContribuyente(c.getContribuyente().getId());
 		
 		model.addAttribute("idEmpresa",c.getContribuyente().getId());
 		model.addAttribute("rucEmpresa",c.getContribuyente().getSruc());
-		//System.out.println("nombre de la empresa: "+ c.getContribuyente().getSnombre());
 		model.addAttribute("nombreEmpresa",c.getContribuyente().getSnombre());
-		/*
-		model.addAttribute("telefonoEmpresa",c.getContribuyente().getSTelefono());
-		model.addAttribute("correoEmpresa",c.getContribuyente().getSCorreo());
-		*/
 		model.addAttribute("telefonoEmpresa",contribuyente.getSTelefono());
 		model.addAttribute("correoEmpresa",contribuyente.getSCorreo());
 		
 		model.addAttribute("idUser", c.getId());
 		model.addAttribute("totalRegistroPorPagina", totalRegistroPorPagina);
-		//model.addAttribute("empresa", c.getContribuyente());
-		return "/user/mantenimiento/representante/representante-registro";
+		return "/user/mantenimiento/representante/representante-registro";*/
+		return "";
 	}
 }

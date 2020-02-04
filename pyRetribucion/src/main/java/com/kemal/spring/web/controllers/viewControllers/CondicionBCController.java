@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.CondicionBCService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.CondicionBCForm;
 
@@ -55,12 +52,12 @@ public class CondicionBCController {
 	@GetMapping(value = "/condicionbc")
 	public String mostrarCondicion(Model model, @RequestParam(required = false, name = "page") Integer page) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		List<TipoPeriodicidad> lstCal = calendarioService.findAll();
 		PageRequest pageable = PageRequest.of((null==page?1:page) - 1, 5);
-		Page<CondicionBC> articlePage = service.findByNCodigoCnsAndSEstadoNotOrderBySEstadoAsc(c.getContribuyente().getId(), pageable);
+		Page<CondicionBC> articlePage = service.findByNCodigoCnsAndSEstadoNotOrderBySEstadoAsc(1/*c.getContribuyente().getId()*/, pageable);
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -89,9 +86,9 @@ public class CondicionBCController {
 	@PostMapping(value = "/guardarCondicion")
 	public ModelAndView guardarLiberacion(@ModelAttribute("condicionBCForm") CondicionBCForm condicionBCForm) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		ModelAndView model = new ModelAndView();
 
 		CondicionBC condicion = new CondicionBC();
@@ -100,7 +97,7 @@ public class CondicionBCController {
 		if(null!=condicionBCForm.getDfecExclusion()&&!condicionBCForm.getDfecExclusion().equals(""))
 			condicion.setDfecExclusion((util.strtoDate(condicionBCForm.getDfecExclusion().substring(0, 10))));
 		condicion.setSBuenContribuyente(condicionBCForm.getSBuenContribuyente());
-		condicion.setNCodigoCns(c.getContribuyente().getId());
+		condicion.setNCodigoCns(1/*c.getContribuyente().getId()*/);
 		
 		
 		service.save(condicion,util.lstArchivos("FCONDICIONBC",condicionBCForm.getFsDocumento()));
@@ -114,10 +111,10 @@ public class CondicionBCController {
 	public String eliminarCondicion(@PathVariable String idEliminar,
 			@ModelAttribute("condicionBCForm") CondicionBCForm condicionBCForm) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		((UserDetailsImpl) us).getUser();
-
+		((_UserDetailsImpl) us).getUser();
+*/
 
 		CondicionBC condicion =  service.findById(Integer.parseInt(idEliminar));
 		condicion.setSEstado("0");

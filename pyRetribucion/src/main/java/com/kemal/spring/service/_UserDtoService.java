@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
  * Created by Keno&Kemo on 04.12.2017..
  */
 @Service
-public class UserDtoService {
+public class _UserDtoService {
 
-    private UserService userService;
+ /*   private _UserService userService;
     private ModelMapper modelMapper;
 
-    public UserDtoService(UserService userService, ModelMapper modelMapper) {
+    public _UserDtoService(_UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
@@ -79,5 +79,5 @@ public class UserDtoService {
         Page<User> users = userService.findByEmailContaining(email, pageRequest);
         List<UserDto> userDtos = users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
         return new PageImpl<>(userDtos, pageRequest, users.getTotalElements());
-    }
+    }*/
 }

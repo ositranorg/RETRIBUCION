@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kemal.spring.domain.User;
 import com.kemal.spring.service.EmailService;
-import com.kemal.spring.service.UserService;
+import com.kemal.spring.service._UserService;
 import com.kemal.spring.web.dto.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +26,8 @@ import javax.validation.Valid;
 @RequestMapping("")
 @Scope("session")
 public class RegisterController {
-    private UserService userService;
-    public RegisterController(UserService userService, EmailService emailService) {
+    private _UserService userService;
+    public RegisterController(_UserService userService, EmailService emailService) {
         this.userService = userService;
     }
 
@@ -35,7 +35,7 @@ public class RegisterController {
     public ModelAndView saveUser(ModelAndView modelAndView, @ModelAttribute("userDto") @Valid final UserDto userDto,
                                  BindingResult bindingResult, HttpServletRequest request, Errors errors){
 
-        User emailExists = userService.findByEmail(userDto.getEmail());
+        /*User emailExists = userService.findByEmail(userDto.getEmail());
         User userNameExists = userService.findByUsername(userDto.getUsername());
 
         System.out.println(emailExists);
@@ -61,21 +61,10 @@ public class RegisterController {
             user.setEnabled(true);
             userService.save(user);
 
-
-            /*String appUrl = request.getScheme() + "://" + request.getServerName();
-
-            SimpleMailMessage registrationEmail = new SimpleMailMessage();
-            registrationEmail.setTo(user.getEmail());
-            registrationEmail.setSubject("Registration Confirmation");
-            registrationEmail.setText("Please confirm the registration");
-            registrationEmail.setFrom("email@email.com");
-
-            emailService.sendEmail(registrationEmail);*/
-
             modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to "
                                     + userDto.getEmail());
             modelAndView.setViewName("website/registered");
-        }
+        }*/
 
         return modelAndView;
     }

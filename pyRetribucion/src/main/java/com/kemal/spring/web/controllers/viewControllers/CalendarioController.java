@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kemal.spring.domain.Concepto;
 import com.kemal.spring.domain.Contrato;
 import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.CalendarioDetService;
 import com.kemal.spring.service.ContratoService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.CalendarioDto;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.CalendarioForm;
@@ -73,12 +70,12 @@ public class CalendarioController {
 
 	@RequestMapping(value = { "/calendario/pago/{calendarioSel}/{anioSel}" }, method = RequestMethod.GET)
 	public ModelAndView pago(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 
 		int anio = util.anioActual();
-		List<Contrato> contratos = contratoService.findByContribuyente(c.getContribuyente());
+		List<Contrato> contratos = contratoService.findByContribuyente(null/*c.getContribuyente()*/);
 
 		List<CalendarioDto> calendarioDto = new ArrayList<CalendarioDto>();
 
@@ -99,7 +96,7 @@ public class CalendarioController {
 		} else {// calendario=mensual , trimestral
 			TipoPeriodicidad calend = new TipoPeriodicidad();
 			calend.setId(Integer.parseInt(calendarioSel));
-			Contrato contrato = contratoService.findByCalendarioAndContribuyente(calend, c.getContribuyente());
+			Contrato contrato = contratoService.findByCalendarioAndContribuyente(calend,null/* c.getContribuyente()*/);
 			if (contrato.getTipoVencimiento().getId().intValue() == 1) {// segun contrato
 				calendarioDto = calendarioDetService.getCalendariosxContratoAndConceptoOrderById(contrato,concepto);
 			} else { // o segun sunat
@@ -119,12 +116,12 @@ public class CalendarioController {
 
 	@RequestMapping(value = { "/calendario/presentacion/{calendarioSel}/{anioSel}" }, method = RequestMethod.GET)
 	public ModelAndView presentacion(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 
 		int anio = util.anioActual();
-		List<Contrato> contratos = contratoService.findByContribuyente(c.getContribuyente());
+		List<Contrato> contratos = contratoService.findByContribuyente(null/*c.getContribuyente()*/);
 
 		List<CalendarioDto> calendarioDto = new ArrayList<CalendarioDto>();
 
@@ -140,7 +137,7 @@ public class CalendarioController {
 		} else {// calendario=mensual , trimestral
 			TipoPeriodicidad calend = new TipoPeriodicidad();
 			calend.setId(Integer.parseInt(calendarioSel));
-			Contrato contrato = contratoService.findByCalendarioAndContribuyente(calend, c.getContribuyente());
+			Contrato contrato = contratoService.findByCalendarioAndContribuyente(calend, null/*c.getContribuyente()*/);
 			if (contrato.getTipoVencimiento().getId().intValue() == 1) {// segun contrato
 				calendarioDto = calendarioDetService.getCalendariosxContratoAndConceptoOrderById(contrato,concepto);
 			} else { // o segun sunat

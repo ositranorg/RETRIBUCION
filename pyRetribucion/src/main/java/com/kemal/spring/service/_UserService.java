@@ -1,43 +1,15 @@
 package com.kemal.spring.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.kemal.spring.domain.Role;
-import com.kemal.spring.domain.User;
-import com.kemal.spring.domain.UserRepository;
-import com.kemal.spring.domain.nonentity.CambiarClaveRepository;
-import com.kemal.spring.domain.nonentity.Resultado;
-import com.kemal.spring.domain.procedures.PkUserMapper;
-import com.kemal.spring.domain.procedures.PkUserMapperFilter;
-import com.kemal.spring.domain.procedures.PkUserMapperResultado;
-import com.kemal.spring.web.dto.UserDto;
-import com.kemal.spring.web.dto.UserUpdateDto;
 
 /**
  * Created by Keno&Kemo on 18.10.2017..
  */
 
 @Service
-public class UserService {
+public class _UserService {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+   /* private BCryptPasswordEncoder bCryptPasswordEncoder;
     //@Autowired
     private UserRepository userRepository;
     @Autowired
@@ -52,8 +24,8 @@ public class UserService {
     //private CambiarClaveRepository cambiarClaveRepository;
     //@Autowired
     //private CambiarClaveMapper cambiarClaveMapper;
-    private RoleService roleService;
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleService
+    private _RoleService roleService;
+    public _UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, _RoleService
             roleService, CacheManager cacheManager,
             CambiarClaveRepository cambiarClaveRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -241,5 +213,5 @@ public class UserService {
     }
     public static Integer genererNombre(){
     	  return (int)(1000000 * Math.random());
-    }
+    }*/
 }

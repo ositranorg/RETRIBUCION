@@ -4,10 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,8 +15,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
-import com.kemal.spring.domain.User;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.UserDto;
 
 /**
@@ -60,10 +54,10 @@ public class IndexController {
   
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){   
             new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
+        }*/
         return "website/login?logout=true";
     }
 
@@ -79,10 +73,10 @@ public class IndexController {
 	}
 	@GetMapping(value="/cambiar-clave")
 	public String cambiarClave(Model model) {
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();		
-		model.addAttribute("idUser", c.getId());
+		User c = ((_UserDetailsImpl) us).getUser();		*/
+		model.addAttribute("idUser", 1/*c.getId()*/);
 		return "website/cambiar-clave";
 	}
 }

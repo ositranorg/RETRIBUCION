@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +26,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kemal.spring.domain.LiberacionPago;
 import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.TipoPeriodicidad;
-import com.kemal.spring.domain.User;
 import com.kemal.spring.service.LiberacionPagoService;
 import com.kemal.spring.service.MonedaService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
-import com.kemal.spring.service.userDetails.UserDetailsImpl;
 import com.kemal.spring.web.dto.Util;
 import com.kemal.spring.web.form.LiberacionPagoForm;
 
@@ -59,13 +56,13 @@ public class LiberacionPagoController {
 	public String buscar(Model model,
 			@RequestParam(required = false, name = "page") Integer page) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 
 		PageRequest pageable = PageRequest.of((null == page ? 1 : page.intValue()) - 1, 5);
 		Page<LiberacionPago> articlePage = service.findByNCodigoCnsAndSEstadox(
-				c.getContribuyente().getId(),c.getPerfil().getId().intValue()==1? "0":"-1", pageable);
+				/*c.getContribuyente().getId()*/1,1/*c.getPerfil().getId().intValue()*/==1? "0":"-1", pageable);
 		int totalPages = articlePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -90,7 +87,7 @@ public class LiberacionPagoController {
 	public String eliminarCondicion(@PathVariable String idEliminar,
 			@ModelAttribute("liberacionPagoForm") LiberacionPagoForm liberacionPagoForm) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));*/
 		Optional<LiberacionPago> op = service.findById(Integer.parseInt(idEliminar));
 		LiberacionPago condicion = op.get();
 		condicion.setSEstado("0");
@@ -121,9 +118,9 @@ public class LiberacionPagoController {
 	@PostMapping(value = "/guardarLiberacion")
 	public ModelAndView guardarLiberacion(@ModelAttribute("liberacionPagoForm") LiberacionPagoForm liberacionPagoForm) {
 
-		SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
+		/*SecurityContextImpl sci = (SecurityContextImpl) (session().getAttribute("SPRING_SECURITY_CONTEXT"));
 		Object us = (Object) sci.getAuthentication().getPrincipal();
-		User c = ((UserDetailsImpl) us).getUser();
+		User c = ((_UserDetailsImpl) us).getUser();*/
 		ModelAndView model = new ModelAndView();
 
 		LiberacionPago liberacionPagox = new LiberacionPago();
@@ -135,7 +132,7 @@ public class LiberacionPagoController {
 		liberacionPagox.setNSaldo(util.strToBigDecimal(liberacionPagoForm.getFnImporte()));
 		liberacionPagox
 				.setDfecReconocimiento(util.strtoDate(liberacionPagoForm.getDfecReconocimiento().substring(0, 10)));
-		liberacionPagox.setNCodigoCns(c.getContribuyente().getId());
+		liberacionPagox.setNCodigoCns(1/*c.getContribuyente().getId()*/);
 		Moneda moneda=new Moneda();
 		moneda.setId(liberacionPagoForm.getMonedaRetribucion());
 		liberacionPagox.setMoneda(moneda);

@@ -1,6 +1,6 @@
 package com.kemal.spring.service.searching;
 
-import com.kemal.spring.service.UserDtoService;
+import com.kemal.spring.service._UserDtoService;
 import com.kemal.spring.web.dto.UserDto;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ import java.util.Collections;
 @Data
 @Service
 public class UserFinder {
-    private UserDtoService userDtoService;
+    /*private _UserDtoService userDtoService;
 
     @Autowired
-    public UserFinder(UserDtoService userDtoService) {
+    public UserFinder(_UserDtoService userDtoService) {
         this.userDtoService = userDtoService;
     }
 
@@ -47,5 +47,5 @@ public class UserFinder {
                 break;
         }
         return new UserSearchResult(userDtoPage, false);
-    }
+    }*/
 }
