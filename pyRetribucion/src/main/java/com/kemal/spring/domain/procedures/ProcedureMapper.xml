@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kemal.spring.domain.procedures.PkgListarLiquidacionMapper">
-	<resultMap id="ListarLiquidacionMapping" type="com.kemal.spring.domain.nonentity.ListarLiquidacion">		
-		<result column="NORDEN" property="nOrden" jdbcType="INTEGER" />
-		<result column="dfecharegistro" property="dFechaRegistro" jdbcType="VARCHAR" />
-	</resultMap>	
-</mapper>
