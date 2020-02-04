@@ -34,7 +34,7 @@ public class IndexController {
 
 	@GetMapping(value = { "/", "/index" })
 	public String index(ModelMap model) {			
-		return "user/home";
+		return "website/login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

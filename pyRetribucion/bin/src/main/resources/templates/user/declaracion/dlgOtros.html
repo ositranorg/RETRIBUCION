@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+</head>
+<body>
+
+
+	<div th:fragment="dlg-Otros">
+
+		<div class="modal fade" id="modalOtros" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" data-keyboard="false"
+			data-backdrop="static">
+			<div class="modal-dialog responsive" role="document">
+				<div class="modal-content" style="min-width: 700px !important;">
+
+					<div class="modal-header">
+
+						<h4 class="modal-title" id="titulolib">AGREGAR DESCUENTO</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body" id="contenidoModalOtros">
+						<form id="frmOtros" th:action="@{/aporteOtros}" method="post">
+
+							<input type="hidden" name="tipoPeriodicidad"
+								id="tipoPeriodicidad"
+								th:value="${retribucionForm.tipoPeriodicidad}" /> <input
+								type="hidden" name="mesRetribucion" id="mesRetribucion"
+								th:value="${retribucionForm.mesRetribucion}" /> <input
+								type="hidden" name="anioRetribucion" id="anioRetribucion"
+								th:value="${retribucionForm.anioRetribucion}" /> <input
+								type="hidden" name="tipoRetribucion" id="tipoRetribucion"
+								th:value="${retribucionForm.tipoRetribucion}" /> <input
+								type="hidden" name="accion" id="biaccion" value="" /> <input
+								type="hidden" name="codaportehdd" id="codaportehdd"
+								th:value="${retribucionForm.codaportehdd}" /> <input
+								type="hidden" name="monedaRetribucion" id="monedaRetribucion"
+								th:value="${retribucionForm.monedaRetribucion}" /> <input
+								type="hidden" name="porcentajehdd" id="porcentaje"
+								th:value="${retribucionForm.porcentaje}" /> <input
+								type="hidden" name="fdesde" id="fdesde" th:value="${fDesde}" />
+							<input type="hidden" name="fhasta" id="fhasta"
+								th:value="${fHasta}" /> <input type="hidden"
+								name="buenContribuyente"
+								th:value="${retribucionForm.buenContribuyente}" /> <input
+								type="hidden" id="iddescuentohdd" name="iddescuentohdd"
+								th:value="${retribucionForm.iddescuentohdd}" />
+
+
+							<div class="col-12">
+								<div class="col-12 table-responsive">
+									<table id="tblDescuento"
+										class=" table table-striped  table-bordered  overlay">
+										<thead>
+											<tr>
+												<th>Fecha de Registro</th>
+												<th>Documento</th>
+												<th>Moneda</th>
+												<th>Importe</th>
+												<th>Saldo</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+
+							<br />
+							<div class="row">
+								<div class="col-6">
+									<label>Monto Disponible para Declarar:</label>
+								</div>
+								<div class="col-6">
+									<label id="lblAcumdescuento" class="col-12"
+										style="text-align: right;"></label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<label>Monto a Declarar:</label>
+								</div>
+								<div class="col-6">
+									<input type="text" id="mntdescuento"
+										class="form-control border border-info "
+										style="text-align: right;"
+										th:field="${retribucionForm.otrosDescuentos}"
+										th:value="${retribucionForm.otrosDescuentos}" />
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<label class="msgErrorMonto"></label>
+								</div>
+								<div class="col-12">
+									<button type="submit" class="btn btn-info">Guardar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+
+
+</body>
+</html>

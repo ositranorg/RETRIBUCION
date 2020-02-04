@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+
+</head>
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<!-- sidebar-wrapper  -->
+		<div class="page-content">
+			<div class="container-fluid">
+				<form id="frmCreditosRegistrados"
+					th:action="@{/listarcreditosregistrados}" >
+					<div class="alert alert-primary" role="alert">
+						<h3>Créditos Registrados</h3>
+					</div>
+
+					<hr />
+
+
+					<div class="container">
+
+						<div class="row">
+							<div class="widget-header">
+								<h4 class="widget-title">Datos del Periodo</h4>
+							</div>
+
+						</div>
+
+
+
+						<div class="row border border-info">
+							<div class="col-12">
+								<div class="row alert alert-info">
+									<h5>CONCESIONARIOS</h5>
+								</div>
+								<div class="row">
+
+
+
+
+									<input id="cns" type="text" class="form-control"
+										autocomplete="off"
+										placeholder="Ingrese el nombre del concesionario" />
+
+
+
+								</div>
+								<hr />
+								<div class="row alert alert-info">
+									<h5>PERÍODO ORIGEN</h5>
+								</div>
+								<hr />
+
+								<div class="row">
+
+									<div class="col-6">
+										<label> TIPO DE PERIODICIDAD </label> <select
+											th:field="${creditosForm.ftipoPeriodicidad}"
+											id="ftipoPeriodicidad"
+											class="form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="cal : ${lsttipoPeriodicidad}"
+												th:value="${cal.id}" th:text="${cal.sDescripcion}"></option>
+
+										</select>
+
+									</div>
+
+									<div class="col-6">
+										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label>
+										<select id="ftipoRetribucion"
+											th:field="${creditosForm.ftipoRetribucion}"
+											class="form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="tp : ${lsttipoRetribucion}"
+												th:value="${tp.id}" th:text="${tp.sDescripcion}"></option>
+										</select>
+
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-6">
+										<label style="text-align: left;"> PERÍODO</label>
+										<div id="periodostributrios"></div>
+									</div>
+									<div class="col-6">
+
+										<label style="text-align: left;"> AÑO</label> <select
+											th:field="${creditosForm.fanioRetribucion}"
+											id="fanioRetribucion"
+											class="form-control form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="anioi : ${anios}" th:value="${anioi}"
+												th:text="${anioi}"></option>
+
+										</select>
+
+									</div>
+
+
+								</div>
+							</div>
+
+
+
+							<!-- /.col -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<hr>
+					<table id="tableCredito" class="table table-striped table-bordered table-hover">
+							<thead>
+								
+							<tr>
+								<th class="center" colspan="7">PERIODO ORIGEN</th>
+								<th class="center" ></th>
+								<th class="center" colspan="5">PERIODO DESTINO</th>
+								<th class="center" ></th>
+								</tr>
+							<tr>
+								<th class="center">codigocredito</th>
+								<th class="center">codigoconcesion</th>
+								<th class="center">codigoaporte</th>
+								<th class="center">TIPO PERIODICIDAD</th>
+								<th class="center">TIPO RETRIBUCION</th>
+								<th class="center">AÑO</th>
+								<th class="center">MES</th>
+								<th class="center">Monto</th>
+								<th class="center">TIPO PERIODICIDAD</th>
+								<th class="center">TIPO RETRIBUCION</th>
+								<th class="center">AÑO</th>
+								<th class="center">MES</th>
+
+								<th class="center">Estado</th>
+								<th class="center"></th>
+							</tr>
+							</thead>
+
+					</table>
+											
+
+					<input type="hidden" id="ftipoPeriodicidadhdd"
+						th:value="${creditosForm.ftipoPeriodicidad}" /> <input
+						type="hidden" id="fmesRetribucionhdd"
+						th:value="${creditosForm.fmesRetribucion}" /> <input
+						type="hidden" id="codigoCN" name="codigoCN" value=""/>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/jsScripts :: scripts"></div>
+
+
+
+	<script type="text/javascript">
+	
+	    
+	function eliminarCredito(idCredito){
+		
+		var data = {
+				idCredito:idCredito
+			 }
+		
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		$.confirm({
+		    title: 'Esta seguro(a) de eliminar el registro?',
+		    content: 'Esta ventana se cerrará automaticamente en unos segundos si ud. no responde.',
+		    autoClose: 'Cancelar|10000',
+		    buttons: {
+		        deleteUser: {
+		            text: 'Eliminar',
+		            action: function () {
+		            	$.ajax({								
+							data : JSON.stringify(data),													
+					        headers: {
+								'X-CSRF-TOKEN': token
+							},
+							//Cambiar a type: POST si necesario
+		    				type: "POST",
+		    				// Formato de datos que se espera en la respuesta
+		    				dataType: 'JSON',
+		    				contentType: 'application/json',
+		    				// URL a la que se enviará la solicitud Ajax
+							url : context +'api/creditos/eliminarCredito'
+						}).done((rest) => {
+							//console.log(rest);
+							if (rest == 1) {
+								mensajeServidor("Se grabo");
+																								
+							}else{
+								mensajeError("Error");
+							}
+						});
+		            }
+		        },
+		        Cancelar: function () {
+		        	
+		        }
+		    }
+		});
+	}
+	jQuery(document).ready(function($) {
+			var url = 'api/creditos/listar-creditosregistrados';
+			var token = $("meta[name='_csrf']").attr("content");
+			var DT1=$('#tableCredito').DataTable( {
+				  "pageLength": 5,
+				  'bProcessing': false,
+			        'bServerSide': false,
+			        
+			        "ajax": {
+			            "url": url,
+			            "data": {
+			                "codigoCN":$("#codigoCN").val()
+			            },
+			            "type": "GET"
+			        },
+			        'headers': {
+						'X-CSRF-TOKEN': token
+					},
+					"aoColumns": [ 
+			        	
+			        	
+				            { 'mData': 'ncodigo',"visible":false },
+				          
+				            { 'mData': 'nCodigocn',"visible":false },
+				            { 'mData': 'nCodigoAporte',"visible":false},
+				            
+				            { 'mData': 'periodicidadOrigen'},
+				            { 'mData': 'retribucionOrigen'},
+				            { 'mData': 'sAnioPeriodoiOrigen'},			            
+				            { 'mData': 'sMesPeriodoOrigen' },
+				            { 'mData': 'nimporte' },
+				            
+				            { 'mData': 'periodicidadDestino' },
+				            { 'mData': 'retribucionDestino' },
+				            { 'mData': 'sAnioPeriodoDestino' },
+				            { 'mData': 'sMesPeriodoDestino' },
+				            { 'mData': 'estado' },
+				            { 'mData': '' }
+			              
+			            ],"columnDefs": [ {
+			                'targets': -1,
+			                'data': null,
+			                'defaultContent': '<button type="button" class="btn btn-info btn-xs dt-view"><span class="fa fa-trash" aria-hidden="true"></span></button>'
+			            } ],
+			            "language": {
+			                "decimal": "",
+			                "emptyTable": "No hay información",
+			                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+			                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+			                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+			                "infoPostFix": "",
+			                "thousands": ",",
+			                "lengthMenu": "Mostrar _MENU_ Entradas",
+			                "loadingRecords": "Cargando...",
+			                "processing": "Procesando...",
+			                "search": "Buscar:",
+			                "zeroRecords": "Sin resultados encontrados",
+			                "paginate": {
+			                    "first": "Primero",
+			                    "last": "Ultimo",
+			                    "next": "Siguiente",
+			                    "previous": "Anterior"
+			                }
+			            }
+				    
+			} );
+			 $('#tableCredito tbody').on( 'click', 'button', function () {
+			        var data = DT1.row( $(this).parents('tr') ).data();
+			        eliminarCredito(data.ncodigo);
+			    } );
+		buscarPeriodo("fmesRetribucion", "periodostributrios","ftipoPeriodicidad");
+		$('#cns').autocomplete({
+			serviceUrl: context+'api/contribuyente/getContribuyente',
+			paramName: "tagName",
+			delimiter: ",",
+		   transformResult: function(response) {
+			    	
+			return {      	
+			  //must convert json to javascript object before process
+			  suggestions: $.map($.parseJSON(response), function(item) {
+			      return { value: item.snombre, data: item.id };
+			   })
+			            
+			 };
+			        
+	         },
+	         onSelect: function (suggestion) {
+	                $('#codigoCN').val(suggestion.data);
+	                $('#tableCredito').DataTable().ajax.reload(null, false);
+	         }
+			    
+		 });
+		 
+	});
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+<title>Insert title here</title>
+</head>
+<script src="https://use.fontawesome.com/c0c323679c.js"></script>
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<!-- sidebar-wrapper  -->
+		<div class="page-content">
+			<div class="container-fluid">
+
+				<div class="alert alert-primary" role="alert">
+					<h3>Cambiar Clave</h3>
+				</div>
+				<div class="container-fluid">
+					<form class="needs-validation" novalidate id="frmCambiarClave">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card">
+									<div class="card-header bg-primary text-white">
+										<p class="h6">Datos de la nueva clave</p>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group">
+													<label>Ingrese clave actual</label> <input
+														type="password" id="txtClaveAnterior" class="form-control"
+														required />
+													<div class="invalid-feedback">Por favor ingrese clave
+														anterior.</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group">
+													<label>Ingrese nueva clave</label> <input type="password"
+														id="txtNuevaClave" class="form-control" required />
+													<div class="invalid-feedback">Por favor ingrese nueva
+														clave.</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group">
+													<label>Confirmar clave nueva</label> <input type="password"
+														id="txtConfirmarClave" class="form-control" required />
+													<div class="invalid-feedback">Por favor ingrese
+														confirmar nueva clave.</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 mt-2" role="toolbar">
+												<div class="btn-group" role="group" aria-label="First group">
+													<button type="submit" class="btn btn-primary"
+														id="fFormatouploadsubirtodo" onClick="cambiarClave()">
+														Guardar <i class="fa fa-save"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer -->
+	<!--<footer th:replace="fragments/footer :: footer"></footer>-->
+	<!-- Modal -->
+	<div class="modal" tabindex="-1" role="dialog" id="myModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Modal body text goes here.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="ignismyModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="">
+						<span>×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="thank-you-pop">
+						<img
+							src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png"
+							alt="">
+						<h1>!Se realizó la operación correctamente!</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="modal fade" id="errorModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="">
+						<span>×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="thank-you-pop">
+						<img
+							src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png"
+							alt="">
+						<h1>!Ocurrio un error!</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+<script type="text/javascript">
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.getElementsByClassName('needs-validation');
+	// Loop over them and prevent submission
+	var validation = Array.prototype.filter.call(forms, function(form) {
+	form.addEventListener('submit', function(event) {
+		/*
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		*/
+		event.preventDefault();
+		event.stopPropagation();
+	
+		form.classList.add('was-validated');		
+	}, false);
+	});
+	}, false);
+	})();
+	
+var context = [[@{/}]];
+var idUsuario = [[${idUser}]];
+console.log("usuario: ",idUsuario);
+var token = $("meta[name='_csrf']").attr("content");
+
+
+
+//this.cambiarClave();
+function cambiarClave(){
+	  var url = context + 'api/usuario/cambiar-clave';
+	  var claveAnterior = $('#txtClaveAnterior').val();
+	  var nuevaClave = $('#txtNuevaClave').val();
+	  var confirmarClave = $('#txtConfirmarClave').val();
+	  if(claveAnterior==''|| nuevaClave==''||confirmarClave==''){
+		  return false;
+	  }
+	  var data = {
+		 claveAnterior:claveAnterior,
+		 nuevaClave:nuevaClave,
+		 confirmarClave:confirmarClave,
+		 idUsuario:idUsuario
+	  }
+	  $.ajax({
+			headers: {
+				"X-CSRF-TOKEN": token
+			},
+			// En data puedes utilizar un objeto JSON, un array o un query string
+			data: JSON.stringify(data),
+			//Cambiar a type: POST si necesario
+			type: "POST",
+			// Formato de datos que se espera en la respuesta
+			dataType: 'JSON',
+			contentType: 'application/json',
+			// URL a la que se enviará la solicitud Ajax
+			url: url,
+		})
+		.done((rest) => {			
+			//console.log(rest);
+			if (rest.resultado == 1) {
+				console.log(rest);
+				//alert('Se registró correctamente.')
+				$('#txtClaveAnterior').val('');
+				$('#txtNuevaClave').val('');
+				$('#txtConfirmarClave').val('');
+				
+				$.alert({
+				    title: 'Información',
+				    content: rest.mensaje,
+				    type: 'green',
+				});
+				$("#frmCambiarClave")[0].reset();
+				$('#frmCambiarClave').removeClass( "was-validated");
+			}else{
+				$.alert({
+				    title: 'Alerta',
+				    content: 'Ocurrió un error.',
+				    type: 'red',
+				});
+			}
+
+		});
+	
+}
+</script>
+
+</html>

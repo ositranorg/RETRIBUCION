@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+</head>
+<body>
+
+
+	<div th:fragment="dlg-BaseImponible">
+
+		<div class="modal fade" id="modalBaseImponible" tabindex="-1"
+			data-keyboard="false" data-backdrop="static" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog responsive" role="document">
+				<div class="modal-content">
+
+					<div class="modal-header">
+
+						<h4 class="modal-title" id="titulobi">AGREGAR BASE IMPONIBLE</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<form id="frmBiImportes" th:action="@{/guardarbi}" method="post">
+
+							<input type="hidden" name="tipoPeriodicidad"
+								id="tipoPeriodicidad"
+								th:value="${retribucionForm.tipoPeriodicidad}" /> <input
+								type="hidden" name="mesRetribucion" id="mesRetribucion"
+								th:value="${retribucionForm.mesRetribucion}" /> <input
+								type="hidden" name="anioRetribucion" id="anioRetribucion"
+								th:value="${retribucionForm.anioRetribucion}" /> <input
+								type="hidden" name="tipoRetribucion" id="tipoRetribucion"
+								th:value="${retribucionForm.tipoRetribucion}" /> <input
+								type="hidden" name="porcentajehdd" id="porcentaje"
+								th:value="${retribucionForm.porcentaje}" /> <input
+								type="hidden" name="fdesde" id="fdesde"
+								th:value="${retribucionForm.fdesde}" /> <input type="hidden"
+								name="fhasta" id="fhasta" th:value="${retribucionForm.fhasta}" />
+							<input type="hidden" name="accion" id="biaccion" value="" /> <input
+								type="hidden" name="codigobihdd" id="codigobihdd" value="" /> <input
+								type="hidden" name="codaportebihdd" id="codaportebihdd"
+								th:value="${retribucionForm.codaportehdd}" /> <input
+								type="hidden" name="monedaRetribucion" id="monedaRetribucion"
+								th:value="${retribucionForm.monedaRetribucion}" /> <input
+								type="hidden" name="codicionConcesionario"
+								id="codicionConcesionario"
+								th:value="${retribucionForm.buenContribuyente}" /> <input
+								type="hidden" name="buenContribuyente"
+								th:value="${retribucionForm.buenContribuyente}" />
+							<div id="contenidoModalBi" class="col-12">
+								<div class="row">
+									<label id="lbldetallebi" class="col-sm-12 control-label"></label>
+									<select id="cboDetalleBC" name="cboDetalleBC"
+										class="form-control border border-info">
+									</select> <label class="msgErrorcboDetalleBC"></label>
+								</div>
+								<div class="row">
+									<label class="col-sm-12 control-label">DESCRIPCION PARA
+										EL IMPORTE</label> <input type="text" id="biconcepto"
+										class="col-sm-12 form-control border border-info "
+										name="biconcepto" maxlength="350" /> <label
+										class="msgErrorbiconcepto"></label>
+								</div>
+								<div class="row">
+									<label class="col-sm-12 control-label">IMPORTE</label> <input
+										type="text" id="biimporte" name="biimporte"
+										class="col-sm-12 form-control border border-info right  numero" />
+									<label class="msgErrorbiimporte"></label>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-info" id="guardarbi"></button>
+						</form>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+</body>
+</html>
