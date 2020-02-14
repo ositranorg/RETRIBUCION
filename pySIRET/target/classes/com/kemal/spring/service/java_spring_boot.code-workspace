@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "C:\\proyectos\\ositran\\RETRIBUCION\\pyRetribucion"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "tailwind_css",
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/.factorypath": true
+		},
+		"maven.executable.path": "C:\\programas\\apache-maven-3.6.3\\bin\\mvn.cmd",
+		"editor.fontSize": 18
+	}
+}
