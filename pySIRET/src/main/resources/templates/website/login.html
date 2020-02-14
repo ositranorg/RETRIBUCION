@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8" />
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta Http-Equiv="Cache-Control" Content="no-cache">
+<meta Http-Equiv="Pragma" Content="no-cache">
+<meta Http-Equiv="Expires" Content="0">
+
+
+
+<link th:rel="stylesheet" type="text/css"
+	th:href="@{/css/jquery-ui.min.css}" />
+<link th:rel="stylesheet" type="text/css"
+	th:href="@{/css/jquery-confirm.min.css}" />
+<link th:rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+<link th:rel="stylesheet" type="text/css" th:href="@{/css/sb-admin.css}" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" th:src="@{/js/aes.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+</head>
+
+
+
+<body style="background-color: white !important;" >
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class=" col-6" style="margin-top: 50px;">
+				<img class="img-fluid" src="images/undraw_nakamoto_2iv6.png">
+			</div>
+			<div class=" col-6" style="margin-top: 50px;">
+				<div class="col-12 center" style="width: 20rem; margin-top: 50px;">
+					<img src="images/undraw_profile_pic_ic5t.png" alt="Card image cap"
+						style="width: 50px;">
+
+				</div>
+
+				<div class="col-12">
+
+
+					<h4 class="center">OSITRAN</h4>
+
+
+
+					<form id="frm" th:action="@{/login}" method="post" name="myform">
+						<div class="form-group">
+							<label th:for="username">USUARIO</label>
+
+							<div class="inputGroupContainer">
+
+								<div class="input-group">
+
+									<a href="#" class="btn btn-default input-group-btn"> <span
+										class="fa fa-user"></span>
+									</a> <input type="text" class="form-control" th:id="username"
+										id="username" name="username" th:name="username"
+										placeholder="Enter username">
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label th:for="username">USUARIO</label>
+
+							<div class="inputGroupContainer">
+
+								<div class="input-group">
+
+									<a href="#" class="btn btn-default input-group-btn"> <span
+										class="fa fa-lock"></span>
+									</a> <input type="password" class="form-control" name="password"
+										id="password" th:name="password" th:id="password"
+										placeholder="Password">
+								</div>
+
+							</div>
+						</div>
+
+
+
+
+						<button type="button" class="btn btn-primary"
+							onclick="doSubmit();">Entrar</button>
+					</form>
+
+
+
+
+					<a th:href="@{/abrir-recuperar-clave}">Olvidó su clave</a>
+
+					<div class="alert" th:if="${errorMessge}" th:text="${errorMessge}"
+						style="color: red; font-weight: bold; margin: 30px 0px;"></div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	  function preventBack() { window.history.forward(); }
+      setTimeout("preventBack()", 0);
+      window.onunload = function () { null };
+		function encryption(v) {
+			console.log("clave sin enc:" + $("#password").val());
+			console.log("clave:" + $("#password").val());
+			var rkEncryptionKey = CryptoJS.enc.Base64
+					.parse('u/Gu5posvwDsXUnV5Zaq4g==');
+			var rkEncryptionIv = CryptoJS.enc.Base64
+					.parse('5D9r9ZVzEYYgha93/aUK2w==');
+			var utf8Stringified = CryptoJS.enc.Utf8.parse(v);
+			var encrypted = CryptoJS.AES.encrypt(utf8Stringified.toString(),
+					rkEncryptionKey, {
+						mode : CryptoJS.mode.CBC,
+						padding : CryptoJS.pad.Pkcs7,
+						iv : rkEncryptionIv
+					});
+			return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+		}
+		function doSubmit() {
+			if ($("#username").val() == "" || $("#password").val() == "") {
+				alert("Debe ingresar usuario y password.");
+			} else {
+				document.getElementById('username').style.color="white";
+				document.getElementById('password').style.color="white";
+				var val = document.getElementById('username').value; //assign password to a variable
+				document.myform.username.value = encryption(val);
+				val = document.getElementById('password').value; //assign password to a variable
+				document.myform.password.value = encryption(val);
+				$("#frm").submit();
+			}
+		}
+		jQuery(document).ready(function($) {
+			$("#frm").trigger("reset");
+		});
+	</script>
+
+
+	<!-- Footer -->
+
+
+
+
+
+</body>
+</html>

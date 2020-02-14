@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+
+</head>
+
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<!-- sidebar-wrapper  -->
+
+		<div class="page-content">
+			<!--  <p th:text="#{liquidacion.mensaje.adjunteArchivos}">Welcome!</p>-->
+			<div class="container-fluid">
+				<div aria-live="polite" aria-atomic="true"
+					style="min-height: 200px; position: fixed; z-index: 1000000000; right: 0px;">
+					<div style="position: absolute; top: 0; right: 0;">
+						<div id="toastMensajeError" class="toast" role="alert"
+							style="width: 250px;" aria-live="assertive" aria-atomic="true"
+							data-delay="40000">
+							<div class="toast-header bg-danger">
+								<strong class="mr-auto text-white">Error</strong>
+								<!-- <small class="text-white">3 mins ago</small> -->
+								<button type="button" class="ml-2 mb-1 close text-white"
+									data-dismiss="toast" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="toast-body" id="toastMensajeErrorBody">Hey,
+								there! This is a Bootstrap 4 toast.</div>
+						</div>
+						<div id="toastMensajeCorrecto" class="toast" role="alert"
+							style="width: 250px;" aria-live="assertive" aria-atomic="true"
+							data-delay="40000">
+							<div class="toast-header bg-success">
+								<strong class="mr-auto text-white">Información</strong>
+								<!-- <small class="text-white">3 mins ago</small> -->
+								<button type="button" class="ml-2 mb-1 close text-white"
+									data-dismiss="toast" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="toast-body" id="toastMensajeCorrectoBody">Hey,
+								there! This is a Bootstrap 4 toast.</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="alert alert-primary" role="alert">
+					<h3>Formato de Liquidación Anual y Dictamen</h3>
+				</div>
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="form-group">
+								<label>Año</label> <label class="form-control" id="anio">2019</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<p class="h6">Subir Dictamen</p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="custom-file">
+												<input type="file" class="custom-file-input"
+													id="fdictamenupload" name="files"
+													th:data-url="@{/Upload?subir=fdictamen&tipoDocumento=1}"
+													multiple
+													accept="application/pdf,application/vnd.ms-excel,application/vnd.ms-word"
+													onchange="adjuntarArchivosDictamen(event)"> <label
+													class="custom-file-label" for="fdictamenupload"
+													data-browse="Seleccione">Seleccione archivo(s)
+													hasta 30mb</label>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-sm-12">
+											<ul id="listaArchivosDictamen" class="list-unstyled">
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12" role="toolbar">
+											<div class="btn-group" role="group" aria-label="First group">
+												<button id="fdictamenuploadsubirtodo" type="button"
+													class="btn btn-primary" onClick="subirTodoDictamen()">
+													Subir Todo <i class="fa fa-upload"></i>
+												</button>
+											</div>
+											<div class="btn-group" role="group" aria-label="First group">
+												<button id="fdictamenuploadcancelatodo" type="button"
+													class="btn btn-primary" onclick="cancelarTodoDictamen()">
+													Cancelar Todo <i class="fa fa-trash "></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<p class="h6">Subir Formato de Liquidación Anual</p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="custom-file">
+												<input type="file" class="custom-file-input"
+													id="fFormatoupload" name="files2"
+													th:data-url="@{/Upload?subir=fdictament&tipoDocumento=2}"
+													accept="application/pdf,application/vnd.ms-excel,application/vnd.ms-word"
+													onchange="adjuntarArchivosFormato(event)" multiple>
+												<label class="custom-file-label" for="fFormatoupload"
+													data-browse="Seleccione">Seleccione archivo(s)
+													hasta 30mb</label>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-sm-12">
+											<ul id="listaArchivosFormato" class="list-unstyled">
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 mt-0" role="toolbar">
+											<div class="btn-group" role="group" aria-label="First group">
+												<button type="button" class="btn btn-primary"
+													id="fFormatouploadsubirtodo" onClick="subirTodoFormato()">
+													Subir Todo <i class="fa fa-upload"></i>
+												</button>
+											</div>
+											<div class="btn-group" role="group" aria-label="First group">
+												<button type="button" class="btn btn-primary"
+													id="fFormatouploadcancelatodo"
+													onclick="cancelarTodoFormato()">
+													Cancelar Todo <i class="fa fa-trash"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-sm-12">
+							<div class="btn-group" role="group" aria-label="First group">
+								<button type="button" class="btn btn-primary"
+									id="btnSoloGuardar" onclick="soloGuadar()">Sólo
+									Guardar</button>
+							</div>
+							<div class="btn-group" role="group" aria-label="First group"
+								id="btnGuardarEnviar">
+								<button type="button" class="btn btn-primary"
+									id="btnEnviarGuardar" onclick="guardarEnviarFinal()">Guardar
+									y Enviar</button>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<p class="h6">Lista de Archivos Súbidos</p>
+								</div>
+								<div class="card-body">
+									<!--
+									<div class="row">
+										<div class="col-sm-4 form-group">
+											<label>Período Tributario</label> <select class="form-control"
+												id="exampleFormControlSelect1">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+										<div class="col-sm-4 form-group">
+											<label>Estado</label> <select class="form-control"
+												id="exampleFormControlSelect1">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+									</div>
+									-->
+									<div class="row">
+										<div class="col-sm-12">
+											<table class="table">
+												<thead class="thead-dark">
+													<tr>
+														<th scope="col" style="text-align: center;">AÑO</th>
+														<th scope="col" style="text-align: center;">FECHA DE
+															REGISTRO</th>
+														<th scope="col" style="text-align: center;">ULTIMA
+															FECHA MODIFICACIÓN</th>
+														<th scope="col" style="text-align: center;">ARCHIVO</th>
+														<th scope="col" style="text-align: center;">ESTADO</th>
+													</tr>
+												</thead>
+												<tbody id="tblLiquidaciones">
+
+												</tbody>
+											</table>
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPaginacion">
+												</ul>
+											</nav>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Footer -->
+
+
+	<div th:replace="fragments/jsScripts :: scripts"></div>
+	<script type="text/javascript">
+		// jQuery(document)
+		// 		.ready(
+		// 			function($) {
+		// 					var archivos = [ "pdf", "docx", "doc","xlsx","xls" ];
+		// 					subir("fdictamen", archivos, 30);
+		// 			}
+
+		// 		);
+		var context = [[@{/}]];
+		var totalRegistrosPorPagina = [[${totalRegistroPorPagina}]];
+		var token = $("meta[name='_csrf']").attr("content");
+		$('#fdictamenuploadsubirtodo').css("display", "none");
+		$('#fdictamenuploadcancelatodo').css("display", "none");
+
+		$('#fFormatouploadsubirtodo').css("display", "none");
+		$('#fFormatouploadcancelatodo').css("display", "none");
+		
+		$('#btnSoloGuardar').css("display", "none");		
+		//$('#btnEnviarGuardar').css("display", "none");
+
+		var archivosDictamen = [];
+		var archivosFormato = [];
+		var archivosDictamenResponse = [];
+		var archivosFormatoResponse = [];
+		// function adjuntarArchivosDictamen(event) {
+		// 	//console.log(event);
+		// 	archivosDictamen = [];
+		// 	var archivos = event.target.files;
+		// 	var archivosExtensionesPermitidos = ["pdf", "docx", "doc", "xlsx", "xls"];
+		// 	var mayusArchivosExtensionesPermitidos = String.prototype.toUpperCase.apply(archivosExtensionesPermitidos).split(",");
+		// 	var esValidoExtension = true;
+		// 	var maxtamanio = 30;
+		// 	var mensaje = "";
+		// 	closeMensajes();
+		// 	for (let index = 0; index < archivos.length; index++) {
+		// 		var ext = archivos[index].name.substr(-3).toUpperCase();
+		// 		// console.log("extension ",ext);
+		// 		// console.log("extensiones ",mayusArchivosExtensionesPermitidos);
+		// 		archivosDictamen.push(archivos[index]);
+		// 		if (mayusArchivosExtensionesPermitidos.indexOf(ext) == -1) {
+		// 			//uploadErrors.push('Solo se acepta archivos de formato ' + mayuscArracceptFileTypes);
+		// 			mensaje = "Por favor seleccione archivos permitidos.";
+		// 			esValidoExtension = false;
+		// 			break;
+		// 		}
+		// 		if (archivos[index].size > ((parseInt(maxtamanio) + 1) * (1024 * 1024))) {
+		// 			mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
+		// 			esValidoExtension = false;
+		// 			break;
+		// 		}
+		// 		//const element = archivos[index];
+
+		// 	}
+		
+		function cargarPaginador(totalRegistros){
+			var total = totalRegistros;
+			var totalPagina = totalRegistros/totalRegistrosPorPagina;
+			var redondeoPagina = Math.ceil(totalPagina);
+			//console.log("total_pagina:",totalPagina);
+			//console.log("total_registros:",total);
+			//console.log("total_redondeo:",redondeoPagina);
+			$("#ulPaginacion").empty();
+			if(totalRegistros==0){
+				return;
+			}
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion(1);return false;">Inicio</a></li>');
+			var pagina = 0;			
+			for(var i=0;i<redondeoPagina;i++){				
+				pagina = i + 1;
+				$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ pagina +');return false;">' + (i+1) + '</a></li>');	
+			}			
+			$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarLiquidacion('+ redondeoPagina +');return false;">Final</a></li>');
+		}
+		this.listarLiquidacion(1);
+		function listarLiquidacion(pagina){
+		    var url = context + 'api/liquidacion/listar-liquidacion';
+		    var data = {
+		    	pagina:pagina
+		    }
+			$.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				data: JSON.stringify(data),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+				.done((rest) => {
+					//console.log(rest);
+					if (rest.resultado == 1) {						
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
+						cargarPaginador(rest.listaLiquidacion.totalRegistros);
+						//console.log(rest);
+					}
+
+				})
+		}
+		
+		function guardarEnviar(){
+			
+			//console.log("archivosFormato ",archivosFormato)
+			//console.log("archivosDictamen ",archivosDictamen)
+			closeMensajes();
+			
+			
+			//if(archivosFormato.length>0 && archivosDictamen.length>0){				
+			if(archivosFormatoResponse.length>0 && archivosDictamenResponse.length>0){
+				if (!registrarDictamen(2)) return;
+				if(!registrarFormato(2))return;
+				
+				console.log("TODO CORRECTO")
+				
+				$('#btnSoloGuardar').css("display", "none");		
+				//$('#btnEnviarGuardar').css("display", "none");
+				limpiarArchivosDictamen();
+				limpiarArchivosFormato();
+				
+				cancelarTodoDictamen();
+				cancelarTodoFormato();
+			
+			}else{
+				if(archivosDictamenResponse.length==0){
+				//mensajeError('Por favor debe agregar archivo(s) dictamen.');
+					mensajeError('[[#{liquidacion.mensaje.agregarArchivosDictamen}]]');				
+					return;					
+				}
+				if(archivosFormatoResponse.length==0){
+					//mensajeError('Por favor debe agregar archivo(s) formato de liquidación.')
+					mensajeError('[[#{liquidacion.mensaje.agregarArchivosFormato}]]');
+					return;					
+				}
+			}
+		}
+		
+	
+		function adjuntarArchivosDictamen(event) {
+			//console.log(event);		
+			archivosDictamen = [];
+			var archivos = event.target.files;
+			var archivosExtensionesPermitidos = ["pdf", "docx", "doc", "xlsx", "xls"];
+			var mayusArchivosExtensionesPermitidos = String.prototype.toUpperCase.apply(archivosExtensionesPermitidos).split(",");
+			var esValidoExtension = true;
+			var maxtamanio = 30;
+			var mensaje = "";
+			closeMensajes();
+			for (let index = 0; index < archivos.length; index++) {
+				var ext = archivos[index].name.substr(-3).toUpperCase();
+				// console.log("extension ",ext);
+				// console.log("extensiones ",mayusArchivosExtensionesPermitidos);
+				archivosDictamen.push(archivos[index]);
+				if (mayusArchivosExtensionesPermitidos.indexOf(ext) == -1) {
+					//uploadErrors.push('Solo se acepta archivos de formato ' + mayuscArracceptFileTypes);
+					//mensaje = "Por favor seleccione archivos permitidos.";
+					mensaje = '[[#{liquidacion.mensaje.archivoPermitido}]]';
+					esValidoExtension = false;
+					break;
+				}
+				if (archivos[index].size > ((parseInt(maxtamanio) + 1) * (1024 * 1024))) {
+					mensaje = print("[[#{liquidacion.mensaje.limiteArchivo}]]", maxtamanio);
+					//mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
+					esValidoExtension = false;
+					break;
+				}
+				//const element = archivos[index];
+
+			}
+			//console.log("esvalido ",esValidoExtension);
+			if (!esValidoExtension) {
+				mensajeError(mensaje)
+				//alert("ERROR")
+				archivosDictamen = [];
+				return;
+			}
+
+
+			cargarListaArchivoDictamen();
+		
+
+			$('#fdictamenuploadsubirtodo').css("display", "block");
+			$('#fdictamenuploadcancelatodo').css("display", "block");
+			/*
+			$('#btnSoloGuardar').css("display", "block");
+			$('#btnEnviarGuardar').css("display", "block");
+			*/
+		}
+		function cargarListaArchivoDictamen(){
+			/*
+			$('#listaArchivosDictamen').empty();
+			archivosDictamen.forEach((archivo) => {
+				var fileData = {
+				  file: {
+					  lastModified : archivo.lastModified,
+					  lastModifiedDate: archivo.lastModifiedDate,
+			          name:archivo.name,
+			          size:archivo.size,
+			          type:archivo.type
+				  }
+				}
+				fileData = JSON.stringify(fileData.file);
+				$('#listaArchivosDictamen').append("<li>" + 
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+			
+			});
+			*/
+			/*
+			 $('#listaArchivosDictamen').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+					archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+			*/
+			cargarListaArchivos(archivosDictamen,'listaArchivosDictamen');
+			if(archivosDictamen.length==0){
+
+				$('#fdictamenuploadsubirtodo').css("display", "none");
+				$('#fdictamenuploadcancelatodo').css("display", "none");
+				if(archivosFormato.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
+				}
+			}
+		}
+		function cargarListaArchivos(archivos,nombreListaFormato,mostrarIcono=false){
+			$('#'+nombreListaFormato).empty();
+		
+			archivos.forEach((archivo) => {
+				//console.log(archivo)
+			
+				var fileData = {
+				  file: {
+					  lastModified : archivo.lastModified,
+					  lastModifiedDate: archivo.lastModifiedDate,
+			          name:archivo.name,
+			          size:archivo.size,
+			          type:archivo.type
+				  }
+				}
+				fileData = JSON.stringify(fileData.file);
+				if(!mostrarIcono){
+					$('#'+nombreListaFormato).append("<li>" + 
+							archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+				}else{
+				    $('#'+nombreListaFormato).append("<li><a href='" + archivo.fileNameOriginal + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+							archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+				}	
+			});		
+		}
+		function guardarEnviarFinal(){
+			if(archivosDictamenResponse.length==0){							
+				//mensajeError("Por favor adjunte archivos Dictamen.")
+				//return;
+			}
+			if(archivosFormatoResponse.length==0){						
+				//mensajeError("Por favor adjunte archivos Formato de Liquidación Anual.")
+				//	return;
+			}
+			
+			registrarSubirTodo(2,archivosFormatoResponse,archivosDictamenResponse);
+			
+			
+			//console.log(archivosDictamenResponse);
+			//console.log(archivosFormatoResponse);
+		}
+		function registrarSubirTodo(estado,listaFormato,listaDictamen) {
+			var liquidaciones = [];
+			var pAnio = $('#anio').text();
+			closeMensajes();
+						
+			$.each(listaFormato, function (index, archivoDictamen) {
+				var data = {
+					idPeriodo: 1,
+					idTipoDocumento: 2,
+					anio: pAnio,
+					documento: archivoDictamen.fileName,
+					estado: estado
+				};
+				liquidaciones.push(data);
+				//console.log(archivoDictamen);
+			
+
+			});
+			$.each(listaDictamen, function (index, archivoDictamen) {
+				var data = {
+					idPeriodo: 1,
+					idTipoDocumento: 1,
+					anio: pAnio,
+					documento: archivoDictamen.fileName,
+					estado: estado
+				};
+				liquidaciones.push(data);
+				//console.log(archivoDictamen);
+			
+
+			});
+			/*
+			if (listaDictamen.length == 0) {
+				return false;
+			}
+			if (listaFormato.length == 0) {
+				return false;
+			}*/
+			var dataFinal = {
+					estado: estado,
+					liquidaciones: liquidaciones
+			}
+			var url = context + 'api/liquidacion/registrar-liquidacion';
+			$.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				//data: JSON.stringify(liquidaciones),
+				data: JSON.stringify(dataFinal),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+				.done((rest) => {
+					//console.log(rest);
+					if (rest.resultado == 1) {
+						//mensajeCorrecto(rest.mensaje);
+						mensajeCorrecto('[[#{general.mensaje.registroCorrectamente}]]');
+						$('#btnSoloGuardar').css("display", "none");
+						//$('#btnEnviarGuardar').css("display", "none");
+						$('#fFormatouploadsubirtodo').css("display", "none");
+						$('#fFormatouploadcancelatodo').css("display", "none");
+						$('#listaArchivosDictamen').empty();
+						$('#listaArchivosFormato').empty();
+						
+						archivosDictamenResponse = [];
+						archivosFormatoResponse = [];
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
+						cargarPaginador(rest.listaLiquidacion.totalRegistros);
+					}else{
+						mensajeError(rest.mensaje);
+					}
+
+				});
+		
+		}
+		function cargarListaArchivoFormato(){
+			
+			/*
+			$('#listaArchivosFormato').empty();
+			archivosFormato.forEach((archivo) => {
+				var fileData = {
+				  file: {
+					  lastModified : archivo.lastModified,
+					  lastModifiedDate: archivo.lastModifiedDate,
+			          name:archivo.name,
+			          size:archivo.size,
+			          type:archivo.type
+				  }
+				}
+				fileData = JSON.stringify(fileData.file);
+				
+				$('#listaArchivosFormato').append("<li>" + 
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+				
+			});
+			*/
+			/*			
+		    $('#listaArchivosFormato').append("<li><a href='" + archivo.name + "' target='_blank'><i class='fa fa-file'></i></a>" + 
+					archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",1)' onclick='return false;'><i class='fa fa-trash text-danger'></i></button></li>");
+			*/	
+			cargarListaArchivos(archivosFormato,'listaArchivosFormato');
+			if(archivosFormato.length==0){
+				$('#fFormatouploadsubirtodo').css("display", "none");
+				$('#fFormatouploadcancelatodo').css("display", "none");
+				if(archivosDictamen.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
+				}
+			}
+			
+		}
+		function retirarArchivo(archivo,tipo){
+			if(tipo==1){
+				//console.log(archivo);
+				//var archivoTmp = JSON.parse(archivo);
+				archivosDictamen.splice(archivosDictamen.findIndex(v => v.name === archivo.name), 1);
+				cargarListaArchivoDictamen();
+				//console.log(archivosDictamen);
+			}
+			else if(tipo==2){
+				archivosFormato.splice(archivosFormato.findIndex(v => v.name === archivo.name), 1);
+				cargarListaArchivoFormato();
+			}
+				
+		}
+		function adjuntarArchivosFormato(event) {
+			//console.log(event);
+			archivosFormato = [];
+			var archivos = event.target.files;
+			var archivosExtensionesPermitidos = ["pdf", "docx", "doc", "xlsx", "xls"];
+			var mayusArchivosExtensionesPermitidos = String.prototype.toUpperCase.apply(archivosExtensionesPermitidos).split(",");
+			var esValidoExtension = true;
+			var maxtamanio = 30;
+			var mensaje = "";
+			closeMensajes();
+			for (let index = 0; index < archivos.length; index++) {
+				var ext = archivos[index].name.substr(-3).toUpperCase();
+				// console.log("extension ",ext);
+				// console.log("extensiones ",mayusArchivosExtensionesPermitidos);
+				
+				if (mayusArchivosExtensionesPermitidos.indexOf(ext) == -1) {
+					//uploadErrors.push('Solo se acepta archivos de formato ' + mayuscArracceptFileTypes);
+					mensaje = '[[#{liquidacion.mensaje.archivoPermitido}]]';
+					//mensaje = "Por favor seleccione archivos permitidos.";
+					esValidoExtension = false;
+					break;
+				}
+				if (archivos[index].size > ((parseInt(maxtamanio) + 1) * (1024 * 1024))) {
+					//mensaje = 'El tama\u00f1o del archivo solo puede ser hasta ' + maxtamanio + ' mb.';
+					mensaje = '[[#{liquidacion.mensaje.limiteArchivo}]]';
+					esValidoExtension = false;
+					break;
+				}
+				//const element = archivos[index];
+				archivosFormato.push(archivos[index]);
+			}
+			//console.log("esvalido ",esValidoExtension);
+			if (!esValidoExtension) {
+				mensajeError(mensaje)
+				//alert("ERROR")
+				archivosFormato = [];
+				return;
+			}
+
+
+			cargarListaArchivoFormato();
+			/*
+			archivosFormato.forEach((archivo) => {
+				
+				$('#listaArchivosFormato').append("<li>" + 
+						archivo.name + "   <button class='btn' onclick='retirarArchivo("+fileData+",2)'><i class='fa fa-trash text-danger'></i></button></li>")
+			})
+			*/
+			$('#fFormatouploadsubirtodo').css("display", "block");
+			$('#fFormatouploadcancelatodo').css("display", "block");
+			/*
+			$('#btnSoloGuardar').css("display", "block");		
+			$('#btnEnviarGuardar').css("display", "block");
+			*/
+		}
+		function closeMensajes() {
+			$('#toastMensajeError').toast('hide');
+			$('#toastMensajeCorrecto').toast('hide');
+		}
+		function subirTodoDictamen() {
+			//closeMensajes();
+			archivosDictamenResponse=[];
+		
+			
+			var itemsProcessed = 0;
+			$.each(archivosDictamen, function (index, param) {
+				var formData = new FormData();
+				formData.append("files", param);
+				$.ajax({
+					url: context + 'Upload?subir=fdictamen&tipoDocumento=1',
+					type: "post",
+					headers: {
+						"X-CSRF-TOKEN": token
+					},
+					data: formData,
+					cache: false,
+					contentType: false,
+					processData: false
+				}).done(
+					function (rest) {
+						itemsProcessed++;
+						archivosDictamenResponse.push(rest);
+						if(itemsProcessed === archivosDictamen.length) {
+							cargarListaArchivoSubirTodo(archivosDictamenResponse,'listaArchivosDictamen');							
+							$('#btnSoloGuardar').css("display", "block");		
+							//$('#btnEnviarGuardar').css("display", "block");
+							$('#fdictamenuploadsubirtodo').css("display", "none");		
+							$('#fdictamenuploadcancelatodo').css("display", "none");	
+					    }
+						//limpiarArchivosDictamen();
+					}
+				)
+			});
+			
+			//mensajeCorrecto('Se subieron los archivos correctamente');	
+		} 
+		
+		function cargarListaArchivoSubirTodo(lista,nombreListaFormato){
+			/*	
+			console.log("data: ",lista);
+			console.log("total: ",lista.length);
+			*/
+			$('#'+nombreListaFormato).empty();
+			for (var i = 0; i < lista.length; i++) {
+			  var data = lista[i];
+			  //console.log("resultado: ",data);
+			  //console.log("resultado: ",data.fileNameOriginal);
+			  $('#'+nombreListaFormato)
+			  .append("<li><a href='" + data.fileName + "' target='_blank'><i class='fa fa-file'></i></a> " 
+					  + data.fileNameOriginal + "</li>");
+			}	
+		}
+		function subirTodoFormato() {		
+			var itemsProcessed = 0;
+			$.each(archivosFormato, function (index, param) {
+				var formData = new FormData();
+				formData.append("files", param);
+				$.ajax({
+					url: context + 'Upload?subir=fFormato&tipoDocumento=2',
+					type: "post",
+					headers: {
+						"X-CSRF-TOKEN": token
+					},
+					data: formData,
+					cache: false,
+					contentType: false,
+					processData: false
+				}).done(
+					function (rest) {
+						
+						//$('#btnSoloGuardar').css("display", "block");		
+						//$('#btnEnviarGuardar').css("display", "block");
+						itemsProcessed++;
+						archivosFormatoResponse.push(rest);
+						//archivosDictamenResponse.push(rest);
+						if(itemsProcessed === archivosFormato.length) {
+							cargarListaArchivoSubirTodo(archivosFormatoResponse,'listaArchivosFormato');	
+							$('#fFormatouploadsubirtodo').css("display", "none");		
+							$('#fFormatouploadcancelatodo').css("display", "none");	
+							$('#btnSoloGuardar').css("display", "block");		
+							//$('#btnEnviarGuardar').css("display", "block");
+					    }
+						//limpiarArchivosFormato();
+					}
+				)
+			});
+			cargarListaArchivos(archivosFormato,'listaArchivosFormato',true);
+			//closeMensajes();
+			//mensajeCorrecto('Se subieron los archivos correctamente');
+			mensajeCorrecto('[[#{liquidacion.mensaje.subieronCorrectamente}]]');	
+			//cancelarTodoFormato();
+			limpiarControles('fFormato');
+
+		}
+		function mensajeCorrecto(mensaje) {
+			$('#toastMensajeCorrectoBody').empty();
+			$('#toastMensajeCorrectoBody').append('<p>' + mensaje + '</p>')
+			$('#toastMensajeCorrecto').toast('show');
+		}
+		function mensajeError(mensaje) {
+	    	
+	
+		
+			$('#toastMensajeErrorBody').empty();
+			$('#toastMensajeErrorBody').append('<p>' + mensaje + '</p>')
+			$('#toastMensajeError').toast('show');
+		}
+		function cancelarTodoDictamen() {
+			/*
+			$('#fdictamenupload').val('');
+			archivosDictamen = [];
+			$('#listaArchivosDictamen').empty();
+			*/
+			limpiarArchivosDictamen();
+			$('#fdictamenuploadsubirtodo').css("display", "none");
+			$('#fdictamenuploadcancelatodo').css("display", "none");
+			if(archivosDictamenResponse.length==0){
+				if(archivosFormatoResponse.length==0){
+					//$('#btnSoloGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
+				}
+			}
+		}
+		function limpiarArchivosDictamen(){
+			$('#fdictamenupload').val('');
+			archivosDictamen = [];
+			$('#listaArchivosDictamen').empty();
+		}
+		function cancelarTodoFormato() {
+			/*		
+			$('#fFormatoupload').val('');
+			archivosFormato = [];
+			$('#listaArchivosFormato').empty();
+			*/
+			limpiarArchivosFormato();
+			$('#fFormatouploadsubirtodo').css("display", "none");
+			$('#fFormatouploadcancelatodo').css("display", "none");
+			
+			if(archivosFormato.length==0){
+				if(archivosDictamenResponse.length==0){
+					$('#btnSoloGuardar').css("display", "none");
+					//$('#btnEnviarGuardar').css("display", "none");
+				}
+			}		
+		}
+		function limpiarArchivosFormato(){
+			$('#fFormatoupload').val('');
+			archivosFormato = [];
+			$('#listaArchivosFormato').empty();
+		}
+		function limpiarControles(control) {
+			$('#fFormatoupload').val('');
+			$('#fdictamenupload').val('');
+			//archivosFormato = [];
+			//$('#listaArchivosFormato').empty();
+			$('#'+control+ 'uploadsubirtodo').css("display", "none");
+			$('#'+control+'uploadcancelatodo').css("display", "none");
+		}
+		function soloGuadar(){
+			
+			registrarDictamen(1);
+			registrarFormato(1);
+			//limpiarArchivosFormato();
+			//limpiarArchivosDictamen();
+			$('#btnSoloGuardar').css("display", "none");
+			//$('#btnEnviarGuardar').css("display", "none");
+			
+			$('#fdictamenuploadsubirtodo').css("display", "none");
+			$('#fdictamenuploadcancelatodo').css("display", "none");
+			
+			$('#fFormatouploadsubirtodo').css("display", "none");
+			$('#fFormatouploadcancelatodo').css("display", "none");
+			archivosDictamenResponse = [];
+			archivosFormatoResponse = [];
+		}
+		function registrarDictamen(estado) {
+			var liquidaciones = [];
+			var pAnio = $('#anio').text();
+			closeMensajes();
+			
+			if(estado==1){
+				if(archivosDictamenResponse.length==0){
+					if(archivosFormatoResponse.length==0){
+						//mensajeError('Por favor adjunte archivo(s).');
+						mensajeError('[[#{liquidacion.mensaje.adjunteArchivos}]]');	
+						return false;
+					}
+				}	
+			}else if(estado==2){
+				if(archivosDictamenResponse.length==0){
+					//mensajeError('Por favor adjunte archivo(s) dictamen.');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoDictamen}]]');
+					return false;
+				}
+				if(archivosFormatoResponse.length==0){
+					//mensajeError('Por favor adjunte archivo(s) formato.');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoFormato}]]');
+					return false;
+				}
+			}
+			
+			$.each(archivosDictamenResponse, function (index, archivoDictamen) {
+				var data = {
+					idPeriodo: 1,
+					idTipoDocumento: 1,
+					anio: pAnio,
+					documento: archivoDictamen.fileName,
+					estado: estado
+				};
+				liquidaciones.push(data);
+				//console.log(archivoDictamen);
+
+
+			});
+			if (liquidaciones.length == 0) {
+				return false;
+			};
+			var dataFinal = {
+					estado:estado,
+					liquidaciones:liquidaciones
+				}
+			var url = context + 'api/liquidacion/registrar-liquidacion';
+			$.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				//data: JSON.stringify(liquidaciones),
+				data: JSON.stringify(dataFinal),
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+				.done((rest) => {
+					//console.log(rest);
+					if (rest.resultado == 1) {
+						mensajeCorrecto(rest.mensaje);
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
+					}
+
+				});
+		}
+		function registrarFormato(estado) {
+			var liquidaciones = [];
+			var pAnio = $('#anio').text();
+			closeMensajes();
+			/*
+			if(archivosDictamenResponse.length==0){
+				//mensajeError('Por favor seleccione el botón Subir Todo del formato de liquidación.');
+				mensajeError('Por favor seleccione el botón Subir Todo del formato de liquidación.');
+				return false;
+			}
+			*/
+			/*
+			if(archivosFormatoResponse.length==0){
+				if(archivosDictamenResponse.length==0){
+					mensajeError('Por favor adjunte archivo(s).');
+					return false;
+				}
+			}*/
+			if(estado==1){
+				if(archivosFormatoResponse.length==0){			
+					if(archivosDictamenResponse.length==0){					
+						//mensajeError('Por favor adjunte archivo(s).');
+						mensajeError('[[#{liquidacion.mensaje.adjunteArchivos}]]');
+						return false;
+					}
+				}	
+			}else if(estado==2){
+				if(archivosDictamenResponse.length==0){
+					//mensajeError('Por favor adjunte archivo(s) dictamen');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoDictamen}]]');
+					return false;
+				}
+				if(archivosFormatoResponse.length==0){
+					//mensajeError('Por favor adjunte archivo(s) formato');
+					mensajeError('[[#{liquidacion.mensaje.adjunteArchivoFormato}]]');
+					return false;
+				}
+			}
+			$.each(archivosFormatoResponse, function (index, archivoFormato) {
+				var data = {
+					idPeriodo: 1,
+					idTipoDocumento: 2,
+					anio: pAnio,
+					documento: archivoFormato.fileName,
+					estado: estado
+				};
+				liquidaciones.push(data);
+				//console.log(archivoDictamen);
+
+
+			});
+			if (liquidaciones.length == 0) {
+				return;
+			}
+			var dataFinal = {
+					estado:estado,
+					liquidaciones:liquidaciones
+				}
+			var url = context + 'api/liquidacion/registrar-liquidacion';
+			$.ajax({
+				headers: {
+					"X-CSRF-TOKEN": token
+				},
+				// En data puedes utilizar un objeto JSON, un array o un query string
+				//data: JSON.stringify(liquidaciones),
+				data: JSON.stringify(dataFinal),				
+				//Cambiar a type: POST si necesario
+				type: "POST",
+				// Formato de datos que se espera en la respuesta
+				dataType: 'JSON',
+				contentType: 'application/json',
+				// URL a la que se enviará la solicitud Ajax
+				url: url,
+			})
+				.done((rest) => {
+					//console.log(rest);
+					if (rest.resultado == 1) {
+						mensajeCorrecto(rest.mensaje);
+						cargarDatosLiquidaciones(rest.listaLiquidacion.lista);
+					}
+
+				})
+		}
+		function cargarDatosLiquidaciones(listaLiquidacion) {
+			$('#tblLiquidaciones').empty();
+			listaLiquidacion.forEach((liquidacion) => {
+				//console.log(liquidacion);
+				var dateParts = liquidacion.dfechaRegistro.split("/");
+				var dateModificarParts = liquidacion.dfechaRegistro.split("/");
+				
+				var fecha = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+				var fechaModificar = new Date(+dateModificarParts[2], dateModificarParts[1] - 1, +dateModificarParts[0]);
+				//console.log("fecha: ",fecha)
+				//var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : new Date(liquidacion.dfechaModifica).toString('DD/MM/YYYY hh:mm:ss');
+				var fechaModificacion = liquidacion.dfechaModifica == null ? '-' : moment(fechaModificar).format('DD/MM/YYYY') + ' ' + liquidacion.dhoraModifica;
+				var estado = liquidacion.sestado==="1"?'SIN PRESENTAR':'PRESENTACIÓN NRO ' + liquidacion.norden + ' Y ENVIADO';
+				var row = '<tr><td style="text-align: center;">' + liquidacion.nanio + '</td>';
+				//row += '<td>' + moment(fecha).format('DD/MM/YYYY hh:mm:ss') + '</td>'
+				row += '<td style="text-align: center;">' + moment(fecha).format('DD/MM/YYYY') + ' ' + liquidacion.dhoraRegistro + '</td>'
+				row += '<td style="text-align: center;">' + fechaModificacion + '</td>'
+				row += '<td style="text-align: center;"><a target="_blank" href="' + context +'get/pformatoLiquidacion/'+ liquidacion.sdocumento + '"><i class="fa fa-file fa-2x" aria-hidden="true"></i></a></td>'
+				row += '<td style="text-align: center;">' + estado + '</td>'
+				// row += '<td>' + liqu1idacion.fechaRegistro + '</td>'
+				row += '</tr>'
+				$('#tblLiquidaciones').append(row);
+			});
+		}
+		function format(fmt, ...args) {
+		    if (!fmt.match(/^(?:(?:(?:[^{}]|(?:\{\{)|(?:\}\}))+)|(?:\{[0-9]+\}))+$/)) {
+		        throw new Error('invalid format string.');
+		    }
+		    return fmt.replace(/((?:[^{}]|(?:\{\{)|(?:\}\}))+)|(?:\{([0-9]+)\})/g, (m, str, index) => {
+		        if (str) {
+		            return str.replace(/(?:{{)|(?:}})/g, m => m[0]);
+		        } else {
+		            if (index >= args.length) {
+		                throw new Error('argument index is out of range in format');
+		            }
+		            return args[index];
+		        }
+		    });
+		}
+		function print(fmt, ...args) {
+		    return (format(fmt, ...args));
+		}
+	</script>
+
+
+</body>
+
+</html>

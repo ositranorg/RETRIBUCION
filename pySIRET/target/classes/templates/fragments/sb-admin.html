@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	>
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+<style>
+label {
+	display: inline-block;
+	width: 5em;
+}
+</style>
+</head>
+<body>
+
+
+	<div th:fragment="mn-lat">
+
+		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#"> <i
+			class="fas fa-bars"></i>
+		</a>
+		<nav id="sidebar" class="sidebar-wrapper">
+			<div class="sidebar-content">
+				<div class="sidebar-brand">
+					<a href="https://www.ositran.gob.pe/retribucion-al-estado/"
+						target="_blank">RETRIBUCIÓN AL ESTADO</a>
+					<div id="close-sidebar">
+						<i class="fa fa-times"></i>
+					</div>
+				</div>
+				<div class="sidebar-header">
+					<div class="user-pic">
+						<img class="img-responsive img-rounded" src="/img/user.jpg"
+							th:src="@{/img/user.jpg}" alt="User picture">
+					</div>
+					<div class="user-info">
+						<span class="user-role">Bienvenido</span>
+    					<div sec:authorize="isAuthenticated()">
+     						  <span sec:authentication="principal.user.contribuyente.snombre"></span>
+     					</div>
+						<span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span>
+						</span>
+					</div>
+				</div>
+
+				<!-- sidebar-search  -->
+				<div class="sidebar-menu">
+					<ul>
+						<li class="header-menu"><span>Menú</span></li>
+						<!-- 
+						<li class="sidebar-dropdown">
+							<a href="#">
+								<i class="fa fa-shopping-cart"></i> 
+								<span>USUARIOS </span>
+							</a>
+							<div class="sidebar-submenu">
+							<ul>
+									<li><a th:href="@{/cambiar-clave}">CAMBIAR CLAVE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
+
+								</ul>
+							</div>
+						</li>
+						 -->
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span>MANTENIMIENTO </span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/mantenimiento/contribuyente}">CONTRIBUYENTE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
+									<li><a th:href="@{/mantenimiento/representante}">REPRESENTANTE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
+								</ul>
+							</div></li>
+						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}">
+								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
+									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>
+						</a></li>
+						<li class="sidebar-dropdown"><a th:href="@{/pagos}"> <i
+								class="fa fa-shopping-cart"></i> <span> PAGOS</span>
+						</a></li>
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span> CRÉDITOS</span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/abrirRegistrarCreditos}">REGISTRAR CRÉDITO <span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
+									<li><a th:href="@{/listarcreditosregistrados}">LISTAR
+											CRÉDITOS <span class="badge badge-pill badge-success">ver</span>
+									</a></li>
+
+								</ul>
+							</div></li>
+
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span> LIBERACIÓN DE
+									PAGOS</span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/liberacionpago}">REGISTRO <span
+											class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+									<li><a th:href="@{/liberacioncarga/1}">CARGA MASIVA <span
+											class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+
+								</ul>
+							</div></li>
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span> OTROS DESCUENTOS</span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/descuento}">REGISTRO <span
+											class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">CARGA
+											MASIVA<span class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+
+								</ul>
+							</div></li>
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span> DEDUCCIONES</span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/deduccion}">REGISTRO <span
+											class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">CARGA
+											MASIVA<span class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+
+								</ul>
+							</div></li>
+
+
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span> DECLARACION
+									JURADA</span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/mostrarBuscar}">Registrar
+											Retribución <span class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+									<li><a href="#">Consultar</a></li>
+									<li><a th:href="@{/calendario/pago/ver/2019}">Calendario
+											de Pagos <span class="badge badge-pill badge-success">ver</span>
+									</a></li>
+									<li><a th:href="@{/calendario/presentacion/ver/2019}">Calendario
+											para la Presentación <span
+											class="badge badge-pill badge-success">ver</span>
+									</a></li>
+								</ul>
+							</div></li>
+						<li class="sidebar-dropdown"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span>LIQUIDACIÓN</span>
+						</a>
+							<div class="sidebar-submenu">
+								<ul>
+									<li><a th:href="@{/liquidacion/formatoliquidacion}">
+											Formato de Liquidación Anual y Dictamen <span
+											class="badge badge-pill badge-warning">Empezar</span>
+									</a></li>
+								</ul>
+							</div></li>
+
+
+
+
+
+					</ul>
+				</div>
+				<!-- sidebar-menu  -->
+			</div>
+			<!-- sidebar-content  -->
+			<div class="sidebar-footer">
+				<a href="#"> <i class="fa fa-bell"></i> <span
+					class="badge badge-pill badge-warning notification">3</span>
+				</a> <a href="#"> <i class="fa fa-envelope"></i> <span
+					class="badge badge-pill badge-success notification">7</span>
+				</a> <a href="#"> <i class="fa fa-cog"></i> <span
+					class="badge-sonar"></span>
+				</a> <a href="#" th:href="@{/cambiar-clave}" data-placement="bottom"
+					data-toggle="tooltip" title="Cambiar clave"> <i
+					class="fa fa-key"></i></a> <a
+					href="javascript: document.logoutForm.submit()"><i
+					class="fa fa-power-off"></i></a>
+
+				<form name="logoutForm" th:action="@{/logout}" method="post"
+					th:hidden="true">
+					<input id="salir" type="submit" value="Sign Out" />
+				</form>
+			</div>
+		</nav>
+
+
+	</div>
+</body>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+<script type="text/javascript">
+	/*
+	$(document).ready(function() {
+		//$('[data-toggle="tooltip"]').tooltip();   
+		$("body").tooltip({
+			selector : '[data-toggle=tooltip]'
+		});
+	});
+	 */
+	$(function() {
+		$(document).tooltip();
+	});
+</script>
+</html>

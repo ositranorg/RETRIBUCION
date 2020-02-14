@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+		<div class="page-content">
+			<div class="container-fluid">
+				<div class="alert alert-primary" role="alert">
+					<h3>Contribuyentes</h3>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<p class="h6">Lista de contribuyentes</p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<table class="table">
+												<thead class="thead-dark">
+													<tr>
+														<th scope="col" style="text-align: center;">NOMBRE</th>
+														<th scope="col" style="text-align: center;">RUC</th>
+													</tr>
+												</thead>
+												<tbody id="tblContribuyentes">
+
+												</tbody>
+											</table>
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPaginacion">
+												</ul>
+											</nav>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<div th:replace="fragments/jsScripts :: scripts"></div>
+<script type="text/javascript">
+var context = [[@{/}]];
+
+	var totalRegistrosPorPagina = [[${totalRegistroPorPagina}]];
+	var token = $("meta[name='_csrf']").attr("content");
+listarContribuyente(1);
+function cargarPaginador(totalRegistros){
+	var total = totalRegistros;
+	var totalPagina = totalRegistros/totalRegistrosPorPagina;
+	var redondeoPagina = Math.ceil(totalPagina);
+	//console.log("total_pagina:",totalPagina);
+	//console.log("total_registros:",total);
+	//console.log("total_redondeo:",redondeoPagina);
+	$("#ulPaginacion").empty();
+	$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente(1);return false;">Inicio</a></li>');
+	var pagina = 0;			
+	for(var i=0;i<redondeoPagina;i++){				
+		pagina = i + 1;
+		$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente('+ pagina +');return false;">' + (i+1) + '</a></li>');	
+	}			
+	$("#ulPaginacion").append('<li class="page-item"><a class="page-link" href="#" onclick="listarContribuyente('+ redondeoPagina +');return false;">Final</a></li>');
+}
+function listarContribuyente(pagina){
+    var url = context + 'api/contribuyente/listar-contribuyente-paginacion';
+    var data = {
+    	pagina:pagina
+    }
+	$.ajax({
+		headers: {
+			"X-CSRF-TOKEN": token
+		},
+		// En data puedes utilizar un objeto JSON, un array o un query string
+		data: JSON.stringify(data),
+		//Cambiar a type: POST si necesario
+		type: "POST",
+		// Formato de datos que se espera en la respuesta
+		dataType: 'JSON',
+		contentType: 'application/json',
+		// URL a la que se enviará la solicitud Ajax
+		url: url,
+	})
+		.done((rest) => {
+			//console.log(rest);
+			if (rest.resultado == 1) {						
+				cargarDatos(rest.lista.contribuyentes);
+				cargarPaginador(rest.lista.totalRegistros);
+				//console.log(rest);
+			}
+
+		})
+}
+function cargarDatos(lista) {
+	$('#tblContribuyentes').empty();
+	lista.forEach((data) => {
+		var row = '<tr><td style="text-align: left;">' + data.snombre + '</td>';
+		row += '<td style="text-align: center;">' + data.sruc + '</td>'
+		row += '</tr>'
+		$('#tblContribuyentes').append(row);
+	});
+	
+}
+</script>
+</html>

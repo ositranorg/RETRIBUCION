@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+</head>
+<body>
+
+
+	<div th:fragment="dlg-EliminarOtro">
+
+		<div class="modal fade" id="modalEliminarOtro" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" data-keyboard="false"
+			data-backdrop="static">
+			<div class="modal-dialog responsive" role="document">
+				<div class="modal-content">
+
+					<div class="modal-header">
+
+						<h4 class="modal-title" id="tituloeOtro">ELIMINAR DESCUENTO</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+
+					<div class="modal-body" id="contenidoModalOtros">
+						<form id="frmEliminarOtro" th:action="@{/eliminarOtro}"
+							method="post">
+
+							<input type="hidden" name="tipoPeriodicidad"
+								id="tipoPeriodicidad"
+								th:value="${retribucionForm.tipoPeriodicidad}" /> <input
+								type="hidden" name="mesRetribucion" id="mesRetribucion"
+								th:value="${retribucionForm.mesRetribucion}" /> <input
+								type="hidden" name="anioRetribucion" id="anioRetribucion"
+								th:value="${retribucionForm.anioRetribucion}" /> <input
+								type="hidden" name="tipoRetribucion" id="tipoRetribucion"
+								th:value="${retribucionForm.tipoRetribucion}" /> <input
+								type="hidden" name="accion" id="biaccion" value="" /> <input
+								type="hidden" name="codaportehdd" id="codaportehdd"
+								th:value="${retribucionForm.codaportehdd}" /> <input
+								type="hidden" name="monedaRetribucion" id="monedaRetribucion"
+								th:value="${retribucionForm.monedaRetribucion}" /> <input
+								type="hidden" name="porcentajehdd" id="porcentaje"
+								th:value="${retribucionForm.porcentaje}" /> <input
+								type="hidden" name="fdesde" id="fdesde" th:value="${fDesde}" />
+							<input type="hidden" name="fhasta" id="fhasta"
+								th:value="${fHasta}" /> <input type="hidden"
+								name="buenContribuyente"
+								th:value="${retribucionForm.buenContribuyente}" />
+							<div class="row">
+								<div class="col-12">
+									<label>Está seguro(a) que desea eliminar el monto?</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<button type="submit" class="btn btn-info"
+										id="eliminarAporteOtro">Aceptar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+
+
+</body>
+</html>

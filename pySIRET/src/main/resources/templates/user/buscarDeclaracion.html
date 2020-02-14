@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<meta charset="utf-8" />
+
+</head>
+
+
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="fragments/sb-admin :: mn-lat"></div>
+
+		<div class="page-content  chiller-theme toggled">
+			<div class="container-fluid">
+
+				<div class="row">
+					<div class="col-12">
+						<div class="alert alert-primary" role="alert">
+							<h3>Datos del Período a Declarar</h3>
+						</div>
+
+					</div>
+					<div class="col-12">
+						<form id="frmMostrarRetribucion" th:action="@{/retribucion}">
+						<input id="tpperiodicidadhdd" type="hidden" th:value="${buscarRetribucionForm.tipoPeriodicidad}"></input>
+							<div class="col-12">
+								<div class="row">
+
+									<div class="col-6">
+										<label> TIPO DE PERIODICIDAD </label><span style="color: red">(*)</span>
+										<select th:field="${buscarRetribucionForm.tipoPeriodicidad}"
+											id="cal" class="form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="cal : ${lsttipoPeriodicidad}"
+												th:value="${cal.id}" th:text="${cal.sDescripcion}"
+												th:selected="${buscarRetribucionForm.tipoPeriodicidad==cal.id}"></option>
+
+										</select>
+									</div>
+
+									<div class="col-6">
+										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
+											style="color: red">(*)</span> <select
+											th:field="${buscarRetribucionForm.tipoRetribucion}"
+											id="tipoRetribucion" class="form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="tp : ${lsttipoRetribucion}"
+												th:value="${tp.id}" th:text="${tp.sDescripcion}"
+												th:selected="${buscarRetribucionForm.tipoRetribucion==tp.id}"></option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-6">
+										<label style="text-align: left;"> PERÍODO</label><span
+											style="color: red">(*)</span>
+										<div id="periodostributrios"></div>
+
+
+									</div>
+									<div class="col-6">
+
+										<label style="text-align: left;"> AÑO</label><span
+											style="color: red">(*)</span> <select
+											th:field="${buscarRetribucionForm.anioRetribucion}"
+											id="sAnio"
+											class="form-control form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="anioi : ${anios}" th:value="${anioi}"
+												th:text="${anioi}"
+												th:selected="${buscarRetribucionForm.anioRetribucion==anioi}"></option>
+
+										</select>
+									</div>
+
+
+								</div>
+
+								<div class="row">
+
+									<div class="col-6">
+										<label> MONEDA </label><span style="color: red">(*)</span> <select
+											th:field="${buscarRetribucionForm.monedaRetribucion}"
+											id="monedaRetribucion"
+											class="form-control border border-info">
+											<option value="">--SELECCIONE--</option>
+											<option th:each="tp : ${lstMonedaRetribucion}"
+												th:value="${tp.id}" th:text="${tp.sDescripcion}"
+												th:selected="${buscarRetribucionForm.monedaRetribucion==tp.id}"></option>
+										</select> <label id="errcal" class="col-sm-12 control-label"></label>
+									</div>
+
+									<div class="col-6">
+
+
+
+										<input id="buenContribuyente" type="hidden" name="buenContribuyente" th:value="${buscarRetribucionForm.buenContribuyente}"></input> 
+
+
+										<label style="text-align: left;"> ES BUEN
+											CONTRIBUYENTE?</label> <label
+											class="form-control  border border-info">[[${buscarRetribucionForm.buenContribuyente}]]</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label style="text-align: left;"> PORCENTAJE A
+											APLICAR( %)</label> 
+											<input id="porcentajehdd" type="hidden" name="porcentajehdd" value=""></input> 
+											<input id="lstAportePorcentajesize" type="hidden" th:value="${lstAportePorcentajesize}"></input> 
+											<label id="lblporcentaje" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">
+											[[${null!=lstAportePorcentaje and lstAportePorcentaje.size()==1?lstAportePorcentaje.get(0).porcentaje:''}]]</label>
+
+									</div>
+									<div class="col"></div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="fdesde" style="text-align: left;"> DESDE</label> <input
+											id="fdesde" type="text" data-date-format="dd/MM/yyyy"
+											class=" date-picker form-control border border-info"
+											autocomplete="off" th:field="${buscarRetribucionForm.fdesde}"
+											th:value="${buscarRetribucionForm.fdesde}">
+									</div>
+									<div class="col">
+
+										<label for="fhasta" style="text-align: left;"> HASTA</label> <input
+											name="fhasta" id="fhasta" type="text"
+											data-date-format="dd/MM/yyyy"
+											class=" date-picker form-control border border-info"
+											autocomplete="off" th:field="${buscarRetribucionForm.fhasta}"
+											th:value="${buscarRetribucionForm.fhasta}">
+									</div>
+
+								</div>
+								<hr>
+								<div class="form-group">
+
+
+
+									<button type="submit" class="btn btn-info" id="btnBuscarDJ">Entrar</button>
+								</div>
+								<span style="color: red">(*)campos obligatorios</span>
+								<div id="errorMessage" th:if="${errorMessage}"
+									th:text="${errorMessage}" class="alert alert-danger"
+									role="alert"></div>
+
+							</div>
+							<input type="hidden" id="tipoPeriodicidadhdd"
+								th:value="${buscarRetribucionForm.tipoPeriodicidad}" /> <input
+								type="hidden" id="meshdd"
+								th:value="${buscarRetribucionForm.mes}" />
+						</form>
+
+
+						
+							<div class="modal fade" data-keyboard="false"
+								data-backdrop="static" id="modalBuenCSN" tabindex="-1"
+								role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog responsive" role="document">
+									<div class="modal-content">
+
+										<div class="modal-header">
+
+											<h4 class="modal-title" id="tituloBuenCSN">ALERTA :
+												REVISE SU INFORMACIÓN</h4>
+
+										</div>
+
+
+										<div class="modal-body" id="contenidoModalBuenCSN">
+										<form id="frmBuenCSN">
+											<div class="row">
+												<p id="lbldetallebi" class="col-12 justify center">Estimado
+													usuario, se le recuerda que ud. tiene la responsabilidad de
+													mantener actualizada la información relacionada con la
+													condición de Buen Contribuyente asignada por SUNAT. Es por
+													ello que se le solicita indicar si ha variado dicha
+													condición. Si ud. ya actualizó la condición omita este
+													mensaje.</p>
+
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<hr>
+													<label class="control-label">Desea actualizar su
+														información?</label> <input type="radio" name="cboBuenCSN"
+														value="SI">SI</input> <input type="radio"
+														name="cboBuenCSN" checked="checked" value="NO"> NO</input>
+													<label style="float: right;" id="errcboBuenCSN"
+														class="errcboBuenCSN"></label>
+												</div>
+											</div>
+											</form>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-info" id="btnBuenCsn">CONTINUAR</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+
+
+
+
+						<div class="modal fade" data-keyboard="false"
+							data-backdrop="static" id="modalNO" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog responsive" role="document">
+								<div class="modal-content">
+
+									<div class="modal-header">
+
+										<h4 class="modal-title" id="tituloBuenCSN">ALERTA</h4>
+
+									</div>
+
+
+									<div class="modal-body" id="contenidoNo">
+										<div class="row">
+											<label id="lbldetallebi" class="col-sm-12 control-label">Estimado
+												usuario, ha elegido la opción "NO", ud. es responsable de la
+												información actualmente registrada.</label>
+
+										</div>
+
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-info" id="btnContinuar">CONTINUAR</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/jsScripts :: scripts"></div>
+	<script type="text/javascript">
+		$(function() {
+			
+			buscarPeriodo("mes","periodostributrios","cal",$("#tpperiodicidadhdd").val());
+			
+			$("#tipoRetribucion").change(function(){
+				if($("#lstAportePorcentajesize").val()==undefined||$("#lstAportePorcentajesize").val()==""?0:parseInt($("#lstAportePorcentajesize").val())>1){
+					$.ajax({
+						type : "GET",
+						contenttype : "application/json",
+						url : context+"retribucion/getPorcentaje",
+						data : { tipoRetribucion:$("#tipoRetribucion").val()},
+						dataType : "json",
+						success : function(result) {
+								$("#lblporcentaje").html(result);
+								$("#porcentajehdd").val(result);	
+						},
+						error : function(result) {
+							console.log("error");
+							$("#lblporcentaje").html("");
+							$("#porcentajehdd").val("");	
+						}
+
+					});
+				}else{
+					
+					$("#porcentajehdd").val($("#lblporcentaje").html().trim());	
+				}
+			});
+			
+			if($("#errorMessage").html()==""){
+				$("#modalBuenCSN").modal("show");	
+			}
+			
+			
+
+			$("#btnBuenCsn").on("click", function() {
+				var actualizar = $("input[name=cboBuenCSN]:checked").val();
+				if (actualizar == "NO") {
+					$("#modalBuenCSN").modal("hide");
+					$("#modalNO").modal("show");
+				} else if (actualizar == "SI") {
+					location.href = "/condicionbc";				
+				} else {
+					$("#errcboBuenCSN").html(msgObligatorio);
+				}
+			});
+			$("#btnContinuar").on("click", function() {
+				$("#modalNO").modal("hide");
+			});
+			
+			
+		
+			
+			
+
+		});
+	</script>
+</body>
+</html>
