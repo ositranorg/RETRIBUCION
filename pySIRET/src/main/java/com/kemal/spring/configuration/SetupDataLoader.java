@@ -254,163 +254,171 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "tisur", userRoles,7,2);
 	
 		*/
+		
+		int aniocalendario=2020;
 		delAllVencimiento();
-		createVencimiento("01", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.JANUARY).getTime(), 1,1,4,1,1);
-		createVencimiento("02", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.FEBRUARY).getTime(), 1,1,4,1,1);
-		createVencimiento("03", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.MARCH).getTime(), 1,1,4,1,1);
-		createVencimiento("04", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.APRIL).getTime(), 1,1,4,1,1);
-		createVencimiento("05", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.MAY).getTime(), 1,1,4,1,1);
-		createVencimiento(  "06", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.JUNE).getTime(), 1,1,4,1,1);
-		createVencimiento("07", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.JULY).getTime(), 1,1,4,1,1);
-		createVencimiento("08", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.AUGUST).getTime(), 1,1,4,1,1);
-		createVencimiento(  "09", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.SEPTEMBER).getTime(), 1,1,4,1,1);
-		createVencimiento( "10", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.OCTOBER).getTime(), 1,1,4,1,1);
-		createVencimiento( "11", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.NOVEMBER).getTime(), 1,1,4,1,1);
-		createVencimiento("12", "2019",
-				obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.DECEMBER).getTime(), 1,1,4,1,1);
+		/*createVencimiento("01", ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY).getTime(), 1,1,4,1,1);
+		createVencimiento("02",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY).getTime(), 1,1,4,1,1);
+		createVencimiento("03",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH).getTime(), 1,1,4,1,1);
+		createVencimiento("04",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL).getTime(), 1,1,4,1,1);
+		createVencimiento("05",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.MAY).getTime(), 1,1,4,1,1);
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,1,1);
+		createVencimiento("07",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JULY).getTime(), 1,1,4,1,1);
+		createVencimiento("08",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST).getTime(), 1,1,4,1,1);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 1,1,4,1,1);
+		createVencimiento( "10",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER).getTime(), 1,1,4,1,1);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER).getTime(), 1,1,4,1,1);
+		createVencimiento("12",  ""+aniocalendario,
+				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,1,1);
+*/
+		createVencimiento("01",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH).getTime(), 1,3,4,2,1);
+		createVencimiento("02",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,3,4,2,1);
+		createVencimiento("03",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 1,3,4,2,1);
+		createVencimiento("04",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,3,4,2,1);
+		
+		
+		createVencimiento("01",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH).getTime(), 1,3,4,2,2);
+		createVencimiento("02",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,3,4,2,2);
+		createVencimiento("03",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 1,3,4,2,2);
+		createVencimiento("04",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,3,4,2,2);
+		
+		createVencimiento(  "01",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JANUARY).getTime(), 1,1,4,3,3);
+		createVencimiento(  "02",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.FEBRUARY).getTime(), 1,1,4,3,3);
+		createVencimiento(  "03",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.MARCH).getTime(), 1,1,4,3,3);
+		createVencimiento( "04",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.APRIL).getTime(), 1,1,4,3,3);
+		createVencimiento(  "05",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.MAY).getTime(), 1,1,4,3,3);
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,3,3);
+		createVencimiento(  "07",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JULY).getTime(), 1,1,4,3,3);
+		createVencimiento(  "08",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.AUGUST).getTime(), 1,1,4,3,3);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 1,1,4,3,3);
+		createVencimiento(  "10",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.OCTOBER).getTime(), 1,1,4,3,3);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.NOVEMBER).getTime(), 1,1,4,3,3);
+		createVencimiento(  "12",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,3);
 
-		createVencimiento("01", "2019", obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.MARCH).getTime(), 1,3,4,2,2);
-		createVencimiento("02", "2019", obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.JUNE).getTime(), 1,3,4,2,2);
-		createVencimiento("03", "2019", obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.SEPTEMBER).getTime(), 1,3,4,2,2);
-		createVencimiento("04", "2019", obtenerUltimoDiaHabilMesSiguiente(2019, Calendar.DECEMBER).getTime(), 1,3,4,2,2);
-		/*
-		createVencimiento(  "01", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.JANUARY).getTime(), 1,1,4,3,3);
-		createVencimiento(  "02", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.FEBRUARY).getTime(), 1,1,4,3,3);
-		createVencimiento(  "03", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.MARCH).getTime(), 1,1,4,3,3);
-		createVencimiento( "04", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.APRIL).getTime(), 1,1,4,3,3);
-		createVencimiento(  "05", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.MAY).getTime(), 1,1,4,3,3);
-		createVencimiento(  "06", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.JUNE).getTime(), 1,1,4,3,3);
-		createVencimiento(  "07", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.JULY).getTime(), 1,1,4,3,3);
-		createVencimiento(  "08", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.AUGUST).getTime(), 1,1,4,3,3);
-		createVencimiento(  "09", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.SEPTEMBER).getTime(), 1,1,4,3,3);
-		createVencimiento(  "10", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.OCTOBER).getTime(), 1,1,4,3,3);
-		createVencimiento( "11", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.NOVEMBER).getTime(), 1,1,4,3,3);
-		createVencimiento(  "12", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.DECEMBER).getTime(), 1,1,4,3,3);
-
-		createVencimiento(  "01", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.JANUARY).getTime(), 1,1,4,3,4);
-		createVencimiento(  "02", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.FEBRUARY).getTime(), 1,1,4,3,4);
-		createVencimiento(  "03", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.MARCH).getTime(), 1,1,4,3,4);
-		createVencimiento( "04", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.APRIL).getTime(), 1,1,4,3,4);
-		createVencimiento(  "05", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.MAY).getTime(), 1,1,4,3,4);
-		createVencimiento(  "06", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.JUNE).getTime(), 1,1,4,3,4);
-		createVencimiento(  "07", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.JULY).getTime(), 1,1,4,3,4);
-		createVencimiento(  "08", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.AUGUST).getTime(), 1,1,4,3,4);
-		createVencimiento(  "09", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.SEPTEMBER).getTime(), 1,1,4,3,4);
-		createVencimiento(  "10", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.OCTOBER).getTime(), 1,1,4,3,4);
-		createVencimiento( "11", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.NOVEMBER).getTime(), 1,1,4,3,4);
-		createVencimiento(  "12", "2019",
-				obtenerDiezCalendarioMesSiguiente(2019, Calendar.DECEMBER).getTime(), 1,1,4,3,4);
-
-		createVencimiento(  "01", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JANUARY, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "02", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.FEBRUARY, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "03", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.MARCH, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "04", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.APRIL, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "05", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.MAY, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "06", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JUNE, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "07", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JULY, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "08", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.AUGUST, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "09", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.SEPTEMBER, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "10", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.OCTOBER, 7).getTime(), 1,1,4,4,5);
-		createVencimiento( "11", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.NOVEMBER, 7).getTime(), 1,1,4,4,5);
-		createVencimiento(  "12", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.DECEMBER, 7).getTime(), 1,1,4,4,5);
+		createVencimiento(  "01",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JANUARY).getTime(), 1,1,4,3,4);
+		createVencimiento(  "02",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.FEBRUARY).getTime(), 1,1,4,3,4);
+		createVencimiento(  "03",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.MARCH).getTime(), 1,1,4,3,4);
+		createVencimiento( "04",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.APRIL).getTime(), 1,1,4,3,4);
+		createVencimiento(  "05",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.MAY).getTime(), 1,1,4,3,4);
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,3,4);
+		createVencimiento(  "07",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JULY).getTime(), 1,1,4,3,4);
+		createVencimiento(  "08",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.AUGUST).getTime(), 1,1,4,3,4);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 1,1,4,3,4);
+		createVencimiento(  "10",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.OCTOBER).getTime(), 1,1,4,3,4);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.NOVEMBER).getTime(), 1,1,4,3,4);
+		createVencimiento(  "12",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4);
+		
+		createVencimiento(  "01",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "02",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "03",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "04",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "05",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "07",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "08",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "10",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 7,false).getTime(), 1,1,4,4,5);
+		createVencimiento(  "12",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 7,false).getTime(), 1,1,4,4,5);
 
 		
-		createVencimiento(  "01", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JANUARY, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "02", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.FEBRUARY, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "03", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.MARCH, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "04", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.APRIL, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "05", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.MAY, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "06", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JUNE, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "07", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JULY, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "08", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.AUGUST, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "09", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.SEPTEMBER, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "10", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.OCTOBER, 7).getTime(), 1,1,4,4,6);
-		createVencimiento( "11", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.NOVEMBER, 7).getTime(), 1,1,4,4,6);
-		createVencimiento(  "12", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.DECEMBER, 7).getTime(), 1,1,4,4,6);
+		createVencimiento(  "01",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "02",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "03",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "04",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "05",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "07",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "08",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "10",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 7,false).getTime(), 1,1,4,4,6);
+		createVencimiento(  "12",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 7,false).getTime(), 1,1,4,4,6);
 		
-		createVencimiento(  "01", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JANUARY, 5).getTime(), 1,1,4,5,7);
-		createVencimiento(  "02", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.FEBRUARY, 5).getTime(), 1,1,4,5,7);
-		createVencimiento( "03", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.MARCH, 5).getTime(), 1,1,4,5,7);
-		createVencimiento(  "04", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.APRIL, 5).getTime(), 1,1,4,5,7);
-		createVencimiento( "05", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.MAY, 5).getTime(), 1,1,4,5,7);
-		createVencimiento( "06", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JUNE, 5).getTime(), 1,1,4,5,7);
-		createVencimiento( "07", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.JULY, 5).getTime(), 1,1,4,5,7);
-		createVencimiento(  "08", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.AUGUST, 5).getTime(), 1,1,4,5,7);
-		createVencimiento(  "09", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.SEPTEMBER, 5).getTime(), 1,1,4,5,7);
-		createVencimiento(  "10", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.OCTOBER, 5).getTime(), 1,1,4,5,7);
-		createVencimiento( "11", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.NOVEMBER, 5).getTime(), 1,1,4,5,7);
-		createVencimiento(  "12", "2019",
-				obtenerDiaHabilMesSiguiente(2019, Calendar.DECEMBER, 5).getTime(), 1,1,4,5,7);
-		*/
+		createVencimiento(  "01",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento(  "02",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento( "03",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento(  "04",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento( "05",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento( "06",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento( "07",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento(  "08",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento(  "10",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 5,false).getTime(), 1,1,4,5,7);
+		createVencimiento(  "12",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 5,false).getTime(), 1,1,4,5,7);
+		
 		
 //		
 //		createAportePorcentaje(1,1, new BigDecimal("0.46511"));//lap
@@ -437,7 +445,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		
 		
 		
-		//createCalendarioDet("2019", 2, 4, 1);*********
+		//createCalendarioDet( ""+aniocalendario, 2, 4, 1);*********
 		// createCalendarioDet("2018", 2, 6, 1);
 		// createCalendarioDet("2017", 2, 6, 1);
 		// createCalendarioDet("2016", 2, 6, 1);
@@ -550,7 +558,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		aporteTipoService.save(aporteTipo);
 
 	}
-	
+	@Transactional
+	void deleteConcesionario() {
+		concesionarioService.deleteAll();
+
+	}
 	@Transactional
 	void createConcesionario(final String name, final String ruc) {
 		Concesionario concesionario = new Concesionario();
@@ -681,15 +693,15 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		Calendar cal = Calendar.getInstance();
 		cal.set(anio, mesSiguiente, 1);
 		int ultimo = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		cal.set(anio, mesSiguiente, ultimo);	
+		cal.set((mes==Calendar.DECEMBER?anio+1:anio), mesSiguiente, ultimo);	
 		
 		return cal;
 	}
-	public Calendar obtenerDiaHabilMesSiguiente(int anio, int mes, int numeroDiasHab) {
+	public Calendar obtenerDiaHabilMesSiguiente(int anio, int mes, int numeroDiasHab, boolean ultimodiahabil) {
 		int mesSiguiente = mes + 1;
 		Calendar cal = Calendar.getInstance();
 		cal.set(anio, mesSiguiente, 1);		
-		addfechaPresentacion(cal, 1, numeroDiasHab);
+		addfecha(cal, 1, numeroDiasHab,ultimodiahabil);
 		
 		return cal;
 	}
@@ -698,19 +710,20 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		retrofechaPresentacion(cal, -1,true);
 		return cal;
 	}
-	public void addfechaPresentacion(Calendar dt, int sumaoresta, int tope) {
+	public void addfecha(Calendar dt, int sumaoresta, int tope, boolean ultimodiahabil) {
 		int cont = 0;
-		int fin = 2 + tope;
-		while (cont <= fin) {		
+		int fin = tope;
+		while (cont < fin) {		
 			int a = dt.get(Calendar.YEAR);
 			int m = dt.get(Calendar.MONTH);
 			int d = dt.get(Calendar.DATE);
 			int ndia = dt.get(Calendar.DAY_OF_WEEK);
-			if (!(ndia == Calendar.SUNDAY && ndia == Calendar.SATURDAY)) {
+			if (!(ndia == Calendar.SUNDAY || ndia == Calendar.SATURDAY)) {
 				Feriado f = feriadoService.findByFerAnyoAndFerMesAndFerDia(a, m+1, d);
 				if (null == f){cont++;} 
 			}
-			dt.setTime(variarFecha(dt, Calendar.DATE, sumaoresta).getTime());
+			  if(cont!=(fin))
+				dt.setTime(variarFecha(dt, Calendar.DATE, sumaoresta).getTime());
 			System.out.println(dt.getTime());
 		}
 	}

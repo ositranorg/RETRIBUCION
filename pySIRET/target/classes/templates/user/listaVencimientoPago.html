@@ -19,8 +19,18 @@
 					</div>
 					
 					<div class="col-12">
-				
-					</div>
+
+					<label style="text-align: left;"> AÑO</label> 
+					
+					
+					<input id="fbanioRetribucion" type="text" class="form-control"
+										autocomplete="off"
+										placeholder="Ingrese el año" />
+										
+										
+					<br>
+
+												</div>
 					<div class="col-4" th:each="r : ${calendarioDet}">
 
 
@@ -72,7 +82,26 @@
 				showButtonPanel : true
 
 			});
-
+			$('#fbanioRetribucion').autocomplete({
+				serviceUrl: context+'getAnios',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				    	
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map($.parseJSON(response), function(item) {
+				      return { value: item.anio, data: item.anio };
+				   })
+				            
+				 };
+				        
+		         },
+		         onSelect: function (suggestion) {
+		               
+		         }
+				    
+			 });
 		
 		});
 		

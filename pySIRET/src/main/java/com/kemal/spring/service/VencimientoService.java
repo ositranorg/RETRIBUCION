@@ -37,9 +37,9 @@ public class VencimientoService {
     public List<CalendarioDto> findByConceptoOrderById(Concesionario contribuyente) {
 		return null;// util.fromLstToCalendarioDto(dao.findByContribuyenteOrderById(contribuyente));
 	}
-    public List<Vencimiento> findByConcesionarioAndSEstado(Concesionario  t) {
+    public List<Vencimiento> findByConcesionarioAndSEstado(Concesionario  t,String anio) {
     	
-		return  dao.findByConcesionarioAndSEstado(t,"1");
+		return  dao.findByConcesionarioAndSAnioPeriodoAndSEstado(t,anio,"1");
 	}
     public Vencimiento findById(Integer id) {
 		return dao.findById(id).get();// dao.findBysEstadoOrderById("1");

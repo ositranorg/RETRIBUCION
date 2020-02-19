@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.text.html.HTML.Tag;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +46,9 @@ public class ContribuyenteRestController {
 	@PostMapping(value = "listar-contribuyente-paginacion", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> listarContribuyentePaginacion(@RequestBody ContribuyenteDto contribuyenteDto) {
 		HashMap<String, Object> rest = new HashMap<String, Object>();
-		rest.put("lista", contribuyenteService.listaContribuyentePaginacion(contribuyenteDto.getPagina(), totalRegistroPorPagina));
+		HashMap<String, Object> x=	contribuyenteService.listaContribuyentePaginacion(contribuyenteDto.getPagina(), totalRegistroPorPagina);
+			List<Concesionario> z=	(List<Concesionario>)x.get("contribuyentes");
+		rest.put("lista", x);
 		rest.put("resultado", 1);
 		return new ResponseEntity<>(rest, HttpStatus.OK);
 	}

@@ -19,6 +19,9 @@ public class ConcesionarioService {
 	public Concesionario findById(Integer id) {
 			return dao.findById(id).get();
 	}
+	public void deleteAll() {
+		dao.deleteAll();
+	}
 	public void save(Concesionario contribuyente) {
 		dao.save(contribuyente);
 	}
