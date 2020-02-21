@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kemal.spring.domain.Concepto;
 import com.kemal.spring.domain.Concesionario;
-import com.kemal.spring.domain.TipoVencimiento;
 import com.kemal.spring.domain.Vencimiento;
 import com.kemal.spring.domain.VencimientoRepository;
 import com.kemal.spring.web.dto.CalendarioDto;
@@ -37,9 +37,9 @@ public class VencimientoService {
     public List<CalendarioDto> findByConceptoOrderById(Concesionario contribuyente) {
 		return null;// util.fromLstToCalendarioDto(dao.findByContribuyenteOrderById(contribuyente));
 	}
-    public List<Vencimiento> findByConcesionarioAndSEstado(Concesionario  t,String anio) {
-    	
-		return  dao.findByConcesionarioAndSAnioPeriodoAndSEstado(t,anio,"1");
+    public List<Vencimiento> findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(Concesionario  t,Integer idConcepto,String anio) {
+    	Concepto concepto=new Concepto(idConcepto);
+		return  dao.findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(t,concepto,anio,"1");
 	}
     public Vencimiento findById(Integer id) {
 		return dao.findById(id).get();// dao.findBysEstadoOrderById("1");

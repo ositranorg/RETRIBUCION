@@ -8,64 +8,33 @@
 <body>
 	<div class="page-wrapper chiller-theme toggled">
 		<div th:replace="fragments/sb-admin :: mn-lat"></div>
-
 		<div class="page-content  chiller-theme toggled">
 			<div class="container-fluid">
-
-				<div class="row">
-					<div class="alert alert-primary" role="alert">
-						<h3>Cronograma de Vencimiento para la Presentación de la Declaración Jurada de la Retribución
-							al Estado [[${anio}]]</h3>
-					</div>
-					
-					<div class="col-12">
-				<!-- 	<form th:action="@{/calendario/presentacion}" method="post">
-					
-					<select th:field="${calendarioSel}" id="cal" class="form-control">
-						<option th:each="cal : ${lstCalendario}" th:value="${cal.id}" th:text="${cal.sDescripcion}"></option>
+				<form id="frmVencPago">
+					<div class="row">
+						<div class="alert alert-primary" role="alert">
+							<h3>Cronograma de Vencimiento para el Pago de la Retribución
+								al Estado</h3>
+						</div>
+						<div class="col-12" >
+							<input id="cns" type="text" class=" form-control"
+								autocomplete="off"  th:if="${cn eq -1}"
+								placeholder="Ingrese el nombre del concesionario" />
+							<input id="cnshdd" type="hidden" th:value="${cn}"/>								
+						</div>
+						<hr />
+						<div class="col-12">
 						
-					</select>
-					
-					
-					<select th:field="${anioSel}" id="sAnio" class="form-control">
-						<option th:each="anioi : ${anios}" th:value="${anioi}" th:text="${anioi}"></option>
-						
-					</select>
-
-					</form>
- -->
-					</div>
-					<div class="col-4" th:each="r : ${calendarioDet}">
-
-
-
-						<div class="card text-white bg-primary  mb-3">
-							<div class="card-header">
-								<div class="row">
-									<h5 th:text="${'Periodo-'+r.sMesPeriodo} ">Featured</h5>
-								</div>
-							</div>
-							<div class="card-body">
-								<div class="card-title">
-									Fecha de Pago:
-									<h5 th:text="${#dates.format(r.dFechaVenc,'dd-MMM-yyyy')}"></h5>
-								</div>
-							</div>
+							<input
+								id="fbanioRetribucion" type="text" class=" form-control"
+								autocomplete="off" placeholder="Ingrese el año" />
+							<input id="aniohdd" type="hidden" th:value="${anioActual}"/>								
 						</div>
 					</div>
-
-
-
-
-					<!-- 								<div id="dd" class="form-control " placeholder="Pick the multiple dates"></div> -->
-
-
-
-
-
-				</div>
-
-
+					<div class="row">
+						<div id="containerMeses" class="row"></div>
+					</div>
+				</form>
 
 			</div>
 
@@ -77,8 +46,44 @@
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 
 	<script type="text/javascript">
+	function calendario(anio,cn){
+		 var vencimiento=[];
+    	 var data={sAnioPeriodo:anio,
+    			 concesionario:cn};
+    	 vencimiento.push(data);
+    	 $.ajax({
+				data : JSON.stringify(vencimiento),
+				type: "POST",
+				dataType: 'JSON',
+				contentType: 'application/json',
+				url : context+'calendario/pago/filtrar'
+				}).done((res) => {
+					console.log(res);
+					var lista=res.calendarioDet;
+					$("#containerMeses").html("");
+					
+					for(var i=0;i<lista.length;i++){
+						$("#containerMeses").append(
+							'<div class="col-sm-3">'+
+                          '<div class="card text-white bg-success  m-3 ">'+
+									'<div class="card-header">'+
+										'<div class="row">'+
+											'<h5 >Periodo-'+lista[i].sMesPeriodo+'</h5>'+
+										'</div>'+
+									'</div>'+
+									' <div class="card-body">'+
+										' <div class="card-title">'+
+											' Fecha de Pago:'+
+											'<h5 >'+lista[i].dFechaVenc+'</h5>'+
+										'</div>'+
+									'</div>'+
+						   '</div>'+'</div>');
+					}
+					
+				});
+	}
 		$(function() {
-
+			calendario($("#aniohdd").val(),$("#cnshdd").val());
 			$('#dd').datepicker({
 				multidate : true,
 				format : 'dd-mm-yyyy',
@@ -86,229 +91,42 @@
 				showButtonPanel : true
 
 			});
-
-			// 		$("#datepicker").datepicker({
-			// 		      numberOfMonths: 3,
-			// 		      showButtonPanel: true
-			// 		    });
-
+			$('#fbanioRetribucion').autocomplete({
+				serviceUrl: context+'getAnios',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map($.parseJSON(response), function(item) {
+				      return { value: item, data: item };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	$("#aniohdd").val(suggestion.data);
+		        	calendario(suggestion.data,$("#cnshdd").val());
+		         }
+			 });
+			$('#cns').autocomplete({
+				serviceUrl: context+'api/contribuyente/getContribuyente',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map($.parseJSON(response), function(item) {
+				      return { value: item.snombre, data: item.id };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	 $("#cnshdd").val(suggestion.data);
+		        	 calendario($("#aniohdd").val(),suggestion.data);
+		         }
+			 });
 		});
-		// 		function editEvent(event) {
-		// 			$('#event-modal input[name="event-index"]').val(
-		// 					event ? event.id : '');
-		// 			$('#event-modal input[name="event-name"]').val(
-		// 					event ? event.name : '');
-		// 			$('#event-modal input[name="event-location"]').val(
-		// 					event ? event.location : '');
-		// 			$('#event-modal input[name="event-start-date"]').datepicker(
-		// 					'update', event ? event.startDate : '');
-		// 			$('#event-modal input[name="event-end-date"]').datepicker('update',
-		// 					event ? event.endDate : '');
-		// 			$('#event-modal').modal();
-		// 		}
-
-		// 		function deleteEvent(event) {
-		// 			var dataSource = $('#calendar').data('calendar').getDataSource();
-
-		// 			for ( var i in dataSource) {
-		// 				if (dataSource[i].id == event.id) {
-		// 					dataSource.splice(i, 1);
-		// 					break;
-		// 				}
-		// 			}
-
-		// 			$('#calendar').data('calendar').setDataSource(dataSource);
-		// 		}
-
-		// 		function saveEvent() {
-		// 			var event = {
-		// 				id : $('#event-modal input[name="event-index"]').val(),
-		// 				name : $('#event-modal input[name="event-name"]').val(),
-		// 				location : $('#event-modal input[name="event-location"]').val(),
-		// 				startDate : $('#event-modal input[name="event-start-date"]')
-		// 						.datepicker('getDate'),
-		// 				endDate : $('#event-modal input[name="event-end-date"]')
-		// 						.datepicker('getDate')
-		// 			}
-
-		// 			var dataSource = $('#calendar').data('calendar').getDataSource();
-
-		// 			if (event.id) {
-		// 				for ( var i in dataSource) {
-		// 					if (dataSource[i].id == event.id) {
-		// 						dataSource[i].name = event.name;
-		// 						dataSource[i].location = event.location;
-		// 						dataSource[i].startDate = event.startDate;
-		// 						dataSource[i].endDate = event.endDate;
-		// 					}
-		// 				}
-		// 			} else {
-		// 				var newId = 0;
-		// 				for ( var i in dataSource) {
-		// 					if (dataSource[i].id > newId) {
-		// 						newId = dataSource[i].id;
-		// 					}
-		// 				}
-
-		// 				newId++;
-		// 				event.id = newId;
-
-		// 				dataSource.push(event);
-		// 			}
-
-		// 			$('#calendar').data('calendar').setDataSource(dataSource);
-		// 			$('#event-modal').modal('hide');
-		// 		}
-		// 		$(function() {
-		// 			var currentYear = new Date().getFullYear();
-
-		// 			$('#calendar')
-		// 					.calendar(
-		// 							{
-		// 								enableContextMenu : true,
-		// 								enableRangeSelection : true,
-		// 								contextMenuItems : [ {
-		// 									text : 'Update',
-		// 									click : editEvent
-		// 								}, {
-		// 									text : 'Delete',
-		// 									click : deleteEvent
-		// 								} ],
-		// 								selectRange : function(e) {
-		// 									editEvent({
-		// 										startDate : e.startDate,
-		// 										endDate : e.endDate
-		// 									});
-		// 								},
-		// 								mouseOnDay : function(e) {
-		// 									if (e.events.length > 0) {
-		// 										var content = '';
-
-		// 										for ( var i in e.events) {
-		// 											content += '<div class="event-tooltip-content">'
-		// 													+ '<div class="event-name" style="color:' + e.events[i].color + '">'
-		// 													+ e.events[i].name
-		// 													+ '</div>'
-		// 													+ '<div class="event-location">'
-		// 													+ e.events[i].location
-		// 													+ '</div>' + '</div>';
-		// 										}
-
-		// 										$(e.element).popover({
-		// 											trigger : 'manual',
-		// 											container : 'body',
-		// 											html : true,
-		// 											content : content
-		// 										});
-
-		// 										$(e.element).popover('show');
-		// 									}
-		// 								},
-		// 								mouseOutDay : function(e) {
-		// 									if (e.events.length > 0) {
-		// 										$(e.element).popover('hide');
-		// 									}
-		// 								},
-		// 								dayContextMenu : function(e) {
-		// 									$(e.element).popover('hide');
-		// 								},
-		// 								dataSource : [
-		// 										{
-		// 											id : 0,
-		// 											name : 'Google I/O',
-		// 											location : 'San Francisco, CA',
-		// 											startDate : new Date(currentYear,
-		// 													4, 28),
-		// 											endDate : new Date(currentYear, 4,
-		// 													29)
-		// 										},
-		// 										{
-		// 											id : 1,
-		// 											name : 'Microsoft Convergence',
-		// 											location : 'New Orleans, LA',
-		// 											startDate : new Date(currentYear,
-		// 													2, 16),
-		// 											endDate : new Date(currentYear, 2,
-		// 													19)
-		// 										},
-		// 										{
-		// 											id : 2,
-		// 											name : 'Microsoft Build Developer Conference',
-		// 											location : 'San Francisco, CA',
-		// 											startDate : new Date(currentYear,
-		// 													3, 29),
-		// 											endDate : new Date(currentYear, 4,
-		// 													1)
-		// 										},
-		// 										{
-		// 											id : 3,
-		// 											name : 'Apple Special Event',
-		// 											location : 'San Francisco, CA',
-		// 											startDate : new Date(currentYear,
-		// 													8, 1),
-		// 											endDate : new Date(currentYear, 8,
-		// 													1)
-		// 										},
-		// 										{
-		// 											id : 4,
-		// 											name : 'Apple Keynote',
-		// 											location : 'San Francisco, CA',
-		// 											startDate : new Date(currentYear,
-		// 													8, 9),
-		// 											endDate : new Date(currentYear, 8,
-		// 													9)
-		// 										},
-		// 										{
-		// 											id : 5,
-		// 											name : 'Chrome Developer Summit',
-		// 											location : 'Mountain View, CA',
-		// 											startDate : new Date(currentYear,
-		// 													10, 17),
-		// 											endDate : new Date(currentYear, 10,
-		// 													18)
-		// 										},
-		// 										{
-		// 											id : 6,
-		// 											name : 'F8 2015',
-		// 											location : 'San Francisco, CA',
-		// 											startDate : new Date(currentYear,
-		// 													2, 25),
-		// 											endDate : new Date(currentYear, 2,
-		// 													26)
-		// 										},
-		// 										{
-		// 											id : 7,
-		// 											name : 'Yahoo Mobile Developer Conference',
-		// 											location : 'New York',
-		// 											startDate : new Date(currentYear,
-		// 													7, 25),
-		// 											endDate : new Date(currentYear, 7,
-		// 													26)
-		// 										},
-		// 										{
-		// 											id : 8,
-		// 											name : 'Android Developer Conference',
-		// 											location : 'Santa Clara, CA',
-		// 											startDate : new Date(currentYear,
-		// 													11, 1),
-		// 											endDate : new Date(currentYear, 11,
-		// 													4)
-		// 										},
-		// 										{
-		// 											id : 9,
-		// 											name : 'LA Tech Summit',
-		// 											location : 'Los Angeles, CA',
-		// 											startDate : new Date(currentYear,
-		// 													10, 17),
-		// 											endDate : new Date(currentYear, 10,
-		// 													17)
-		// 										} ]
-		// 							});
-
-		// 			$('#save-event').click(function() {
-		// 				saveEvent();
-		// 			});
-		// 		});
+		
 	</script>
 
 

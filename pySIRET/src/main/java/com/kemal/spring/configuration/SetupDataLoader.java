@@ -242,8 +242,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createConcepto("LIBERACION DE PAGO",6);
 		createConcepto("OTROS DESCUENTOS",6);
 		
-		createPerfil("CONCESIONARIO");
 		createPerfil("SUPERVISOR");
+		createPerfil("CONCESIONARIO");		
 		createPerfil("TESORERIA");
 		createPerfil("INVITADO");
 		
@@ -253,11 +253,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				
 		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "tisur", userRoles,7,2);
 	
-		*/
+		
 		
 		int aniocalendario=2020;
 		delAllVencimiento();
-		/*createVencimiento("01", ""+aniocalendario,
+		createVencimiento("01", ""+aniocalendario,
 				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY).getTime(), 1,1,4,1,1);
 		createVencimiento("02",  ""+aniocalendario,
 				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY).getTime(), 1,1,4,1,1);
@@ -281,7 +281,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER).getTime(), 1,1,4,1,1);
 		createVencimiento("12",  ""+aniocalendario,
 				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,1,1);
-*/
+
 		createVencimiento("01",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH).getTime(), 1,3,4,2,1);
 		createVencimiento("02",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,3,4,2,1);
 		createVencimiento("03",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 1,3,4,2,1);
@@ -419,7 +419,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createVencimiento(  "12",  ""+aniocalendario,
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 5,false).getTime(), 1,1,4,5,7);
 		
-		
+		*/
 //		
 //		createAportePorcentaje(1,1, new BigDecimal("0.46511"));//lap
 //		createAportePorcentaje(2,1, new BigDecimal("0.15"));//adp

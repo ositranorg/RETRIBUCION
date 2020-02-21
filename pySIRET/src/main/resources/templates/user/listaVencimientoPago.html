@@ -8,60 +8,33 @@
 <body>
 	<div class="page-wrapper chiller-theme toggled">
 		<div th:replace="fragments/sb-admin :: mn-lat"></div>
-
 		<div class="page-content  chiller-theme toggled">
 			<div class="container-fluid">
-
-				<div class="row">
-					<div class="alert alert-primary" role="alert">
-						<h3>Cronograma de Vencimiento para el Pago de la Retribución
-							al Estado [[${anio}]]</h3>
-					</div>
-					
-					<div class="col-12">
-
-					<label style="text-align: left;"> AÑO</label> 
-					
-					
-					<input id="fbanioRetribucion" type="text" class="form-control"
-										autocomplete="off"
-										placeholder="Ingrese el año" />
-										
-										
-					<br>
-
-												</div>
-					<div class="col-4" th:each="r : ${calendarioDet}">
-
-
-
-						<div class="card text-white bg-success  mb-3">
-							<div class="card-header">
-								<div class="row">
-									<h5 th:text="${'Periodo-'+r.sMesPeriodo} ">Featured</h5>
-								</div>
-							</div>
-							<div class="card-body">
-								<div class="card-title">
-									Fecha de Pago:
-									<h5 th:text="${#dates.format(r.dFechaVenc,'dd-MMM-yyyy')}"></h5>
-								</div>
-							</div>
+				<form id="frmVencPago">
+					<div class="row">
+						<div class="alert alert-primary" role="alert">
+							<h3>Cronograma de Vencimiento para el Pago de la Retribución
+								al Estado</h3>
+						</div>
+						<div class="col-12" th:if="${cn eq -1}">
+							<input id="cns" type="text" class=" form-control"
+								autocomplete="off"
+								placeholder="Ingrese el nombre del concesionario" />
+							<input id="cnshdd" type="hidden" th:value="${cn}"/>								
+						</div>
+						<hr />
+						<div class="col-12">
+						
+							<input
+								id="fbanioRetribucion" type="text" class=" form-control"
+								autocomplete="off" placeholder="Ingrese el año" />
+							<input id="aniohdd" type="hidden" th:value="${anioActual}"/>								
 						</div>
 					</div>
-
-
-
-
-					<!-- 								<div id="dd" class="form-control " placeholder="Pick the multiple dates"></div> -->
-
-
-
-
-
-				</div>
-
-
+					<div class="row">
+						<div id="containerMeses" class="row"></div>
+					</div>
+				</form>
 
 			</div>
 
@@ -73,8 +46,44 @@
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 
 	<script type="text/javascript">
+	function calendario(anio,cn){
+		 var vencimiento=[];
+    	 var data={sAnioPeriodo:anio,
+    			 concesionario:cn};
+    	 vencimiento.push(data);
+    	 $.ajax({
+				data : JSON.stringify(vencimiento),
+				type: "POST",
+				dataType: 'JSON',
+				contentType: 'application/json',
+				url : context+'calendario/pago/filtrar'
+				}).done((res) => {
+					console.log(res);
+					var lista=res.calendarioDet;
+					$("#containerMeses").html("");
+					
+					for(var i=0;i<lista.length;i++){
+						$("#containerMeses").append(
+							'<div class="col-sm-3">'+
+                          '<div class="card text-white bg-success  m-3 ">'+
+									'<div class="card-header">'+
+										'<div class="row">'+
+											'<h5 >Periodo-'+lista[i].sMesPeriodo+'</h5>'+
+										'</div>'+
+									'</div>'+
+									' <div class="card-body">'+
+										' <div class="card-title">'+
+											' Fecha de Pago:'+
+											'<h5 >'+lista[i].dFechaVenc+'</h5>'+
+										'</div>'+
+									'</div>'+
+						   '</div>'+'</div>');
+					}
+					
+				});
+	}
 		$(function() {
-
+			calendario($("#aniohdd").val(),$("#cnshdd").val());
 			$('#dd').datepicker({
 				multidate : true,
 				format : 'dd-mm-yyyy',
@@ -87,22 +96,35 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
-				    	
 				return {      	
 				  //must convert json to javascript object before process
 				  suggestions: $.map($.parseJSON(response), function(item) {
-				      return { value: item.anio, data: item.anio };
+				      return { value: item, data: item };
 				   })
-				            
 				 };
-				        
 		         },
 		         onSelect: function (suggestion) {
-		               
+		        	$("#aniohdd").val(suggestion.data);
+		        	calendario(suggestion.data,$("#cnshdd").val());
 		         }
-				    
 			 });
-		
+			$('#cns').autocomplete({
+				serviceUrl: context+'api/contribuyente/getContribuyente',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map($.parseJSON(response), function(item) {
+				      return { value: item.snombre, data: item.id };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	 $("#cnshdd").val(suggestion.data);
+		        	 calendario($("#aniohdd").val(),suggestion.data);
+		         }
+			 });
 		});
 		
 	</script>

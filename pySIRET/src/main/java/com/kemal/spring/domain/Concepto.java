@@ -56,6 +56,8 @@ public class Concepto {
     @JoinColumn(name = "ncodigoModulo")
     private Modulo modulo;
     
-    
+    public Concepto (Integer id){
+    	this.id=id;
+    }
     
 }

@@ -637,7 +637,11 @@ jQuery(document).ready(function ($) {
         h(this);
     });
     
-    
+    $('input,textarea ').keypress(function(event){
+        if(event.keyCode == 13){
+  	      event.preventDefault();
+        }
+  });
     
    
     

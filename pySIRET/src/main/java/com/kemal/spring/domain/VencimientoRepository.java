@@ -8,5 +8,5 @@ public interface VencimientoRepository extends JpaRepository<Vencimiento, Intege
 
 
 	public List<Vencimiento> findBysEstadoOrderById(String Estado);
-	public List<Vencimiento> findByConcesionarioAndSAnioPeriodoAndSEstado(Concesionario concesionario,String anio,String Estado);
+	public List<Vencimiento> findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(Concesionario concesionario,Concepto concepto,String anio,String Estado);
 }

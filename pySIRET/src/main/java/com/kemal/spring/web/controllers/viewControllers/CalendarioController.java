@@ -2,6 +2,7 @@ package com.kemal.spring.web.controllers.viewControllers;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,16 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kemal.spring.domain.Concesionario;
-import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.Vencimiento;
 import com.kemal.spring.service.VencimientoService;
-import com.kemal.spring.web.dto.CalendarioDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.VencimientoDTO;
 import com.kemal.spring.web.dto.Util;
-import com.kemal.spring.web.form.CalendarioForm;
 
 @Controller(value = "calendario")
 @Scope("session")
@@ -67,42 +67,51 @@ public class CalendarioController {
 	}
 	@Autowired
 	VencimientoService vencimientoService;
+	@ResponseBody
+	@PostMapping(value = "/calendario/pago/filtrar", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> pagofilrar(@RequestBody  List<VencimientoDTO> vencimientodto) {
+		HashMap<String, Object> a=getCalendarios(vencimientodto,4);
+		return new ResponseEntity<>(a, HttpStatus.OK);
+	}
 	@RequestMapping(value = { "/calendario/pago" }, method = RequestMethod.GET)
-	public String pago(Model model,		
-			@RequestParam(value = "anioSel", required = false) String anioSel) {
+	public String pago(Model model) {
 		User u = (User)session().getAttribute("oUsuario");
-		List<Vencimiento> list=vencimientoService.findByConcesionarioAndSEstado(u.getConcesionario(), 
-				anioSel==null||anioSel.equals("")?""+util.anioActual():anioSel);
-		int anio = util.anioActual();
-		List<String> anios = util.getAnios();
-		model.addAttribute("calendarioDet", list);// fechasvenc
-		model.addAttribute("anio", anio);
-		model.addAttribute("anios", anios);
+		model.addAttribute("cn", u.getPerfil().getId()==2?u.getConcesionario().getId():-1);
+		model.addAttribute("anioActual",util.anioActual());
 		return "user/listaVencimientoPago";
 	}
-
-	@RequestMapping(value = { "/calendario/presentacion/" }, method = RequestMethod.GET)
-	public ModelAndView presentacion(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
-		User u = (User)session().getAttribute("oUsuario");
-
-	int anio = util.anioActual();
-
-    List<CalendarioDto> calendarioDto = new ArrayList<CalendarioDto>();
-
-    List<TipoPeriodicidad> listCalendario = new ArrayList<TipoPeriodicidad>();
-
-
-    	List<String> anios =  util.getAnios();
-//		CalendarioForm form = new CalendarioForm();
-//		ModelAndView view = new ModelAndView("/user/listaVencimientoPresentacion", "command", form);
-//		view.addObject("lstCalendario", listCalendario);// mensual,trimestral...
-//		view.addObject("calendarioDet", calendarioDto);// fechasvenc
-//		view.addObject("anio", anio);
-//		view.addObject("anios", anios);
-//		return view;
-		return null;
+	@ResponseBody
+	@PostMapping(value = "/calendario/presentacion/filtrar", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> presentacionfilrar(@RequestBody  List<VencimientoDTO> vencimientodto) {
+		HashMap<String, Object> a=getCalendarios(vencimientodto,5);
+		return new ResponseEntity<>(a, HttpStatus.OK);
 	}
-	
+	public 	HashMap<String, Object> getCalendarios(List<VencimientoDTO> v,Integer calendario) {
+		User u = (User)session().getAttribute("oUsuario");
+		HashMap<String, Object> a=new HashMap<String,Object>();
+		List<Vencimiento> list=new ArrayList<Vencimiento>();
+		List<VencimientoDTO> listdto=new ArrayList<VencimientoDTO>();
+		Concesionario concesionario=util.getConcesionario(u,v.get(0).getConcesionario());
+		try {
+			list=vencimientoService.findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(
+					concesionario, 
+					calendario,
+					v.get(0).getSAnioPeriodo().equals("")?""+util.anioActual():v.get(0).getSAnioPeriodo());
+			list.stream().map(z->(new VencimientoDTO(z.getSMesPeriodo(),z.getSAnioPeriodo(),util.fomratDate(z.getDFechaVenc())))).forEachOrdered(listdto::add);
+			a.put("calendarioDet", listdto);
+		} catch (Exception e) {
+			a.put("calendarioDet", listdto);
+			e.printStackTrace();
+		}
+		return a;
+	}
+	@RequestMapping(value = { "/calendario/presentacion" }, method = RequestMethod.GET)
+	public String presentacion(Model model) {
+		User u = (User)session().getAttribute("oUsuario");
+		model.addAttribute("cn", u.getPerfil().getId()==2?u.getConcesionario().getId():-1);
+		model.addAttribute("anioActual",util.anioActual());
+		return "user/listaVencimientoPresentacion";
+	}
 	@RequestMapping(value = "/getAnios", method = RequestMethod.GET)
 	public @ResponseBody
 	List<String> getTags(@RequestParam String tagName) {
