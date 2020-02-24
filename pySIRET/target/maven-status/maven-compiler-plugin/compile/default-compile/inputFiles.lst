@@ -6,6 +6,7 @@
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/service/AporteService.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/domain/EstadoRepository.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/domain/RoleRepository.java
+/home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/controllers/restApiControllers/dto/VencimientoDTO.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/domain/Archivo.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/controllers/viewControllers/ContribuyenteController.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/dto/ArchivoDTO.java
