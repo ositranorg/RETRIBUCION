@@ -13,21 +13,27 @@
 				<form id="frmVencPago">
 					<div class="row">
 						<div class="alert alert-primary" role="alert">
-							<h3>Cronograma de Vencimiento para el Pago de la Retribución
-								al Estado</h3>
+							<h3>[[#{general.mensaje.titulo.vencimiento.pago}]]</h3>
 						</div>
 						<div class="col-12" th:if="${cn eq -1}">
+						<label >[[#{general.mensaje.label.concesion}]]</label>
 							<input id="cns" type="text" class=" form-control"
-								autocomplete="off"
+								autocomplete="off" th:value="${cn}"
 								placeholder="Ingrese el nombre del concesionario" />
-							<input id="cnshdd" type="hidden" th:value="${cn}"/>								
+								
+						<label >[[#{general.mensaje.label.tiporetribucion}]]</label>
+						<input id="cns" type="text" class=" form-control"
+						       autocomplete="off" th:value="${cn}"
+							   placeholder="Ingrese el nombre del concesionario" />								
+													
 						</div>
+						<input id="cnshdd" type="hidden" th:value="${cn}"/>		
 						<hr />
 						<div class="col-12">
-						
+						<label >[[#{general.mensaje.label.anio}]]</label>
 							<input
 								id="fbanioRetribucion" type="text" class=" form-control"
-								autocomplete="off" placeholder="Ingrese el año" />
+								autocomplete="off" placeholder="Ingrese el año" th:value="${anioActual}"/>
 							<input id="aniohdd" type="hidden" th:value="${anioActual}"/>								
 						</div>
 					</div>
@@ -80,8 +86,8 @@
 						   '</div>'+'</div>');
 					}
 					
-				});
-	}
+		});
+		}
 		$(function() {
 			calendario($("#aniohdd").val(),$("#cnshdd").val());
 			$('#dd').datepicker({

@@ -127,6 +127,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
+		int aniocalendario=2020;
 /*
 		createEstado(0,"ELIMINADO");
 		createEstado(1,"REGISTRADO");
@@ -255,7 +256,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	
 		
 		
-		int aniocalendario=2020;
+		
 		delAllVencimiento();
 		createVencimiento("01", ""+aniocalendario,
 				obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY).getTime(), 1,1,4,1,1);
@@ -342,7 +343,20 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.NOVEMBER).getTime(), 1,1,4,3,4);
 		createVencimiento(  "12",  ""+aniocalendario,
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4);
+	
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,3,3);
+		createVencimiento(  "01",  ""+(aniocalendario),
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,3);
 		
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,3,4);
+		createVencimiento(  "01",  ""+(aniocalendario),
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4);
+				*/
+		createVencimiento(  "01",  ""+aniocalendario,
+		obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 1,1,4,3,4);;
+		/*
 		createVencimiento(  "01",  ""+aniocalendario,
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7,false).getTime(), 1,1,4,4,5);
 		createVencimiento(  "02",  ""+aniocalendario,
@@ -678,8 +692,31 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 	}
 
-	
-
+	public Calendar obtenerCalendarioPrincipal(int anio, int mes,int dia) {
+		/*ESTE CALENDARIO ES ANUAL 20 enero*/
+		int mesSiguiente = mes + 1;
+		Calendar cal = Calendar.getInstance();
+		cal.set(mes==12?anio+1:anio, mesSiguiente, dia);
+		addfechaPrincipal(cal,1,1,false);
+		return cal;
+	}
+	public void addfechaPrincipal(Calendar dt, int sumaoresta, int tope, boolean ultimodiahabil) {
+		int cont = 0;
+		int fin = tope;
+		while (cont < fin) {		
+			int a = dt.get(Calendar.YEAR);
+			int m = dt.get(Calendar.MONTH);
+			int d = dt.get(Calendar.DATE);
+			int ndia = dt.get(Calendar.DAY_OF_WEEK);
+			if (!(ndia == Calendar.SUNDAY || ndia == Calendar.SATURDAY)) {
+				Feriado f = feriadoService.findByFerAnyoAndFerMesAndFerDia(a, m+1, d);
+				if (null == f){cont++;} 
+			}
+			  if(cont!=(fin))
+				dt.setTime(variarFecha(dt, Calendar.DATE, sumaoresta).getTime());
+			System.out.println(dt.getTime());
+		}
+	}
 	public Calendar obtenerDiezCalendarioMesSiguiente(int anio, int mes) {
 		int mesSiguiente = mes + 1;
 		Calendar cal = Calendar.getInstance();
