@@ -16,7 +16,7 @@ public interface VencimientoRepository extends JpaRepository<Vencimiento, Intege
 			+ " left join i.concepto c"
 			+ " where (s.id is null or s.id=:idconcesionario)"
 			+ " and (p.id is null or p.id=:idtipoPeriodicidad)"
-			+ " and (r.id is null or r.id=:idtipoRetribucion)"
+			+ " and (r.id is null or r.id=:idtipoRetribucion) "
 			+ " and (c.id is null or c.id=:idconcepto)"
 			+ " and i.sAnioPeriodo=:sAnioPeriodo"
 			+ " and i.sEstado=:sEstado"
