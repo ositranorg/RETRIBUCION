@@ -32,25 +32,23 @@
 								<label class="control-label">[[#{general.mensaje.label.tipoperiodicidad}]]</label>
 								<input id="fbtipoperiodicidad" type="text" class=" form-control"
 									autocomplete="off"
-									th:placeholder="#{general.mensaje.placeholder.tipoperiodicidad}" />
-								<input id="tipoperiodicidadhdd" type="hidden"
-									th:value="${anioActual}" />
+									 />
+								<input id="tipoperiodicidadhdd" type="hidden" />
 							</div>
 							<div class="col-sm">
 								<label class="control-label">[[#{general.mensaje.label.tiporetribucion}]]</label>
 								<input id="fbtiporetribucion" type="text" class=" form-control"
 									autocomplete="off"
-									th:placeholder="#{general.mensaje.label.tiporetribucion}" />
-								<input id="tiporetribucionhdd" type="hidden"
-									th:value="${anioActual}" />
+									 />
+								<input id="tiporetribucionhdd" type="hidden" />
 							</div>
 							<div class="col-sm">
 								<label class="control-label">[[#{general.mensaje.label.anio}]]</label>
 								<input id="fbanioRetribucion" type="text" class=" form-control"
 									autocomplete="off"
 									th:placeholder="#{general.mensaje.placeholder.anio}"
-									th:value="${anioActual}" /> <input id="aniohdd" type="hidden"
-									th:value="${anioActual}" />
+									th:value="${anioActual}" /> 
+									<input id="aniohdd" type="hidden" th:value="${anioActual}" />
 							</div>
 						</div>
 					</div>
@@ -127,7 +125,7 @@
 			calendario($("#aniohdd").val(),$("#cnshdd").val());
 			
 			$('#fbtipoperiodicidad').autocomplete({
-				serviceUrl: context+'getTipoPeriodicidad',
+				serviceUrl: context+'api/tipoperiodicidad/getTipoPeriodicidad',
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
@@ -145,7 +143,7 @@
 			 });
 			
 			$('#fbtiporetribucion').autocomplete({
-				serviceUrl: context+'getTipoRetribucion',
+				serviceUrl: context+'api/tiporetribucion/getTipoRetribucion',
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
@@ -177,7 +175,7 @@
 		         },
 		         onSelect: function (suggestion) {
 		        	$("#aniohdd").val(suggestion.data);
-		        	calendario(suggestion.data,$("#cnshdd").val());
+		        	calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
 		         }
 			 });
 			$('#cns').autocomplete({
@@ -194,7 +192,7 @@
 		         },
 		         onSelect: function (suggestion) {
 		        	 $("#cnshdd").val(suggestion.data);
-		        	 calendario($("#aniohdd").val(),suggestion.data);
+		        	 calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
 		         }
 			 });
 		});

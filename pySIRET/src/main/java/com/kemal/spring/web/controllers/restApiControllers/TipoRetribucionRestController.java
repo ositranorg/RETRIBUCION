@@ -15,7 +15,7 @@ import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.TipoRetribucion;
 import com.kemal.spring.service.TipoRetribucionService;
 @RestController
-@RequestMapping("api/contribuyente")
+@RequestMapping("api/tiporetribucion")
 @Scope("session")
 public class TipoRetribucionRestController {
 	

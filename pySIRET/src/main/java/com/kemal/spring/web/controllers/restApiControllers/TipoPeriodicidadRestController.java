@@ -16,7 +16,7 @@ import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.service.TipoPeriodicidadService;
 @RestController
-@RequestMapping("api/contribuyente")
+@RequestMapping("api/tipoperiodicidad")
 @Scope("session")
 public class TipoPeriodicidadRestController {
 	
