@@ -48,5 +48,7 @@ public class TipoPeriodicidad implements Serializable {
     @Column(name = "ORDERBY")
     private Integer orden; 
     
-    
+    public TipoPeriodicidad(Integer id) {
+    	this.id=id;
+    } 
 }

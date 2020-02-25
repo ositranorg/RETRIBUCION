@@ -51,14 +51,14 @@ public class Util {
 
 		return salida;
 	}
-	public  Concesionario getConcesionario(User u,int vVar) {
+	public  Integer getConcesionario(User u,int vVar) {
 		Concesionario concesionario=null;
 		if(u.getPerfil().getId()!=2) {
 			concesionario=new Concesionario(vVar);
 		}else {
 			concesionario=u.getConcesionario();
 		}
-		return concesionario;
+		return u.getPerfil().getId()!=2?vVar:u.getConcesionario().getId();
 	}
 	public int anioActual() {
 		Calendar cal = Calendar.getInstance();

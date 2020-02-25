@@ -127,8 +127,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
-		int aniocalendario=2020;
-/*
+		
+/*int aniocalendario=2020;
 		createEstado(0,"ELIMINADO");
 		createEstado(1,"REGISTRADO");
 		createEstado(2,"APLICADO");
@@ -343,20 +343,27 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.NOVEMBER).getTime(), 1,1,4,3,4);
 		createVencimiento(  "12",  ""+aniocalendario,
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4);
-	
+				
+//void createVencimiento(String mes, String anio, Date fecha,
+//int tipoPeriodicidad, int tipoRetribucion, int concepto,int tipoVencimiento,int concesionario) 
+
 		createVencimiento(  "06",  ""+aniocalendario,
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,3,3);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,3,3);
 		createVencimiento(  "01",  ""+(aniocalendario),
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,3);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,3,3);
 		
 		createVencimiento(  "06",  ""+aniocalendario,
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 1,1,4,3,4);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,3,4);
 		createVencimiento(  "01",  ""+(aniocalendario),
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4);
-				*/
-		createVencimiento(  "01",  ""+aniocalendario,
-		obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 1,1,4,3,4);;
-		/*
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,3,4);
+
+createVencimiento(  "01",  ""+aniocalendario,
+		obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 4,2,4,3,3);				
+createVencimiento(  "01",  ""+aniocalendario,
+		obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 4,2,4,3,4);				
+				
+		
+		
 		createVencimiento(  "01",  ""+aniocalendario,
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7,false).getTime(), 1,1,4,4,5);
 		createVencimiento(  "02",  ""+aniocalendario,

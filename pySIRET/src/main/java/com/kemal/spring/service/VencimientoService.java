@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.kemal.spring.domain.Concepto;
 import com.kemal.spring.domain.Concesionario;
+import com.kemal.spring.domain.TipoPeriodicidad;
+import com.kemal.spring.domain.TipoPeriodicidadRepository;
+import com.kemal.spring.domain.TipoRetribucion;
+import com.kemal.spring.domain.TipoRetribucionRepository;
 import com.kemal.spring.domain.Vencimiento;
 import com.kemal.spring.domain.VencimientoRepository;
 import com.kemal.spring.web.dto.CalendarioDto;
@@ -18,6 +22,12 @@ import com.kemal.spring.web.dto.Util;
 public class VencimientoService {
 	@Autowired
     VencimientoRepository dao;
+	@Autowired
+	TipoPeriodicidadRepository daoTipoPeriodicidad;
+	@Autowired
+	TipoRetribucionRepository daoTipoRetribucion;
+	
+	
 	@Autowired
 	Util util;
 	@Transactional
@@ -37,9 +47,9 @@ public class VencimientoService {
     public List<CalendarioDto> findByConceptoOrderById(Concesionario contribuyente) {
 		return null;// util.fromLstToCalendarioDto(dao.findByContribuyenteOrderById(contribuyente));
 	}
-    public List<Vencimiento> findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(Concesionario  t,Integer idConcepto,String anio) {
-    	Concepto concepto=new Concepto(idConcepto);
-		return  dao.findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(t,concepto,anio,"1");
+    public List<Vencimiento> getVencimiento(Integer  idconcesion,Integer idtipoPeriodicidad,Integer idtipoRetribucion,Integer idConcepto,String anio) {
+		return  dao.getVencimiento
+				(idconcesion,idtipoPeriodicidad,idtipoRetribucion,idConcepto,anio,"1");
 	}
     public Vencimiento findById(Integer id) {
 		return dao.findById(id).get();// dao.findBysEstadoOrderById("1");

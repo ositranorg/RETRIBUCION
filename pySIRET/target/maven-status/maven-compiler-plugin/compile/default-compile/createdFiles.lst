@@ -109,6 +109,7 @@ com/kemal/spring/web/form/BuscarRetribucionForm.class
 com/kemal/spring/configuration/WebConfig.class
 com/kemal/spring/web/controllers/restApiControllers/dto/CreditoDTO.class
 com/kemal/spring/web/dto/AporteDescuentoModalDTO.class
+com/kemal/spring/web/dto/Evento.class
 com/kemal/spring/customAnnotations/EmailValidator.class
 com/kemal/spring/domain/UserRepository.class
 com/kemal/spring/web/controllers/restApiControllers/dto/VencimientoDTO.class

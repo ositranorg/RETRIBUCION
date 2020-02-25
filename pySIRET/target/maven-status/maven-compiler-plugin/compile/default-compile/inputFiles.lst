@@ -153,6 +153,7 @@
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/controllers/restApiControllers/CreditosRestController.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/dto/DataTableVWCreditoRegistrado.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/paging/InitialPagingSizes.java
+/home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/dto/Evento.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/service/ConcesionarioService.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/dto/AporteDeduccionModalDTO.java
 /home/oracle/git/RETRIBUCION/pySIRET/src/main/java/com/kemal/spring/web/dto/Config.java

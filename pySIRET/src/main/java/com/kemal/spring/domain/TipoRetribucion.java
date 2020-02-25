@@ -24,7 +24,9 @@ public class TipoRetribucion {
 	private String sDescripcion;
 	@Column(name = "SESTADO")
 	private String sEstado="1";
-	
+    public TipoRetribucion(Integer id) {
+    	this.id=id;
+    } 
 
 	
 }

@@ -28,7 +28,7 @@ import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.Vencimiento;
 import com.kemal.spring.service.VencimientoService;
-import com.kemal.spring.web.controllers.restApiControllers.dto.VencimientoDTO;
+import com.kemal.spring.web.controllers.restApiControllers.dto.VencimientoDto;
 import com.kemal.spring.web.dto.Util;
 
 @Controller(value = "calendario")
@@ -67,43 +67,14 @@ public class CalendarioController {
 	}
 	@Autowired
 	VencimientoService vencimientoService;
-	@ResponseBody
-	@PostMapping(value = "/calendario/pago/filtrar", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> pagofilrar(@RequestBody  List<VencimientoDTO> vencimientodto) {
-		HashMap<String, Object> a=getCalendarios(vencimientodto,4);
-		return new ResponseEntity<>(a, HttpStatus.OK);
-	}
+	
+	
 	@RequestMapping(value = { "/calendario/pago" }, method = RequestMethod.GET)
 	public String pago(Model model) {
 		User u = (User)session().getAttribute("oUsuario");
 		model.addAttribute("cn", u.getPerfil().getId()==2?u.getConcesionario().getId():-1);
 		model.addAttribute("anioActual",util.anioActual());
 		return "user/listaVencimientoPago";
-	}
-	@ResponseBody
-	@PostMapping(value = "/calendario/presentacion/filtrar", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> presentacionfilrar(@RequestBody  List<VencimientoDTO> vencimientodto) {
-		HashMap<String, Object> a=getCalendarios(vencimientodto,5);
-		return new ResponseEntity<>(a, HttpStatus.OK);
-	}
-	public 	HashMap<String, Object> getCalendarios(List<VencimientoDTO> v,Integer calendario) {
-		User u = (User)session().getAttribute("oUsuario");
-		HashMap<String, Object> a=new HashMap<String,Object>();
-		List<Vencimiento> list=new ArrayList<Vencimiento>();
-		List<VencimientoDTO> listdto=new ArrayList<VencimientoDTO>();
-		Concesionario concesionario=util.getConcesionario(u,v.get(0).getConcesionario());
-		try {
-			list=vencimientoService.findByConcesionarioAndConceptoAndSAnioPeriodoAndSEstado(
-					concesionario, 
-					calendario,
-					v.get(0).getSAnioPeriodo().equals("")?""+util.anioActual():v.get(0).getSAnioPeriodo());
-			list.stream().map(z->(new VencimientoDTO(z.getSMesPeriodo(),z.getSAnioPeriodo(),util.fomratDate(z.getDFechaVenc())))).forEachOrdered(listdto::add);
-			a.put("calendarioDet", listdto);
-		} catch (Exception e) {
-			a.put("calendarioDet", listdto);
-			e.printStackTrace();
-		}
-		return a;
 	}
 	@RequestMapping(value = { "/calendario/presentacion" }, method = RequestMethod.GET)
 	public String presentacion(Model model) {
@@ -112,6 +83,50 @@ public class CalendarioController {
 		model.addAttribute("anioActual",util.anioActual());
 		return "user/listaVencimientoPresentacion";
 	}
+	
+	
+	@ResponseBody
+	@PostMapping(value = "/calendario/pago/filtrar", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> pagofilrar(@RequestBody  List<VencimientoDto> vencimientodto) {
+		HashMap<String, Object> a=getCalendarios(vencimientodto,4);
+		return new ResponseEntity<>(a, HttpStatus.OK);
+	}
+	@ResponseBody
+	@PostMapping(value = "/calendario/presentacion/filtrar", consumes = "application/json",produces =  { "application/json" })
+	public ResponseEntity<?> presentacionfilrar(@RequestBody  List<VencimientoDto> vencimientodto) {
+		HashMap<String, Object> a=getCalendarios(vencimientodto,5);
+		return new ResponseEntity<>(a, HttpStatus.OK);
+	}
+	
+	public 	HashMap<String, Object> getCalendarios(List<VencimientoDto> v,Integer idconcepto) {
+		User u = (User)session().getAttribute("oUsuario");
+		HashMap<String, Object> a=new HashMap<String,Object>();
+		List<Vencimiento> list=new ArrayList<Vencimiento>();
+		List<VencimientoDto> listdto=new ArrayList<VencimientoDto>();
+		Integer idconcesionario=util.getConcesionario(u,v.get(0).getConcesionario());
+		try {
+			list=vencimientoService.getVencimiento(
+					idconcesionario, 
+					v.get(0).getItipoPeriodicidaddto(),
+					v.get(0).getItipoRetribuciondto(),
+					idconcepto,
+					v.get(0).getSAnioPeriodo().equals("")?""+util.anioActual():v.get(0).getSAnioPeriodo());
+			list.stream().map(z->(new VencimientoDto(
+					z.getTipoPeriodicidad().getOrden() ,
+					z.getTipoPeriodicidad().getSDescripcion(),
+					z.getTipoRetribucion().getSDescripcion(),
+					z.getSMesPeriodo(),z.getSAnioPeriodo(),
+					util.fomratDate(z.getDFechaVenc()
+					))))
+			.forEachOrdered(listdto::add);
+			a.put("calendarioDet", listdto);
+		} catch (Exception e) {
+			a.put("calendarioDet", listdto);
+			e.printStackTrace();
+		}
+		return a;
+	}
+	
 	@RequestMapping(value = "/getAnios", method = RequestMethod.GET)
 	public @ResponseBody
 	List<String> getTags(@RequestParam String tagName) {
