@@ -1,11 +1,9 @@
 package com.kemal.spring.web.controllers.viewControllers;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.Vencimiento;
 import com.kemal.spring.service.VencimientoService;
@@ -33,30 +29,7 @@ import com.kemal.spring.web.dto.Util;
 
 @Controller(value = "calendario")
 @Scope("session")
-public class CalendarioController {
-
-	private String saveDirectory = "T:/Upload/";
-
-	@RequestMapping(value = { "/calendario/uploadFile" }, method = RequestMethod.POST)
-	public String handleFileUpload(HttpServletRequest request, @RequestParam CommonsMultipartFile[] file)
-			throws Exception {
-
-		System.out.println("description: " + request.getParameter("description"));
-
-		if (file != null && file.length > 0) {
-			for (CommonsMultipartFile aFile : file) {
-
-				System.out.println("Saving file: " + aFile.getOriginalFilename());
-
-				if (!aFile.getOriginalFilename().equals("")) {
-					aFile.transferTo(new File(saveDirectory + aFile.getOriginalFilename()));
-				}
-			}
-		}
-
-		// returns to the view "Result"
-		return "/pages/contactus";
-	}
+public class CalendarioRestController {
 
 	@Autowired
 	Util util;
@@ -88,17 +61,17 @@ public class CalendarioController {
 	@ResponseBody
 	@PostMapping(value = "/calendario/pago/filtrar", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> pagofilrar(@RequestBody  List<VencimientoDto> vencimientodto) {
-		HashMap<String, Object> a=getCalendarios(vencimientodto,4);
+		HashMap<String, Object> a=getCalendarios(vencimientodto);
 		return new ResponseEntity<>(a, HttpStatus.OK);
 	}
 	@ResponseBody
 	@PostMapping(value = "/calendario/presentacion/filtrar", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> presentacionfilrar(@RequestBody  List<VencimientoDto> vencimientodto) {
-		HashMap<String, Object> a=getCalendarios(vencimientodto,5);
+		HashMap<String, Object> a=getCalendarios(vencimientodto);
 		return new ResponseEntity<>(a, HttpStatus.OK);
 	}
 	
-	public 	HashMap<String, Object> getCalendarios(List<VencimientoDto> v,Integer idconcepto) {
+	public 	HashMap<String, Object> getCalendarios(List<VencimientoDto> v) {
 		User u = (User)session().getAttribute("oUsuario");
 		HashMap<String, Object> a=new HashMap<String,Object>();
 		List<Vencimiento> list=new ArrayList<Vencimiento>();
@@ -109,7 +82,7 @@ public class CalendarioController {
 					idconcesionario, 
 					v.get(0).getItipoPeriodicidaddto(),
 					v.get(0).getItipoRetribuciondto(),
-					idconcepto,
+					v.get(0).getConcepto(),
 					v.get(0).getSAnioPeriodo().equals("")?""+util.anioActual():v.get(0).getSAnioPeriodo());
 			list.stream().map(z->(new VencimientoDto(
 					z.getTipoPeriodicidad().getOrden() ,

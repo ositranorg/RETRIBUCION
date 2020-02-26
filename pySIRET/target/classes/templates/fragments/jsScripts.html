@@ -46,30 +46,35 @@
         var context = [[@{/}]];
     /*]]>*/
     var IDLE_TIMEOUT = 30*60//media hora
-            var _idleSecondsCounter = 0;
+    var _idleSecondsCounter = 0;
 
-            document.onclick = function () {
-                _idleSecondsCounter = 0;
-            };
+    document.onclick = function () {
+        _idleSecondsCounter = 0;
+    };
 
-            document.onmousemove = function () {
-                _idleSecondsCounter = 0;
-            };
+    document.onmousemove = function () {
+        _idleSecondsCounter = 0;
+    };
 
-            document.onkeypress = function () {
-                _idleSecondsCounter = 0;
-            };
+    document.onkeypress = function () {
+        _idleSecondsCounter = 0;
+    };
 
-            window.setInterval(CheckIdleTime, 1000);
+    window.setInterval(CheckIdleTime, 1000);
 
-            function CheckIdleTime() {
-                _idleSecondsCounter++;
-                if (_idleSecondsCounter >= IDLE_TIMEOUT) {
-                	alert("Estimado Usuario su sesion ha terminado");
-            		$("#salir").click();
+    function CheckIdleTime() {
+        _idleSecondsCounter++;
+        if (_idleSecondsCounter >= IDLE_TIMEOUT) {
+        	alert("Estimado Usuario su sesion ha terminado");
+    		$("#salir").click();
 
-                }
-            }
+        }
+    }
+    function ordenarAsc(p_array_json, p_key) {
+   		p_array_json.sort(function (a, b) {
+      return a[p_key] > b[p_key];
+	   });
+	}
     function parseFloatHTMLField(f) {
 		return parseFloat(undefined != $("#" + f).html()
 				&& $("#" + f).html() != "" ? quitarCommas($("#" + f).html())

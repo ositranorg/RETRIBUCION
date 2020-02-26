@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface VencimientoRepository extends JpaRepository<Vencimiento, Integer> {
-
-
+	public List<Vencimiento> findBySAnioPeriodoAndConcepto(String sAnioPeriodo,Concepto concepto);
+	
 	public List<Vencimiento> findBysEstadoOrderById(String Estado);
 	@Query("select i from Vencimiento i "
 			+ " left join i.concesionario s "

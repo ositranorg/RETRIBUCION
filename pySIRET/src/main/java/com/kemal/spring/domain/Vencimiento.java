@@ -84,10 +84,9 @@ public class Vencimiento implements Serializable {
 	@JoinColumn(name = "ncodigotv")
 	private TipoVencimiento tipoVencimiento;
 
-	@Column(name = "SESPECIAL")
-	private String sEspecial = "0";
-	@Column(name = "SDIGITO_RUC", length = 1)
-	private String sDigitoRuc;
+	@Column(name = "SDIAHABIL")
+	private Integer sDiaHabil = 1;
+	
 	@Column(name = "SESTADO")
 	private String sEstado = "1";
 
@@ -96,5 +95,6 @@ public class Vencimiento implements Serializable {
 	@JoinColumn(name = "concesionario_id", nullable = false)
 	@JsonIgnore
 	private Concesionario concesionario; 
+	
 
 }
