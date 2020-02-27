@@ -16,8 +16,11 @@ public class VencimientoDto {
 private String sMesPeriodo;
 @JsonProperty("sAnioPeriodo")
 private String sAnioPeriodo;
-@JsonProperty("dFechaVenc")
-private String dFechaVenc;
+@JsonProperty("dFechaVencPago")
+private String dFechaVencPago;
+@JsonProperty("dFechaVencPres")
+private String dFechaVencPres;
+
 @JsonProperty("concesionario")
 private Integer concesionario;
 
@@ -34,16 +37,15 @@ private String tipoPeriodicidaddto;
 
 @JsonProperty("oderbytipoPeriodicidaddto")
 private Integer oderbytipoPeriodicidaddto;
-@JsonProperty("concepto")
-private Integer concepto;
 
-public VencimientoDto(Integer oderbytipoPeriodicidaddto,String tipoPeriodicidaddto,String tipoRetribuciondto,String sMesPeriodo,String sAnioPeriodo,String dFechaVenc) 
+public VencimientoDto(Integer oderbytipoPeriodicidaddto,String tipoPeriodicidaddto,String tipoRetribuciondto,String sMesPeriodo,String sAnioPeriodo,String dFechaVencPago,String dFechaVencPres) 
 {	
 	this.oderbytipoPeriodicidaddto=oderbytipoPeriodicidaddto;
 	this.tipoPeriodicidaddto=tipoPeriodicidaddto;
 	this.tipoRetribuciondto=tipoRetribuciondto;
 	this.sMesPeriodo=sMesPeriodo;
 	this.sAnioPeriodo=sAnioPeriodo;
-	this.dFechaVenc=dFechaVenc;
+	this.dFechaVencPago=dFechaVencPago;
+	this.dFechaVencPres=dFechaVencPres;
 }
 }

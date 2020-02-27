@@ -34,8 +34,8 @@ label {
 					</div>
 					<div class="user-info">
 						<span class="user-role">Bienvenido</span>
-    					<div sec:authorize="isAuthenticated()">
-     						  <span sec:authentication="principal.user.contribuyente.snombre"></span>
+    					<div >
+     						  <span th:text="${session.oUsuario.concesionario.snombre}"></span>
      					</div>
 						<span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span>
 						</span>
@@ -62,8 +62,8 @@ label {
 							</div>
 						</li>
 						 -->
-						<li class="sidebar-dropdown"><a href="#"> <i
-								class="fa fa-shopping-cart"></i> <span>MANTENIMIENTO </span>
+						<li class="sidebar-dropdown" th:if="${session.oUsuario.perfil.id==1}"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span>CONCESIONES </span>
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
@@ -74,8 +74,9 @@ label {
 											class="badge badge-pill badge-success">ver</span>
 									</a></li>
 								</ul>
-							</div></li>
-						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}">
+							</div>
+						</li>
+						<li class="sidebar-dropdown" th:if="${session.oUsuario.concesionario.id==1}"><a th:href="@{/condicionbc}">
 								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
 									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>
 						</a></li>

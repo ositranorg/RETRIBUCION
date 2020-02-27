@@ -37,14 +37,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     //region Find eagerly
     //==========================================================================
-    @Query("SELECT u FROM User u JOIN FETCH u.roles")
+    /*  @Query("SELECT u FROM User u JOIN FETCH u.roles")
     List<User> findAllEagerly();
 
-    @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.email = (:email)")
+   @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.email = (:email)")
     User findByEmailEagerly(@Param("email") String email);
 
     @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.id = (:id)")
-    User findByIdEagerly(@Param("id") Long id);
+    User findByIdEagerly(@Param("id") Long id);*/
     //==========================================================================
     //endregion
 

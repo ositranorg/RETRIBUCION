@@ -1,6 +1,8 @@
 package com.kemal.spring.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -26,6 +29,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "SRET_CONCESIONARIO")
 public class Concesionario {
@@ -64,4 +68,10 @@ public class Concesionario {
 		this.id=id;
 		
 	}
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "concesionario")  
+    private List<ConcesionarioTipoVencimiento> concesionarioTipoVencimiento = new ArrayList<>();
+
+	
+	
 }

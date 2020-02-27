@@ -87,12 +87,12 @@ public class User {
     
     private String sTelefono;
     
-    @JsonBackReference
+   /* @JsonBackReference
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();*/
 
    
   

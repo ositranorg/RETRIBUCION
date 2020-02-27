@@ -27,7 +27,6 @@ public class VencimientoService {
 	@Autowired
 	TipoRetribucionRepository daoTipoRetribucion;
 	
-	
 	@Autowired
 	Util util;
 	@Transactional
@@ -50,27 +49,20 @@ public class VencimientoService {
 	}
 	@Transactional
     public void deleteSAnioPeriodoAndConcepto(String sAnioPeriodo,Integer idconcepto){
-    	List<Vencimiento> s= dao.findBySAnioPeriodoAndConcepto(sAnioPeriodo,new Concepto(idconcepto));
+    	List<Vencimiento> s= dao.findBySAnioPeriodoAndSEstado(sAnioPeriodo, "1");
     	for (Vencimiento vencimiento : s) {
 			dao.deleteById(vencimiento.getId());
 		}
-    	
     }
-  
-    
-    public List<CalendarioDto> findByConceptoOrderById(Concesionario contribuyente) {
-		return null;// util.fromLstToCalendarioDto(dao.findByContribuyenteOrderById(contribuyente));
-	}
-    public List<Vencimiento> getVencimiento(Integer  idconcesion,Integer idtipoPeriodicidad,Integer idtipoRetribucion,Integer idConcepto,String anio) {
-    	System.out.println(idconcesion+"-"+idtipoPeriodicidad+"-"+idtipoRetribucion+"-"+idConcepto+"-"+anio+"1");
+    public List<Vencimiento> getVencimiento(Integer  idconcesion,Integer idtipoPeriodicidad,Integer idtipoRetribucion,String anio) {
 		return  dao.getVencimiento
-				(idconcesion,idtipoPeriodicidad,idtipoRetribucion,idConcepto,anio,"1");
+				(idconcesion,idtipoPeriodicidad,idtipoRetribucion,anio,"1");
 	}
     public Vencimiento findById(Integer id) {
 		return dao.findById(id).get();// dao.findBysEstadoOrderById("1");
 	}
     public List<Vencimiento> findBySAnioPeriodoAndConcepto(String  sAnioPeriodo,Integer idconcepto) {
-    	return dao.findBySAnioPeriodoAndConcepto(sAnioPeriodo,new Concepto(idconcepto));
+    	return dao.findBySAnioPeriodoAndSEstado(sAnioPeriodo,"1");
 	}
 	
 }

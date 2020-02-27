@@ -74,8 +74,8 @@
     	 var data={sAnioPeriodo:anio,
     			 concesionario:cn,
     			 itipoPeriodicidaddto:itipoPeriodicidaddto,
-    			 itipoRetribuciondto:itipoRetribuciondto,
-    			 concepto:4};
+    			 itipoRetribuciondto:itipoRetribuciondto
+    			 };
     	 vencimiento.push(data);
     	 $.ajax({
 				data : JSON.stringify(vencimiento),
@@ -92,7 +92,7 @@
 					
 					for(var i=0;i<lista.length;i++){
 						$("#containerMeses").append(
-							'<div class="col-sm-2">'+
+							'<div class="col-sm-3">'+
 		                          '<div class="card text-white bg-success m-1 ">'+
 											'<div class="card-header">'+
 												'<div class="row">'+
@@ -102,12 +102,12 @@
 											' <div class="card-body ">'+
 												
 													'<p style="text-align: left;">'+
-													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.fechapresentacion}]]:</label><br>'+
-													'<label style="font-size:18px;font-weight:bold;" >'+lista[i].dFechaVenc+'</label><br>'+
+													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.fechapago}]]:</label><br>'+
+													'<label style="font-size:18px;font-weight:bold;" >'+lista[i].dFechaVencPago+'</label><br>'+
 													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.tipoperiodicidad}]]:</label><br>'+
-													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoPeriodicidaddto+'</label>'+
+													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoPeriodicidaddto+'</label><br>'+
 													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.tiporetribucion}]]:</label><br>'+
-													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoRetribuciondto+'</label>'+
+													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoRetribuciondto+'</label><br>'+
 													'</p>'+
 											
 											'</div>'+
@@ -175,7 +175,7 @@
 			
 			
 			$('#fbanioRetribucion').autocomplete({
-				serviceUrl: context+'api/calendario/getAnios',
+				serviceUrl: context+'getAnios',
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {

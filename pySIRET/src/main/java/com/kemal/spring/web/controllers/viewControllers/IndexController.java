@@ -1,19 +1,10 @@
 package com.kemal.spring.web.controllers.viewControllers;
 
-import java.io.IOException;
-import java.security.spec.AlgorithmParameterSpec;
-
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
+import com.kemal.spring.domain.ConcesionarioTipoVencimiento;
 import com.kemal.spring.domain.User;
+import com.kemal.spring.service.ConcesionarioTipoVencimientoService;
 import com.kemal.spring.service.UsuarioService;
 import com.kemal.spring.web.dto.UserDto;
 import com.kemal.spring.web.dto.Util;
@@ -38,6 +31,8 @@ import com.kemal.spring.web.dto.Util;
 public class IndexController {
 	@Autowired
 	UsuarioService usuarioService;
+	@Autowired
+	ConcesionarioTipoVencimientoService concesionarioTipoVencimientoService;
 	@Autowired
 	Util util;
 	@GetMapping(value = { "/", "/index" })
@@ -93,6 +88,10 @@ public class IndexController {
 		if (respuesta) {
 			 HttpSession sesion = request.getSession(true);
              sesion.setAttribute("oUsuario", oUsuario);
+             ConcesionarioTipoVencimiento concesionarioTipoVencimiento =concesionarioTipoVencimientoService.findById(oUsuario.getConcesionario().getId(), 7);
+             if(null!=concesionarioTipoVencimiento) {
+            	 sesion.setAttribute("puedeVerBC", "1");
+             }
 			return "redirect:/home";
 		} else {
 			request.getSession().setAttribute("oUsuario", null);

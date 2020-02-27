@@ -28,9 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kemal.spring.domain.Archivo;
-import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.domain.User;
-import com.kemal.spring.domain.Vencimiento;
 
 
 @Component
@@ -38,26 +36,8 @@ public class Util {
 	@Autowired
 	Config config;
 	
-	public List<CalendarioDto> fromLstToCalendarioDto(List<?> lst) {
-		List<CalendarioDto> salida = new ArrayList<CalendarioDto>();
-		lst.stream().forEach(p -> {
-			if (p instanceof Vencimiento) {
-				Vencimiento f = (Vencimiento) p;
-				CalendarioDto to = new CalendarioDto(f.getId(), f.getSMesPeriodo(), f.getDFechaVenc());
-				salida.add(to);
-			} 
-
-		});
-
-		return salida;
-	}
+	
 	public  Integer getConcesionario(User u,int vVar) {
-		Concesionario concesionario=null;
-		if(u.getPerfil().getId()!=2) {
-			concesionario=new Concesionario(vVar);
-		}else {
-			concesionario=u.getConcesionario();
-		}
 		return u.getPerfil().getId()!=2?vVar:u.getConcesionario().getId();
 	}
 	public int anioActual() {

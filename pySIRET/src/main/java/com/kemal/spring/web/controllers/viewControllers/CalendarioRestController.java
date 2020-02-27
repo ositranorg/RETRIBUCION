@@ -82,15 +82,16 @@ public class CalendarioRestController {
 					idconcesionario, 
 					v.get(0).getItipoPeriodicidaddto(),
 					v.get(0).getItipoRetribuciondto(),
-					v.get(0).getConcepto(),
 					v.get(0).getSAnioPeriodo().equals("")?""+util.anioActual():v.get(0).getSAnioPeriodo());
 			list.stream().map(z->(new VencimientoDto(
 					z.getTipoPeriodicidad().getOrden() ,
 					z.getTipoPeriodicidad().getSDescripcion(),
 					z.getTipoRetribucion().getSDescripcion(),
-					z.getSMesPeriodo(),z.getSAnioPeriodo(),
-					util.fomratDate(z.getDFechaVenc()
-					))))
+					z.getSMesPeriodo(),
+					z.getSAnioPeriodo(),
+					util.fomratDate(z.getDFechaVencPago()),
+					util.fomratDate(z.getDFechaVencPres())
+					)))
 			.forEachOrdered(listdto::add);
 			a.put("calendarioDet", listdto);
 		} catch (Exception e) {
