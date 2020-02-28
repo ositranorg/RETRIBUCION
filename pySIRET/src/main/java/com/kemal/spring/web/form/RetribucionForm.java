@@ -71,4 +71,6 @@ public class RetribucionForm {
 	private Integer idliberacionhdd;
 	private Integer iddescuentohdd;
 	private BigDecimal porcentajehdd;
+	private Integer tipoDeclaracion;
+	
 }

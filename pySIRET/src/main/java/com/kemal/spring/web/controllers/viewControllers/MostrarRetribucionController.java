@@ -248,10 +248,7 @@ public class MostrarRetribucionController {
 				r.setFdesde(dfecReconocimientoDesde);
 			if (null != dfecReconocimientoHasta && !"".equals(dfecReconocimientoHasta))
 				r.setFhasta(dfecReconocimientoHasta);
-
-			r.setCodaportehdd(aporte.getId());
-
-
+			
 			PageRequest pageable = PageRequest.of((null == page ? 1 : page) - 1, 15);
 			Page<BaseCalculo> articlePage = baseCalculoService.findByNcodigoApAndSEstado(aporte.getId(), pageable);
 			int totalPages = articlePage.getTotalPages();
@@ -311,6 +308,7 @@ public class MostrarRetribucionController {
 			r.setRetribucionapagar(retPendientePagar);
 			r.setRetribucionresultante(retPendientePagar);
 			r.setCodaportehdd(aporte.getId());
+			r.setTipoDeclaracion(aporte.getTipoDeclaracion());
 			model.addAttribute("retribucionForm", r);
 			return "/user/retribucion";
 

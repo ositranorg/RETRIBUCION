@@ -80,4 +80,7 @@ public class Aporte {
 	@Column(name = "SUSUMODIFICA")
     private String sUsuModifica;
 	
+	private Integer tipoDeclaracion;
+	
+	
 }

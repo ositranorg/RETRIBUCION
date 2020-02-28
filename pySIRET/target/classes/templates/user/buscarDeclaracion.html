@@ -97,8 +97,8 @@
 										<input id="buenContribuyente" type="hidden" name="buenContribuyente" th:value="${buscarRetribucionForm.buenContribuyente}"></input> 
 
 
-										<label style="text-align: left;"> ES BUEN
-											CONTRIBUYENTE?</label> <label
+										<label style="text-align: left;" th:if="${session.puedeVerBC==1}"> ES BUEN
+											CONTRIBUYENTE?</label> <label  th:if="${session.puedeVerBC==1}"
 											class="form-control  border border-info">[[${buscarRetribucionForm.buenContribuyente}]]</label>
 									</div>
 								</div>
