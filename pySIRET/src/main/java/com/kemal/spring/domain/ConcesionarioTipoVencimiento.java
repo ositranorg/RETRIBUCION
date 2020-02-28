@@ -30,7 +30,7 @@ public class ConcesionarioTipoVencimiento {
 	private String sAnioPeriodo;
 
 	@ManyToOne
-	@JoinColumn(name = "idConcesionario", referencedColumnName = "NCODIGO", insertable = false, updatable = false)
+	@JoinColumn(name = "idConcesionario", referencedColumnName = "CNC_ID", insertable = false, updatable = false)
 	private Concesionario concesionario;
 
 	@ManyToOne

@@ -53,6 +53,7 @@ com/kemal/spring/domain/AporteDeduccionRepository.class
 com/kemal/spring/configuration/AppInitializer.class
 com/kemal/spring/web/dto/UserUpdateDto.class
 com/kemal/spring/service/ArchivoService.class
+com/kemal/spring/domain/ConcesionarioTipoVencimientoRepository.class
 com/kemal/spring/bd/view/VWNuevoCreditoRepository.class
 com/kemal/spring/domain/LiquidacionRepository.class
 com/kemal/spring/domain/TipoRetribucion.class
@@ -63,10 +64,12 @@ com/kemal/spring/service/BaseCalculoService.class
 com/kemal/spring/service/ModuloService.class
 com/kemal/spring/service/CondicionBCService.class
 com/kemal/spring/domain/DeduccionRepository.class
+com/kemal/spring/web/controllers/restApiControllers/TipoDeclaracionRestController.class
 com/kemal/spring/service/AporteTipoService.class
 com/kemal/spring/filter/Interceptor.class
 com/kemal/spring/web/form/RetribucionForm.class
 com/kemal/spring/web/controllers/restApiControllers/dto/ContribuyenteDto.class
+com/kemal/spring/service/ConcesionarioTipoVencimientoService.class
 com/kemal/spring/domain/AporteTipo.class
 com/kemal/spring/web/dto/DataTableVWNuevoCredito.class
 com/kemal/spring/service/MonedaService.class
@@ -103,6 +106,7 @@ com/kemal/spring/domain/nonentity/CambiarClaveRepository.class
 com/kemal/spring/web/form/LiberacionPagoForm.class
 com/kemal/spring/domain/Descuento.class
 com/kemal/spring/web/controllers/viewControllers/ContratoController.class
+com/kemal/spring/domain/procedures/Prc_TipoDeclaracion.class
 com/kemal/spring/domain/TipoDocumento.class
 com/kemal/spring/domain/EstadoRepository.class
 com/kemal/spring/domain/ArchivoRepository.class
@@ -117,6 +121,7 @@ com/kemal/spring/customAnnotations/EmailValidator.class
 com/kemal/spring/domain/UserRepository.class
 com/kemal/spring/domain/PagoSinAporte.class
 com/kemal/spring/service/LiquidacionService.class
+com/kemal/spring/domain/ConcesionarioTipoVencimiento.class
 com/kemal/spring/domain/Perfil.class
 com/kemal/spring/service/ConceptoService.class
 com/kemal/spring/domain/RepresentanteRepository.class
@@ -127,6 +132,7 @@ com/kemal/spring/domain/nonentity/CambiarClaveFiltro.class
 com/kemal/spring/web/paging/PageModel.class
 com/kemal/spring/domain/TipoVencimiento.class
 com/kemal/spring/web/controllers/restApiControllers/liquidacionRestController.class
+com/kemal/spring/web/controllers/restApiControllers/dto/TipoDeclaracionDto.class
 com/kemal/spring/web/controllers/restApiControllers/ContribuyenteRestController.class
 com/kemal/spring/web/dto/BaseCalculoConceptodto.class
 com/kemal/spring/web/dto/Uploads.class
@@ -147,12 +153,12 @@ com/kemal/spring/web/form/PagoForm.class
 com/kemal/spring/web/dto/CalendarioDto.class
 com/kemal/spring/web/controllers/viewControllers/CreditosController.class
 com/kemal/spring/web/controllers/restApiControllers/TipoDocumentoRestController.class
+com/kemal/spring/domain/ConcesionarioTipoVencimientoId.class
 com/kemal/spring/web/form/CondicionBCForm.class
 com/kemal/spring/domain/nonentity/Resultado.class
 com/kemal/spring/customAnnotations/PasswordMatchesValidator.class
 com/kemal/spring/web/controllers/restApiControllers/liquidacionRestController$2.class
 com/kemal/spring/domain/Aporte.class
-com/kemal/spring/domain/procedures/SampleCreditoDeLaDJSP.class
 com/kemal/spring/web/controllers/restApiControllers/dto/TipoDocumentoDto.class
 com/kemal/spring/domain/PagoSinAporteRepository.class
 com/kemal/spring/web/dto/Config.class

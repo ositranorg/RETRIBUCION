@@ -83,7 +83,8 @@ public class MostrarRetribucionController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
 	}
-
+	
+	
 	@GetMapping(value = "/mostrarBuscar")
 	public String mostrarBuscarDJ(@RequestParam(required = false, name = "tipoPeriodicidad") String tipoPeriodicidad,
 			@RequestParam(required = false, name = "mes") String periodicidad,

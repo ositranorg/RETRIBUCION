@@ -205,33 +205,34 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createTipoVencimiento("De acuerdo al cronograma establecido por la SUNAT para el cumplimiento de sus obligaciones tributarias.".toUpperCase());
 		
 		
-		createConcesionario("LIMA AIRPORT PARTNERS S.R.L.", "20501577252");
-		createConcesionario("AEROPUERTOS DEL PERÚ S.A.", "20514513172");
-		createConcesionario("FERROCARRILES TRANSANDINO S.A", "20432747833");
-		createConcesionario("FERROVIAS CENTRAL ANDINA S.A.", "20432347142");
-		createConcesionario("CONCESIONARIA VIAL DEL PERU S.A. ", "20511465061");
-		createConcesionario("NORVIAL S.A.", "20505377142");
-		createConcesionario("TERMINAL INTERNACIONAL DEL SUR S.A.", "20428500475");
-		createConcesionario("APM TERMINALS CALLAO S.A.", "20543083888");
-		createConcesionario("DP WORLD CALLAO S.R.L.", "20513462388");
-		createConcesionario("TERMINALES PORTUARIOS EUROANDINOS PAITA S.A. - TPE PAITA S.A.", "20522473571");
-		createConcesionario("TERMINAL PORTUARIO PARACAS S.A.", "20562916360");
-		createConcesionario("TRANSPORTADORA CALLAO S.A.", "20537577232");
-		createConcesionario("SALAVERRY TERMINAL INTERNACIONAL S.A.", "20603487321");
+		/*createConcesionario(1,"LIMA AIRPORT PARTNERS S.R.L.", "20501577252");
+		createConcesionario(2,"AEROPUERTOS DEL PERÚ S.A.", "20514513172");
+		createConcesionario(22,"FERROCARRILES TRANSANDINO S.A", "20432747833");
+		createConcesionario(21,"FERROVIAS CENTRAL ANDINA S.A.", "20432347142");
+		createConcesionario(14,"CONCESIONARIA VIAL DEL PERU S.A. ", "20511465061");
+		createConcesionario(5,"NORVIAL S.A.", "20505377142");
+		createConcesionario(25,"TERMINAL INTERNACIONAL DEL SUR S.A.", "20428500475");
+		createConcesionario(29,"APM TERMINALS CALLAO S.A.", "20543083888");
+		createConcesionario(26,"DP WORLD CALLAO S.R.L.", "20513462388");
+		createConcesionario(27,"TERMINALES PORTUARIOS EUROANDINOS PAITA S.A. - TPE PAITA S.A.", "20522473571");
+		createConcesionario(31,"TERMINAL PORTUARIO PARACAS S.A.", "20562916360");
+		createConcesionario(28,"TRANSPORTADORA CALLAO S.A.", "20537577232");
+		createConcesionario(35,"SALAVERRY TERMINAL INTERNACIONAL S.A.", "20603487321");
+		*/
 		int aniocalendario=2020;
 		createConcesionarioTipoVencimiento(1, 2, ""+aniocalendario);
 		createConcesionarioTipoVencimiento(2, 3, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(3, 4, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(4, 4, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(22, 4, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(21, 4, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(14, 5, ""+aniocalendario);
 		createConcesionarioTipoVencimiento(5, 5, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(6, 5, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(7, 6, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(8, 7, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(9, 7, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(10, 7, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(11, 7, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(12, 7, ""+aniocalendario);
-		createConcesionarioTipoVencimiento(13, 7, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(25, 6, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(29, 7, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(26, 7, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(27, 7, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(31, 7, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(28, 7, ""+aniocalendario);
+		createConcesionarioTipoVencimiento(35, 7, ""+aniocalendario);
 		
 		
 		createModulo("PAGO");
@@ -265,33 +266,33 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 		createUserIfNotFound("adp"  + "@gmail.com", "User" , "User", "adp" , "admin", userRoles,2,2);
 				
-		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "admin", userRoles,7,2);
-		createUserIfNotFound("cferro"  + "@gmail.com", "apmter" , "cferro", "cferro" , "admin", userRoles,3,2);
-		createUserIfNotFound("trasan"  + "@gmail.com", "trasan" , "trasan", "trasan" , "admin", userRoles,4,2);
+		createUserIfNotFound("tisur"  + "@gmail.com", "apmter" , "tisur", "tisur" , "admin", userRoles,25,2);
+		createUserIfNotFound("cferro"  + "@gmail.com", "apmter" , "cferro", "cferro" , "admin", userRoles,22,2);
+		createUserIfNotFound("trasan"  + "@gmail.com", "trasan" , "trasan", "trasan" , "admin", userRoles,21,2);
 	
 
 		
 		
 		createAportePorcentaje(1,1, new BigDecimal("0.46511"));//lap
 		createAportePorcentaje(2,1, new BigDecimal("0.15"));//adp
-		createAportePorcentaje(3,1, new BigDecimal("0.3725"));//ferrocarriles trasandino
-		createAportePorcentaje(3,3, new BigDecimal("0.5"));//ferrocarriles trasandino
-		createAportePorcentaje(4,1, new BigDecimal("0.2475"));//ferrovias central andina
-		createAportePorcentaje(4,3, new BigDecimal("0.5"));//ferrovias central andina
-		createAportePorcentaje(5,1, new BigDecimal("0.1861"));//CONCESIONARIA VIAL DEL PERU S.A.
-		createAportePorcentaje(6,1, new BigDecimal("0.055"));//norvial
+		createAportePorcentaje(22,1, new BigDecimal("0.3725"));//ferrocarriles trasandino
+		createAportePorcentaje(22,3, new BigDecimal("0.5"));//ferrocarriles trasandino
+		createAportePorcentaje(21,1, new BigDecimal("0.2475"));//ferrovias central andina
+		createAportePorcentaje(21,3, new BigDecimal("0.5"));//ferrovias central andina
+		createAportePorcentaje(14,1, new BigDecimal("0.1861"));//CONCESIONARIA VIAL DEL PERU S.A.
+		createAportePorcentaje(5,1, new BigDecimal("0.055"));//norvial
 		
-		createAportePorcentaje(7,1,new BigDecimal("0.5"));//tisur-retribucion(canon)
-		createAportePorcentaje(7,3, new BigDecimal("0.985"));//tisur-especial
+		createAportePorcentaje(25,1,new BigDecimal("0.5"));//tisur-retribucion(canon)
+		createAportePorcentaje(25,3, new BigDecimal("0.985"));//tisur-especial
 		
-		createAportePorcentaje(8,1, new BigDecimal("0.03"));//apm terminals
-		createAportePorcentaje(9,1, new BigDecimal("0.03"));//dpworl
-		createAportePorcentaje(10,1, new BigDecimal("0.02"));//euroandinos
-		createAportePorcentaje(11,1, new BigDecimal("0.03"));//paracas
-		createAportePorcentaje(12,1, new BigDecimal("0.02"));//transportadora
+		createAportePorcentaje(29,1, new BigDecimal("0.03"));//apm terminals
+		createAportePorcentaje(26,1, new BigDecimal("0.03"));//dpworl
+		createAportePorcentaje(27,1, new BigDecimal("0.02"));//euroandinos
+		createAportePorcentaje(31,1, new BigDecimal("0.03"));//paracas
+		createAportePorcentaje(28,1, new BigDecimal("0.02"));//transportadora
 		
-		createAportePorcentaje(13,1, new BigDecimal("0.03"));//sALAVERRY
-		createAportePorcentaje(13,4, new BigDecimal("0.0006"));//sALAVERRY
+		createAportePorcentaje(35,1, new BigDecimal("0.03"));//sALAVERRY
+		createAportePorcentaje(35,4, new BigDecimal("0.0006"));//sALAVERRY
 		
 		
 		
@@ -389,21 +390,47 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 //				
 
 		createVencimiento(  "01",  ""+aniocalendario,
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,3,1);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,22,1);
 		createVencimiento(  "02",  ""+(aniocalendario),
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,3,1);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,22,1);
 		
 		createVencimiento(  "01",  ""+aniocalendario,
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,4,1);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,21,1);
 		createVencimiento(  "02",  ""+(aniocalendario),
-				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,4,1);
+				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,21,1);
 
 		createVencimiento(  "01",  ""+aniocalendario,
-				obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 4,2,4,3,1);				
+				obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 4,2,4,22,1);				
 		createVencimiento(  "01",  ""+aniocalendario,
-				obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 4,2,4,4,1);				
+				obtenerCalendarioPrincipal(aniocalendario, Calendar.DECEMBER, 20).getTime(), 4,2,4,21,1);				
 				
 		
+		
+		createVencimiento(  "01",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "02",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "03",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "04",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "05",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "06",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "07",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "08",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "09",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "10",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 7).getTime(), 1,1,4,14,1);
+		createVencimiento( "11",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 7).getTime(), 1,1,4,14,1);
+		createVencimiento(  "12",  ""+aniocalendario,
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 7).getTime(), 1,1,4,14,1);
+
 		
 		createVencimiento(  "01",  ""+aniocalendario,
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7).getTime(), 1,1,4,5,1);
@@ -429,57 +456,31 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 7).getTime(), 1,1,4,5,1);
 		createVencimiento(  "12",  ""+aniocalendario,
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 7).getTime(), 1,1,4,5,1);
-
 		
 		createVencimiento(  "01",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 7).getTime(), 1,1,4,6,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 5).getTime(), 1,1,4,25,1);
 		createVencimiento(  "02",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "03",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "04",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "05",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "06",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "07",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "08",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "09",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "10",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 7).getTime(), 1,1,4,6,1);
-		createVencimiento( "11",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 7).getTime(), 1,1,4,6,1);
-		createVencimiento(  "12",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 7).getTime(), 1,1,4,6,1);
-		
-		createVencimiento(  "01",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JANUARY, 5).getTime(), 1,1,4,7,1);
-		createVencimiento(  "02",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.FEBRUARY, 5).getTime(), 1,1,4,25,1);
 		createVencimiento( "03",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MARCH, 5).getTime(), 1,1,4,25,1);
 		createVencimiento(  "04",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.APRIL, 5).getTime(), 1,1,4,25,1);
 		createVencimiento( "05",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.MAY, 5).getTime(), 1,1,4,25,1);
 		createVencimiento( "06",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE, 5).getTime(), 1,1,4,25,1);
 		createVencimiento( "07",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.JULY, 5).getTime(), 1,1,4,25,1);
 		createVencimiento(  "08",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.AUGUST, 5).getTime(), 1,1,4,25,1);
 		createVencimiento(  "09",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER, 5).getTime(), 1,1,4,25,1);
 		createVencimiento(  "10",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.OCTOBER, 5).getTime(), 1,1,4,25,1);
 		createVencimiento( "11",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.NOVEMBER, 5).getTime(), 1,1,4,25,1);
 		createVencimiento(  "12",  ""+aniocalendario,
-				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 5).getTime(), 1,1,4,7,1);
+				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 5).getTime(), 1,1,4,25,1);
 		
 		
 		
@@ -571,10 +572,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	
 	
 	@Transactional
-	void createConcesionario(final String name, final String ruc) {
+	void createConcesionario(final Integer id,final String name, final String ruc) {
 		Concesionario concesionario = new Concesionario();
 		concesionario.setSnombre(name);
 		concesionario.setSruc(ruc);
+		concesionario.setId(id);
 		concesionarioService.save(concesionario);
 
 	}
