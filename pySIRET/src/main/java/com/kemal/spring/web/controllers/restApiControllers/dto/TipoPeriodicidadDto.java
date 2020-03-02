@@ -1,10 +1,17 @@
 package com.kemal.spring.web.controllers.restApiControllers.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@CustomJsonRootName(plural = "lsttipoPeriodicidad", singular = "tipoPeriodicidad")
 public class TipoPeriodicidadDto {
-	@JsonProperty("codigoTipoPeridicidadDTO")
-	private String codigoTipoPeridicidadDTO;
-	@JsonProperty("sDescripcion")
+	private Integer id;
 	private String sDescripcion;
 }

@@ -84,7 +84,7 @@
 				url : context+'calendario/pago/filtrar'
 				}).done((res) => {
 					
-					var lista=res.calendarioDet;
+					var lista=res.HashMap.calendarioDet;
 					ordenarAsc(lista, 'oderbytipoPeriodicidaddto');
 					console.log(lista);
 					$("#containerMeses").html("");

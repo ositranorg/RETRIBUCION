@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-
+@CustomJsonRootName(plural = "lstVencimiento", singular = "vencimiento")
 public class VencimientoDto {
 
 @JsonProperty("sMesPeriodo")

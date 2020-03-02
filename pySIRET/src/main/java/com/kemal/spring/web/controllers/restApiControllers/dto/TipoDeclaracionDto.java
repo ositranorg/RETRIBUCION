@@ -1,7 +1,5 @@
 package com.kemal.spring.web.controllers.restApiControllers.dto;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +17,4 @@ public class TipoDeclaracionDto {
 	private String mes;
 	@JsonProperty("anio")
 	private String anio;
-	
-	
 }

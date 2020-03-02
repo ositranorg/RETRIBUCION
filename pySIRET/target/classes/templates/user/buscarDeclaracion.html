@@ -96,8 +96,7 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<label style="text-align: left;"> PORCENTAJE A
-											APLICAR( %)</label> 
+										<label style="text-align: left;"> PORCENTAJE A APLICAR( %)</label> 
 											<input id="porcentajehdd" type="hidden" name="porcentajehdd" value=""></input> 
 											<input id="lstAportePorcentajesize" type="hidden"></input> 
 											<label id="lblporcentaje" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">
@@ -249,13 +248,20 @@
 			$.getJSON(context+"api/mostrarDJ/cargarDatos",				
 				function(rest){
 				console.log(rest);
-					$("#cal").html("");
-					loadDropdown("cal",rest.lstTipoPeriodicidad);
+					
+					loadDropdown("cal",rest.mostrarDto.lst_tipo_periodicidad);
+					loadDropdown("tipoRetribucion",rest.mostrarDto.lst_tipo_retribucion);
+					loadDropdown("sAnio",rest.mostrarDto.lst_anios);
+					loadDropdown("monedaRetribucion",rest.mostrarDto.lst_moneda_retribucion);
+					
+					LstAportePorcentaje
+					
+					
 			});
 			
 			
 			
-			buscarPeriodo("mes","periodostributrios","cal",$("#tpperiodicidadhdd").val());
+ 			buscarPeriodo("mes","periodostributrios","cal",1);
 			
 			$("#tipoRetribucion").change(function(){
 				if($("#lstAportePorcentajesize").val()==undefined||$("#lstAportePorcentajesize").val()==""?0:parseInt($("#lstAportePorcentajesize").val())>1){
