@@ -87,7 +87,7 @@ public class MostrarDJRestController {
 		m.setLstMonedaRetribucion(monedaService.findAll());
 		m.setLstAportePorcentaje(aportePorcentajeService.findAll(u.getConcesionario().getId()));
 		m.setCondicionBC( condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId()));
-		 objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+		 objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true); 
 
 		return objectMapper;
 	}
