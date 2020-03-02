@@ -129,7 +129,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
-		
+		/*
 
 		createEstado(0,"ELIMINADO");
 		createEstado(1,"REGISTRADO");
@@ -204,7 +204,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createTipoVencimiento("Quinto día útil del mes siguiente.".toUpperCase());
 		createTipoVencimiento("De acuerdo al cronograma establecido por la SUNAT para el cumplimiento de sus obligaciones tributarias.".toUpperCase());
 		
-		
+		*/
 		/*createConcesionario(1,"LIMA AIRPORT PARTNERS S.R.L.", "20501577252");
 		createConcesionario(2,"AEROPUERTOS DEL PERÚ S.A.", "20514513172");
 		createConcesionario(22,"FERROCARRILES TRANSANDINO S.A", "20432747833");
@@ -219,6 +219,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createConcesionario(28,"TRANSPORTADORA CALLAO S.A.", "20537577232");
 		createConcesionario(35,"SALAVERRY TERMINAL INTERNACIONAL S.A.", "20603487321");
 		*/
+		
+		/*
 		int aniocalendario=2020;
 		createConcesionarioTipoVencimiento(1, 2, ""+aniocalendario);
 		createConcesionarioTipoVencimiento(2, 3, ""+aniocalendario);
@@ -337,7 +339,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createVencimiento("02",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 2,1,4,2,1);
 		createVencimiento("03",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.SEPTEMBER).getTime(), 2,1,4,2,1);
 		createVencimiento("04",  ""+aniocalendario, obtenerUltimoDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 2,1,4,2,1);
-		
+		*/
 //	    createVencimiento(  "01",  ""+aniocalendario,
 //				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JANUARY).getTime(), 1,1,4,3,3,0);
 //		createVencimiento(  "02",  ""+aniocalendario,
@@ -388,7 +390,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 //		createVencimiento(  "12",  ""+aniocalendario,
 //				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4,0);
 //				
-
+/*
 		createVencimiento(  "01",  ""+aniocalendario,
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,22,1);
 		createVencimiento(  "02",  ""+(aniocalendario),
@@ -483,7 +485,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 5).getTime(), 1,1,4,25,1);
 		
 		
-		
+		*/
 		
 		alreadySetup = true;
 	}

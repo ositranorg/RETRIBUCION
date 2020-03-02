@@ -21,19 +21,17 @@
 
 					</div>
 					<div class="col-12">
-						<form id="frmMostrarRetribucion" th:action="@{/retribucion}">
-						<input id="tpperiodicidadhdd" type="hidden" th:value="${buscarRetribucionForm.tipoPeriodicidad}"></input>
+						<form id="frmMostrarRetribucion" >
+						<input id="tpperiodicidadhdd" type="hidden" ></input>
 							<div class="col-12">
 								<div class="row">
 
 									<div class="col-6">
 										<label> TIPO DE PERIODICIDAD </label><span style="color: red">(*)</span>
-										<select th:field="${buscarRetribucionForm.tipoPeriodicidad}"
+										<select 
 											id="cal" class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="cal : ${lsttipoPeriodicidad}"
-												th:value="${cal.id}" th:text="${cal.sDescripcion}"
-												th:selected="${buscarRetribucionForm.tipoPeriodicidad==cal.id}"></option>
+											
 
 										</select>
 									</div>
@@ -41,12 +39,10 @@
 									<div class="col-6">
 										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
 											style="color: red">(*)</span> <select
-											th:field="${buscarRetribucionForm.tipoRetribucion}"
+										
 											id="tipoRetribucion" class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="tp : ${lsttipoRetribucion}"
-												th:value="${tp.id}" th:text="${tp.sDescripcion}"
-												th:selected="${buscarRetribucionForm.tipoRetribucion==tp.id}"></option>
+											
 										</select>
 									</div>
 								</div>
@@ -62,13 +58,11 @@
 
 										<label style="text-align: left;"> AÑO</label><span
 											style="color: red">(*)</span> <select
-											th:field="${buscarRetribucionForm.anioRetribucion}"
+											
 											id="sAnio"
 											class="form-control form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="anioi : ${anios}" th:value="${anioi}"
-												th:text="${anioi}"
-												th:selected="${buscarRetribucionForm.anioRetribucion==anioi}"></option>
+											
 
 										</select>
 									</div>
@@ -80,13 +74,11 @@
 
 									<div class="col-6">
 										<label> MONEDA </label><span style="color: red">(*)</span> <select
-											th:field="${buscarRetribucionForm.monedaRetribucion}"
+											
 											id="monedaRetribucion"
 											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="tp : ${lstMonedaRetribucion}"
-												th:value="${tp.id}" th:text="${tp.sDescripcion}"
-												th:selected="${buscarRetribucionForm.monedaRetribucion==tp.id}"></option>
+											
 										</select> <label id="errcal" class="col-sm-12 control-label"></label>
 									</div>
 
@@ -94,12 +86,12 @@
 
 
 
-										<input id="buenContribuyente" type="hidden" name="buenContribuyente" th:value="${buscarRetribucionForm.buenContribuyente}"></input> 
+										<input id="buenContribuyente" type="hidden" name="buenContribuyente" ></input> 
 
 
-										<label style="text-align: left;" th:if="${session.puedeVerBC==1}"> ES BUEN
-											CONTRIBUYENTE?</label> <label  th:if="${session.puedeVerBC==1}"
-											class="form-control  border border-info">[[${buscarRetribucionForm.buenContribuyente}]]</label>
+										<label style="text-align: left;" > ES BUEN
+											CONTRIBUYENTE?</label> <label  
+											class="form-control  border border-info"></label>
 									</div>
 								</div>
 								<div class="row">
@@ -107,9 +99,9 @@
 										<label style="text-align: left;"> PORCENTAJE A
 											APLICAR( %)</label> 
 											<input id="porcentajehdd" type="hidden" name="porcentajehdd" value=""></input> 
-											<input id="lstAportePorcentajesize" type="hidden" th:value="${lstAportePorcentajesize}"></input> 
+											<input id="lstAportePorcentajesize" type="hidden"></input> 
 											<label id="lblporcentaje" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">
-											[[${null!=lstAportePorcentaje and lstAportePorcentaje.size()==1?lstAportePorcentaje.get(0).porcentaje:''}]]</label>
+											</label>
 
 									</div>
 									<div class="col"></div>
@@ -119,8 +111,8 @@
 										<label for="fdesde" style="text-align: left;"> DESDE</label> <input
 											id="fdesde" type="text" data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
-											autocomplete="off" th:field="${buscarRetribucionForm.fdesde}"
-											th:value="${buscarRetribucionForm.fdesde}">
+											autocomplete="off"
+											>
 									</div>
 									<div class="col">
 
@@ -128,8 +120,8 @@
 											name="fhasta" id="fhasta" type="text"
 											data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
-											autocomplete="off" th:field="${buscarRetribucionForm.fhasta}"
-											th:value="${buscarRetribucionForm.fhasta}">
+											autocomplete="off"
+											>
 									</div>
 
 								</div>
@@ -141,15 +133,15 @@
 									<button type="submit" class="btn btn-info" id="btnBuscarDJ">Entrar</button>
 								</div>
 								<span style="color: red">(*)campos obligatorios</span>
-								<div id="errorMessage" th:if="${errorMessage}"
-									th:text="${errorMessage}" class="alert alert-danger"
+								<div id="errorMessage" 
+									 class="alert alert-danger"
 									role="alert"></div>
 
 							</div>
 							<input type="hidden" id="tipoPeriodicidadhdd"
-								th:value="${buscarRetribucionForm.tipoPeriodicidad}" /> <input
+								 /> <input
 								type="hidden" id="meshdd"
-								th:value="${buscarRetribucionForm.mes}" />
+								 />
 						</form>
 
 
@@ -246,7 +238,22 @@
 
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 	<script type="text/javascript">
+		function loadDropdown(id,lista){
+			var dropdown=$("#"+id);
+			$.each(lista, function (key, entry) {							 
+			    dropdown.append($('<option></option>').attr('value', entry.id).text(entry.sdescripcion));
+		})
+		}
 		$(function() {
+			
+			$.getJSON(context+"api/mostrarDJ/cargarDatos",				
+				function(rest){
+				console.log(rest);
+					$("#cal").html("");
+					loadDropdown("cal",rest.lstTipoPeriodicidad);
+			});
+			
+			
 			
 			buscarPeriodo("mes","periodostributrios","cal",$("#tpperiodicidadhdd").val());
 			

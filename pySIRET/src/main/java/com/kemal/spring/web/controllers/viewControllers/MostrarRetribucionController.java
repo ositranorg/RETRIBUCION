@@ -84,7 +84,12 @@ public class MostrarRetribucionController {
 		return attr.getRequest().getSession(); // true == allow create
 	}
 	
-	
+	@GetMapping(value = "/mostrarBuscar")
+	public String mostrarBuscarDJ() {
+		
+		return "/user/buscarDeclaracion";
+	}
+			/*
 	@GetMapping(value = "/mostrarBuscar")
 	public String mostrarBuscarDJ(@RequestParam(required = false, name = "tipoPeriodicidad") String tipoPeriodicidad,
 			@RequestParam(required = false, name = "mes") String periodicidad,
@@ -173,7 +178,7 @@ public class MostrarRetribucionController {
 		model.addAttribute("errorMessage", null == msg ? "" : msg);
 		return "/user/buscarDeclaracion";
 	}
-
+*/
 	@GetMapping(value = "/retribucion")
 	public String retribucion(@RequestParam(required = false, name = "tipoPeriodicidad") String tipoPeriodicidad,
 			@RequestParam(required = false, name = "mes") String periodicidad,
