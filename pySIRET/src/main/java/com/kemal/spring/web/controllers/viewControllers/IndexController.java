@@ -91,6 +91,8 @@ public class IndexController {
              ConcesionarioTipoVencimiento concesionarioTipoVencimiento =concesionarioTipoVencimientoService.findById(oUsuario.getConcesionario().getId(), 7);
              if(null!=concesionarioTipoVencimiento) {
             	 sesion.setAttribute("puedeVerBC", "1");
+             }else {
+            	 sesion.setAttribute("puedeVerBC", "0");
              }
 			return "redirect:/home";
 		} else {

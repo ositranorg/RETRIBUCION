@@ -22,7 +22,11 @@
 					</div>
 					<div class="col-12">
 						<form id="frmMostrarRetribucion" >
+						<input  id="puedeVerBC" type="hidden" th:value="${session.puedeVerBC}"/>
 						<input id="tpperiodicidadhdd" type="hidden" ></input>
+						<input id="nporcentajehdd" type="hidden" ></input>
+						
+						
 							<div class="col-12">
 								<div class="row">
 
@@ -37,6 +41,7 @@
 									</div>
 
 									<div class="col-6">
+									<input  id="nporcentajehdd"  type="hidden" value=""/>
 										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
 											style="color: red">(*)</span> <select
 										
@@ -48,8 +53,8 @@
 								</div>
 								<div class="row">
 									<div class="col-6">
-										<label style="text-align: left;"> PERÍODO</label><span
-											style="color: red">(*)</span>
+										<label style="text-align: left;"> PERÍODO</label>
+										<span style="color: red">(*)</span>
 										<div id="periodostributrios"></div>
 
 
@@ -57,7 +62,8 @@
 									<div class="col-6">
 
 										<label style="text-align: left;"> AÑO</label><span
-											style="color: red">(*)</span> <select
+											style="color: red">(*)</span> 
+										<select
 											
 											id="sAnio"
 											class="form-control form-control border border-info">
@@ -83,31 +89,32 @@
 									</div>
 
 									<div class="col-6">
-
-
-
-										<input id="buenContribuyente" type="hidden" name="buenContribuyente" ></input> 
-
-
-										<label style="text-align: left;" > ES BUEN
-											CONTRIBUYENTE?</label> <label  
-											class="form-control  border border-info"></label>
+										<input  id="puedeVerBC"  type="hidden" th:value="${session.puedeVerBC}"/>
+										<label style="text-align: left;" th:if="${session.puedeVerBC==1}"> ES BUEN CONTRIBUYENTE?</label>
+									  <div  class="col" th:if="${session.puedeVerBC==1}">
+											<span style="color: red">(*)</span>
+												<div id="buenContribuyente">										
+													
+												</div>
+										
+									  </div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col">
-										<label style="text-align: left;"> PORCENTAJE A APLICAR( %)</label> 
-											<input id="porcentajehdd" type="hidden" name="porcentajehdd" value=""></input> 
-											<input id="lstAportePorcentajesize" type="hidden"></input> 
-											<label id="lblporcentaje" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">
-											</label>
-
+										<label style="text-align: left;"> PORCENTAJE A APLICAR( %)</label> 	
+											<span style="color: red">(*)</span>
+										<div id="idlblporcentaje">										
+		
+										</div>
+										
 									</div>
 									<div class="col"></div>
 								</div>
 								<div class="row">
 									<div class="col">
-										<label for="fdesde" style="text-align: left;"> DESDE</label> <input
+										<label for="fdesde" style="text-align: left;"> DESDE</label> 
+										<input
 											id="fdesde" type="text" data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
 											autocomplete="off"
@@ -241,21 +248,53 @@
 			var dropdown=$("#"+id);
 			$.each(lista, function (key, entry) {							 
 			    dropdown.append($('<option></option>').attr('value', entry.id).text(entry.sdescripcion));
-		})
+			})
+		}
+		function loadPorcentaje(id,lista){
+			var result=[];
+			$.each(lista, function (key, entry) {							 
+			    result.push(entry.sdescripcion);
+			});
+			$("#nporcentajehdd").val(result.length)
+			if(result.length>1){
+				var html=
+							'<select id="cboPorcentaje"'+
+							'class="form-control border border-info">'+
+							'<option value="">--SELECCIONE--</option>'+
+							'</select> ';
+				$("#"+id).append(html);
+				loadDropdown("cboPorcentaje",lista);						 
+			}else{
+				var html='<label id="porcentajehdd" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">'+
+				result[0]+'</label>';
+				$("#"+id).append(html);
+			}
+		}
+		function loadBC(id,v){
+			if($("#puedeVerBC").val()==1){
+				var html='<label >'+v+'</label> ';
+				$("#"+id).append(html);
+			}else{
+				$("#"+id).html("");
+			}
+			
 		}
 		$(function() {
 			
 			$.getJSON(context+"api/mostrarDJ/cargarDatos",				
 				function(rest){
 				console.log(rest);
-					
+				
+				var vacio='<select  class="form-control border border-info">'
+							+ '<option value="">--SELECCIONE--</option>'
+                            + '</select>';
+				$('#periodostributrios').html(vacio);
 					loadDropdown("cal",rest.mostrarDto.lst_tipo_periodicidad);
 					loadDropdown("tipoRetribucion",rest.mostrarDto.lst_tipo_retribucion);
 					loadDropdown("sAnio",rest.mostrarDto.lst_anios);
 					loadDropdown("monedaRetribucion",rest.mostrarDto.lst_moneda_retribucion);
-					
-					LstAportePorcentaje
-					
+					loadPorcentaje("idlblporcentaje",rest.mostrarDto.lst_aporte_porcentaje);
+					loadBC("buenContribuyente",rest.mostrarDto.condicion_bc.sbuencontribuyente);
 					
 			});
 			
@@ -264,27 +303,12 @@
  			buscarPeriodo("mes","periodostributrios","cal",1);
 			
 			$("#tipoRetribucion").change(function(){
-				if($("#lstAportePorcentajesize").val()==undefined||$("#lstAportePorcentajesize").val()==""?0:parseInt($("#lstAportePorcentajesize").val())>1){
-					$.ajax({
-						type : "GET",
-						contenttype : "application/json",
-						url : context+"retribucion/getPorcentaje",
-						data : { tipoRetribucion:$("#tipoRetribucion").val()},
-						dataType : "json",
-						success : function(result) {
-								$("#lblporcentaje").html(result);
-								$("#porcentajehdd").val(result);	
-						},
-						error : function(result) {
-							console.log("error");
-							$("#lblporcentaje").html("");
-							$("#porcentajehdd").val("");	
-						}
-
+				if($("#nporcentajehdd").val()==undefined||$("#nporcentajehdd").val()==""?0:parseInt($("#nporcentajehdd").val())>1){
+					var data = { tipoRetribucion:$("#tipoRetribucion").val()};
+					$.getJSON(context+"api/mostrarDJ/getPorcentaje",data,function(rest){
+						console.log(rest);
+						$("#porcentajehdd option[text=" + rest +"]").prop("selected", true);
 					});
-				}else{
-					
-					$("#porcentajehdd").val($("#lblporcentaje").html().trim());	
 				}
 			});
 			

@@ -16,10 +16,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @JsonRootName("aportePorcentajeDto")
 public class AportePorcentajeDto {
-	
 private Integer id;
-	
-private BigDecimal porcentaje;
-
-
+private BigDecimal sdescripcion;
 }

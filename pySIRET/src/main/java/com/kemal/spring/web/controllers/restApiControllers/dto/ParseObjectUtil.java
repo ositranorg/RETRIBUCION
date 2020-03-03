@@ -70,7 +70,7 @@ public class ParseObjectUtil {
 				CondicionBCDTO d=new CondicionBCDTO(x.getId(),x.getSBuenContribuyente());
 				return d;	
 			}else {
-				return null;
+				return new CondicionBCDTO(-1,"");
 			}
 			
 	}

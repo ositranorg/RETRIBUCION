@@ -12,10 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.kemal.spring.domain.AportePorcentaje;
+import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.service.AporteDeduccionService;
 import com.kemal.spring.service.AporteDescuentoService;
@@ -99,8 +103,30 @@ public class MostrarDJRestController {
 		m.setLstTipoRetribucion( (List<TipoRetribucionDto>)parseObjectUtil.parseList( tipoRetribucionService.findAll()));
 		m.setLstMonedaRetribucion((List<MonedaDto>)parseObjectUtil.parseList( monedaService.findAll()));
 		m.setLstAportePorcentaje((List<AportePorcentajeDto>)parseObjectUtil.parseList(aportePorcentajeService.findAll(u.getConcesionario().getId())));
-		m.setCondicionBC( parseObjectUtil.parseObject(condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId())));
+		CondicionBC		x=condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId());
+		
+				
+		m.setCondicionBC( parseObjectUtil.parseObject(x));
 		return new ResponseEntity<>(m, HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping("/getPorcentaje")
+	public String getPorcentaje(@RequestParam(required = false, name = "tipoRetribucion") int tipoRetribucion) {
+		AportePorcentaje c = null;
+		try {
+			User u = (User)session().getAttribute("oUsuario");
+			c = aportePorcentajeService.findByContribuyenteAndTipoRetribucionAndSEstado(u.getConcesionario().getId(),
+					tipoRetribucion);
+			if (null != c)
+				return c.getPorcentaje().toString();
+		} catch (final Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+		return "";
+
+	}
+	
 }
 
