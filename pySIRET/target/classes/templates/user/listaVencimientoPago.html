@@ -85,7 +85,7 @@
 				url : context+'calendario/pago/filtrar'
 				}).done((res) => {
 					
-					var lista=res.calendarioDet;
+					var lista=res.HashMap.calendarioDet;
 					ordenarAsc(lista, 'oderbytipoPeriodicidaddto');
 					console.log(lista);
 					$("#containerMeses").html("");
@@ -142,9 +142,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_tpdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item.sdescripcion, data: item.id };
 				   })
 				 };
@@ -160,9 +162,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_tpdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item.sdescripcion, data: item.id };
 				   })
 				 };
@@ -179,9 +183,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_trdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item, data: item };
 				   })
 				 };
@@ -196,9 +202,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			    transformResult: function(response) {
+			    	  var obj=JSON.parse(response);
+					   var d=obj.autoCompleteDto.lista_tpdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item.snombre, data: item.id };
 				   })
 				 };

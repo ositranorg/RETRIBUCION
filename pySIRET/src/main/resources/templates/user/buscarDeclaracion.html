@@ -21,56 +21,55 @@
 
 					</div>
 					<div class="col-12">
-						<form id="frmMostrarRetribucion" >
-						<input  id="puedeVerBC" type="hidden" th:value="${session.puedeVerBC}"/>
-						<input id="tpperiodicidadhdd" type="hidden" ></input>
-						<input id="nporcentajehdd" type="hidden" ></input>
-						
-						
+						<form id="frmMostrarRetribucion">
+							<input id="puedeVerBC" type="hidden"
+								th:value="${session.puedeVerBC}" /> <input
+								id="tpperiodicidadhdd" type="hidden"></input> <input
+								id="nporcentajehdd" type="hidden"></input>
+
+
 							<div class="col-12">
 								<div class="row">
 
 									<div class="col-6">
 										<label> TIPO DE PERIODICIDAD </label><span style="color: red">(*)</span>
-										<select 
-											id="cal" class="form-control border border-info">
+										<select onclick="borrarError('errcal');" id="cal"
+											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											
 
-										</select>
+
+										</select> <label id="errcal"> </label>
 									</div>
 
 									<div class="col-6">
-									<input  id="nporcentajehdd"  type="hidden" value=""/>
-										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
+										<input id="nporcentajehdd" type="hidden" value="" /> <label
+											style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
 											style="color: red">(*)</span> <select
-										
+											onclick="borrarError('errtipoRetribucion');"
 											id="tipoRetribucion" class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											
-										</select>
+
+										</select> <label id="errtipoRetribucion"> </label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-6">
-										<label style="text-align: left;"> PERÍODO</label>
-										<span style="color: red">(*)</span>
+										<label style="text-align: left;"> PERÍODO</label> <span
+											style="color: red">(*)</span>
 										<div id="periodostributrios"></div>
 
-
+										<label id="errmes"> </label>
 									</div>
 									<div class="col-6">
 
 										<label style="text-align: left;"> AÑO</label><span
-											style="color: red">(*)</span> 
-										<select
-											
-											id="sAnio"
+											style="color: red">(*)</span> <select
+											onclick="borrarError('errsAnio');" id="sAnio"
 											class="form-control form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											
 
-										</select>
+
+										</select> <label id="errsAnio"> </label>
 									</div>
 
 
@@ -80,93 +79,80 @@
 
 									<div class="col-6">
 										<label> MONEDA </label><span style="color: red">(*)</span> <select
-											
+											onclick="borrarError('errsmonedaRetribucion');"
 											id="monedaRetribucion"
 											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											
-										</select> <label id="errcal" class="col-sm-12 control-label"></label>
+
+										</select> <label id="errsmonedaRetribucion"></label>
 									</div>
 
 									<div class="col-6">
-										<input  id="puedeVerBC"  type="hidden" th:value="${session.puedeVerBC}"/>
-										<label style="text-align: left;" th:if="${session.puedeVerBC==1}"> ES BUEN CONTRIBUYENTE?</label>
-									  <div  class="col" th:if="${session.puedeVerBC==1}">
+										<input id="puedeVerBC" type="hidden"
+											th:value="${session.puedeVerBC}" /> <label
+											style="text-align: left;" th:if="${session.puedeVerBC==1}">
+											ES BUEN CONTRIBUYENTE?</label>
+										<div class="col" th:if="${session.puedeVerBC==1}">
 											<span style="color: red">(*)</span>
-												<div id="buenContribuyente">										
-													
-												</div>
-										
-									  </div>
+											<div id="buenContribuyente"></div>
+
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col">
-										<label style="text-align: left;"> PORCENTAJE A APLICAR( %)</label> 	
-											<span style="color: red">(*)</span>
-										<div id="idlblporcentaje">										
-		
-										</div>
-										
+										<label style="text-align: left;"> PORCENTAJE A
+											APLICAR( %)</label> <span style="color: red">(*)</span> <label
+											id="porcentaje"
+											style="text-align: right; font-weight: bolder !important;"
+											class="form-control  border border-info"></label> <label
+											id="errporcentaje" ></label>
 									</div>
 									<div class="col"></div>
 								</div>
 								<div class="row">
 									<div class="col">
-										<label for="fdesde" style="text-align: left;"> DESDE</label> 
-										<input
+										<label for="fdesde" style="text-align: left;"> DESDE</label> <input
 											id="fdesde" type="text" data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
-											autocomplete="off"
-											>
+											autocomplete="off">
 									</div>
 									<div class="col">
-
 										<label for="fhasta" style="text-align: left;"> HASTA</label> <input
 											name="fhasta" id="fhasta" type="text"
 											data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
-											autocomplete="off"
-											>
+											autocomplete="off">
 									</div>
-
 								</div>
 								<hr>
 								<div class="form-group">
-
-
-
-									<button type="submit" class="btn btn-info" id="btnBuscarDJ">Entrar</button>
+									<button type="button" class="btn btn-info" id="btnBuscarDJ">Entrar</button>
 								</div>
 								<span style="color: red">(*)campos obligatorios</span>
-								<div id="errorMessage" 
-									 class="alert alert-danger"
-									role="alert"></div>
 
 							</div>
-							<input type="hidden" id="tipoPeriodicidadhdd"
-								 /> <input
-								type="hidden" id="meshdd"
-								 />
+							<input type="hidden" id="tipoPeriodicidadhdd" /> <input
+								type="hidden" id="meshdd" />
 						</form>
 
 
-						
-							<div class="modal fade" data-keyboard="false"
-								data-backdrop="static" id="modalBuenCSN" tabindex="-1"
-								role="dialog" aria-labelledby="myModalLabel">
-								<div class="modal-dialog responsive" role="document">
-									<div class="modal-content">
 
-										<div class="modal-header">
+						<div class="modal fade" data-keyboard="false"
+							data-backdrop="static" id="modalBuenCSN" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog responsive" role="document">
+								<div class="modal-content">
 
-											<h4 class="modal-title" id="tituloBuenCSN">ALERTA :
-												REVISE SU INFORMACIÓN</h4>
+									<div class="modal-header">
 
-										</div>
+										<h4 class="modal-title" id="tituloBuenCSN">ALERTA :
+											REVISE SU INFORMACIÓN</h4>
+
+									</div>
 
 
-										<div class="modal-body" id="contenidoModalBuenCSN">
+									<div class="modal-body" id="contenidoModalBuenCSN">
 										<form id="frmBuenCSN">
 											<div class="row">
 												<p id="lbldetallebi" class="col-12 justify center">Estimado
@@ -189,16 +175,16 @@
 														class="errcboBuenCSN"></label>
 												</div>
 											</div>
-											</form>
-										</div>
+										</form>
+									</div>
 
-										<div class="modal-footer">
-											<button type="button" class="btn btn-info" id="btnBuenCsn">CONTINUAR</button>
-										</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-info" id="btnBuenCsn">CONTINUAR</button>
 									</div>
 								</div>
 							</div>
-						
+						</div>
+
 
 
 
@@ -250,26 +236,7 @@
 			    dropdown.append($('<option></option>').attr('value', entry.id).text(entry.sdescripcion));
 			})
 		}
-		function loadPorcentaje(id,lista){
-			var result=[];
-			$.each(lista, function (key, entry) {							 
-			    result.push(entry.sdescripcion);
-			});
-			$("#nporcentajehdd").val(result.length)
-			if(result.length>1){
-				var html=
-							'<select id="cboPorcentaje"'+
-							'class="form-control border border-info">'+
-							'<option value="">--SELECCIONE--</option>'+
-							'</select> ';
-				$("#"+id).append(html);
-				loadDropdown("cboPorcentaje",lista);						 
-			}else{
-				var html='<label id="porcentajehdd" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">'+
-				result[0]+'</label>';
-				$("#"+id).append(html);
-			}
-		}
+		
 		function loadBC(id,v){
 			if($("#puedeVerBC").val()==1){
 				var html='<label >'+v+'</label> ';
@@ -279,13 +246,15 @@
 			}
 			
 		}
+		function borrarError(id){
+			$("#"+id).html("");
+		}
 		$(function() {
-			
+			var f=true;
 			$.getJSON(context+"api/mostrarDJ/cargarDatos",				
 				function(rest){
-				console.log(rest);
 				
-				var vacio='<select  class="form-control border border-info">'
+				var vacio='<select id="mes" class="form-control border border-info">'
 							+ '<option value="">--SELECCIONE--</option>'
                             + '</select>';
 				$('#periodostributrios').html(vacio);
@@ -293,31 +262,25 @@
 					loadDropdown("tipoRetribucion",rest.mostrarDto.lst_tipo_retribucion);
 					loadDropdown("sAnio",rest.mostrarDto.lst_anios);
 					loadDropdown("monedaRetribucion",rest.mostrarDto.lst_moneda_retribucion);
-					loadPorcentaje("idlblporcentaje",rest.mostrarDto.lst_aporte_porcentaje);
 					loadBC("buenContribuyente",rest.mostrarDto.condicion_bc.sbuencontribuyente);
 					
+					
+					
+					$("#sAnio").val(rest.mostrarDto.anioActual);
 			});
-			
-			
 			
  			buscarPeriodo("mes","periodostributrios","cal",1);
 			
 			$("#tipoRetribucion").change(function(){
-				if($("#nporcentajehdd").val()==undefined||$("#nporcentajehdd").val()==""?0:parseInt($("#nporcentajehdd").val())>1){
-					var data = { tipoRetribucion:$("#tipoRetribucion").val()};
+					borrarError('errporcentaje');
+					var data = { tipoRetribucion:$("#tipoRetribucion").val()==""?-1:$("#tipoRetribucion").val()};
 					$.getJSON(context+"api/mostrarDJ/getPorcentaje",data,function(rest){
-						console.log(rest);
-						$("#porcentajehdd option[text=" + rest +"]").prop("selected", true);
+						$("#porcentaje").html(rest.aportePorcentajeDto.sdescripcion!=undefined?rest.aportePorcentajeDto.sdescripcion:"");
+					
 					});
-				}
 			});
 			
-			if($("#errorMessage").html()==""){
-				$("#modalBuenCSN").modal("show");	
-			}
-			
-			
-
+			$("#modalBuenCSN").modal("show");	
 			$("#btnBuenCsn").on("click", function() {
 				var actualizar = $("input[name=cboBuenCSN]:checked").val();
 				if (actualizar == "NO") {
@@ -334,11 +297,62 @@
 			});
 			
 			
-		
+			$("#btnBuscarDJ").on("click",function(){
+			
+								if($("#cal").val()==""){
+									$("#errcal").html(msgObligatorio);
+									f=false;
+								}
+								if($("#tipoRetribucion").val()==""){
+									$("#errtipoRetribucion").html(msgObligatorio);
+									f=false;
+								}
+								if($("#mes").val()==""){
+									$("#errmes").html(msgObligatorio);
+									f=false;
+								}
+								if($("#sAnio").val()==""){
+									$("#errsAnio").html(msgObligatorio);
+									f=false;
+								}
+								if($("#monedaRetribucion").val()==""){
+									$("#errsmonedaRetribucion").html(msgObligatorio);
+									f=false;
+								}
+								if($("#porcentaje").html()==""){
+									$("#errporcentaje").html(msgObligatorio);
+									f=false;
+								}
+								if(f){
+									var data={
+											tipoperiodicidad:$("#cal").val(),
+											tiporetribucion:$("#tipoRetribucion").val(),
+											smesperiodo:$("#mes").val(),
+											sanioperiodo:$("#sAnio").val(),
+											moneda:$("#monedaRetribucion").val(),
+											porcentaje:$("#porcentaje").html()
+									};
+									$.ajax({
+								        type: "POST",
+								        contentType: "application/json",
+								        url: context+"api/mostrarDJ/entrarDJ",
+								        data: JSON.stringify(data),
+								        dataType: 'json',
+								        cache: false,
+								        success: function (data) {
+											console.log(data.buscarDJDto.tiporetribucion);
+								        },
+								        error: function (e) {
+
+
+								        }
+								        });
+								}
+				});
 			
 			
 
-		});
+			});
 	</script>
 </body>
 </html>

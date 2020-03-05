@@ -1,6 +1,8 @@
 package com.kemal.spring.web.controllers.restApiControllers;
 
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,9 +13,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -36,6 +39,7 @@ import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.AnioDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.AportePorcentajeDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.BuscarDJDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.MonedaDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.MostrarDJDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.ParseObjectUtil;
@@ -104,7 +108,9 @@ public class MostrarDJRestController {
 		m.setLstMonedaRetribucion((List<MonedaDto>)parseObjectUtil.parseList( monedaService.findAll()));
 		m.setLstAportePorcentaje((List<AportePorcentajeDto>)parseObjectUtil.parseList(aportePorcentajeService.findAll(u.getConcesionario().getId())));
 		CondicionBC		x=condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId());
-		
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(new Date());
+		m.setAnioActual(cal.get(Calendar.YEAR));
 				
 		m.setCondicionBC( parseObjectUtil.parseObject(x));
 		return new ResponseEntity<>(m, HttpStatus.OK);
@@ -112,21 +118,27 @@ public class MostrarDJRestController {
 	
 	
 	@RequestMapping("/getPorcentaje")
-	public String getPorcentaje(@RequestParam(required = false, name = "tipoRetribucion") int tipoRetribucion) {
-		AportePorcentaje c = null;
+	public AportePorcentajeDto getPorcentaje(@RequestParam(required = false, name = "tipoRetribucion") int tipoRetribucion) {
+		AportePorcentaje c = new AportePorcentaje();
 		try {
 			User u = (User)session().getAttribute("oUsuario");
 			c = aportePorcentajeService.findByContribuyenteAndTipoRetribucionAndSEstado(u.getConcesionario().getId(),
 					tipoRetribucion);
 			if (null != c)
-				return c.getPorcentaje().toString();
-		} catch (final Exception e) {
+				return new AportePorcentajeDto(c.getId(),c.getPorcentaje());
+		} catch (Exception e) {
 			e.printStackTrace();
-			return "";
+			return new AportePorcentajeDto();
 		}
-		return "";
+		return new AportePorcentajeDto();
 
 	}
-	
+	 @RequestMapping(value = "/entrarDJ", method = RequestMethod.POST)
+    public ResponseEntity<?> entrarDJ(@RequestBody BuscarDJDto buscarDJDto) {
+		 BuscarDJDto c=new BuscarDJDto();
+		 System.out.println("entrarDJ");
+		 c.setTiporetribucion(200);
+       return new ResponseEntity<>(c, HttpStatus.OK);
+    }
 }
 

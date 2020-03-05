@@ -22,5 +22,6 @@ public class MostrarDJDto {
 	private List<TipoRetribucionDto> lstTipoRetribucion;
 	private List<MonedaDto> lstMonedaRetribucion;
 	private CondicionBCDTO condicionBC;
+	private int anioActual;
 	
 }

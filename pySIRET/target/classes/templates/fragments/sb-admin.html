@@ -35,7 +35,7 @@ label {
 					<div class="user-info">
 						<span class="user-role">Bienvenido</span>
     					<div >
-     						  <span th:text="${session.oUsuario.concesionario.snombre}"></span>
+     						  <span th:text="${session.oUsuario.perfil==2?session.oUsuario.concesionario.snombre:session.oUsuario.name}"></span>
      					</div>
 						<span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span>
 						</span>

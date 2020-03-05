@@ -88,12 +88,14 @@ public class IndexController {
 		if (respuesta) {
 			 HttpSession sesion = request.getSession(true);
              sesion.setAttribute("oUsuario", oUsuario);
-             ConcesionarioTipoVencimiento concesionarioTipoVencimiento =concesionarioTipoVencimientoService.findById(oUsuario.getConcesionario().getId(), 7);
-             if(null!=concesionarioTipoVencimiento) {
-            	 sesion.setAttribute("puedeVerBC", "1");
-             }else {
-            	 sesion.setAttribute("puedeVerBC", "0");
+             sesion.setAttribute("puedeVerBC", "0");
+             if(oUsuario.getPerfil().getId()==2) {
+            	 ConcesionarioTipoVencimiento concesionarioTipoVencimiento =concesionarioTipoVencimientoService.findById(oUsuario.getConcesionario().getId(), 7);
+                 if(null!=concesionarioTipoVencimiento) {
+                	 sesion.setAttribute("puedeVerBC", "1");
+                 }
              }
+             
 			return "redirect:/home";
 		} else {
 			request.getSession().setAttribute("oUsuario", null);
