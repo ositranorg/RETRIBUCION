@@ -1,0 +1,187 @@
+create or replace PACKAGE BODY PK_SRET_APORTE AS
+
+PROCEDURE PRC_TIPODECLARACION (CODIGO_CONSECION       NUMBER,
+                                  ANIO_PERIODO           VARCHAR2,
+                                  MES_PERIODO            VARCHAR2,                               
+                                  TIPODECLARACION    OUT NUMBER)
+   AS
+      CODIGO_PERIODO   NUMBER := 0;
+      CONTADOR         NUMBER := 0;
+      FECHAVENC        DATE;
+      DP               CHAR (1) := '';
+      TIPOCALENDARIO NUMBER:=0;
+   BEGIN
+     
+
+      SELECT COUNT (*) INTO CONTADOR
+        FROM SRET_APORTE S
+       WHERE  NCODIGOCN = CODIGO_CONSECION
+             AND S_ANIO_PERIODO = ANIO_PERIODO
+             AND S_MES_PERIODO = MES_PERIODO AND S.S_ESTADO <> 'E';
+     BEGIN       
+          SELECT ID_TIPO_VENCIMIENTO INTO TIPOCALENDARIO
+          FROM SRET_CSNRIOTIPOVEN 
+          WHERE ID_CONCESIONARIO=CODIGO_CONSECION
+          AND S_ANIO_PERIODO=ANIO_PERIODO;
+     EXCEPTION WHEN NO_DATA_FOUND THEN
+        TIPOCALENDARIO:=0;
+     END ;
+     IF TIPOCALENDARIO!=7 THEN
+         FECHAVENC :=
+         TO_DATE (FUN_GETFECHAVENCIMIENTOPRE(ANIO_PERIODO,MES_PERIODO,CODIGO_CONSECION),'DD/MM/YYYY');        
+     ELSE
+        FECHAVENC :=
+         TO_DATE (SAPREGSF.PK_SAPR_APORTE.FUN_GETFECHAVENCIMIENTOPRE 
+                                        (   ANIO_PERIODO,
+                                            MES_PERIODO,
+                                            CODIGO_CONSECION),'DD/MM/YYYY');
+     END IF;
+    
+     IF ( (FECHAVENC - TO_DATE (TO_CHAR (SYSDATE, 'DD/MM/YYYY'))) >= 0)
+      THEN
+         DP := '1';
+      ELSE
+         DP := '0';
+      END IF;
+
+      IF DP = '1' AND CONTADOR = 0
+      THEN
+         TIPODECLARACION := 1;
+      ELSIF DP = '1' AND CONTADOR != 0
+      THEN
+         TIPODECLARACION := 2;
+      ELSIF DP = '0' AND CONTADOR = 0
+      THEN
+         TIPODECLARACION := 1;
+      ELSIF DP = '0' AND CONTADOR != 0
+      THEN
+         TIPODECLARACION := 3;
+      END IF;
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         TIPODECLARACION := 1;
+   END PRC_TIPODECLARACION;
+ FUNCTION FUN_GETFECHAVENCIMIENTOPRE(CODIGO_CONSECION NUMBER,ANIO_PERIODO VARCHAR2,MES_PERIODO VARCHAR2)RETURN DATE
+ AS
+ SALIDA DATE;
+ BEGIN  
+    SELECT S.DFECHAVENCPRES
+        INTO SALIDA
+    FROM SRET_VENCIMIENTO S
+    WHERE S.CONCESIONARIO_ID = CODIGO_CONSECION
+             AND S.SANIO_PERIODO = ANIO_PERIODO
+             AND S.SMES_PERIODO = MES_PERIODO AND S.SESTADO = '1';
+    RETURN SALIDA;
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+    RETURN NULL;
+   
+ END FUN_GETFECHAVENCIMIENTOPRE;
+ 
+ 
+ 
+ 
+  FUNCTION PRC_GETDJ (PMES              CHAR,
+                       PANIO             CHAR,
+                       PCONCESIONARIO    NUMBER,
+                       CODUSUARIO        VARCHAR2)
+      RETURN NUMBER
+   AS
+      CODIGO   NUMBER := 0;
+   BEGIN
+      SELECT MAX (NCODIGO_APORTE)
+        INTO CODIGO
+        FROM SAPR_APORTE A
+             INNER JOIN SAPR_PERIODO P
+                ON A.NCODIGO_PERIODO = P.NCODIGO_PERIODO
+       WHERE     A.NORDEN =
+                    (SELECT MAX (B.NORDEN)
+                       FROM SAPR_APORTE B
+                      WHERE     B.NCODIGO_PERIODO = A.NCODIGO_PERIODO
+                            AND B.SESTADO = 'I')
+             AND P.SMES_PERIODO = PMES
+             AND P.SANIO_PERIODO = PANIO
+             AND A.SESTADO = 'I'
+             AND P.NCODIGO_CONSECION = PCONCESIONARIO;
+
+      IF CODIGO IS NULL
+      THEN
+         CODIGO :=
+            GRABARDJBORRADOR (PCONCESIONARIO,
+                              PMES,
+                              PANIO,
+                              CODUSUARIO);
+      END IF;
+
+      RETURN CODIGO;
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         RETURN GRABARDJBORRADOR (PCONCESIONARIO,
+                                  PMES,
+                                  PANIO,
+                                  CODUSUARIO);
+   END PRC_GETDJ;
+   
+   
+    FUNCTION GRABARDJBORRADOR (PCONCESION       NUMBER,
+                              PMES             CHAR,
+                              PANIO            CHAR,
+                              CODIGOUSUARIO    VARCHAR2)
+      RETURN NUMBER
+   IS
+      codigo_periodo   NUMBER := 0;
+      codigo           NUMBER := 0;
+      FECHAVPAG DATE;
+      FECHAVENC DATE;
+      EXISTEPERIODO NUMBER:=0;
+      TIPODECLARACION NUMBER;
+   BEGIN
+     BEGIN
+       PRC_TIPODECLARACION (PCONCESION,
+                                  PANIO,
+                                  PMES,
+                                  TIPODECLARACION);
+     
+
+     
+   
+                            
+
+        FECHAVPAG :=TO_DATE (
+                           FUN_GETFECHAVENCIMIENTOPAGO(PANIO,
+                                                        PMES,
+                                                        PCONCESION),
+                           'DD/MM/YYYY');
+        FECHAVENC :=TO_DATE (
+                           FUN_GETFECHAVENCIMIENTOPRE(PANIO,
+                                                       PMES,
+                                                       PCONCESION),
+                           'DD/MM/YYYY');
+        SELECT SEQ_SAPR_APORTE.NEXTVAL INTO CODIGO FROM DUAL;
+     
+        INSERT INTO SRET_APORTE (NCODIGO_APORTE,
+                          
+                               NORDEN,
+                               SESTADO,
+                               NCODIGO_TIPODECLARACION,
+                               SCODUSUREGISTRA,
+                               DFECHAREGISTRO,DFECVENCIMDJ,DFECVENCIMPG)
+           VALUES (CODIGO,
+                   EXISTEPERIODO,
+                   CODIGO,
+                   'I',
+                   TIPODECLARACION,
+                   CODIGOUSUARIO,
+                   SYSDATE,
+                   FECHAVENC,
+                   FECHAVPAG);
+
+     
+
+      RETURN CODIGO;
+    EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;RETURN 0;
+    END;
+   END GRABARDJBORRADOR;
+END PK_SRET_APORTE;
