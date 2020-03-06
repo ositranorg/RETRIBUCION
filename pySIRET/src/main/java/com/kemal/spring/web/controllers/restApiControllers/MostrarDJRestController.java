@@ -106,6 +106,7 @@ public class MostrarDJRestController {
 		m.setLstAnios((List<AnioDto>)parseObjectUtil.parseList(util.getAnios()));
 		m.setLstTipoRetribucion( (List<TipoRetribucionDto>)parseObjectUtil.parseList( tipoRetribucionService.findAll()));
 		m.setLstMonedaRetribucion((List<MonedaDto>)parseObjectUtil.parseList( monedaService.findAll()));
+		m.setCondicionBC( null);
 		if(u.getPerfil().getId()==2) {
 			CondicionBC		x=condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId());
 			m.setCondicionBC( parseObjectUtil.parseObject(x));
