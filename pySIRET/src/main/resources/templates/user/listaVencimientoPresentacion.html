@@ -14,19 +14,19 @@
 					<div class="alert alert-primary" role="alert">
 						<h3>[[#{general.mensaje.titulo.vencimiento.presentacion}]]</h3>
 					</div>
+					<div class="container">
 					<div class="row">
-						<div class="row" th:if="${cn eq -1}">
+						<div class="col-12">
+						<div class="row" th:if="${session.oUsuario.perfil.id==1}">
 							<label>[[#{general.mensaje.label.concesion}]]</label> <input
 								id="cns" type="text" class=" form-control" autocomplete="off"
-								th:value="${cn}"
 								th:placeholder="#{general.mensaje.placeholder.concesionario}" />
-
+						</div>
 						</div>
 						<input id="cnshdd" type="hidden" th:value="${cn}" />
 					</div>
-
+					</div>
 					<hr />
-					<div class="container">
 						<div class="row">
 							<div class="col-sm">
 								<label class="control-label">[[#{general.mensaje.label.tipoperiodicidad}]]</label>
@@ -51,11 +51,10 @@
 									<input id="aniohdd" type="hidden" th:value="${anioActual}" />
 							</div>
 						</div>
-					</div>
-					<div class="col-12">
+					
 						<hr>
 						<div id="containerMeses" class="row"></div>
-					</div>
+					
 				</form>
 
 			</div>
@@ -74,34 +73,35 @@
     	 var data={sAnioPeriodo:anio,
     			 concesionario:cn,
     			 itipoPeriodicidaddto:itipoPeriodicidaddto,
-    			 itipoRetribuciondto:itipoRetribuciondto};
+    			 itipoRetribuciondto:itipoRetribuciondto
+    			 };
     	 vencimiento.push(data);
     	 $.ajax({
 				data : JSON.stringify(vencimiento),
 				type: "POST",
 				dataType: 'JSON',
 				contentType: 'application/json',
-				url : context+'calendario/pago/filtrar'
+				url : context+'calendario/presentacion/filtrar'
 				}).done((res) => {
-					
 					var lista=res.HashMap.calendarioDet;
 					ordenarAsc(lista, 'oderbytipoPeriodicidaddto');
-					console.log(lista);
 					$("#containerMeses").html("");
-					
 					for(var i=0;i<lista.length;i++){
 						$("#containerMeses").append(
-							'<div class="col-sm-3">'+
+							'<div class="container col-sm-3"><div class="">'+
 		                          '<div class="card text-white bg-success m-1 ">'+
 											'<div class="card-header">'+
-												'<div class="row">'+
-													'<h6 >PERIODO-'+lista[i].sMesPeriodo+'</h6>'+
-												'</div>'+
+												
+													
+												
+														'PERIODO<label class="pull-right" style="font-size:36px !important;" >'+lista[i].sMesPeriodo+'</label>'+
+													
+												
 											'</div>'+
 											' <div class="card-body ">'+
 												
 													'<p style="text-align: left;">'+
-													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.fechapresentacion}]]:</label><br>'+
+													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.fechapago}]]:</label><br>'+
 													'<label style="font-size:18px;font-weight:bold;" >'+lista[i].dFechaVencPres+'</label><br>'+
 													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.tipoperiodicidad}]]:</label><br>'+
 													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoPeriodicidaddto+'</label><br>'+
@@ -111,11 +111,10 @@
 											
 											'</div>'+
 								   '</div>'+
-						   '</div>');
+						   '</div></div>');
 					}
-					
-		});
-		}
+				});
+				}
 		$(function() {
 			calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
 			$('#fbtipoperiodicidad').on("keyup",function(){
@@ -141,9 +140,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_tpdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item.sdescripcion, data: item.id };
 				   })
 				 };
@@ -159,9 +160,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_trdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item.sdescripcion, data: item.id };
 				   })
 				 };
@@ -178,9 +181,11 @@
 				paramName: "tagName",
 				delimiter: ",",
 			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.List;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
+				  suggestions: $.map(d, function(item) {
 				      return { value: item, data: item };
 				   })
 				 };
@@ -195,10 +200,12 @@
 				paramName: "tagName",
 				delimiter: ",",
 			    transformResult: function(response) {
+			    	 var obj=JSON.parse(response);
+					   var d=obj.autoCompleteDto.lista_tcdto;
 				return {      	
 				  //must convert json to javascript object before process
-				  suggestions: $.map($.parseJSON(response), function(item) {
-				      return { value: item.snombre, data: item.id };
+				  suggestions: $.map(d, function(item) {
+				      return { value: item.sdescripcion, data: item.id };
 				   })
 				 };
 		         },

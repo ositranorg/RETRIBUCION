@@ -41,7 +41,7 @@ public class IndexController {
         try {
         	  us=(User)request.getSession(false).getAttribute("oUsuario");
         }catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		if(null==us) {
 			return "website/login";

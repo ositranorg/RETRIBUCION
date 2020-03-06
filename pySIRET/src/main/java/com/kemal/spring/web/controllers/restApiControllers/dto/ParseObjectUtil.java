@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.kemal.spring.domain.AportePorcentaje;
+import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.TipoPeriodicidad;
@@ -16,6 +17,17 @@ public class ParseObjectUtil {
 	
 	public List<?> parseList(List<?> obj) {
 		if(null!=obj&&obj.size()>0) {
+			if(obj.get(0) instanceof Concesionario ) {
+				List<ContribuyenteDto> x=new ArrayList<ContribuyenteDto>();
+				for (Object item : obj) {
+					Concesionario  t=(Concesionario)item;
+					ContribuyenteDto d=new ContribuyenteDto(t.getId(),t.getSnombre());
+					x.add(d);
+				}
+				return x;
+			}
+			
+			
 			if(obj.get(0) instanceof TipoPeriodicidad ) {
 				List<TipoPeriodicidadDto> x=new ArrayList<TipoPeriodicidadDto>();
 				for (Object item : obj) {

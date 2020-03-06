@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.service.ConcesionarioService;
+import com.kemal.spring.web.controllers.restApiControllers.dto.AutoCompleteDto;
 import com.kemal.spring.web.controllers.restApiControllers.dto.ContribuyenteDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.ParseObjectUtil;
 @RestController
 @RequestMapping("api/contribuyente")
 @Scope("session")
@@ -33,7 +35,8 @@ public class ContribuyenteRestController {
 	
 	@Value("${total-registro-por-pagina}")
 	private int totalRegistroPorPagina;
-	
+	@Autowired
+	ParseObjectUtil parseUtil;
 	@ResponseBody
 	@PostMapping(value = "listar-contribuyente", consumes = "application/json",produces =  { "application/json" })
 	public ResponseEntity<?> listarContribuyente() {
@@ -62,8 +65,28 @@ public class ContribuyenteRestController {
 		return new ResponseEntity<>(contribuyenteService.actualizarContribuyenteByRuc(contribuyente), HttpStatus.OK);
 	}
 	
-	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getContribuyente", method = RequestMethod.GET)
+	public ResponseEntity<AutoCompleteDto> getTags(@RequestParam String tagName) {
+		AutoCompleteDto m=new AutoCompleteDto();
+		m.setListaTCDto((List<ContribuyenteDto>)parseUtil.parseList(simulateSearchResult(tagName)));
+		return new ResponseEntity<>(m, HttpStatus.OK);
+	}
+
+	private List<Concesionario> simulateSearchResult(String tagName) {
+
+		List<Concesionario> result = new ArrayList<Concesionario>();
+		List<Concesionario> data=contribuyenteService.listaContribuyente();
+		// iterate a list and filter by tagName
+		for (Concesionario tag : data) {
+			if (tag.getSnombre().toUpperCase().contains(tagName.toUpperCase())) {
+				result.add(tag);
+			}
+		}
+
+		return result;
+	}
+	/*	@RequestMapping(value = "/getContribuyente", method = RequestMethod.GET)
 	public @ResponseBody
 	List<Concesionario> getTags(@RequestParam String tagName) {
 
@@ -83,6 +106,6 @@ public class ContribuyenteRestController {
 		}
 
 		return result;
-	}
+	}*/
 
 }

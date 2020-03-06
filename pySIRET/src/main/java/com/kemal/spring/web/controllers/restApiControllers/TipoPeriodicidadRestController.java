@@ -41,7 +41,7 @@ public class TipoPeriodicidadRestController {
 		List<TipoPeriodicidad> data=tipoPeriodicidadService.findAll();
 		// iterate a list and filter by tagName
 		for (TipoPeriodicidad tag : data) {
-			if (tag.getSDescripcion().contains(tagName)) {
+			if (tag.getSDescripcion().toUpperCase().contains(tagName.toUpperCase())) {
 				result.add(tag);
 			}
 		}

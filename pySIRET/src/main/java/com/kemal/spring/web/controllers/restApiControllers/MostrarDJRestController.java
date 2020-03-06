@@ -106,13 +106,13 @@ public class MostrarDJRestController {
 		m.setLstAnios((List<AnioDto>)parseObjectUtil.parseList(util.getAnios()));
 		m.setLstTipoRetribucion( (List<TipoRetribucionDto>)parseObjectUtil.parseList( tipoRetribucionService.findAll()));
 		m.setLstMonedaRetribucion((List<MonedaDto>)parseObjectUtil.parseList( monedaService.findAll()));
-		m.setLstAportePorcentaje((List<AportePorcentajeDto>)parseObjectUtil.parseList(aportePorcentajeService.findAll(u.getConcesionario().getId())));
-		CondicionBC		x=condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId());
+		if(u.getPerfil().getId()==2) {
+			CondicionBC		x=condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId());
+			m.setCondicionBC( parseObjectUtil.parseObject(x));
+		}
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new Date());
 		m.setAnioActual(cal.get(Calendar.YEAR));
-				
-		m.setCondicionBC( parseObjectUtil.parseObject(x));
 		return new ResponseEntity<>(m, HttpStatus.OK);
 	}
 	
