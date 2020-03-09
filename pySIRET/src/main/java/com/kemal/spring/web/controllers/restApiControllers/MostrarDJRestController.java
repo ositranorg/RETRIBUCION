@@ -1,6 +1,7 @@
 package com.kemal.spring.web.controllers.restApiControllers;
 
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,7 @@ import com.kemal.spring.domain.AportePorcentaje;
 import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.User;
 import com.kemal.spring.domain.procedures.PRC_BuscarDJ;
+import com.kemal.spring.domain.procedures.PRC_TipoDeclaracion;
 import com.kemal.spring.service.AportePorcentajeService;
 import com.kemal.spring.service.AporteService;
 import com.kemal.spring.service.CondicionBCService;
@@ -65,11 +68,11 @@ public class MostrarDJRestController {
 	MonedaService monedaService;
 	@Autowired
 	PRC_BuscarDJ buscarDJ;
-	
+
 	
 	@Autowired
 	ParseObjectUtil parseObjectUtil;
-	@Autowired
+
 	public  HttpSession session() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
@@ -127,5 +130,8 @@ public class MostrarDJRestController {
 			 c.setMensaje(x.get("mensaje").toString());
 			 return new ResponseEntity<>(c, HttpStatus.OK);
 	    }
+	 
+	 
+	
 }
 

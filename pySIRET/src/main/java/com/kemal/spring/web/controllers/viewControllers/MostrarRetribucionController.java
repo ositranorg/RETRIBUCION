@@ -29,6 +29,7 @@ import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.PagoSinAporte;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.User;
+import com.kemal.spring.domain.procedures.PRC_TipoDeclaracion;
 import com.kemal.spring.service.AporteDeduccionService;
 import com.kemal.spring.service.AporteDescuentoService;
 import com.kemal.spring.service.AporteLiberacionService;
@@ -78,7 +79,8 @@ public class MostrarRetribucionController {
 	CondicionBCService condicionBCservice;
 	@Autowired
 	MonedaService monedaService;
-	
+	@Autowired
+	PRC_TipoDeclaracion tipoDeclaracion;
 	public static HttpSession session() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
@@ -89,6 +91,28 @@ public class MostrarRetribucionController {
 		
 		return "/user/buscarDeclaracion";
 	}
+	
+	 @GetMapping(value = "/retribucion/mostrarregistrar")
+	    public String mostrarregistrar(Model model,
+	    		@RequestParam(required = false, name = "tipoperiodicidad") Integer tipoperiodicidad,
+	    		@RequestParam(required = false, name = "tiporetribucion") Integer tiporetribucion,
+	    		@RequestParam(required = false, name = "smesperiodo") String smesperiodo,
+	    		@RequestParam(required = false, name = "sanioperiodo") String sanioperiodo,
+	    		@RequestParam(required = false, name = "moneda") Integer moneda,
+	    		@RequestParam(required = false, name = "porcentaje") BigDecimal porcentaje) {
+		
+			 System.out.println("entrarDJ");
+			 User u = (User)session().getAttribute("oUsuario");
+			 Integer tipodeclaracion=tipoDeclaracion.getTipoDeclaracion(u.getConcesionario().getId(), smesperiodo, sanioperiodo);
+			 model.addAttribute("tipoperiodicidad",tipoperiodicidad);
+			 model.addAttribute("tiporetribucion",tiporetribucion);
+			 model.addAttribute("smesperiodo",smesperiodo);
+			 model.addAttribute("sanioperiodo",sanioperiodo);
+			 model.addAttribute("moneda",moneda);
+			 model.addAttribute("porcentaje",porcentaje);
+			 model.addAttribute("tipodeclaracion",tipodeclaracion);
+			 return "/user/retribucion";
+	    }
 			/*
 	@GetMapping(value = "/mostrarBuscar")
 	public String mostrarBuscarDJ(@RequestParam(required = false, name = "tipoPeriodicidad") String tipoPeriodicidad,
@@ -179,7 +203,7 @@ public class MostrarRetribucionController {
 		return "/user/buscarDeclaracion";
 	}
 */
-	@GetMapping(value = "/retribucion")
+	//@GetMapping(value = "/retribucion")
 	public String retribucion(@RequestParam(required = false, name = "tipoPeriodicidad") String tipoPeriodicidad,
 			@RequestParam(required = false, name = "mes") String periodicidad,
 			@RequestParam(required = false, name = "tipoRetribucion") String tipoRetribucion,

@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kemal.spring.domain.procedures.Prc_TipoDeclaracion;
+import com.kemal.spring.domain.procedures.PRC_TipoDeclaracion;
 import com.kemal.spring.web.controllers.restApiControllers.dto.TipoDeclaracionDto;
 @RestController
 @RequestMapping("api/tipodeclaracion")
 @Scope("session")
 public class TipoDeclaracionRestController {
 	@Autowired
-	Prc_TipoDeclaracion prc_TipoDeclaracion;
+	PRC_TipoDeclaracion prc_TipoDeclaracion;
 	
 	@ResponseBody
 	@PostMapping(value = "/gettipodeclaracion", consumes = "application/json",produces =  { "application/json" })

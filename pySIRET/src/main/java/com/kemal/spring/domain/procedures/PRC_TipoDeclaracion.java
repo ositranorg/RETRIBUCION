@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 @Component
-public class Prc_TipoDeclaracion {
+public class PRC_TipoDeclaracion {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCallRefCursor;
@@ -20,7 +20,7 @@ public class Prc_TipoDeclaracion {
 					.addValue("CODIGO_CONSECION", concesionario)
 					.addValue("MES_PERIODO", mes)
 					.addValue("ANIO_PERIODO", anio);
-			simpleJdbcCallRefCursor=new SimpleJdbcCall(jdbcTemplate).withCatalogName("PK_SRET_APORTE").withProcedureName("PRC_TIPODECLARACION");
+			simpleJdbcCallRefCursor=new SimpleJdbcCall(jdbcTemplate).withCatalogName("PK_RET_APORTE").withProcedureName("PRC_TIPODECLARACION");
 			Map<String, Object> map=simpleJdbcCallRefCursor.execute(parameters);
 			return Integer.parseInt(map.get("TIPODECLARACION").toString());
 		} catch (NumberFormatException e) {

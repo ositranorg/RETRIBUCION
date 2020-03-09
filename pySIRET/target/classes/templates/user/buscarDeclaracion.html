@@ -355,16 +355,15 @@
 										    	});
 											}else{
 												 
-												//window.location.href=context+"/retribucion/registrar";
-												  $.post(context+"retribucion/registrar",
-														  {
-														tipoperiodicidad:$("#cal").val(),
-														tiporetribucion:$("#tipoRetribucion").val(),
-														smesperiodo:$("#mes").val(),
-														sanioperiodo:$("#sAnio").val(),
-														moneda:$("#monedaRetribucion").val(),
-														porcentaje:$("#porcentaje").html()
-												});
+												window.location.href=context+"retribucion/mostrarregistrar?"+
+												  
+														"tipoperiodicidad="+$("#cal").val()+"&"+
+														"tiporetribucion="+$("#tipoRetribucion").val()+"&"+
+														"smesperiodo="+$("#mes").val()+"&"+
+														"sanioperiodo="+$("#sAnio").val()+"&"+
+														"moneda="+$("#monedaRetribucion").val()+"&"+
+														"porcentaje="+$("#porcentaje").html()
+												;
 											}								        	
 											
 								        },

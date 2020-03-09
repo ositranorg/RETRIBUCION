@@ -27,7 +27,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +44,7 @@ import com.kemal.spring.domain.Deduccion;
 import com.kemal.spring.domain.Descuento;
 import com.kemal.spring.domain.LiberacionPago;
 import com.kemal.spring.domain.User;
+import com.kemal.spring.domain.procedures.PRC_TipoDeclaracion;
 import com.kemal.spring.service.AporteDeduccionService;
 import com.kemal.spring.service.AporteDescuentoService;
 import com.kemal.spring.service.AporteLiberacionService;
@@ -117,31 +117,15 @@ public class RetribucionController {
 	AporteDescuentoService aporteDescuentoService;	
 	@Autowired
 	AporteDeduccionService aporteDeduccionService;
-	public static HttpSession session() {
+
+	
+	public HttpSession session() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
 	}
-	 @RequestMapping(value = "/retribucion/registrar", method = RequestMethod.POST)
-	    public String entrarDJ(Model model,
-	    		@RequestParam(required = false, name = "tipoperiodicidad") Integer tipoperiodicidad,
-	    		@RequestParam(required = false, name = "tiporetribucion") Integer tiporetribucion,
-	    		@RequestParam(required = false, name = "smesperiodo") Integer smesperiodo,
-	    		@RequestParam(required = false, name = "sanioperiodo") Integer sanioperiodo,
-	    		@RequestParam(required = false, name = "moneda") Integer moneda) {
-			 BuscarDJDto c=new BuscarDJDto();
-			 System.out.println("entrarDJ");
-			 User u = (User)session().getAttribute("oUsuario");
-			 
-			 model.addAttribute("tipoperiodicidad",tipoperiodicidad);
-			 model.addAttribute("tiporetribucion",tiporetribucion);
-			 model.addAttribute("smesperiodo",smesperiodo);
-			 model.addAttribute("sanioperiodo",sanioperiodo);
-			 
-			 model.addAttribute("moneda",moneda);
-			 
-			 
-			 return "/user/retribucion";
-	    }
+	
+	 
+	 
 	/*@RequestMapping(value = { "/retribucion/registrar" }, method = RequestMethod.GET)
 	public ModelAndView pago(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
 		User u = (User)session().getAttribute("oUsuario");
