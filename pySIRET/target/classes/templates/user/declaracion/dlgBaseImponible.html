@@ -27,31 +27,7 @@
 					<div class="modal-body">
 						<form id="frmBiImportes" th:action="@{/guardarbi}" method="post">
 
-							<input type="hidden" name="tipoPeriodicidad"
-								id="tipoPeriodicidad"
-								th:value="${retribucionForm.tipoPeriodicidad}" /> <input
-								type="hidden" name="mesRetribucion" id="mesRetribucion"
-								th:value="${retribucionForm.mesRetribucion}" /> <input
-								type="hidden" name="anioRetribucion" id="anioRetribucion"
-								th:value="${retribucionForm.anioRetribucion}" /> <input
-								type="hidden" name="tipoRetribucion" id="tipoRetribucion"
-								th:value="${retribucionForm.tipoRetribucion}" /> <input
-								type="hidden" name="porcentajehdd" id="porcentaje"
-								th:value="${retribucionForm.porcentaje}" /> <input
-								type="hidden" name="fdesde" id="fdesde"
-								th:value="${retribucionForm.fdesde}" /> <input type="hidden"
-								name="fhasta" id="fhasta" th:value="${retribucionForm.fhasta}" />
-							<input type="hidden" name="accion" id="biaccion" value="" /> <input
-								type="hidden" name="codigobihdd" id="codigobihdd" value="" /> <input
-								type="hidden" name="codaportebihdd" id="codaportebihdd"
-								th:value="${retribucionForm.codaportehdd}" /> <input
-								type="hidden" name="monedaRetribucion" id="monedaRetribucion"
-								th:value="${retribucionForm.monedaRetribucion}" /> <input
-								type="hidden" name="codicionConcesionario"
-								id="codicionConcesionario"
-								th:value="${retribucionForm.buenContribuyente}" /> <input
-								type="hidden" name="buenContribuyente"
-								th:value="${retribucionForm.buenContribuyente}" />
+						
 							<div id="contenidoModalBi" class="col-12">
 								<div class="row">
 									<label id="lbldetallebi" class="col-sm-12 control-label"></label>

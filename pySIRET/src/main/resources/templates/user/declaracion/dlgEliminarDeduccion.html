@@ -29,27 +29,7 @@
 						<form id="frmEliminarDeduccion" th:action="@{/eliminarDeduccion}"
 							method="post">
 
-							<input type="hidden" name="tipoPeriodicidad"
-								id="tipoPeriodicidad"
-								th:value="${retribucionForm.tipoPeriodicidad}" /> <input
-								type="hidden" name="mesRetribucion" id="mesRetribucion"
-								th:value="${retribucionForm.mesRetribucion}" /> <input
-								type="hidden" name="anioRetribucion" id="anioRetribucion"
-								th:value="${retribucionForm.anioRetribucion}" /> <input
-								type="hidden" name="tipoRetribucion" id="tipoRetribucion"
-								th:value="${retribucionForm.tipoRetribucion}" /> <input
-								type="hidden" name="accion" id="biaccion" value="" /> <input
-								type="hidden" name="codaportehdd" id="codaportehdd"
-								th:value="${retribucionForm.codaportehdd}" /> <input
-								type="hidden" name="monedaRetribucion" id="monedaRetribucion"
-								th:value="${retribucionForm.monedaRetribucion}" /> <input
-								type="hidden" name="porcentajehdd" id="porcentaje"
-								th:value="${retribucionForm.porcentaje}" /> <input
-								type="hidden" name="fdesde" id="fdesde" th:value="${fDesde}" />
-							<input type="hidden" name="fhasta" id="fhasta"
-								th:value="${fHasta}" /> <input type="hidden"
-								name="buenContribuyente"
-								th:value="${retribucionForm.buenContribuyente}" />
+							
 							<div class="row">
 								<div class="col-12">
 									<label>Está seguro(a) que desea eliminar el monto?</label>

@@ -33,7 +33,7 @@
 
 									<div class="col-6">
 										<label> TIPO DE PERIODICIDAD </label><span style="color: red">(*)</span>
-										<select onclick="borrarError('errcal');" id="cal"
+										<select onclick="borrarError('errcal');" id="cal" 
 											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
 
@@ -250,7 +250,7 @@
 			$("#"+id).html("");
 		}
 		$(function() {
-			var f=true;
+			
 			$.getJSON(context+"api/mostrarDJ/cargarDatos",				
 				function(rest){
 				
@@ -299,7 +299,7 @@
 			
 			
 			$("#btnBuscarDJ").on("click",function(){
-			
+				var f=true;
 								if($("#cal").val()==""){
 									$("#errcal").html(msgObligatorio);
 									f=false;
@@ -341,7 +341,27 @@
 								        dataType: 'json',
 								        cache: false,
 								        success: function (data) {
-											console.log(data.buscarDJDto.tiporetribucion);
+											if(data.buscarDJDto.codigo==-1){
+												$.confirm({
+										    	    title: 'Aviso',
+										    	    content: data.buscarDJDto.mensaje,
+										    	    type: 'green',
+										    	    buttons: {
+										    	    	text: 'OK',
+											    	    Si: function(){
+											    	        window.location.href=context+"pagos";
+											    	    },
+											    	    Cancel:function(){
+											    	    	window.location.reload();
+											    	    }
+										    	    }
+										    	});
+											}else{
+												 
+												$("#frmMostrarRetribucion").attr("action", "/retribucion/registrar?btnsubmit=Save") 
+											    $("#frmMostrarRetribucion").submit();
+											}								        	
+											
 								        },
 								        error: function (e) {
 

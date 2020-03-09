@@ -27,31 +27,6 @@
 					<div class="modal-body" id="contenidoModalOtros">
 						<form id="frmOtros" th:action="@{/aporteOtros}" method="post">
 
-							<input type="hidden" name="tipoPeriodicidad"
-								id="tipoPeriodicidad"
-								th:value="${retribucionForm.tipoPeriodicidad}" /> <input
-								type="hidden" name="mesRetribucion" id="mesRetribucion"
-								th:value="${retribucionForm.mesRetribucion}" /> <input
-								type="hidden" name="anioRetribucion" id="anioRetribucion"
-								th:value="${retribucionForm.anioRetribucion}" /> <input
-								type="hidden" name="tipoRetribucion" id="tipoRetribucion"
-								th:value="${retribucionForm.tipoRetribucion}" /> <input
-								type="hidden" name="accion" id="biaccion" value="" /> <input
-								type="hidden" name="codaportehdd" id="codaportehdd"
-								th:value="${retribucionForm.codaportehdd}" /> <input
-								type="hidden" name="monedaRetribucion" id="monedaRetribucion"
-								th:value="${retribucionForm.monedaRetribucion}" /> <input
-								type="hidden" name="porcentajehdd" id="porcentaje"
-								th:value="${retribucionForm.porcentaje}" /> <input
-								type="hidden" name="fdesde" id="fdesde" th:value="${fDesde}" />
-							<input type="hidden" name="fhasta" id="fhasta"
-								th:value="${fHasta}" /> <input type="hidden"
-								name="buenContribuyente"
-								th:value="${retribucionForm.buenContribuyente}" /> <input
-								type="hidden" id="iddescuentohdd" name="iddescuentohdd"
-								th:value="${retribucionForm.iddescuentohdd}" />
-
-
 							<div class="col-12">
 								<div class="col-12 table-responsive">
 									<table id="tblDescuento"
@@ -89,8 +64,7 @@
 									<input type="text" id="mntdescuento"
 										class="form-control border border-info "
 										style="text-align: right;"
-										th:field="${retribucionForm.otrosDescuentos}"
-										th:value="${retribucionForm.otrosDescuentos}" />
+										 />
 
 								</div>
 							</div>

@@ -20,4 +20,6 @@ public class BuscarDJDto {
 	private String sanioperiodo;
 	private Integer moneda;
 	private BigDecimal porcentaje;
+	private String mensaje;
+	private Integer codigo;
 }

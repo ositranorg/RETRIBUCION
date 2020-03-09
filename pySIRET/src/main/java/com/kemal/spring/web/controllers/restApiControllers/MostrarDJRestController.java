@@ -3,6 +3,7 @@ package com.kemal.spring.web.controllers.restApiControllers;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -24,17 +25,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.kemal.spring.domain.AportePorcentaje;
 import com.kemal.spring.domain.CondicionBC;
 import com.kemal.spring.domain.User;
-import com.kemal.spring.service.AporteDeduccionService;
-import com.kemal.spring.service.AporteDescuentoService;
-import com.kemal.spring.service.AporteLiberacionService;
+import com.kemal.spring.domain.procedures.PRC_BuscarDJ;
 import com.kemal.spring.service.AportePorcentajeService;
 import com.kemal.spring.service.AporteService;
-import com.kemal.spring.service.BaseCalculoService;
 import com.kemal.spring.service.CondicionBCService;
-import com.kemal.spring.service.LiberacionPagoService;
 import com.kemal.spring.service.MonedaService;
-import com.kemal.spring.service.OtroDescuentoService;
-import com.kemal.spring.service.PagoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
 import com.kemal.spring.web.controllers.restApiControllers.dto.AnioDto;
@@ -63,25 +58,13 @@ public class MostrarDJRestController {
 	AporteService aporteService;
 	@Autowired
 	AportePorcentajeService aportePorcentajeService;
-	@Autowired
-	BaseCalculoService baseCalculoService;
-	@Autowired
-	AporteDeduccionService aporteDeduccionService;
-	@Autowired
-	AporteLiberacionService aporteLiberacionPagoService;
-	@Autowired
-	AporteDescuentoService aporteDescuentoService;	
-	@Autowired
-	LiberacionPagoService liberacionPagoService;
-	@Autowired
-	OtroDescuentoService otrosDescuentosService;
-	@Autowired
-	PagoService pagoService;
+
 	@Autowired
 	CondicionBCService condicionBCservice;
 	@Autowired
 	MonedaService monedaService;
-	
+	@Autowired
+	PRC_BuscarDJ buscarDJ;
 	
 	
 	@Autowired
@@ -135,11 +118,16 @@ public class MostrarDJRestController {
 
 	}
 	 @RequestMapping(value = "/entrarDJ", method = RequestMethod.POST)
-    public ResponseEntity<?> entrarDJ(@RequestBody BuscarDJDto buscarDJDto) {
-		 BuscarDJDto c=new BuscarDJDto();
-		 System.out.println("entrarDJ");
-		 c.setTiporetribucion(200);
-       return new ResponseEntity<>(c, HttpStatus.OK);
-    }
+	    public ResponseEntity<?> entrarDJ(@RequestBody BuscarDJDto buscarDJDto) {
+			 BuscarDJDto c=new BuscarDJDto();
+			 System.out.println("entrarDJ");
+			 User u = (User)session().getAttribute("oUsuario");
+			 HashMap<String,Object> x=buscarDJ.buscarDJ(u.getConcesionario().getId(), buscarDJDto.getSmesperiodo(), buscarDJDto.getSanioperiodo(), u.getUsername());
+			 c.setCodigo((Integer)x.get("codigo"));
+			 c.setMensaje(x.get("mensaje").toString());
+			 return new ResponseEntity<>(c, HttpStatus.OK);
+	    }
+	 
+	 
 }
 

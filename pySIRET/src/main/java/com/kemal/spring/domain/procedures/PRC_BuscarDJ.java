@@ -1,7 +1,6 @@
 package com.kemal.spring.domain.procedures;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,19 +13,32 @@ public class PRC_BuscarDJ {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCallRefCursor;
-	public Map<String, Object>  getTipoDeclaracion(int concesionario,String mes,String anio) {
+	public HashMap<String,Object>  buscarDJ(int concesionario,String mes,String anio,String usuario) {
+		HashMap<String,Object> m=new HashMap<String,Object>();
 		try {
 			jdbcTemplate.setResultsMapCaseInsensitive(true);
 			SqlParameterSource parameters=new MapSqlParameterSource()
-					.addValue("CODIGO_CONSECION", concesionario)
-					.addValue("MES_PERIODO", mes)
-					.addValue("ANIO_PERIODO", anio);
+					.addValue("PMES", mes)
+					.addValue("PANIO", anio)
+					.addValue("PCONCESIONARIO", concesionario)					
+					.addValue("CODUSUARIO", usuario);
 			simpleJdbcCallRefCursor=new SimpleJdbcCall(jdbcTemplate)
-					.withCatalogName("PK_SRET_APORTE")
-					.withProcedureName("PRC_TIPODECLARACION");
-			return	simpleJdbcCallRefCursor.execute(parameters);
+					.withCatalogName("PK_RET_APORTE")
+					.withFunctionName("PRC_GETDJ");
+			String resultado=simpleJdbcCallRefCursor.executeFunction(String.class,parameters);
+			
+			Integer n=null;
+			try {
+				n=new Integer(resultado);
+			}catch(NumberFormatException e) {
+				n=new Integer("-1");
+				e.printStackTrace();
+			}
+			m.put("codigo", n);
+			m.put("mensaje", resultado);
+			return m;
 		} catch (NumberFormatException e) {
-			return new  HashMap<String, Object>();
+			return m;
 		}
 	}
 }
