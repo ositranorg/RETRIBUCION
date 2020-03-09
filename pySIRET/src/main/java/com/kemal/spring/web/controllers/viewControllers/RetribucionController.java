@@ -121,20 +121,25 @@ public class RetribucionController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
 	}
-	 @RequestMapping(value = "/retribucion/registrar", method = RequestMethod.GET)
-	    public String entrarDJ(Model model,HttpServletRequest request,HttpServletResponse response) {
+	 @RequestMapping(value = "/retribucion/registrar", method = RequestMethod.POST)
+	    public String entrarDJ(Model model,
+	    		@RequestParam(required = false, name = "tipoperiodicidad") Integer tipoperiodicidad,
+	    		@RequestParam(required = false, name = "tiporetribucion") Integer tiporetribucion,
+	    		@RequestParam(required = false, name = "smesperiodo") Integer smesperiodo,
+	    		@RequestParam(required = false, name = "sanioperiodo") Integer sanioperiodo,
+	    		@RequestParam(required = false, name = "moneda") Integer moneda) {
 			 BuscarDJDto c=new BuscarDJDto();
 			 System.out.println("entrarDJ");
 			 User u = (User)session().getAttribute("oUsuario");
-			 System.out.println(request.getParameter(""));
-			 /*model.addAttribute("ptipoperiodicidad",buscarDJDto.getTipoperiodicidad());
-			 model.addAttribute("ptiporetribucion",buscarDJDto.getTiporetribucion());
-			 model.addAttribute("panio",buscarDJDto.getSanioperiodo());
-			 model.addAttribute("pmes",buscarDJDto.getSmesperiodo());
 			 
-			 model.addAttribute("pporcentaje",buscarDJDto.getPorcentaje());
-			 model.addAttribute("pmoneda",buscarDJDto.getMoneda());
-			 */
+			 model.addAttribute("tipoperiodicidad",tipoperiodicidad);
+			 model.addAttribute("tiporetribucion",tiporetribucion);
+			 model.addAttribute("smesperiodo",smesperiodo);
+			 model.addAttribute("sanioperiodo",sanioperiodo);
+			 
+			 model.addAttribute("moneda",moneda);
+			 
+			 
 			 return "/user/retribucion";
 	    }
 	/*@RequestMapping(value = { "/retribucion/registrar" }, method = RequestMethod.GET)

@@ -350,16 +350,21 @@
 										    	    	text: 'OK',
 											    	    Si: function(){
 											    	        window.location.href=context+"pagos";
-											    	    },
-											    	    Cancel:function(){
-											    	    	window.location.reload();
 											    	    }
 										    	    }
 										    	});
 											}else{
 												 
-												$("#frmMostrarRetribucion").attr("action", "/retribucion/registrar?btnsubmit=Save") 
-											    $("#frmMostrarRetribucion").submit();
+												//window.location.href=context+"/retribucion/registrar";
+												  $.post(context+"retribucion/registrar",
+														  {
+														tipoperiodicidad:$("#cal").val(),
+														tiporetribucion:$("#tipoRetribucion").val(),
+														smesperiodo:$("#mes").val(),
+														sanioperiodo:$("#sAnio").val(),
+														moneda:$("#monedaRetribucion").val(),
+														porcentaje:$("#porcentaje").html()
+												});
 											}								        	
 											
 								        },

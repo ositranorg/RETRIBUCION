@@ -127,7 +127,5 @@ public class MostrarDJRestController {
 			 c.setMensaje(x.get("mensaje").toString());
 			 return new ResponseEntity<>(c, HttpStatus.OK);
 	    }
-	 
-	 
 }
 
