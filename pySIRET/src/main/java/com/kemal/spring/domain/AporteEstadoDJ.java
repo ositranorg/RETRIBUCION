@@ -14,13 +14,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "SRET_APORTETIPO")
-public class AporteTipo {
+@Table(name = "SRET_APORTEESTADODJ")
+public class AporteEstadoDJ {
 	@Id
 	@Column(name = "NCODIGO",length = 1, unique = true, nullable = false)	
 	private String id;
-	@Column(length = 20)
+	@Column(name = "SDESCRIPCION",length = 20)
 	private String sDescripcion;
-	@Column(length = 1)
+	@Column(name="SESTADO",length = 1)
 	private String sEstado="1";
 }

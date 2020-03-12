@@ -251,7 +251,7 @@
 		}
 		$(function() {
 			
-			$.getJSON(context+"api/mostrarDJ/cargarDatos",				
+			$.getJSON(context+"cargarDatos",				
 				function(rest){
 				
 				var vacio='<select id="mes" class="form-control border border-info">'
@@ -275,7 +275,7 @@
 			$("#tipoRetribucion").change(function(){
 					borrarError('errporcentaje');
 					var data = { tipoRetribucion:$("#tipoRetribucion").val()==""?-1:$("#tipoRetribucion").val()};
-					$.getJSON(context+"api/mostrarDJ/getPorcentaje",data,function(rest){
+					$.getJSON(context+"getPorcentaje",data,function(rest){
 						$("#porcentaje").html(rest.aportePorcentajeDto.sdescripcion!=undefined?rest.aportePorcentajeDto.sdescripcion:"");
 					
 					});
@@ -336,7 +336,7 @@
 									$.ajax({
 								        type: "POST",
 								        contentType: "application/json",
-								        url: context+"api/mostrarDJ/entrarDJ",
+								        url: context+"entrarDJ",
 								        data: JSON.stringify(data),
 								        dataType: 'json',
 								        cache: false,
@@ -354,16 +354,14 @@
 										    	    }
 										    	});
 											}else{
-												 
 												window.location.href=context+"retribucion/mostrarregistrar?"+
-												  
-														"tipoperiodicidad="+$("#cal").val()+"&"+
-														"tiporetribucion="+$("#tipoRetribucion").val()+"&"+
-														"smesperiodo="+$("#mes").val()+"&"+
-														"sanioperiodo="+$("#sAnio").val()+"&"+
-														"moneda="+$("#monedaRetribucion").val()+"&"+
-														"porcentaje="+$("#porcentaje").html()
-												;
+																			"tipoperiodicidad="+$("#cal").val()+
+																			"&tiporetribucion="+$("#tipoRetribucion").val()+
+																			"&smesperiodo="+$("#mes").val()+
+																			"&sanioperiodo="+$("#sAnio").val()+
+																			"&moneda="+$("#monedaRetribucion").val()+
+																			"&porcentaje="+$("#porcentaje").html()+
+																			"&codigo="+data.buscarDJDto.codigo;
 											}								        	
 											
 								        },

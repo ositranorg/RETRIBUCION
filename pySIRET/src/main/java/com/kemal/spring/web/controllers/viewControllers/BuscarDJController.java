@@ -1,6 +1,9 @@
 package com.kemal.spring.web.controllers.viewControllers;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,10 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -29,6 +39,7 @@ import com.kemal.spring.domain.Moneda;
 import com.kemal.spring.domain.PagoSinAporte;
 import com.kemal.spring.domain.TipoPeriodicidad;
 import com.kemal.spring.domain.User;
+import com.kemal.spring.domain.procedures.PRC_BuscarDJ;
 import com.kemal.spring.domain.procedures.PRC_TipoDeclaracion;
 import com.kemal.spring.service.AporteDeduccionService;
 import com.kemal.spring.service.AporteDescuentoService;
@@ -43,13 +54,20 @@ import com.kemal.spring.service.OtroDescuentoService;
 import com.kemal.spring.service.PagoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
+import com.kemal.spring.web.controllers.restApiControllers.dto.AnioDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.AportePorcentajeDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.BuscarDJDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.MonedaDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.MostrarDJDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.ParseObjectUtil;
+import com.kemal.spring.web.controllers.restApiControllers.dto.TipoPeriodicidadDto;
+import com.kemal.spring.web.controllers.restApiControllers.dto.TipoRetribucionDto;
 import com.kemal.spring.web.dto.Util;
-import com.kemal.spring.web.form.BuscarRetribucionForm;
 import com.kemal.spring.web.form.RetribucionForm;
 
 @Controller
 @Scope("session")
-public class MostrarRetribucionController {
+public class BuscarDJController {
 	@Autowired
 	TipoPeriodicidadService calendarioService;
 	@Autowired
@@ -81,6 +99,10 @@ public class MostrarRetribucionController {
 	MonedaService monedaService;
 	@Autowired
 	PRC_TipoDeclaracion tipoDeclaracion;
+	@Autowired
+	PRC_BuscarDJ buscarDJ;
+	@Autowired
+	ParseObjectUtil parseObjectUtil;
 	public static HttpSession session() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
@@ -91,17 +113,61 @@ public class MostrarRetribucionController {
 		
 		return "/user/buscarDeclaracion";
 	}
+	@GetMapping(value = "/registrarDJ")
+	public String registrarDJ() {
+		
+		return "/user/retribucion";
+	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/cargarDatos")
+	public ResponseEntity<MostrarDJDto> cargarDatos() {
+		MostrarDJDto m=new MostrarDJDto();
+		User u = (User)session().getAttribute("oUsuario");
+		m.setLstTipoPeriodicidad( (List<TipoPeriodicidadDto>)parseObjectUtil.parseList( calendarioService.findAll()));
+		m.setLstAnios((List<AnioDto>)parseObjectUtil.parseList(util.getAnios()));
+		m.setLstTipoRetribucion( (List<TipoRetribucionDto>)parseObjectUtil.parseList( tipoRetribucionService.findAll()));
+		m.setLstMonedaRetribucion((List<MonedaDto>)parseObjectUtil.parseList( monedaService.findAll()));
+		m.setCondicionBC( null);
+		if(u.getPerfil().getId()==2) {
+			CondicionBC		x=condicionBCservice.findByNCodigoCnsAndSEstado(u.getConcesionario().getId());
+			m.setCondicionBC( parseObjectUtil.parseObject(x));
+		}
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(new Date());
+		m.setAnioActual(cal.get(Calendar.YEAR));
+		return new ResponseEntity<>(m, HttpStatus.OK);
+	}
 	
-	 @GetMapping(value = "/retribucion/mostrarregistrar")
+	
+	@RequestMapping("/getPorcentaje")
+	@ResponseBody
+	public AportePorcentajeDto getPorcentaje(@RequestParam(required = false, name = "tipoRetribucion") int tipoRetribucion) {
+		AportePorcentaje c = new AportePorcentaje();
+		try {
+			User u = (User)session().getAttribute("oUsuario");
+			c = aportePorcentajeService.findByContribuyenteAndTipoRetribucionAndSEstado(u.getConcesionario().getId(),
+					tipoRetribucion);
+			if (null != c)
+				return new AportePorcentajeDto(c.getId(),c.getPorcentaje());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new AportePorcentajeDto();
+		}
+		return new AportePorcentajeDto();
+
+	}
+	
+	@RequestMapping(value = "/retribucion/mostrarregistrar",method = RequestMethod.GET)
 	    public String mostrarregistrar(Model model,
 	    		@RequestParam(required = false, name = "tipoperiodicidad") Integer tipoperiodicidad,
 	    		@RequestParam(required = false, name = "tiporetribucion") Integer tiporetribucion,
 	    		@RequestParam(required = false, name = "smesperiodo") String smesperiodo,
 	    		@RequestParam(required = false, name = "sanioperiodo") String sanioperiodo,
 	    		@RequestParam(required = false, name = "moneda") Integer moneda,
-	    		@RequestParam(required = false, name = "porcentaje") BigDecimal porcentaje) {
+	    		@RequestParam(required = false, name = "porcentaje") BigDecimal porcentaje,
+	    		@RequestParam(required = false, name = "codigo") Integer codigo) {
 		
-			 System.out.println("entrarDJ");
+			 System.out.println("mostrarregistrar");
 			 User u = (User)session().getAttribute("oUsuario");
 			 Integer tipodeclaracion=tipoDeclaracion.getTipoDeclaracion(u.getConcesionario().getId(), smesperiodo, sanioperiodo);
 			 model.addAttribute("tipoperiodicidad",tipoperiodicidad);
@@ -111,7 +177,22 @@ public class MostrarRetribucionController {
 			 model.addAttribute("moneda",moneda);
 			 model.addAttribute("porcentaje",porcentaje);
 			 model.addAttribute("tipodeclaracion",tipodeclaracion);
+			 model.addAttribute("codigo",codigo);
 			 return "/user/retribucion";
+	    }
+	
+	
+	
+	 @RequestMapping(value = "/entrarDJ", method = RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<?> entrarDJ(@RequestBody BuscarDJDto buscarDJDto) {
+			 BuscarDJDto c=new BuscarDJDto();
+			 System.out.println("entrarDJ");
+			 User u = (User)session().getAttribute("oUsuario");
+			 HashMap<String,Object> x=buscarDJ.buscarDJ(u.getConcesionario().getId(), buscarDJDto.getSmesperiodo(), buscarDJDto.getSanioperiodo(), u.getUsername());
+			 c.setCodigo((Integer)x.get("codigo"));
+			 c.setMensaje(x.get("mensaje").toString());
+			 return new ResponseEntity<>(c, HttpStatus.OK);
 	    }
 			/*
 	@GetMapping(value = "/mostrarBuscar")
@@ -216,44 +297,6 @@ public class MostrarRetribucionController {
 			@RequestParam(required = false, name = "page") Integer page, Model model) {
 		User u = (User)session().getAttribute("oUsuario");
 		String errorMessage = "";
-		BigDecimal porcentaje = new BigDecimal(
-				"".equals(porcentajehdd) || "null".equals(porcentajehdd) ? "0" : porcentajehdd);
-		if ("".equals(tipoPeriodicidad)) {
-			errorMessage = "1";
-
-		} else
-
-		if ("".equals(tipoRetribucion)) {
-			errorMessage = "2";
-
-		} else
-
-		if ("".equals(periodicidad)) {
-			errorMessage = "3";
-
-		} else
-
-		if ("".equals(anioRetribucion)) {
-			errorMessage = "4";
-
-		} else
-
-		if (null==monedaRetribucion||monedaRetribucion.length()==0) {
-			errorMessage = "6";
-
-		} else
-
-		if ((!"".equals(dfecReconocimientoDesde) && "".equals(dfecReconocimientoHasta))
-				|| ("".equals(dfecReconocimientoDesde) && !"".equals(dfecReconocimientoHasta))) {
-			errorMessage = "5";
-
-		} else
-
-		if ((!"".equals(dfecReconocimientoDesde) && !"".equals(dfecReconocimientoHasta))
-				&& util.strtoDate(dfecReconocimientoHasta).before(util.strtoDate(dfecReconocimientoDesde))) {
-			errorMessage = "7";
-
-		} else {
 
 			Aporte aporte = aporteService.getAporte(tipoPeriodicidad, tipoRetribucion, periodicidad, anioRetribucion,
 					u.getConcesionario().getId());
@@ -267,7 +310,8 @@ public class MostrarRetribucionController {
 			r.setTipoPeriodicidadDes(calendarioService.findById(Integer.parseInt(tipoPeriodicidad)).getSDescripcion());
 			r.setTipoRetribucionDes(
 					tipoRetribucionService.findById(Integer.parseInt(tipoPeriodicidad)).getSDescripcion());
-			r.setPorcentaje(porcentaje);
+			r.setPorcentaje(new BigDecimal(
+					"".equals(porcentajehdd) || "null".equals(porcentajehdd) ? "0" : porcentajehdd));
 			r.setMonedaRetribucion(monedaRetribucion);
 			Moneda moneda = monedaService.findById((Integer.parseInt(monedaRetribucion)));
 			r.setMonedaRetribucionDes(moneda.getSDescripcion());
@@ -292,8 +336,8 @@ public class MostrarRetribucionController {
 			List<BaseCalculo> lstBaseCalculo = articlePage.getContent();
 			BigDecimal totalBaseCalculo = lstBaseCalculo.stream().map(BaseCalculo::getNimporte).reduce(BigDecimal.ZERO,
 					BigDecimal::add);
-			if (null != porcentaje && (porcentaje.compareTo(BigDecimal.ZERO) > 0))
-				retPendientePagar = (porcentaje.multiply(totalBaseCalculo));
+			/*if (null != porcentaje && (porcentaje.compareTo(BigDecimal.ZERO) > 0))
+				retPendientePagar = (porcentaje.multiply(totalBaseCalculo));*/
 			r.setBaseCalculo(totalBaseCalculo);
 			r.setPagosprevios((pagoService
 					.getListaPago(
@@ -338,11 +382,10 @@ public class MostrarRetribucionController {
 			r.setRetribucionapagar(retPendientePagar);
 			r.setRetribucionresultante(retPendientePagar);
 			r.setCodaportehdd(aporte.getId());
-			r.setTipoDeclaracion(aporte.getTipoDeclaracion());
+			//r.setTipoDeclaracion(aporte.getTipoDeclaracion());
 			model.addAttribute("retribucionForm", r);
-			return "/user/retribucion";
+			//return "/user/retribucion";
 
-		}
 
 		List<TipoPeriodicidad> lstCal = calendarioService.findAll();
 		model.addAttribute("lsttipoPeriodicidad", lstCal);

@@ -1,11 +1,12 @@
 package com.kemal.spring.domain;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,25 +21,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "SRET_APORTEPORCENTAJE")
-	
-public class AportePorcentaje {
-	
+@Table(name = "SRET_APORTETIPOPRESNT")
+public class AporteTipoPresentacion {
 	@Id
 	@Column(name = "NCODIGO", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_SequenceAPORTEPORCENTAJE")
-	@SequenceGenerator(name = "id_SequenceAPORTEPORCENTAJE", sequenceName = "SQ_RET_APORTEPORCENTAJE", allocationSize= 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Sequence_APORTETIPOPRESNT")
+	@SequenceGenerator(name = "id_Sequence_APORTETIPOPRESNT", sequenceName = "SQ_RET_APORTETIPOPRESNT", allocationSize= 1)
 	private Integer id;
 	
-	private BigDecimal porcentaje;
-	
-	@ManyToOne
-	private Concesionario contribuyente;
-	
-	@ManyToOne
-	private TipoRetribucion tipoRetribucion;
+	@Column(name = "SDESCRIPCION")
+	private String sDescripcion;
 	@Column(name = "SESTADO")
 	private String sEstado="1";
 	
-
+	
+	
+	
 }

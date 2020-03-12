@@ -15,7 +15,7 @@ import com.kemal.spring.domain.AporteDescuentoRepository;
 import com.kemal.spring.domain.AporteLiberacion;
 import com.kemal.spring.domain.AporteLiberacionRepository;
 import com.kemal.spring.domain.AporteRepository;
-import com.kemal.spring.domain.AporteTipo;
+import com.kemal.spring.domain.AporteEstadoDJ;
 import com.kemal.spring.domain.Concesionario;
 import com.kemal.spring.domain.Deduccion;
 import com.kemal.spring.domain.DeduccionRepository;
@@ -168,7 +168,7 @@ public class AporteService {
 
 	public Aporte getAporte(String tipoPeriodicidad, String tipoRetribucion, String SMesPeriodo, String SanioPeriodo,
 			Integer csiId) {
-		AporteTipo at = new AporteTipo();
+		AporteEstadoDJ at = new AporteEstadoDJ();
 		at.setId("I");
 		at.setSDescripcion("INGRESADO");
 		at.setSEstado("1");
@@ -179,14 +179,14 @@ public class AporteService {
 		TipoRetribucion r = tipoRetribucionRepository.findById(new Integer(tipoRetribucion)).get();
 		r.setId(Integer.parseInt(tipoRetribucion));
 		Aporte aporte = dao
-				.findByTipoPeriodicidadAndTipoRetribucionAndSMesPeriodoAndSAnioPeriodoAndAporteTipoAndContribuyente(p,
+				.findByTipoPeriodicidadAndTipoRetribucionAndSMesPeriodoAndSAnioPeriodoAndAporteEstadoDJAndContribuyente(p,
 						r, SMesPeriodo.replaceAll(",", ""), s, at, c);
 		if (null == aporte) {
 			Aporte n = new Aporte();
-			n.setAporteTipo(at);
+			n.setAporteTipoEstadoDJ(at);
 			n.setSMesPeriodo(SMesPeriodo);
 			n.setSAnioPeriodo((SanioPeriodo));
-			n.setContribuyente(c);
+			n.setConcesionario(c);
 			n.setTipoPeriodicidad(p);
 			n.setTipoRetribucion(r);
 			dao.save(n);
@@ -220,9 +220,9 @@ public class AporteService {
 		
 		Aporte aporte = dao
 				.findById(codigoAporte).get();
-		AporteTipo apTipo=new AporteTipo();
+		AporteEstadoDJ apTipo=new AporteEstadoDJ();
 		apTipo.setId("P");
-		aporte.setAporteTipo(apTipo);
+		aporte.setAporteTipoEstadoDJ(apTipo);
 		aporte.setSEstado("1");
 		
 		aporte.setSUsuModifica(usuario);

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kemal.spring.domain.AportePorcentaje;
-import com.kemal.spring.domain.AporteTipo;
+import com.kemal.spring.domain.AporteEstadoDJ;
 import com.kemal.spring.domain.Banco;
 import com.kemal.spring.domain.Concepto;
 import com.kemal.spring.domain.Concesionario;
@@ -553,7 +553,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	}
 	@Transactional
 	void createAporteTipo(final String id,final String name) {
-		AporteTipo aporteTipo = new AporteTipo();
+		AporteEstadoDJ aporteTipo = new AporteEstadoDJ();
 		aporteTipo.setId(id);
 		aporteTipo.setSDescripcion(name);
 		

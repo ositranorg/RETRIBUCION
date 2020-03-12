@@ -45,6 +45,7 @@ public class AporteLiberacion {
     private Date dfecModifica;
 	@Column(name = "SUSUMODIFICA")
     private String sUsuModifica;
+	@Column(name = "SESTADO")
 	private String sEstado="1";
   
 	@DateTimeFormat(pattern = "dd/MM/yyyy")

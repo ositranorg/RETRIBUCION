@@ -65,6 +65,7 @@ public class RetribucionForm {
 	private BigDecimal retribucionpendienteapagar;
 	private BigDecimal retribucionapagar;
 	private BigDecimal retribucionresultante;
+	
 	private String cbocodTipoDeclaracion;
 	
 	private Integer iddeduccionhdd;

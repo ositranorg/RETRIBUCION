@@ -33,11 +33,17 @@
 					method="post" target="_blank">
 
 				
-
-
+					<input id="tipoperiodicidad" type="text" th:value="${tipoperiodicidad}">
+					<input id="tiporetribucion"  type="text" th:value="${tiporetribucion}">
+					<input id="smesperiodo"  type="text" th:value="${smesperiodo}">
+					<input id="sanioperiodo"  type="text" th:value="${sanioperiodo}">
+					<input id="moneda"  type="text" th:value="${moneda}">
+					<input id="porcentaje"  type="text" th:value="${porcentaje}">
+					<input id="tipodeclaracion"  type="text" th:value="${tipodeclaracion}">
+					<input id="codigo"  type="text" th:value="${codigo}">
 					<div class="row">
-						<div class="col-6">
-							<div class="card bg-default  mb-3">
+						<div class="card-deck">
+							<div class="card bg-default  ">
 								<div class=" card-header">
 									<div class="row">
 										<div class="col ">TIPO DE DECLARACIÓN</div>
@@ -58,9 +64,8 @@
 									<br> <br> <br>
 								</div>
 							</div>
-						</div>
-						<div class="col-6">
-							<div class="card bg-default  mb-3">
+						
+							<div class="card bg-default  ">
 								<div class=" card-header">
 									<div class="row">
 										<div class="col">DATOS DEL PERIODO</div>
@@ -435,7 +440,7 @@
 		$("#retribucionresultantehdd").val(fretribucionResultante);
 		
 		
-		grabarResultante();
+		//grabarResultante();
 	}
 	function separadorDeMilesporId(id) {
 		var valor = $("#" + id).val();
