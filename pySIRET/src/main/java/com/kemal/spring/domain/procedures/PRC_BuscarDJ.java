@@ -33,6 +33,7 @@ public class PRC_BuscarDJ {
 			}catch(NumberFormatException e) {
 				n=new Integer("-1");
 				e.printStackTrace();
+				System.out.println(resultado);
 			}
 			m.put("codigo", n);
 			m.put("mensaje", resultado);

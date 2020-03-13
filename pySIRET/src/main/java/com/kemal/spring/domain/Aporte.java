@@ -54,8 +54,8 @@ public class Aporte {
 	private Date fechaVenPres;
 	
 	@ManyToOne
-	@JoinColumn(name="ID_APORTETIPOESTDJ")
-	private AporteEstadoDJ aporteTipoEstadoDJ;
+	@JoinColumn(name="ID_APORTEESTDJ")
+	private AporteEstadoDJ aporteEstadoDJ;
 	
 	@ManyToOne
 	@JoinColumn(name="ID_APORTETIPOPRESNT")

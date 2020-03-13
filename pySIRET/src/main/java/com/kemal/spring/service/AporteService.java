@@ -179,11 +179,11 @@ public class AporteService {
 		TipoRetribucion r = tipoRetribucionRepository.findById(new Integer(tipoRetribucion)).get();
 		r.setId(Integer.parseInt(tipoRetribucion));
 		Aporte aporte = dao
-				.findByTipoPeriodicidadAndTipoRetribucionAndSMesPeriodoAndSAnioPeriodoAndAporteEstadoDJAndContribuyente(p,
+				.findByTipoPeriodicidadAndTipoRetribucionAndSMesPeriodoAndSAnioPeriodoAndAporteEstadoDJAndConcesionario(p,
 						r, SMesPeriodo.replaceAll(",", ""), s, at, c);
 		if (null == aporte) {
 			Aporte n = new Aporte();
-			n.setAporteTipoEstadoDJ(at);
+			n.setAporteEstadoDJ(at);
 			n.setSMesPeriodo(SMesPeriodo);
 			n.setSAnioPeriodo((SanioPeriodo));
 			n.setConcesionario(c);
@@ -222,7 +222,7 @@ public class AporteService {
 				.findById(codigoAporte).get();
 		AporteEstadoDJ apTipo=new AporteEstadoDJ();
 		apTipo.setId("P");
-		aporte.setAporteTipoEstadoDJ(apTipo);
+		aporte.setAporteEstadoDJ(apTipo);
 		aporte.setSEstado("1");
 		
 		aporte.setSUsuModifica(usuario);

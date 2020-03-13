@@ -129,8 +129,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		if (alreadySetup) {
 			return;
 		}
-		/*
-
+		
+/*
 		createEstado(0,"ELIMINADO");
 		createEstado(1,"REGISTRADO");
 		createEstado(2,"APLICADO");
@@ -204,23 +204,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		createTipoVencimiento("Quinto día útil del mes siguiente.".toUpperCase());
 		createTipoVencimiento("De acuerdo al cronograma establecido por la SUNAT para el cumplimiento de sus obligaciones tributarias.".toUpperCase());
 		
-		*/
-		/*createConcesionario(1,"LIMA AIRPORT PARTNERS S.R.L.", "20501577252");
-		createConcesionario(2,"AEROPUERTOS DEL PERÚ S.A.", "20514513172");
-		createConcesionario(22,"FERROCARRILES TRANSANDINO S.A", "20432747833");
-		createConcesionario(21,"FERROVIAS CENTRAL ANDINA S.A.", "20432347142");
-		createConcesionario(14,"CONCESIONARIA VIAL DEL PERU S.A. ", "20511465061");
-		createConcesionario(5,"NORVIAL S.A.", "20505377142");
-		createConcesionario(25,"TERMINAL INTERNACIONAL DEL SUR S.A.", "20428500475");
-		createConcesionario(29,"APM TERMINALS CALLAO S.A.", "20543083888");
-		createConcesionario(26,"DP WORLD CALLAO S.R.L.", "20513462388");
-		createConcesionario(27,"TERMINALES PORTUARIOS EUROANDINOS PAITA S.A. - TPE PAITA S.A.", "20522473571");
-		createConcesionario(31,"TERMINAL PORTUARIO PARACAS S.A.", "20562916360");
-		createConcesionario(28,"TRANSPORTADORA CALLAO S.A.", "20537577232");
-		createConcesionario(35,"SALAVERRY TERMINAL INTERNACIONAL S.A.", "20603487321");
-		*/
+	
 		
-		/*
+		
+		
 		int aniocalendario=2020;
 		createConcesionarioTipoVencimiento(1, 2, ""+aniocalendario);
 		createConcesionarioTipoVencimiento(2, 3, ""+aniocalendario);
@@ -390,8 +377,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 //		createVencimiento(  "12",  ""+aniocalendario,
 //				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 1,1,4,3,4,0);
 //				
-/*
-		createVencimiento(  "01",  ""+aniocalendario,
+
+		/*createVencimiento(  "01",  ""+aniocalendario,
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.JUNE).getTime(), 3,3,4,22,1);
 		createVencimiento(  "02",  ""+(aniocalendario),
 				obtenerDiezCalendarioMesSiguiente(aniocalendario, Calendar.DECEMBER).getTime(), 3,3,4,22,1);
@@ -485,8 +472,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 				obtenerDiaHabilMesSiguiente(aniocalendario, Calendar.DECEMBER, 5).getTime(), 1,1,4,25,1);
 		
 		
-		*/
 		
+		*/
 		alreadySetup = true;
 	}
 	

@@ -21,15 +21,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "SRET_APORTETIPOPRESNT")
+@Table(name = "SAPR_TIPODECLARACION",schema ="SAPREGSF")
 public class AporteTipoPresentacion {
 	@Id
-	@Column(name = "NCODIGO", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Sequence_APORTETIPOPRESNT")
-	@SequenceGenerator(name = "id_Sequence_APORTETIPOPRESNT", sequenceName = "SQ_RET_APORTETIPOPRESNT", allocationSize= 1)
+	@Column(name = "NCODIGO_TIPODECLARACION")
 	private Integer id;
 	
-	@Column(name = "SDESCRIPCION")
+	@Column(name = "SNOMBRE_TIPODECLARACION")
 	private String sDescripcion;
 	@Column(name = "SESTADO")
 	private String sEstado="1";
