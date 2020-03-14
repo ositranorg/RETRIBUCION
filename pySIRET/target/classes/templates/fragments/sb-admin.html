@@ -70,12 +70,15 @@ label {
 									<li><a th:href="@{/mantenimiento/contribuyente}">CONTRIBUYENTE<span
 											class="badge badge-pill badge-success">ver</span>
 									</a></li>
-									<li><a th:href="@{/mantenimiento/representante}">REPRESENTANTE<span
-											class="badge badge-pill badge-success">ver</span>
-									</a></li>
 								</ul>
 							</div>
 						</li>
+						<li class="sidebar-dropdown" >
+								<a th:href="@{/mantenimiento/representante}">REPRESENTANTE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a>
+						</li>
+						
 						<li class="sidebar-dropdown" th:if="${session.puedeVerBC==1}"><a th:href="@{/condicionbc}">
 								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
 									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>

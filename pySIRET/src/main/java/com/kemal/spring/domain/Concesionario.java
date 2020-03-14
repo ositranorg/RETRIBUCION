@@ -58,16 +58,6 @@ public class Concesionario {
 	@Column(name="CNC_ESTADO")
 	private String sestado = "1";
 
-	@OneToMany(mappedBy = "concesionario",
-			cascade = CascadeType.ALL,
-			fetch = FetchType.LAZY)	
-	@Column(nullable = true)
-	@JsonBackReference
-	private Set<Representante> representante = new HashSet<>();
-	/*@Column(length = 1)
-	private String supervporOSITRAN="1";*/
-	
-	
 	
 	@OneToMany(mappedBy = "concesionario",
 			cascade = CascadeType.ALL,
