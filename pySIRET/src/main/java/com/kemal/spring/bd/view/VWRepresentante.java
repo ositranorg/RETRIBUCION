@@ -1,13 +1,8 @@
 package com.kemal.spring.bd.view;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -28,14 +23,14 @@ public class VWRepresentante {
 	private String sApePaterno;
 	@Column(name = "SAPEMAT")
 	private String sApeMaterno;
-	@Column(name = "STIPODOC")
+	@Column(name = "STIPODOC",nullable = true)
 	private String tipoDocumento;
-	@Column(name = "SNUMDOC")
+	@Column(name = "SNUMDOC",nullable = true)
 	private String sNumero;
-	@Column(name = "SCARGO")
+	@Column(name = "SCARGO",nullable = true)
 	private String sCargo;
-	@Column(name = "DFECINIPODER")	
-	private Date dFechaInicio;
+	@Column(name = "DFECINIPODER",nullable = true)	
+	private String dFechaInicio;
 	@Column(name = "CNC_ID")	
 	private Integer idConcesionario;
 }

@@ -38,7 +38,9 @@ public class RepresentanteRestController {
 		User u = (User) session().getAttribute("oUsuario");
 		dataTableVWRepresentante.setData(representanteService.listarRepresentantes(u.getConcesionario().getId()));
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return gson.toJson(dataTableVWRepresentante);
+		String json=gson.toJson(dataTableVWRepresentante);
+		System.out.println(json);
+		return json;
 
 	}
 }
