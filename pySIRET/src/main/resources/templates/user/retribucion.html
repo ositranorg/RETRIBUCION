@@ -32,49 +32,18 @@
 				<form action="#" id="frmRetribucion" th:action="@{/graboexitoso}"
 					method="post" target="_blank">
 
-					<input type="hidden" name="codaportehdd" id="codaportehdd"
-						th:value="${retribucionForm.codaportehdd}" /> <input type="hidden" name="fdesde"
-						th:value="${retribucionForm.fdesde}" /> <input type="hidden"
-						name="fhasta" th:value="${retribucionForm.fhasta}" /> <input
-						type="hidden" name="tipoPeriodicidad"
-						th:value="${retribucionForm.tipoPeriodicidad}" /> <input
-						type="hidden" name="tipoRetribucion"
-						th:value="${retribucionForm.tipoRetribucion}" /> <input
-						type="hidden" name="mesRetribucion"
-						th:value="${retribucionForm.mesRetribucion}" /> <input
-						type="hidden" name="anioRetribucion"
-						th:value="${retribucionForm.anioRetribucion}" /> <input
-						type="hidden" name="monedaRetribucion" id="idmoneda"
-						th:value="${retribucionForm.monedaRetribucion}" /> <input
-						type="hidden" name="buenContribuyente"
-						th:value="${retribucionForm.buenContribuyente}" /> <input
-						type="hidden" name="baseCalculo"
-						th:value="${retribucionForm.baseCalculo}" /> <input type="hidden"
-						name="porcentaje" th:value="${retribucionForm.porcentaje}" /> <input
-						type="hidden" name="deduccion"
-						th:value="${retribucionForm.deduccion}" /> <input type="hidden"
-						name="pagosprevios" th:value="${retribucionForm.pagosprevios}" />
-					<input type="hidden" name="creditos"
-						th:value="${retribucionForm.creditos}" /> <input type="hidden"
-						name="liberacionpago" th:value="${retribucionForm.liberacionpago}" />
-					<input type="hidden" name="otrosDescuentos"
-						th:value="${retribucionForm.otrosDescuentos}" /> <input
-						id="intereseshdd" type="hidden" name="intereses"
-						th:value="${retribucionForm.intereses}" /> <input type="hidden"
-						name="retribucionpendienteapagar"
-						th:value="${retribucionForm.retribucionpendienteapagar}" /> <input
-						type="hidden" name="retribucionapagar"
-						th:value="${retribucionForm.retribucionapagar}" /> <input
-						id="retribucionresultantehdd" type="hidden"
-						name="retribucionresultante"
-						th:value="${retribucionForm.retribucionresultante}" />
-
-
-
-
+				
+					<input id="tipoperiodicidad" type="text" th:value="${tipoperiodicidad}">
+					<input id="tiporetribucion"  type="text" th:value="${tiporetribucion}">
+					<input id="smesperiodo"  type="text" th:value="${smesperiodo}">
+					<input id="sanioperiodo"  type="text" th:value="${sanioperiodo}">
+					<input id="moneda"  type="text" th:value="${moneda}">
+					<input id="porcentaje"  type="text" th:value="${porcentaje}">
+					<input id="tipodeclaracion"  type="text" th:value="${tipodeclaracion}">
+					<input id="codigo"  type="text" th:value="${codigo}">
 					<div class="row">
-						<div class="col-6">
-							<div class="card bg-default  mb-3">
+						<div class="card-deck">
+							<div class="card bg-default  ">
 								<div class=" card-header">
 									<div class="row">
 										<div class="col ">TIPO DE DECLARACIÓN</div>
@@ -83,9 +52,9 @@
 												name="cbocodTipoDeclaracion"
 												class="sl2 form-control border border-info  "
 												style="float: right;">
-												<option value="1">ORIGINAL</option>
-												<option value="2">SUSTITUTORIA</option>
-												<option value="3">RECTIFICATORIA</option>
+												<option value="1" th:selected="${tipodeclaracion==1}">ORIGINAL</option>
+												<option value="2" th:selected="${tipodeclaracion==2}">SUSTITUTORIA</option>
+												<option value="3" th:selected="${tipodeclaracion==3}">RECTIFICATORIA</option>
 											</select>
 										</div>
 									</div>
@@ -95,9 +64,8 @@
 									<br> <br> <br>
 								</div>
 							</div>
-						</div>
-						<div class="col-6">
-							<div class="card bg-default  mb-3">
+						
+							<div class="card bg-default  ">
 								<div class=" card-header">
 									<div class="row">
 										<div class="col">DATOS DEL PERIODO</div>
@@ -116,20 +84,20 @@
 											<div class="form-group">
 												<label class="col-12 ">TIPO DE PERIODICIDAD </label> <label
 													class="col-12 "
-													th:text="${retribucionForm.tipoPeriodicidadDes}"></label>
+													></label>
 											</div>
 											<div class="form-group">
 												<label class="col-12 ">PERIODO </label> <label
-													class="col-12 " th:text="${retribucionForm.mesRetribucion}"></label>
+													class="col-12 " ></label>
 											</div>
 											<div class="form-group">
 												<label class="col-12 ">MONEDA</label> <label class="col-12 "
-													th:text="${retribucionForm.monedaRetribucionDes}"></label>
+													></label>
 											</div>
 											<div class="form-group"
-												th:if="${null!=retribucionForm.fdesde && !retribucionForm.fdesde.equals('')}">
+												>
 												<label class="col-12 ">DESDE </label> <label class="col-12 "
-													th:text="${retribucionForm.fdesde}"></label>
+													></label>
 											</div>
 
 										</div>
@@ -137,21 +105,21 @@
 											<div class="form-group">
 												<label class="col-12 ">TIPO DE RETRIBUCIÓN </label> <label
 													class="col-12 "
-													th:text="${retribucionForm.tipoRetribucionDes}"></label>
+													></label>
 											</div>
 											<div class="form-group">
 												<label class="col-12 ">AÑO </label> <label class="col-12 "
-													th:text="${retribucionForm.anioRetribucion}"></label>
+													></label>
 											</div>
 											<div class="form-group">
 												<label class="col-12 ">BUEN CONTRIBUYENTE</label> <label
 													class="col-12 "
-													th:text="${retribucionForm.buenContribuyente}"></label>
+													></label>
 											</div>
 											<div class="form-group"
-												th:if="${null!=retribucionForm.fhasta && !retribucionForm.fhasta.equals('')}">
+												>
 												<label class="col-12 ">HASTA</label> <label class="col-12 "
-													th:text="${retribucionForm.fhasta}"></label>
+													></label>
 											</div>
 
 
@@ -193,8 +161,7 @@
 											<th colspan="7" class="col">CONCEPTO</th>
 											<th class="col">TIPO</th>
 
-											<th class="col">[[${#strings.concat(retribucionForm.monedaSimbolo,'IMPORTE')}]]
-											</th>
+											<th class="col">					</th>
 											<th class="col">
 												<button class="green" type="button"
 													th:attr="onclick=|abrirNuevoModificarBaseImponible('N', '0','0','0','0')|">
@@ -212,20 +179,20 @@
 									<tbody>
 
 
-										<tr th:each="base : ${basec}">
-											<td colspan="7" scope="row" th:text="${base.sDescripcion}">nombreConcepto</td>
+										<tr>
+											<td colspan="7" scope="row" >nombreConcepto</td>
 
-											<td scope="row" th:text="${base.concepto.sDescripcion}">importeBaseImponible</td>
+											<td scope="row" >importeBaseImponible</td>
 											<td scope="row"
-												th:text="${base.nimporte=='0'?'0':#numbers.formatDecimal(base.nimporte, 0, 'COMMA', 0, 'POINT')}">importeBaseImponible</td>
+												>importeBaseImponible</td>
 											<td scope="row"><button title="Editar?" class="green"
 													type="button"
-													th:attr="onclick=|abrirNuevoModificarBaseImponible('M', '${base.id}','${base.sDescripcion}','${base.nimporte}','${base.concepto.id}')|">
+													>
 													<i class="ace-icon fa fa-edit"></i>
 												</button></td>
 											<td scope="row">
 												<button class="red" value="" title="Eliminar?" type="button"
-													th:attr="onclick=|abrirNuevoModificarBaseImponible('E', '${base.id}','${base.sDescripcion}','${base.nimporte}','${base.concepto.id}')|">
+													>
 													<i class="ace-icon fa fa-minus-circle"></i>
 												</button>
 											</td>
@@ -281,8 +248,7 @@
 
 
 											<th scope="col">CASILLA</th>
-											<th scope="col" style="text-align: right;">[[${#strings.concat(retribucionForm.monedaSimbolo,'
-												IMPORTE')}]]</th>
+											<th scope="col" style="text-align: right;"></th>
 
 										</tr>
 									</thead>
@@ -294,15 +260,14 @@
 											<td
 												style="text-align: right; font-weight: bolder !important;"
 												id="fbasecalculo">
-												[[${retribucionForm.baseCalculo=='0'?'0':#numbers.formatDecimal(retribucionForm.baseCalculo,0,
-												'COMMA', 0, 'POINT')}]]</td>
+												</td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="10">PORCENTAJE A APLICAR ( %)</td>
 
 											<td>(2)</td>
 											<td align="right" id="fporcentaje"
-												style="font-weight: bold; text-align: right;">[[${retribucionForm.porcentaje}]]</td>
+												style="font-weight: bold; text-align: right;"></td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="10">DEDUCCIONES</td>
@@ -312,9 +277,9 @@
 												style="text-align: right; font-weight: bolder !important;">
 												<button style="float: left;" class="btn btn-info"
 													id="btnDeduccionOpen" type="button">+</button> 
-												<a id="fdeduccion" th:if="${null!=retribucionForm.deduccion}"
+												<a id="fdeduccion" 
 												style="float: right; text-align: right !important; text-decoration: underline;"
-												href="#">[[${#numbers.formatDecimal(retribucionForm.deduccion,0,'COMMA',0,'POINT')}]]</a>
+												href="#"></a>
 
 											</td>
 										</tr>
@@ -324,8 +289,7 @@
 
 											<td>(3)</td>
 											<td id="fretribucionpendiente"
-												style="text-align: right; font-weight: bolder !important;">[[${retribucionForm.retribucionpendienteapagar=='0'?'0':#numbers.formatDecimal(retribucionForm.retribucionpendienteapagar,0,
-												'COMMA', 0, 'POINT')}]]</td>
+												style="text-align: right; font-weight: bolder !important;"></td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="12" class="table-secondary">(
@@ -337,14 +301,13 @@
 
 											<td>(4)</td>
 											<td id="fpagosprevios"
-												style="text-align: right; font-weight: bolder !important;">[[${retribucionForm.pagosprevios=='0'?'0':#numbers.formatDecimal(retribucionForm.pagosprevios,0,
-												'COMMA', 0, 'POINT')}]]</td>
+												style="text-align: right; font-weight: bolder !important;"></td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="10">CRÉDITOS POR APLICAR</td>
 
 											<td>(5)</td>
-											<td id="fcreditos">[[${retribucionForm.creditos}]]</td>
+											<td id="fcreditos"></td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="10">LIBERACIÓN DE PAGO</td>
@@ -355,9 +318,9 @@
 												<button style="float: left; font-weight: bolder !important;"
 													class="btn btn-info" id="btnLiberacionOpen" type="button">+</button>
 												<a id="fliberacion"
-												th:if="${null!=retribucionForm.liberacionpago}"
+												
 												style="float: right; text-align: right !important; text-decoration: underline;"
-												href="#">[[${#numbers.formatDecimal(retribucionForm.liberacionpago,0,'COMMA', 0,'POINT')}]]</a>
+												href="#"></a>
 											</td>
 										</tr>
 										<tr>
@@ -369,9 +332,9 @@
 												<button style="float: left; font-weight: bolder !important;"
 													class="btn btn-info" id="btnOtrosDescuentosOpen"
 													type="button">+</button> <a id="fotros"
-												th:if="${null!=retribucionForm.otrosDescuentos}"
+												
 												style="float: right; text-align: right; text-decoration: underline;"
-												href="#">[[${#numbers.formatDecimal(retribucionForm.otrosDescuentos,0,'COMMA', 0, 'POINT')}]]</a>
+												href="#"></a>
 											</td>
 										</tr>
 										<tr>
@@ -380,7 +343,7 @@
 
 											<td>(8)</td>
 											<td id="fretribucionaPagar"
-												style="font-weight: bold; text-align: right;">[[${retribucionForm.retribucionapagar}]]</td>
+												style="font-weight: bold; text-align: right;"></td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="12" class="table-secondary">(
@@ -394,7 +357,7 @@
 											<td><input id="fintereses" type="text"
 												class="numero border border-info "
 												style="font-weight: bold; text-align: right; float: right;"
-												size="7" />[[${retribucionForm.intereses}]]</td>
+												size="7" /></td>
 										</tr>
 										<tr>
 											<td scope="row" colspan="10">RETRIBUCIÓN AL ESTADO
@@ -402,7 +365,7 @@
 
 											<td>(10)</td>
 											<td id="fretribucionResultante"
-												style="font-weight: bold; text-align: right;">[[${retribucionForm.retribucionresultante}]]</td>
+												style="font-weight: bold; text-align: right;"></td>
 										</tr>
 
 									</tbody>
@@ -477,7 +440,7 @@
 		$("#retribucionresultantehdd").val(fretribucionResultante);
 		
 		
-		grabarResultante();
+		//grabarResultante();
 	}
 	function separadorDeMilesporId(id) {
 		var valor = $("#" + id).val();
@@ -803,6 +766,27 @@
 		});
 	}	
 	$(function() {
+		 var vencimiento=[];
+    	 var data={mes:'01',
+    			 anio:'2020',
+    			 idConcesionario:'1'
+    			 };
+    	 vencimiento.push(data);
+	 
+    	 $.ajax({
+			data : JSON.stringify(vencimiento),
+			type: "POST",
+			dataType: 'JSON',
+			contentType: 'application/json',
+			url : context+'api/tipodeclaracion/gettipodeclaracion'
+			}).done((res) => {
+				if(res!=-1){
+					 var s = "#cbocodTipoDeclaracion option:eq(" + (parseInt(res) - 1) + ")";
+					  $(s).prop('selected', true);
+				}
+		 });
+		 
+		 
 		separadorDeMilesKeyPressPorId("mntliberacion");
 		separadorDeMilesKeyPressPorId("mntdescuento");
 		separadorDeMilesKeyPressPorId("mntdeduccion");

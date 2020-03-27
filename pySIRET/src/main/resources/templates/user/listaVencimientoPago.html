@@ -8,50 +8,54 @@
 <body>
 	<div class="page-wrapper chiller-theme toggled">
 		<div th:replace="fragments/sb-admin :: mn-lat"></div>
-
 		<div class="page-content  chiller-theme toggled">
 			<div class="container-fluid">
-
-				<div class="row">
+				<form id="frmVencPago">
 					<div class="alert alert-primary" role="alert">
-						<h3>Cronograma de Vencimiento para el Pago de la Retribución
-							al Estado [[${anio}]]</h3>
+						<h3>[[#{general.mensaje.titulo.vencimiento.pago}]]</h3>
 					</div>
-					
-					<div class="col-12">
-				
+					<div class="container">
+					<div class="row">
+						<div class="col-12">
+						<div class="row" th:if="${session.oUsuario.perfil.id==1}">
+							<label>[[#{general.mensaje.label.concesion}]]</label> <input
+								id="cns" type="text" class=" form-control" autocomplete="off"
+								th:placeholder="#{general.mensaje.placeholder.concesionario}" />
+						</div>
+						</div>
+						<input id="cnshdd" type="hidden" th:value="${cn}" />
 					</div>
-					<div class="col-4" th:each="r : ${calendarioDet}">
-
-
-
-						<div class="card text-white bg-success  mb-3">
-							<div class="card-header">
-								<div class="row">
-									<h5 th:text="${'Periodo-'+r.sMesPeriodo} ">Featured</h5>
-								</div>
+					</div>
+					<hr />
+						<div class="row">
+							<div class="col-sm">
+								<label class="control-label">[[#{general.mensaje.label.tipoperiodicidad}]]</label>
+								<input id="fbtipoperiodicidad" type="text" class=" form-control"
+									autocomplete="off" th:placeholder="#{general.mensaje.placeholder.tipoperiodicidad}"
+									 />
+								<input id="tipoperiodicidadhdd" type="hidden" />
 							</div>
-							<div class="card-body">
-								<div class="card-title">
-									Fecha de Pago:
-									<h5 th:text="${#dates.format(r.dFechaVenc,'dd-MMM-yyyy')}"></h5>
-								</div>
+							<div class="col-sm">
+								<label class="control-label">[[#{general.mensaje.label.tiporetribucion}]]</label>
+								<input id="fbtiporetribucion" type="text" class=" form-control"
+									autocomplete="off" th:placeholder="#{general.mensaje.placeholder.tiporetribucion}"
+									 />
+								<input id="tiporetribucionhdd" type="hidden" />
+							</div>
+							<div class="col-sm">
+								<label class="control-label">[[#{general.mensaje.label.anio}]]</label>
+								<input id="fbanioRetribucion" type="text" class=" form-control"
+									autocomplete="off"
+									th:placeholder="#{general.mensaje.placeholder.anio}"
+									th:value="${anioActual}" /> 
+									<input id="aniohdd" type="hidden" th:value="${anioActual}" />
 							</div>
 						</div>
-					</div>
-
-
-
-
-					<!-- 								<div id="dd" class="form-control " placeholder="Pick the multiple dates"></div> -->
-
-
-
-
-
-				</div>
-
-
+					
+						<hr>
+						<div id="containerMeses" class="row"></div>
+					
+				</form>
 
 			</div>
 
@@ -63,17 +67,153 @@
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 
 	<script type="text/javascript">
+	
+	function calendario(anio,cn,itipoPeriodicidaddto,itipoRetribuciondto){
+		 var vencimiento=[];
+    	 var data={sAnioPeriodo:anio,
+    			 concesionario:cn,
+    			 itipoPeriodicidaddto:itipoPeriodicidaddto,
+    			 itipoRetribuciondto:itipoRetribuciondto
+    			 };
+    	 vencimiento.push(data);
+    	 $.ajax({
+				data : JSON.stringify(vencimiento),
+				type: "POST",
+				dataType: 'JSON',
+				contentType: 'application/json',
+				url : context+'calendario/pago/filtrar'
+				}).done((res) => {
+					var lista=res.HashMap.calendarioDet;
+					ordenarAsc(lista, 'oderbytipoPeriodicidaddto');
+					$("#containerMeses").html("");
+					for(var i=0;i<lista.length;i++){
+						$("#containerMeses").append(
+							'<div class="container col-sm-3"><div class="">'+
+		                          '<div class="card text-white bg-success m-1 ">'+
+											'<div class="card-header">'+
+												
+													
+												
+														'PERIODO<label class="pull-right" style="font-size:36px !important;" >'+lista[i].sMesPeriodo+'</label>'+
+													
+												
+											'</div>'+
+											' <div class="card-body ">'+
+												
+													'<p style="text-align: left;">'+
+													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.fechapago}]]:</label><br>'+
+													'<label style="font-size:18px;font-weight:bold;" >'+lista[i].dFechaVencPago+'</label><br>'+
+													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.tipoperiodicidad}]]:</label><br>'+
+													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoPeriodicidaddto+'</label><br>'+
+													'<label style="font-size:8px;font-weight:bold;" > [[#{general.mensaje.label.tiporetribucion}]]:</label><br>'+
+													'<label style="font-size:12px;font-weight:bold;" >'+lista[i].tipoRetribuciondto+'</label><br>'+
+													'</p>'+
+											
+											'</div>'+
+								   '</div>'+
+						   '</div></div>');
+					}
+				});
+				}
 		$(function() {
-
-			$('#dd').datepicker({
-				multidate : true,
-				format : 'dd-mm-yyyy',
-				numberOfMonths : 3,
-				showButtonPanel : true
-
+			calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+			$('#fbtipoperiodicidad').on("keyup",function(){
+				if(this.value==""){
+					$("#tipoperiodicidadhdd").val("");
+					calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+				};
 			});
-
-		
+			$('#fbtiporetribucion').on("keyup",function(){
+				if(this.value==""){
+					$("#tiporetribucionhdd").val("");
+					calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+				};
+			});
+			$('#fbanioRetribucion').on("keyup",function(){
+				if(this.value==""){
+					$("#aniohdd").val("");
+					calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+				};
+			});
+			$('#fbtipoperiodicidad').autocomplete({
+				serviceUrl: context+'api/tipoperiodicidad/getTipoPeriodicidad',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_tpdto;
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map(d, function(item) {
+				      return { value: item.sdescripcion, data: item.id };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	$("#tipoperiodicidadhdd").val($('#fbtipoperiodicidad').val()==""?"":suggestion.data);
+		        	calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+		         }
+			 });
+			
+			$('#fbtiporetribucion').autocomplete({
+				serviceUrl: context+'api/tiporetribucion/getTipoRetribucion',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.autoCompleteDto.lista_trdto;
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map(d, function(item) {
+				      return { value: item.sdescripcion, data: item.id };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	$("#tiporetribucionhdd").val($('#fbtiporetribucion').val()==""?"":suggestion.data);
+		        	calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+		         }
+			 });
+			
+			
+			$('#fbanioRetribucion').autocomplete({
+				serviceUrl: context+'getAnios',
+				paramName: "tagName",
+				delimiter: ",",
+			   transformResult: function(response) {
+				   var obj=JSON.parse(response);
+				   var d=obj.List;
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map(d, function(item) {
+				      return { value: item, data: item };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	$("#aniohdd").val($('#fbanioRetribucion').val()==""?"":suggestion.data);
+		        	calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+		         }
+			 });
+			$('#cns').autocomplete({
+				serviceUrl: context+'api/contribuyente/getContribuyente',
+				paramName: "tagName",
+				delimiter: ",",
+			    transformResult: function(response) {
+			    	 var obj=JSON.parse(response);
+					   var d=obj.autoCompleteDto.lista_tcdto;
+				return {      	
+				  //must convert json to javascript object before process
+				  suggestions: $.map(d, function(item) {
+				      return { value: item.sdescripcion, data: item.id };
+				   })
+				 };
+		         },
+		         onSelect: function (suggestion) {
+		        	 $("#cnshdd").val($('#cns').val()==""?"":suggestion.data);
+		        	 calendario($("#aniohdd").val(),$("#cnshdd").val(),$("#tipoperiodicidadhdd").val(),$("#tiporetribucionhdd").val());
+		         }
+			 });
 		});
 		
 	</script>

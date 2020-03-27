@@ -62,7 +62,7 @@
 										class="fa fa-user"></span>
 									</a> <input type="text" class="form-control" th:id="username"
 										id="username" name="username" th:name="username"
-										placeholder="Enter username">
+										placeholder="Enter username" autocomplete="off" onblur="foco('password')">
 								</div>
 
 							</div>
@@ -80,7 +80,7 @@
 										class="fa fa-lock"></span>
 									</a> <input type="password" class="form-control" name="password"
 										id="password" th:name="password" th:id="password"
-										placeholder="Password">
+										placeholder="Password" autocomplete="off"  onblur="foco('btnlogin')">
 								</div>
 
 							</div>
@@ -89,7 +89,7 @@
 
 
 
-						<button type="button" class="btn btn-primary"
+						<button id="btnlogin" type="button" class="btn btn-primary"
 							onclick="doSubmit();">Entrar</button>
 					</form>
 
@@ -108,6 +108,10 @@
 	</div>
 
 	<script type="text/javascript">
+	function foco(idElemento){
+		 document.getElementById(idElemento).focus();
+	}
+	
 	  function preventBack() { window.history.forward(); }
       setTimeout("preventBack()", 0);
       window.onunload = function () { null };

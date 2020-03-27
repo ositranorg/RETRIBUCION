@@ -59,9 +59,10 @@ public class Vencimiento implements Serializable {
 	@SequenceGenerator(name = "id_SequenceVENCIMIENTO", sequenceName = "SQ_RET_VENCIMIENTO", allocationSize = 1)
 	private Integer id;
 
-	@Column(name = "DFECHAVENC", nullable = false)
-	private Date dFechaVenc;
-
+	@Column(name = "DFECHAVENCPAGO")
+	private Date dFechaVencPago;
+	@Column(name = "DFECHAVENCPRES")
+	private Date dFechaVencPres;
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = TipoRetribucion.class)
 	@JoinColumn(name = "nTipoRetribucion")
 	private TipoRetribucion tipoRetribucion;
@@ -76,18 +77,12 @@ public class Vencimiento implements Serializable {
 	@Column(name = "SANIO_PERIODO", nullable = false, length = 4)
 	private String sAnioPeriodo;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Concepto.class)
-	@JoinColumn(name = "ncodigoConcepto")
-	private Concepto concepto;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = TipoVencimiento.class)
-	@JoinColumn(name = "ncodigotv")
-	private TipoVencimiento tipoVencimiento;
+	
 
-	@Column(name = "SESPECIAL")
-	private String sEspecial = "0";
-	@Column(name = "SDIGITO_RUC", length = 1)
-	private String sDigitoRuc;
+	@Column(name = "SDIAHABIL")
+	private Integer sDiaHabil = 1;
+	
 	@Column(name = "SESTADO")
 	private String sEstado = "1";
 
@@ -96,5 +91,6 @@ public class Vencimiento implements Serializable {
 	@JoinColumn(name = "concesionario_id", nullable = false)
 	@JsonIgnore
 	private Concesionario concesionario; 
+	
 
 }

@@ -22,10 +22,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
@@ -45,6 +44,7 @@ import com.kemal.spring.domain.Deduccion;
 import com.kemal.spring.domain.Descuento;
 import com.kemal.spring.domain.LiberacionPago;
 import com.kemal.spring.domain.User;
+import com.kemal.spring.domain.procedures.PRC_TipoDeclaracion;
 import com.kemal.spring.service.AporteDeduccionService;
 import com.kemal.spring.service.AporteDescuentoService;
 import com.kemal.spring.service.AporteLiberacionService;
@@ -60,6 +60,7 @@ import com.kemal.spring.service.PagoService;
 import com.kemal.spring.service.TipoPeriodicidadService;
 import com.kemal.spring.service.TipoRetribucionService;
 import com.kemal.spring.service.VencimientoService;
+import com.kemal.spring.web.controllers.restApiControllers.dto.BuscarDJDto;
 import com.kemal.spring.web.dto.AporteDeduccionModalDTO;
 import com.kemal.spring.web.dto.AporteDescuentoModalDTO;
 import com.kemal.spring.web.dto.AporteLiberacionModalDTO;
@@ -116,12 +117,16 @@ public class RetribucionController {
 	AporteDescuentoService aporteDescuentoService;	
 	@Autowired
 	AporteDeduccionService aporteDeduccionService;
-	public static HttpSession session() {
+
+	
+	public HttpSession session() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(); // true == allow create
 	}
-
-	@RequestMapping(value = { "/retribucion/registrar" }, method = RequestMethod.GET)
+	
+	 
+	 
+	/*@RequestMapping(value = { "/retribucion/registrar" }, method = RequestMethod.GET)
 	public ModelAndView pago(ModelMap model, @PathVariable String calendarioSel, @PathVariable String anioSel) {
 		User u = (User)session().getAttribute("oUsuario");
 
@@ -130,7 +135,7 @@ public class RetribucionController {
 		ModelAndView view = new ModelAndView("/user/retribucion", "command", form);
 
 		return view;
-	}
+	}*/
 
 	@GetMapping(value = "/retribucion/openDeduccion")
 	@ResponseBody

@@ -33,40 +33,51 @@ public class Aporte {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_SequenceAPORTE")
 	@SequenceGenerator(name = "id_SequenceAPORTE", sequenceName = "SQ_RET_APORTE", allocationSize= 1)
 	private Integer id;
-	
-
- 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = TipoRetribucion.class)
- 	@JoinColumn(name="sTipoRetribucion")
+	@ManyToOne
+	@JoinColumn(name="ID_CONCESIONARIO")
+	private Concesionario concesionario;
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = TipoRetribucion.class)
+ 	@JoinColumn(name="ID_TIPORETRIBUCION")
 	private TipoRetribucion tipoRetribucion; 
  	
  	@ManyToOne(fetch = FetchType.EAGER,targetEntity = TipoPeriodicidad.class)
- 	@JoinColumn(name="sTipoPeriodicidad")
+ 	@JoinColumn(name="ID_TIPOPERIODICIDAD")
 	private TipoPeriodicidad tipoPeriodicidad;
- 	
- 	
+ 	@Column(name = "SMES_PERIODO")
 	private String sMesPeriodo;
+ 	@Column(name = "SANIO_PERIODO")
 	private String sAnioPeriodo;
-	
-
-
-	private String sEstado="1";
+ 	
 	@Temporal(TemporalType.DATE)
 	private Date fechaVenPago;
 	@Temporal(TemporalType.DATE)
 	private Date fechaVenPres;
 	
 	@ManyToOne
-	@JoinColumn(name="ncodigoCN")
-	private Concesionario contribuyente;
+	@JoinColumn(name="ID_APORTEESTDJ")
+	private AporteEstadoDJ aporteEstadoDJ;
 	
 	@ManyToOne
-	@JoinColumn(name="ncodigoAT")
-	private AporteTipo aporteTipo;
+	@JoinColumn(name="ID_APORTETIPOPRESNT")
+	private AporteTipoPresentacion aporteTipoPresentacion;
+	
+	@Column(name = "SESTADO")
+	private String sEstado="1";
 	
     @Column(name = "NINTERES")
 	private BigDecimal nInteres;
     @Column(name = "NRET_RESULTANTE")
 	private BigDecimal nRetribucionResultante;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_MONEDA")
+	private Moneda moneda;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_APORTEPORCTJE")
+	private AportePorcentaje aportePorcentaje;
+	
+	
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DFECHAREGISTRO")
@@ -79,5 +90,6 @@ public class Aporte {
     private Date dfecModifica;
 	@Column(name = "SUSUMODIFICA")
     private String sUsuModifica;
+	
 	
 }

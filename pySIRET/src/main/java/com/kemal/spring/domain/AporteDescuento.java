@@ -45,6 +45,7 @@ public class AporteDescuento {
     private Date dfecModifica;
 	@Column(name = "SUSUMODIFICA")
     private String sUsuModifica;
+	@Column(name = "SESTADO")
 	private String sEstado="1";
   
 	@Column(name = "SDESCRIPCION_DES", length = 4000)

@@ -54,44 +54,32 @@
 												Datos del Representante(s) Legal(es)<span class="text-danger">(*)</span>
 											</p>
 										</div>
-										<div>
-											<button class="btn btn-light" data-toggle="modal"
-												data-target="#registrarModal">
-												<i class="fa fa-plus pr-1"></i>REPRESENTANTE
-											</button>
-										</div>
+										
 									</div>
 								</div>
 								<div class="card-body">
 									<div class="row">
 										<div class="col-sm-12">
-											<table class="table">
-												<thead class="thead-dark">
+											<table id="tblRepresentante" class="table">
+												<thead >
 													<tr>
 														<th scope="col" style="text-align: center;">Nro</th>
-														<th scope="col" style="text-align: center;">Tipo
-															Documento</th>
+														<th scope="col" style="text-align: center;">Tipo Documento</th>
 														<th scope="col" style="text-align: center;">Número</th>
 														<th scope="col" style="text-align: center;">Nombres</th>
-														<th scope="col" style="text-align: center;">Ape.
-															Paterno</th>
-														<th scope="col" style="text-align: center;">Ape.
-															Materno</th>
+														<th scope="col" style="text-align: center;">Ape.Paterno</th>
+														<th scope="col" style="text-align: center;">Ape.Materno</th>
 														<th scope="col" style="text-align: center;">Cargo</th>
-														<th scope="col" style="text-align: center;">Fec.
-															Inicio</th>
-														<th scope="col" style="text-align: center;">
-															Acciones</th>
+														<th scope="col" style="text-align: center;">Fec.Inicio</th>
 													</tr>
 												</thead>
-												<tbody id="tblRepresentantes">
-	
-												</tbody>
+												
 											</table>
-											<nav aria-label="Page navigation example">
-												<ul class="pagination" id="ulPaginacion">
-												</ul>
-											</nav>
+											
+			
+					
+					
+											
 										</div>
 									</div>
 								</div>
@@ -263,7 +251,47 @@
 	$('#txtTelefono').val(telefonoEmpresa);
 	$('#txtCorreo').val(correoEmpresa);
 	listarTipoDocumento();
-	listarRepresentantes(1);
+	var url = context+'api/representante/listar-representante';
+	var DT1=$('#tblRepresentante').DataTable( {
+		  "pageLength": 5,
+		  'bProcessing': false,
+	        'bServerSide': false,
+	        "ajax": {
+	            "url": url,
+	            "type": "GET"
+	        },
+			"aoColumns": [ 
+		            { 'mData': 'id',"visible":false },
+		            { 'mData': 'tipoDocumento' },
+		            { 'mData': 'sNumero' },
+		            { 'mData': 'sNombres'},
+		            { 'mData': 'sApePaterno'},
+		            { 'mData': 'sApeMaterno'},			            
+		            { 'mData': 'sCargo' },
+		            { 'mData': 'dFechaInicio' }
+	            ],
+	            "language": {
+	                "decimal": "",
+	                "emptyTable": "No hay información",
+	                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+	                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+	                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+	                "infoPostFix": "",
+	                "thousands": ",",
+	                "lengthMenu": "Mostrar _MENU_ Entradas",
+	                "loadingRecords": "Cargando...",
+	                "processing": "Procesando...",
+	                "search": "Buscar:",
+	                "zeroRecords": "Sin resultados encontrados",
+	                "paginate": {
+	                    "first": "Primero",
+	                    "last": "Ultimo",
+	                    "next": "Siguiente",
+	                    "previous": "Anterior"
+	                }
+	            }
+		    
+	} );
 	
 	function variaValorNroDocumento(){
 		var idTipoDocumento = $('#cboTipoDocumento').val();
@@ -330,16 +358,13 @@
 	function listarRepresentantes(pagina){
 		var url = context + 'api/representante/listar-representante';
 		var ruc = $('#txtRucEmpresa').val();
-	    var data = {
+	   /* var data = {
 	    		sruc:ruc,
 	    		pagina:pagina
-	    }
+	    }*/
 		$.ajax({
-			headers: {
-				"X-CSRF-TOKEN": token
-			},
 			// En data puedes utilizar un objeto JSON, un array o un query string
-			data: JSON.stringify(data),
+			//data: JSON.stringify(data),
 			//Cambiar a type: POST si necesario
 			type: "POST",
 			// Formato de datos que se espera en la respuesta
@@ -349,12 +374,11 @@
 			url: url,
 		})
 		.done((rest) => {
-			//console.log(rest);
-			if (rest.resultado == 1) {		
-				pintarTablaRepresentantes(rest.lista.representantes);
-				cargarPaginador(rest.lista.totalRegistros);
+			console.log(rest);
+			if (rest.HashMap.resultado == 1) {		
+				pintarTablaRepresentantes(rest.HashMap.lista);
+				//cargarPaginador(rest.lista.totalRegistros);
 			}
-
 		});
 	}
 	function cargarOptionTipoDocumento(lista){
@@ -472,7 +496,7 @@
 		}
 		var conta = 0;
 		lista.forEach((data)=>{
-			var nombre = data.tipoDocumento.snombre==='null'?'-':data.tipoDocumento.snombre;
+			var nombre = data.tipo_documento===null||data.tipo_documento===undefined?'-':data.tipo_documento;
 			var numero = data.snumero==null?'-':data.snumero;
 			var nombres = data.snombres==null?'-':data.snombres;
 			var apePaterno = data.sapePaterno==null?'-':data.sapePaterno;

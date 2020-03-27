@@ -21,56 +21,55 @@
 
 					</div>
 					<div class="col-12">
-						<form id="frmMostrarRetribucion" th:action="@{/retribucion}">
-						<input id="tpperiodicidadhdd" type="hidden" th:value="${buscarRetribucionForm.tipoPeriodicidad}"></input>
+						<form id="frmMostrarRetribucion">
+							<input id="puedeVerBC" type="hidden"
+								th:value="${session.puedeVerBC}" /> <input
+								id="tpperiodicidadhdd" type="hidden"></input> <input
+								id="nporcentajehdd" type="hidden"></input>
+
+
 							<div class="col-12">
 								<div class="row">
 
 									<div class="col-6">
 										<label> TIPO DE PERIODICIDAD </label><span style="color: red">(*)</span>
-										<select th:field="${buscarRetribucionForm.tipoPeriodicidad}"
-											id="cal" class="form-control border border-info">
+										<select onclick="borrarError('errcal');" id="cal" 
+											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="cal : ${lsttipoPeriodicidad}"
-												th:value="${cal.id}" th:text="${cal.sDescripcion}"
-												th:selected="${buscarRetribucionForm.tipoPeriodicidad==cal.id}"></option>
 
-										</select>
+
+										</select> <label id="errcal"> </label>
 									</div>
 
 									<div class="col-6">
-										<label style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
+										<input id="nporcentajehdd" type="hidden" value="" /> <label
+											style="text-align: left;"> TIPO DE RETRIBUCIÓN</label><span
 											style="color: red">(*)</span> <select
-											th:field="${buscarRetribucionForm.tipoRetribucion}"
+											onclick="borrarError('errtipoRetribucion');"
 											id="tipoRetribucion" class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="tp : ${lsttipoRetribucion}"
-												th:value="${tp.id}" th:text="${tp.sDescripcion}"
-												th:selected="${buscarRetribucionForm.tipoRetribucion==tp.id}"></option>
-										</select>
+
+										</select> <label id="errtipoRetribucion"> </label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-6">
-										<label style="text-align: left;"> PERÍODO</label><span
+										<label style="text-align: left;"> PERÍODO</label> <span
 											style="color: red">(*)</span>
 										<div id="periodostributrios"></div>
 
-
+										<label id="errmes"> </label>
 									</div>
 									<div class="col-6">
 
 										<label style="text-align: left;"> AÑO</label><span
 											style="color: red">(*)</span> <select
-											th:field="${buscarRetribucionForm.anioRetribucion}"
-											id="sAnio"
+											onclick="borrarError('errsAnio');" id="sAnio"
 											class="form-control form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="anioi : ${anios}" th:value="${anioi}"
-												th:text="${anioi}"
-												th:selected="${buscarRetribucionForm.anioRetribucion==anioi}"></option>
 
-										</select>
+
+										</select> <label id="errsAnio"> </label>
 									</div>
 
 
@@ -80,37 +79,34 @@
 
 									<div class="col-6">
 										<label> MONEDA </label><span style="color: red">(*)</span> <select
-											th:field="${buscarRetribucionForm.monedaRetribucion}"
+											onclick="borrarError('errsmonedaRetribucion');"
 											id="monedaRetribucion"
 											class="form-control border border-info">
 											<option value="">--SELECCIONE--</option>
-											<option th:each="tp : ${lstMonedaRetribucion}"
-												th:value="${tp.id}" th:text="${tp.sDescripcion}"
-												th:selected="${buscarRetribucionForm.monedaRetribucion==tp.id}"></option>
-										</select> <label id="errcal" class="col-sm-12 control-label"></label>
+
+										</select> <label id="errsmonedaRetribucion"></label>
 									</div>
 
 									<div class="col-6">
+										<input id="puedeVerBC" type="hidden"
+											th:value="${session.puedeVerBC}" /> <label
+											style="text-align: left;" th:if="${session.puedeVerBC==1}">
+											ES BUEN CONTRIBUYENTE?</label>
+										<div class="col" th:if="${session.puedeVerBC==1}">
+											<span style="color: red">(*)</span>
+											<div id="buenContribuyente"></div>
 
-
-
-										<input id="buenContribuyente" type="hidden" name="buenContribuyente" th:value="${buscarRetribucionForm.buenContribuyente}"></input> 
-
-
-										<label style="text-align: left;"> ES BUEN
-											CONTRIBUYENTE?</label> <label
-											class="form-control  border border-info">[[${buscarRetribucionForm.buenContribuyente}]]</label>
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col">
 										<label style="text-align: left;"> PORCENTAJE A
-											APLICAR( %)</label> 
-											<input id="porcentajehdd" type="hidden" name="porcentajehdd" value=""></input> 
-											<input id="lstAportePorcentajesize" type="hidden" th:value="${lstAportePorcentajesize}"></input> 
-											<label id="lblporcentaje" style="text-align: right; font-weight: bolder !important;" class="form-control  border border-info">
-											[[${null!=lstAportePorcentaje and lstAportePorcentaje.size()==1?lstAportePorcentaje.get(0).porcentaje:''}]]</label>
-
+											APLICAR( %)</label> <span style="color: red">(*)</span> <label
+											id="porcentaje"
+											style="text-align: right; font-weight: bolder !important;"
+											class="form-control  border border-info"></label> <label
+											id="errporcentaje" ></label>
 									</div>
 									<div class="col"></div>
 								</div>
@@ -119,56 +115,44 @@
 										<label for="fdesde" style="text-align: left;"> DESDE</label> <input
 											id="fdesde" type="text" data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
-											autocomplete="off" th:field="${buscarRetribucionForm.fdesde}"
-											th:value="${buscarRetribucionForm.fdesde}">
+											autocomplete="off">
 									</div>
 									<div class="col">
-
 										<label for="fhasta" style="text-align: left;"> HASTA</label> <input
 											name="fhasta" id="fhasta" type="text"
 											data-date-format="dd/MM/yyyy"
 											class=" date-picker form-control border border-info"
-											autocomplete="off" th:field="${buscarRetribucionForm.fhasta}"
-											th:value="${buscarRetribucionForm.fhasta}">
+											autocomplete="off">
 									</div>
-
 								</div>
 								<hr>
 								<div class="form-group">
-
-
-
-									<button type="submit" class="btn btn-info" id="btnBuscarDJ">Entrar</button>
+									<button type="button" class="btn btn-info" id="btnBuscarDJ">Entrar</button>
 								</div>
 								<span style="color: red">(*)campos obligatorios</span>
-								<div id="errorMessage" th:if="${errorMessage}"
-									th:text="${errorMessage}" class="alert alert-danger"
-									role="alert"></div>
 
 							</div>
-							<input type="hidden" id="tipoPeriodicidadhdd"
-								th:value="${buscarRetribucionForm.tipoPeriodicidad}" /> <input
-								type="hidden" id="meshdd"
-								th:value="${buscarRetribucionForm.mes}" />
+							<input type="hidden" id="tipoPeriodicidadhdd" /> <input
+								type="hidden" id="meshdd" />
 						</form>
 
 
-						
-							<div class="modal fade" data-keyboard="false"
-								data-backdrop="static" id="modalBuenCSN" tabindex="-1"
-								role="dialog" aria-labelledby="myModalLabel">
-								<div class="modal-dialog responsive" role="document">
-									<div class="modal-content">
 
-										<div class="modal-header">
+						<div class="modal fade" data-keyboard="false"
+							data-backdrop="static" id="modalBuenCSN" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog responsive" role="document">
+								<div class="modal-content">
 
-											<h4 class="modal-title" id="tituloBuenCSN">ALERTA :
-												REVISE SU INFORMACIÓN</h4>
+									<div class="modal-header">
 
-										</div>
+										<h4 class="modal-title" id="tituloBuenCSN">ALERTA :
+											REVISE SU INFORMACIÓN</h4>
+
+									</div>
 
 
-										<div class="modal-body" id="contenidoModalBuenCSN">
+									<div class="modal-body" id="contenidoModalBuenCSN">
 										<form id="frmBuenCSN">
 											<div class="row">
 												<p id="lbldetallebi" class="col-12 justify center">Estimado
@@ -191,16 +175,16 @@
 														class="errcboBuenCSN"></label>
 												</div>
 											</div>
-											</form>
-										</div>
+										</form>
+									</div>
 
-										<div class="modal-footer">
-											<button type="button" class="btn btn-info" id="btnBuenCsn">CONTINUAR</button>
-										</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-info" id="btnBuenCsn">CONTINUAR</button>
 									</div>
 								</div>
 							</div>
-						
+						</div>
+
 
 
 
@@ -246,41 +230,58 @@
 
 	<div th:replace="fragments/jsScripts :: scripts"></div>
 	<script type="text/javascript">
-		$(function() {
-			
-			buscarPeriodo("mes","periodostributrios","cal",$("#tpperiodicidadhdd").val());
-			
-			$("#tipoRetribucion").change(function(){
-				if($("#lstAportePorcentajesize").val()==undefined||$("#lstAportePorcentajesize").val()==""?0:parseInt($("#lstAportePorcentajesize").val())>1){
-					$.ajax({
-						type : "GET",
-						contenttype : "application/json",
-						url : context+"retribucion/getPorcentaje",
-						data : { tipoRetribucion:$("#tipoRetribucion").val()},
-						dataType : "json",
-						success : function(result) {
-								$("#lblporcentaje").html(result);
-								$("#porcentajehdd").val(result);	
-						},
-						error : function(result) {
-							console.log("error");
-							$("#lblporcentaje").html("");
-							$("#porcentajehdd").val("");	
-						}
-
-					});
-				}else{
-					
-					$("#porcentajehdd").val($("#lblporcentaje").html().trim());	
-				}
-			});
-			
-			if($("#errorMessage").html()==""){
-				$("#modalBuenCSN").modal("show");	
+		function loadDropdown(id,lista){
+			var dropdown=$("#"+id);
+			$.each(lista, function (key, entry) {							 
+			    dropdown.append($('<option></option>').attr('value', entry.id).text(entry.sdescripcion));
+			})
+		}
+		
+		function loadBC(id,v){
+			if($("#puedeVerBC").val()==1){
+				var html='<label >'+v+'</label> ';
+				$("#"+id).append(html);
+			}else{
+				$("#"+id).html("");
 			}
 			
+		}
+		function borrarError(id){
+			$("#"+id).html("");
+		}
+		$(function() {
 			
-
+			$.getJSON(context+"cargarDatos",				
+				function(rest){
+				
+				var vacio='<select id="mes" class="form-control border border-info">'
+							+ '<option value="">--SELECCIONE--</option>'
+                            + '</select>';
+				$('#periodostributrios').html(vacio);
+					loadDropdown("cal",rest.mostrarDto.lst_tipo_periodicidad);
+					loadDropdown("tipoRetribucion",rest.mostrarDto.lst_tipo_retribucion);
+					loadDropdown("sAnio",rest.mostrarDto.lst_anios);
+					loadDropdown("monedaRetribucion",rest.mostrarDto.lst_moneda_retribucion);
+					if(undefined!=rest.mostrarDto.condicion_bc)
+					loadBC("buenContribuyente",rest.mostrarDto.condicion_bc.sbuencontribuyente);
+					
+					
+					
+					$("#sAnio").val(rest.mostrarDto.anioActual);
+			});
+			
+ 			buscarPeriodo("mes","periodostributrios","cal",1);
+			
+			$("#tipoRetribucion").change(function(){
+					borrarError('errporcentaje');
+					var data = { tipoRetribucion:$("#tipoRetribucion").val()==""?-1:$("#tipoRetribucion").val()};
+					$.getJSON(context+"getPorcentaje",data,function(rest){
+						$("#porcentaje").html(rest.aportePorcentajeDto.sdescripcion!=undefined?rest.aportePorcentajeDto.sdescripcion:"");
+					
+					});
+			});
+			
+			$("#modalBuenCSN").modal("show");	
 			$("#btnBuenCsn").on("click", function() {
 				var actualizar = $("input[name=cboBuenCSN]:checked").val();
 				if (actualizar == "NO") {
@@ -297,11 +298,84 @@
 			});
 			
 			
-		
+			$("#btnBuscarDJ").on("click",function(){
+				var f=true;
+								if($("#cal").val()==""){
+									$("#errcal").html(msgObligatorio);
+									f=false;
+								}
+								if($("#tipoRetribucion").val()==""){
+									$("#errtipoRetribucion").html(msgObligatorio);
+									f=false;
+								}
+								if($("#mes").val()==""){
+									$("#errmes").html(msgObligatorio);
+									f=false;
+								}
+								if($("#sAnio").val()==""){
+									$("#errsAnio").html(msgObligatorio);
+									f=false;
+								}
+								if($("#monedaRetribucion").val()==""){
+									$("#errsmonedaRetribucion").html(msgObligatorio);
+									f=false;
+								}
+								if($("#porcentaje").html()==""){
+									$("#errporcentaje").html(msgObligatorio);
+									f=false;
+								}
+								if(f){
+									var data={
+											tipoperiodicidad:$("#cal").val(),
+											tiporetribucion:$("#tipoRetribucion").val(),
+											smesperiodo:$("#mes").val(),
+											sanioperiodo:$("#sAnio").val(),
+											moneda:$("#monedaRetribucion").val(),
+											porcentaje:$("#porcentaje").html()
+									};
+									$.ajax({
+								        type: "POST",
+								        contentType: "application/json",
+								        url: context+"entrarDJ",
+								        data: JSON.stringify(data),
+								        dataType: 'json',
+								        cache: false,
+								        success: function (data) {
+											if(data.buscarDJDto.codigo==-1){
+												$.confirm({
+										    	    title: 'Aviso',
+										    	    content: data.buscarDJDto.mensaje,
+										    	    type: 'green',
+										    	    buttons: {
+										    	    	text: 'OK',
+											    	    Si: function(){
+											    	        window.location.href=context+"pagos";
+											    	    }
+										    	    }
+										    	});
+											}else{
+												window.location.href=context+"retribucion/mostrarregistrar?"+
+																			"tipoperiodicidad="+$("#cal").val()+
+																			"&tiporetribucion="+$("#tipoRetribucion").val()+
+																			"&smesperiodo="+$("#mes").val()+
+																			"&sanioperiodo="+$("#sAnio").val()+
+																			"&moneda="+$("#monedaRetribucion").val()+
+																			"&porcentaje="+$("#porcentaje").html()+
+																			"&codigo="+data.buscarDJDto.codigo;
+											}								        	
+											
+								        },
+								        error: function (e) {
+
+
+								        }
+								        });
+								}
+				});
 			
 			
 
-		});
+			});
 	</script>
 </body>
 </html>

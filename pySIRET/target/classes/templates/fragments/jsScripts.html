@@ -8,11 +8,11 @@
 <body>
 
 	<div th:fragment="scripts">
-	  	<script type="text/javascript"
+	<!--   	<script type="text/javascript"
 			th:src="@{/js/jquery.min.js}"></script>
-			
-			 <script type="text/javascript"
-			th:src="@{/js/jquery-3.3.1.js}"></script>
+		 -->	
+			  <script type="text/javascript"
+			th:src="@{/js/jquery-3.3.1.js}"></script> 
 			 
 		<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
 	
@@ -26,12 +26,11 @@
 		<script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
 		<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
 		<script type="text/javascript" th:src="@{/js/jquery-confirm.min.js}"></script>
-<!-- 		<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script> -->
-<!-- 		<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script> -->
-		<script type="text/javascript" th:src="@{/js/jquery.auto-complete.js}"></script>
+		<script  type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
+		<script  type="text/javascript" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script> 
+		<script  type="text/javascript" th:src="@{/js/jquery.auto-complete.js}"></script>
 		
 		<!-- 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>-->
-
 		<script type="text/javascript" th:src="@{/js/reutilizables.js}"></script>
 
 		
@@ -39,37 +38,42 @@
 			th:src="@{/js/dataTables.select.min.js}"></script>
 		<script th:inline="javascript">
 		
-		   function preventBack() { window.history.forward(); }
-	        setTimeout("preventBack()", 0);
-	        window.onunload = function () { null };
+		//    function preventBack() { window.history.forward(); }
+	    //     setTimeout("preventBack()", 0);
+	    //     window.onunload = function () { null };
     /*<![CDATA[*/
         var context = [[@{/}]];
     /*]]>*/
     var IDLE_TIMEOUT = 30*60//media hora
-            var _idleSecondsCounter = 0;
+    var _idleSecondsCounter = 0;
 
-            document.onclick = function () {
-                _idleSecondsCounter = 0;
-            };
+    document.onclick = function () {
+        _idleSecondsCounter = 0;
+    };
 
-            document.onmousemove = function () {
-                _idleSecondsCounter = 0;
-            };
+    document.onmousemove = function () {
+        _idleSecondsCounter = 0;
+    };
 
-            document.onkeypress = function () {
-                _idleSecondsCounter = 0;
-            };
+    document.onkeypress = function () {
+        _idleSecondsCounter = 0;
+    };
 
-            window.setInterval(CheckIdleTime, 1000);
+    window.setInterval(CheckIdleTime, 1000);
 
-            function CheckIdleTime() {
-                _idleSecondsCounter++;
-                if (_idleSecondsCounter >= IDLE_TIMEOUT) {
-                	alert("Estimado Usuario su sesion ha terminado");
-            		$("#salir").click();
+    function CheckIdleTime() {
+        _idleSecondsCounter++;
+        if (_idleSecondsCounter >= IDLE_TIMEOUT) {
+        	alert("Estimado Usuario su sesion ha terminado");
+    		$("#salir").click();
 
-                }
-            }
+        }
+    }
+    function ordenarAsc(p_array_json, p_key) {
+   		p_array_json.sort(function (a, b) {
+      return a[p_key] > b[p_key];
+	   });
+	}
     function parseFloatHTMLField(f) {
 		return parseFloat(undefined != $("#" + f).html()
 				&& $("#" + f).html() != "" ? quitarCommas($("#" + f).html())

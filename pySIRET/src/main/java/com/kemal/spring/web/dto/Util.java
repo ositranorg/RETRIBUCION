@@ -1,7 +1,6 @@
 package com.kemal.spring.web.dto;
 
 import java.math.BigDecimal;
-import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -13,7 +12,6 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -30,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kemal.spring.domain.Archivo;
-import com.kemal.spring.domain.Vencimiento;
+import com.kemal.spring.domain.User;
 
 
 @Component
@@ -38,20 +36,10 @@ public class Util {
 	@Autowired
 	Config config;
 	
-	public List<CalendarioDto> fromLstToCalendarioDto(List<?> lst) {
-		List<CalendarioDto> salida = new ArrayList<CalendarioDto>();
-		lst.stream().forEach(p -> {
-			if (p instanceof Vencimiento) {
-				Vencimiento f = (Vencimiento) p;
-				CalendarioDto to = new CalendarioDto(f.getId(), f.getSMesPeriodo(), f.getDFechaVenc());
-				salida.add(to);
-			} 
-
-		});
-
-		return salida;
+	
+	public  Integer getConcesionario(User u,int vVar) {
+		return u.getPerfil().getId()!=2?vVar:u.getConcesionario().getId();
 	}
-
 	public int anioActual() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
@@ -183,7 +171,7 @@ public class Util {
 	        env.put(Context.SECURITY_CREDENTIALS, clave);
 
 	        try {
-	        	 DirContext   ctx = new InitialDirContext(env); // get a handle to an Initial DirContext
+	        	DirContext   ctx = new InitialDirContext(env); // get a handle to an Initial DirContext
 	            sRetorno = "0";
 	            System.out.println("CONEXIÓN EXITOSA LDAP-EXCHANGE, AUTENTICACIÓN EXITOSA.");
 	        } catch (javax.naming.AuthenticationException e) {

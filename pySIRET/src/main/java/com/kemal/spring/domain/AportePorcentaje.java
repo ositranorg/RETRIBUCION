@@ -37,6 +37,7 @@ public class AportePorcentaje {
 	
 	@ManyToOne
 	private TipoRetribucion tipoRetribucion;
+	@Column(name = "SESTADO")
 	private String sEstado="1";
 	
 

@@ -1,23 +1,22 @@
 package com.kemal.spring.web.controllers.restApiControllers;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.kemal.spring.domain.Representante;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.kemal.spring.domain.User;
 import com.kemal.spring.service.RepresentanteService;
-import com.kemal.spring.web.controllers.restApiControllers.dto.ContribuyenteDto;
-import com.kemal.spring.web.controllers.restApiControllers.dto.RepresentanteDto;
+import com.kemal.spring.web.dto.DataTableVWRepresentante;
 
 @RestController
 @RequestMapping("api/representante")
@@ -25,49 +24,23 @@ import com.kemal.spring.web.controllers.restApiControllers.dto.RepresentanteDto;
 public class RepresentanteRestController {
 	@Autowired
 	RepresentanteService representanteService;
-	
-	@Value("${total-registro-por-pagina}")
-	private int totalRegistroPorPagina;
-	
-	private ModelMapper modelMapper = new ModelMapper();
-	
-	@ResponseBody
-	@PostMapping(value = "registrar-representante", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> registrarRepresentante(@RequestBody RepresentanteDto representanteDto) {
-		System.out.println("idDto: " + representanteDto.getId());
-		System.out.println("fecha inicio " + representanteDto.getDFechaInicio());
-		Representante representante = modelMapper.map(representanteDto, Representante.class);
-		System.out.println("nombre: " + representante.getSNombres());
-		
+	@Autowired
+	DataTableVWRepresentante dataTableVWRepresentante;
 
-		HashMap<String, Object>res = representanteService.registrarRepresentante(representante,representanteDto.getPagina(),totalRegistroPorPagina);
-			
-		return new ResponseEntity<>(res, HttpStatus.OK);
+	public static HttpSession session() {
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		return attr.getRequest().getSession(); // true == allow create
 	}
+
 	@ResponseBody
-	@PostMapping(value = "listar-representante", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> listarRepresentante(@RequestBody ContribuyenteDto contribuyenteDto) {
-	
-		//List<Representante> lista = representanteService.listarRepresentantesByRuc(contribuyenteDto.getSruc());
-		
-		HashMap<String, Object>res = new HashMap<String, Object>();
-		res.put("resultado", 1);
-		res.put("lista", representanteService.listarRepresentantesByRucPaginado(contribuyenteDto.getSruc(), contribuyenteDto.getPagina(), totalRegistroPorPagina));
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	@ResponseBody
-	@PostMapping(value = "eliminar-representante", consumes = "application/json",produces =  { "application/json" })
-	public ResponseEntity<?> eliminarRepresentante(@RequestBody RepresentanteDto representanteDto) {
-	
-		//List<Representante> lista = representanteService.listarRepresentantesByRuc(contribuyenteDto.getSruc());
-		
-		HashMap<String, Object>res = 
-				representanteService.eliminarRepresentantesByRucPaginado(
-						representanteDto.getContribuyente().getSruc(),
-						representanteDto.getPagina(),
-				totalRegistroPorPagina, representanteDto.getId());
-		//res.put("resultado", 1);
-		//res.put("lista", representanteService.listarRepresentantesByRucPaginado(contribuyenteDto.getSruc(), contribuyenteDto.getPagina(), totalRegistroPorPagina));
-		return new ResponseEntity<>(res, HttpStatus.OK);
+	@GetMapping(value = "listar-representante")
+	public String listarRepresentante() {
+		User u = (User) session().getAttribute("oUsuario");
+		dataTableVWRepresentante.setData(representanteService.listarRepresentantes(u.getConcesionario().getId()));
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json=gson.toJson(dataTableVWRepresentante);
+		System.out.println(json);
+		return json;
+
 	}
 }

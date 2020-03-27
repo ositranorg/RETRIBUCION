@@ -48,10 +48,10 @@ public class RoleService {
         boolean roleNameAlreadyExists = false;
         for (Role role1 : allRoles) {
             //Check if the role name is edited and if it is taken
-            if (!role.getName().equals(persistedRole.getName())
-                    && role.getName().equals(role1.getName())) {
-                roleNameAlreadyExists = true;
-            }
+//            if (!role.getName().equals(persistedRole.getName())
+//                    && role.getName().equals(role1.getName())) {
+//                roleNameAlreadyExists = true;
+//            }
         }
         return roleNameAlreadyExists;
     }

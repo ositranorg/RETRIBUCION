@@ -112,7 +112,9 @@ public class CreditosRestController {
 			codigoCN=u.getConcesionario().getId();
 		dataTableVWCreditoRegistrado.setData(creditoService.findCreditosRegistrados(codigoCN));
 		 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		 return gson.toJson(dataTableVWCreditoRegistrado);
+		String json=gson.toJson(dataTableVWCreditoRegistrado);
+		System.out.println(json);
+		 return json;
 	}
 	
 }

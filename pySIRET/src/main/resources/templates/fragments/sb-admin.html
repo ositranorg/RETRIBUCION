@@ -34,8 +34,8 @@ label {
 					</div>
 					<div class="user-info">
 						<span class="user-role">Bienvenido</span>
-    					<div sec:authorize="isAuthenticated()">
-     						  <span sec:authentication="principal.user.contribuyente.snombre"></span>
+    					<div >
+     						  <span th:text="${session.oUsuario.perfil==2?session.oUsuario.concesionario.snombre:session.oUsuario.name}"></span>
      					</div>
 						<span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span>
 						</span>
@@ -62,20 +62,24 @@ label {
 							</div>
 						</li>
 						 -->
-						<li class="sidebar-dropdown"><a href="#"> <i
-								class="fa fa-shopping-cart"></i> <span>MANTENIMIENTO </span>
+						<li class="sidebar-dropdown" th:if="${session.oUsuario.perfil.id==1}"><a href="#"> <i
+								class="fa fa-shopping-cart"></i> <span>CONCESIONES </span>
 						</a>
 							<div class="sidebar-submenu">
 								<ul>
 									<li><a th:href="@{/mantenimiento/contribuyente}">CONTRIBUYENTE<span
 											class="badge badge-pill badge-success">ver</span>
 									</a></li>
-									<li><a th:href="@{/mantenimiento/representante}">REPRESENTANTE<span
-											class="badge badge-pill badge-success">ver</span>
-									</a></li>
 								</ul>
-							</div></li>
-						<li class="sidebar-dropdown"><a th:href="@{/condicionbc}">
+							</div>
+						</li>
+						<li class="sidebar-dropdown" >
+								<a th:href="@{/mantenimiento/representante}">REPRESENTANTE<span
+											class="badge badge-pill badge-success">ver</span>
+									</a>
+						</li>
+						
+						<li class="sidebar-dropdown" th:if="${session.puedeVerBC==1}"><a th:href="@{/condicionbc}">
 								<i class="fa fa-shopping-cart"></i> <span> CONDICIÓN DEL
 									CONCESIONARIO COMO BUEN CONTRIBUYENTE </span>
 						</a></li>
@@ -152,10 +156,10 @@ label {
 											Retribución <span class="badge badge-pill badge-warning">Empezar</span>
 									</a></li>
 									<li><a href="#">Consultar</a></li>
-									<li><a th:href="@{/calendario/pago/ver/2019}">Calendario
+									<li><a th:href="@{/calendario/pago}">Calendario
 											de Pagos <span class="badge badge-pill badge-success">ver</span>
 									</a></li>
-									<li><a th:href="@{/calendario/presentacion/ver/2019}">Calendario
+									<li><a th:href="@{/calendario/presentacion}">Calendario
 											para la Presentación <span
 											class="badge badge-pill badge-success">ver</span>
 									</a></li>

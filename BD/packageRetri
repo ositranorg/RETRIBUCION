@@ -1,0 +1,268 @@
+create or replace PACKAGE BODY PK_RET_APORTE AS
+PROCEDURE PRC_TIPODECLARACION (CODIGO_CONSECION       NUMBER,
+                                  ANIO_PERIODO           VARCHAR2,
+                                  MES_PERIODO            VARCHAR2,                              
+                                  TIPODECLARACION    OUT NUMBER)
+   AS
+      CODIGO_PERIODO   NUMBER := 0;
+      CONTADOR         NUMBER := 0;
+      FECHAVENC        DATE;
+      DP               CHAR (1) := '';
+      TIPOCALENDARIO NUMBER:=0;
+   BEGIN
+     
+
+      SELECT COUNT (*) INTO CONTADOR
+        FROM SRET_APORTE S
+       WHERE id_concesionario = CODIGO_CONSECION
+             AND SANIO_PERIODO = ANIO_PERIODO
+             AND SMES_PERIODO = MES_PERIODO AND S.SESTADO <> 'E';
+     BEGIN      
+          SELECT ID_TIPO_VENCIMIENTO INTO TIPOCALENDARIO
+          FROM SRET_CSNRIOTIPOVEN
+          WHERE ID_CONCESIONARIO=CODIGO_CONSECION
+          AND S_ANIO_PERIODO=ANIO_PERIODO;
+     EXCEPTION WHEN NO_DATA_FOUND THEN
+        TIPOCALENDARIO:=0;
+     END ;
+     IF TIPOCALENDARIO!=7 THEN
+         FECHAVENC :=
+         TO_DATE (FUN_GETFECHAVENCIMIENTOPRE(ANIO_PERIODO,MES_PERIODO,CODIGO_CONSECION),'DD/MM/YYYY');        
+     ELSE
+        FECHAVENC :=
+         TO_DATE (FUN_GETFECHAVENCIMIENTOPRE
+                                        (   ANIO_PERIODO,
+                                            MES_PERIODO,
+                                            CODIGO_CONSECION),'DD/MM/YYYY');
+     END IF;
+   
+     IF ( (FECHAVENC - TO_DATE (TO_CHAR (SYSDATE, 'DD/MM/YYYY'))) >= 0)
+      THEN
+         DP := '1';
+      ELSE
+         DP := '0';
+      END IF;
+
+      IF DP = '1' AND CONTADOR = 0
+      THEN
+         TIPODECLARACION := 1;
+      ELSIF DP = '1' AND CONTADOR != 0
+      THEN
+         TIPODECLARACION := 2;
+      ELSIF DP = '0' AND CONTADOR = 0
+      THEN
+         TIPODECLARACION := 1;
+      ELSIF DP = '0' AND CONTADOR != 0
+      THEN
+         TIPODECLARACION := 3;
+      END IF;
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         TIPODECLARACION := 1;
+   END PRC_TIPODECLARACION;
+   
+   
+ FUNCTION FUN_GETFECHAVENCIMIENTOPAGO (ANIO           IN VARCHAR2,
+                                         MES            IN VARCHAR2,
+                                         CODCONSECION   IN NUMBER)
+      RETURN VARCHAR2
+   IS
+      FEC_PAGO      VARCHAR2 (12);
+      DIGITO        CHAR (1);
+      --CALESPECIAL   CHAR (1) := FUN_CALESPECIALD (CODCONSECION, ANIO);
+      FECHAMANUAL   DATE;
+   BEGIN
+      EXECUTE IMMEDIATE 'alter session set nls_date_format =''DD/MM/YYYY'' '; --aumentar esto
+
+       /* SELECT FN_XTIPODECLARACION_MAN INTO FECHAMANUAL FROM DUAL;
+    IF MES='13' THEN
+        RETURN null;
+      ELSE
+                IF TO_DATE ('01/' || TO_CHAR(MES) || '/' || TO_CHAR(ANIO), 'DD/MM/YYYY') < FECHAMANUAL
+                THEN
+                   SELECT SUBSTR (
+                             (SELECT C.CNC_NRO_DOCUMENTO
+                                FROM SAPR_DETCONSECION DC
+                                     INNER JOIN SCINVGSF.T_CONCESIONARIO C
+                                        ON DC.NCODIGO_CONSECION = C.CNC_ID
+                               WHERE     DC.NCODIGO_CONSECION = CODCONSECION
+                                     AND DC.SESTADO = 'A'),
+                             11)
+                     INTO DIGITO
+                     FROM DUAL;
+
+
+                   SELECT TO_CHAR (DFECHA_VENCIMIENTO, 'DD/MM/YYYY')
+                     INTO FEC_PAGO
+                     FROM SAP_CROPAGO
+                    WHERE     SANIO_PERIODO = ANIO
+                          AND SMES_PERIODO = MES
+                          AND SDIGITO_RUC = DIGITO
+                          AND SESPECIAL = '0';
+                ELSE
+                   SELECT FUN_ULTDIGITO (CODCONSECION) INTO DIGITO FROM DUAL;
+
+                   IF DIGITO IS NULL
+                   THEN
+                      SELECT TO_CHAR (DFECHA_VENCIMIENTO, 'DD/MM/YYYY')
+                        INTO FEC_PAGO
+                        FROM SAP_CROPAGO
+                       WHERE     SANIO_PERIODO = ANIO
+                             AND SMES_PERIODO = MES
+                             AND SDIGITO_RUC IS NULL
+                             AND SESPECIAL = CALESPECIAL;
+                   ELSE
+                      SELECT TO_CHAR (DFECHA_VENCIMIENTO, 'DD/MM/YYYY')
+                        INTO FEC_PAGO
+                        FROM SAP_CROPAGO
+                       WHERE     SANIO_PERIODO = ANIO
+                             AND SMES_PERIODO = MES
+                             AND SDIGITO_RUC = DIGITO
+                             AND SESPECIAL = CALESPECIAL;
+                   END IF;
+                END IF;
+      END IF;
+      RETURN (FEC_PAGO);
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         RETURN NULL;*/
+         RETURN NULL;
+   END FUN_GETFECHAVENCIMIENTOPAGO;  
+ FUNCTION FUN_GETFECHAVENCIMIENTOPRE(CODIGO_CONSECION NUMBER,ANIO_PERIODO VARCHAR2,MES_PERIODO VARCHAR2)RETURN DATE
+ AS
+ SALIDA DATE;
+ BEGIN  
+    SELECT S.DFECHAVENCPRES
+        INTO SALIDA
+    FROM SRET_VENCIMIENTO S
+    WHERE S.CONCESIONARIO_ID = CODIGO_CONSECION
+             AND S.SANIO_PERIODO = ANIO_PERIODO
+             AND S.SMES_PERIODO = MES_PERIODO AND S.SESTADO = '1';
+    RETURN SALIDA;
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+    RETURN NULL;
+   
+ END FUN_GETFECHAVENCIMIENTOPRE;
+ 
+ 
+ 
+ 
+  FUNCTION PRC_GETDJ (PMES              CHAR,
+                       PANIO             CHAR,
+                       PCONCESIONARIO    NUMBER,
+                       CODUSUARIO        VARCHAR2)
+      RETURN VARCHAR2
+   AS
+      CODIGO   NUMBER:=0 ;
+      PAGO NUMBER:=0;
+   BEGIN
+   
+   
+      SELECT COUNT(1) INTO  PAGO
+      FROM SRET_PAGOSINAPORTE A
+       WHERE A.MESRETRIBUCION = PMES
+       AND A.ANIORETRIBUCION = PANIO
+       AND A.SESTADO = '1'
+       AND A.NCODIGOCNS = PCONCESIONARIO;
+      IF PAGO>0 THEN
+        BEGIN
+                  SELECT MAX (NCODIGO)
+                    INTO CODIGO
+                    FROM SRET_APORTE A
+                       
+                   WHERE  A.SMES_PERIODO = PMES
+                         AND A.SANIO_PERIODO = PANIO
+                         AND A.SESTADO = 'I'
+                         AND a.id_concesionario = PCONCESIONARIO;
+           
+                  IF CODIGO IS NULL OR CODIGO=0 
+                  THEN
+                      RETURN ''||GRABARDJBORRADOR (PCONCESIONARIO,
+                                          PMES,
+                                          PANIO,
+                                          CODUSUARIO);
+                        
+                  END IF;
+           
+                
+               EXCEPTION
+                  WHEN NO_DATA_FOUND
+                  THEN
+                     RETURN ''||GRABARDJBORRADOR (PCONCESIONARIO,
+                                              PMES,
+                                              PANIO,
+                                              CODUSUARIO);
+          END;
+      ELSE
+        RETURN 'NO EXSITE EL PAGO PARA EL PERIODO SELECCIONADO. DESEA REALIZAR EL REGISTRO DEL PAGO AHORA?';
+      END IF;
+   END PRC_GETDJ;
+   
+   
+    FUNCTION GRABARDJBORRADOR (PCONCESION       NUMBER,
+                              PMES             CHAR,
+                              PANIO            CHAR,
+                              CODIGOUSUARIO    VARCHAR2)
+      RETURN VARCHAR2
+   IS
+      codigo_periodo   NUMBER := 0;
+      codigo           NUMBER := 0;
+      FECHAVPAG DATE;
+      FECHAVENC DATE;
+      EXISTEPERIODO NUMBER:=0;
+      TIPODECLARACION NUMBER;
+   BEGIN
+     BEGIN
+       PRC_TIPODECLARACION (PCONCESION,
+                                  PANIO,
+                                  PMES,
+                                  TIPODECLARACION);
+     
+
+     
+   
+             /*              
+
+        FECHAVPAG :=TO_DATE (
+                           FUN_GETFECHAVENCIMIENTOPAGO(PANIO,
+                                                        PMES,
+                                                        PCONCESION),
+                           'DD/MM/YYYY');*/
+        FECHAVENC :=TO_DATE (
+                           FUN_GETFECHAVENCIMIENTOPRE(PANIO,
+                                                       PMES,
+                                                       PCONCESION),
+                           'DD/MM/YYYY');
+       SELECT SQ_RET_APORTE.NEXTVAL INTO CODIGO FROM DUAL;
+     
+        INSERT INTO SRET_APORTE (NCODIGO,
+                         
+                             --  NORDEN,
+                           
+                               id_aportetipopresnt,
+                               --SCODUSUREGISTRA,
+                               DFECHAREGISTRO,
+                               FECHA_VEN_PAGO,
+                               FECHA_VEN_PRES)
+           VALUES (CODIGO,
+                  -- EXISTEPERIODO,
+                 --  CODIGO,
+             
+                   TIPODECLARACION,
+                  -- CODIGOUSUARIO,
+                   SYSDATE,
+                   FECHAVENC,
+                   FECHAVPAG);
+
+     
+
+      RETURN ''||CODIGO;
+    EXCEPTION WHEN OTHERS THEN
+ 
+      
+    RETURN 'sqlcode:'||CODIGO||'::::'||'SQLERRM:'||SQLERRM;
+    END;
+   END GRABARDJBORRADOR;
+END PK_RET_APORTE;
